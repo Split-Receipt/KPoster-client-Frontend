@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "~/assets/styles.scss" as *;'
+          additionalData: '@import "app/styles/scss/abstracts/_variables.scss" ;'
         }
       }
     }
@@ -50,7 +50,7 @@ export default defineNuxtConfig({
         'widgets/**/*.{ts, vue}',
         'features/**/*.{ts, vue}',
         'entities/**/*.{ts, vue}',
-        'widgets/**/*.{ts, vue}',
+        'shared/**/*.{ts, vue}',
     ],
   },
 })
