@@ -5,10 +5,14 @@
 }
 
 body {
-    font-weight: $font-weight-medium;
+    font-family: $font-family-medium;
+    line-height: $line-heigh-normal;
+    font-size: $font-size-normal;
+    
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    
     min-height: 100vh;
 }
 
