@@ -6,9 +6,51 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "~/assets/styles.scss" as *;'
+          additionalData: '@import "app/styles/scss/abstracts/_variables.scss" ;'
         }
       }
     }
-  }
+  },
+  components: [
+    {
+      path: 'app',
+      extensions: ['.vue'],
+      pathPrefix: false,
+    },
+    {
+      path: 'pages',
+      extensions: ['.vue'],
+      pathPrefix: false,
+    },
+    {
+      path: 'widgets',
+      extensions: ['.vue'],
+      pathPrefix: false,
+    },
+    {
+      path: 'features',
+      extensions: ['.vue'],
+      pathPrefix: false,
+    },
+    {
+      path: 'entities',
+      extensions: ['.vue'],
+      pathPrefix: false,
+    },
+    {
+      path: 'shared',
+      extensions: ['.vue'],
+      pathPrefix: false,
+    },
+  ],
+  imports: {
+    dirs: [
+        'app/**/*.{ts, vue}',
+        'pages/**/*.{ts, vue}',
+        'widgets/**/*.{ts, vue}',
+        'features/**/*.{ts, vue}',
+        'entities/**/*.{ts, vue}',
+        'shared/**/*.{ts, vue}',
+    ],
+  },
 })
