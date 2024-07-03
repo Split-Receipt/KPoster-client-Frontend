@@ -2,11 +2,16 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxt/eslint"], 
+  css: ['/app/styles/scss/styles.scss'],
   vite: {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@import "app/styles/scss/abstracts/_variables.scss" ;'
+          additionalData: `
+            @import "app/styles/scss/abstracts/_variables.scss" ;
+            @import "app/styles/scss/components/_all.scss" ;
+            @import "app/styles/scss/pages/_all.scss" ;
+          `
         }
       }
     }

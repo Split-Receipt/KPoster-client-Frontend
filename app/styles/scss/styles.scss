@@ -1,9 +1,6 @@
+// Plagins
+@import "normalize-scss/sass/normalize/import-now";
+
 // Base
 @import "/app/styles/scss/base/generic";
-
-// Abstracts
-@import "/app/styles/scss/abstracts/variables";
-
-// Plagins
-
-// Fonts
+@import "/app/styles/scss/base/fonts.scss";
