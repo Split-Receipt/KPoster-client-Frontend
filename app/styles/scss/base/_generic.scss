@@ -1,0 +1,139 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $font-family-medium;
+    line-height: $line-heigh-normal;
+    font-size: $font-size-normal;
+    
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul[class],
+ol[class],
+li {
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: $font-weight-semi-bold;
+}
+
+h1 {
+    font-size: 30px;
+    line-height: 42px;
+
+    @media #{$screen-tablet} {
+        font-size: 40px;
+        line-height: 56px;
+    }
+
+    @media #{$screen-desktop} {
+        font-size: 72px;
+        line-height: 100px;
+    }
+
+    @media #{$screen-big-desktop} {
+        font-size: 74px;
+        line-height: 103px;
+    }
+}
+
+h2 {
+    font-size: 28px;
+    line-height: 39px;
+
+    @media #{$screen-tablet} {
+        font-size: 40px;
+        line-height: 56px;
+    }
+
+    @media #{$screen-desktop} {
+        font-size: 66px;
+        line-height: 92px;
+    }
+
+    @media #{$screen-big-desktop} {
+        font-size: 70px;
+        line-height: 98px;
+    }
+}
+
+h3 {
+    font-size: 28px;
+    line-height: 39px;
+
+    @media #{$screen-tablet} {
+        font-size: 32px;
+        line-height: 45px;
+    }
+
+    @media #{$screen-desktop} {
+        font-size: 60px;
+        line-height: 84px;
+    }
+}
+
+h4 {
+    font-size: 24px;
+    line-height: 33px;
+
+    @media #{$screen-tablet} {
+        font-size: 28px;
+        line-height: 39px;
+    }
+
+    @media #{$screen-desktop} {
+        font-size: 34px;
+        line-height: 48px;
+    }
+
+    @media #{$screen-big-desktop} {
+        font-size: 44px;
+        line-height: 61px;
+    }
+}
+
+h5 {
+    font-size: 22px;
+    line-height: 31px;
+
+    @media #{$screen-desktop} {
+        font-size: 24px;
+        line-height: 34px;
+    }
+
+    @media #{$screen-big-desktop} {
+        font-size: 30px;
+        line-height: 42px;
+    }
+}
+
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+input,
+button {
+  font: inherit;
+}
