@@ -2,12 +2,12 @@
     font-family: $font-family-medium;
     font-weight: $font-weight-medium;
     font-style: normal;
-    src: local("#{$font-family-medium}"), url("/app/styles/fonts/NeuethingSans-MediumExtraExpanded.otf") format("opentype");
+    src: local("#{$font-family-medium}"), url("/app/styles/fonts/NeuethingSans-MediumSemiExpanded.otf") format("opentype");
 }
 
 @font-face {
     font-family: $font-family-semi-bold;
     font-weight: $font-weight-semi-bold;
     font-style: normal;
-    src: local("#{$font-family-semi-bold}"), url("/app/styles/fonts/NeuethingSans-SemiBoldExtraExpanded.otf") format("opentype");
+    src: local("#{$font-family-semi-bold}"), url("/app/styles/fonts/NeuethingSans-SemiBoldSemiExpanded.otf") format("opentype");
 }
