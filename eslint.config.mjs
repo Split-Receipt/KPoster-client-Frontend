@@ -1,79 +1,146 @@
-// @ts-check
-import withNuxt from './.nuxt/eslint.config.mjs';
+import withNuxt from "./.nuxt/eslint.config.mjs";
+import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import eslint from "@eslint/js";
+import tsEslint from "typescript-eslint";
+import vueEslint from "eslint-plugin-vue";
+import vueParser from "vue-eslint-parser";
 
-export default withNuxt(
-	[
-		{
-			'rules': {
-				'semi': ['error', 'always'],
-				'quotes': ['error', 'single'],
-				'no-template-curly-in-string': 'error',
-				'no-unreachable-loop': 'error',
-				'no-var': 'error',
-				'array-callback-return': 'off',
-				'no-useless-escape': 'off',
-				'prefer-regex-literals': 'off',
-				'default-case': 'error',
-				'default-param-last': ['error'],
-				'dot-location': ['error', 'property'],
-				'dot-notation': 'error',
-				'no-else-return': 'error',
-				'no-empty-function': 'error',
-				'no-empty-pattern': 'error',
-				'no-implicit-coercion': 'error',
-				'no-loop-func': 'error',
-				'no-multi-spaces': 'error',
-				'no-new': 'error',
-				'no-param-reassign': 'error',
-				'no-useless-catch': 'error',
-				'no-unused-vars': 'off',
-				'block-spacing': 'error',
-				'brace-style': ['error', '1tbs', { 'allowSingleLine': true }],
-				'comma-spacing': ['error', { 'before': false, 'after': true }],
-				'comma-style': ['error', 'last'],
-				'eol-last': ['error', 'always'],
-				'key-spacing': [
-					'error',
-					{
-						'afterColon': true,
-					},
-				],
-				'indent': ['error', 'tab', { 'SwitchCase': 1 }],
-				'comma-dangle': [
-					'error',
-					{
-						'arrays': 'always-multiline',
-						'objects': 'always-multiline',
-						'imports': 'never',
-						'exports': 'never',
-						'functions': 'ignore',
-					},
-				],
-				'no-tabs': 'off',
-				'space-before-function-paren': ['error', {
-					'anonymous': 'always',
-					'named': 'never',
-					'asyncArrow': 'always',
-				}],
-				'keyword-spacing': ['error', { 'before': true }],
-				'require-await': 'off',
-				'curly': 'error',
-				'no-empty': ['error', { 'allowEmptyCatch': true }],
-				'no-prototype-builtins': 0,
-				'padding-line-between-statements': [
-					'warn',
-					{
-						'blankLine': 'any',
-						'prev': ['const', 'let', 'var'],
-						'next': ['const', 'let', 'var'],
-					},
-					{ 'blankLine': 'always', 'prev': '*', 'next': 'return' },
-					{ 'blankLine': 'always', 'prev': 'function', 'next': '*' },
-				],
-				'no-multiple-empty-lines': ['error', { 'max': 1, 'maxEOF': 1 }],
-				'eqeqeq': ['error', 'always'],
-				'space-before-blocks': 'error',
-			},
-		},
-	]
-);
+export default withNuxt([
+  eslint.configs.recommended,
+  eslintPluginPrettierRecommended,
+  ...tsEslint.configs.recommended,
+  ...vueEslint.configs["flat/recommended"],
+  {
+    ignores: ["eslint.config.mjs", "nuxt.config.ts"],
+    languageOptions: {
+      parser: vueParser,
+      parserOptions: {
+        parser: "@typescript-eslint/parser",
+        sourceType: "module",
+        ecmaVersion: 2020,
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
+    rules: {
+      curly: "error",
+      "comma-dangle": [
+        "error",
+        {
+          arrays: "always-multiline",
+          objects: "always-multiline",
+          imports: "always-multiline",
+          exports: "always-multiline",
+          functions: "ignore",
+        },
+      ],
+      eqeqeq: ["error", "always"],
+      "linebreak-style": ["error", "unix"],
+      "no-console": [
+        "error",
+        { allow: ["warn", "error", "time", "info", "timeEnd"] },
+      ],
+      "no-new": "error",
+      "no-var": "error",
+      "no-empty": ["error", { allowEmptyCatch: true }],
+      "no-multiple-empty-lines": ["error", { max: 1, maxEOF: 1 }],
+      "no-prototype-builtins": "error",
+      indent: "off",
+      "@typescript-eslint/indent": ["error", 2, { SwitchCase: 1 }],
+      quotes: "off",
+      "@typescript-eslint/quotes": ["error", "single"],
+      semi: "off",
+      "@typescript-eslint/semi": ["error", "always"],
+      "brace-style": "off",
+      "@typescript-eslint/brace-style": "error",
+      "space-infix-ops": "off",
+      "@typescript-eslint/space-infix-ops": "error",
+      "key-spacing": "off",
+      "@typescript-eslint/key-spacing": ["error", { mode: "strict" }],
+      "keyword-spacing": "off",
+      "@typescript-eslint/keyword-spacing": ["error", { before: true }],
+      "object-curly-spacing": "off",
+      "@typescript-eslint/object-curly-spacing": ["error", "always"],
+      "padding-line-between-statements": "off",
+      "@typescript-eslint/padding-line-between-statements": [
+        "error",
+        { blankLine: "never", prev: "import", next: "import" },
+        { blankLine: "always", prev: "*", next: ["return", "function"] },
+        { blankLine: "always", prev: "function", next: "*" },
+      ],
+      "space-before-blocks": "off",
+      "@typescript-eslint/space-before-blocks": "error",
+      "space-before-function-paren": "off",
+      "@typescript-eslint/space-before-function-paren": [
+        "error",
+        {
+          anonymous: "always",
+          named: "never",
+          asyncArrow: "always",
+        },
+      ],
+      "@typescript-eslint/ban-ts-comment": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
+      "vue/multi-word-component-names": "off",
+      "vue/attributes-order": "error",
+      "vue/html-indent": ["error", 2],
+      "vue/max-len": [
+        "error",
+        {
+          code: 120,
+          template: 120,
+          ignoreUrls: true,
+          ignoreRegExpLiterals: true,
+          ignoreStrings: true,
+          ignoreTemplateLiterals: true,
+          ignoreHTMLAttributeValues: true,
+        },
+      ],
+      "vue/padding-line-between-blocks": ["error", "always"],
+      "vue/singleline-html-element-content-newline": [
+        "error",
+        {
+          ignoreWhenNoAttributes: true,
+          ignores: ["pre", "textarea"],
+        },
+      ],
+      "vue/html-self-closing": [
+        "error",
+        {
+          html: {
+            void: "always",
+            normal: "always",
+            component: "always",
+          },
+        },
+      ],
+      "vue/max-attributes-per-line": ["error", { singleline: 3, multiline: 1 }],
+      "vue/block-lang": [
+        "error",
+        {
+          script: {
+            lang: "ts",
+          },
+        },
+      ],
+    },
+  },
+  {
+    files: ["*.ts", "*.tsx"],
+    rules: {
+      "no-undef": "off",
+    },
+  },
+  {
+    files: ["*.vue"],
+    rules: {
+      "no-undef": "off",
+    },
+  },
+]);
