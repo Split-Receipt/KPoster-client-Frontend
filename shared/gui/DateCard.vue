@@ -8,7 +8,7 @@
     >
       <span
         v-if="size !== 'mini'"
-        :class="[cardSizeDay[size], 'date-card__day']"
+        :class="[cardSizeDay[size as cardSizeDayType], 'date-card__day']"
       >
         {{ date.day }}
       </span>
@@ -20,42 +20,43 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-  date: {
-    type: Object,
-    default: () => ({
-      day: "1",
-      day_week: "vi",
-    }),
-  },
-  size: {
-    type: String,
-    default: "small",
-  },
-  active: {
-    type: Boolean,
-    default: false,
-  },
-  disabled: {
-    type: Boolean,
-    default: false,
-  },
+interface Props {
+  date: Date;
+  size?: cardSizeType | cardSizeDayType;
+  active?: boolean;
+  disabled?: boolean;
+}
+
+interface Date {
+  day: string;
+  day_week: string;
+}
+
+withDefaults(defineProps<Props>(), {
+  date: () => ({
+    day: "1",
+    day_week: "vi",
+  }),
+  size: () => "small",
+  active: false,
+  disabled: false,
 });
 
-type CardType = {
-  [key: string]: string;
-};
+defineEmits(["dateClick"]);
 
-const cardSize: CardType = {
-  mini: "date-card--mini",
-  small: "date-card--small",
-  medium: "date-card--medium",
-  large: "date-card--large",
-};
+enum cardSize {
+  mini = "date-card--mini",
+  small = "date-card--small",
+  medium = "date-card--medium",
+  large = "date-card--large",
+}
 
-const cardSizeDay: CardType = {
-  medium: "date-card__day--medium",
-};
+enum cardSizeDay {
+  medium = "date-card__day--medium",
+}
+
+type cardSizeType = keyof typeof cardSize;
+type cardSizeDayType = keyof typeof cardSizeDay;
 </script>
 
 <style scoped lang="scss">
