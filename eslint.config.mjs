@@ -6,8 +6,8 @@ import vueEslint from "eslint-plugin-vue";
 import vueParser from "vue-eslint-parser";
 
 export default withNuxt([
-  eslint.configs.recommended,
   eslintPluginPrettierRecommended,
+  eslint.configs.recommended,
   ...tsEslint.configs.recommended,
   ...vueEslint.configs["flat/recommended"],
   {
@@ -50,6 +50,7 @@ export default withNuxt([
       "@typescript-eslint/indent": ["error", 2, { SwitchCase: 1 }],
       quotes: "off",
       "@typescript-eslint/quotes": ["error", "single"],
+      "prettier/prettier": ["error", { singleQuote: true,  parser: "flow" }],
       semi: "off",
       "@typescript-eslint/semi": ["error", "always"],
       "brace-style": "off",
