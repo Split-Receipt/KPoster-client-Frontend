@@ -1,0 +1,18 @@
+@import "buttons.scss";
+//Colors
+$button-black-background-color: $black;
+$button-white-background-color: $white;
+$button-gradient-background-color: $yellow-gray-gradient;
+$button-default-background-color: transparent;
+//Line-height
+$button-text-line-height-xxs: 17px;
+$button-text-line-height-xs: 21px;
+$button-text-line-height-s: 22px;
+$button-text-line-height-m: 25px;
+$button-text-line-height-l: 28px;
+$button-text-line-height-xl: 31px;
+//Button-size
+$button-size-huge: 70px;
+$button-size-big: 65px;
+$button-size-middle: 60px;
+$button-size-small: 50px;

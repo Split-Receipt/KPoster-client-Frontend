@@ -1,22 +1,35 @@
-import withNuxt from "./.nuxt/eslint.config.mjs";
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
-import eslint from "@eslint/js";
-import tsEslint from "typescript-eslint";
-import vueEslint from "eslint-plugin-vue";
-import vueParser from "vue-eslint-parser";
+import withNuxt from './.nuxt/eslint.config.mjs';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import pkg from '@eslint/js';
+import tsEslintPlugin from 'typescript-eslint';
+import vueEslint from 'eslint-plugin-vue';
+import vueParser from 'vue-eslint-parser';
+
+const { configs: eslintConfigs } = pkg;
 
 export default withNuxt([
-  eslint.configs.recommended,
   eslintPluginPrettierRecommended,
-  ...tsEslint.configs.recommended,
-  ...vueEslint.configs["flat/recommended"],
+  eslintConfigs.recommended,
+  tsEslintPlugin.configs.recommended[2],
+  vueEslint.configs.flat,
   {
-    ignores: ["eslint.config.mjs", "nuxt.config.ts"],
+    files: ['*.ts', '*.tsx'],
+    rules: {
+      'no-undef': 'off',
+    },
+  },
+  {
+    files: ['*.vue'],
+    rules: {
+      'no-undef': 'off',
+    },
+  },
+  {
     languageOptions: {
       parser: vueParser,
       parserOptions: {
-        parser: "@typescript-eslint/parser",
-        sourceType: "module",
+        parser: tsEslintPlugin.parser,
+        sourceType: 'module',
         ecmaVersion: 2020,
         ecmaFeatures: {
           jsx: true,
@@ -24,74 +37,75 @@ export default withNuxt([
       },
     },
     rules: {
-      curly: "error",
-      "comma-dangle": [
-        "error",
+      curly: 'error',
+      'comma-dangle': [
+        'error',
         {
-          arrays: "always-multiline",
-          objects: "always-multiline",
-          imports: "always-multiline",
-          exports: "always-multiline",
-          functions: "ignore",
+          arrays: 'always-multiline',
+          objects: 'always-multiline',
+          imports: 'always-multiline',
+          exports: 'always-multiline',
+          functions: 'ignore',
         },
       ],
-      eqeqeq: ["error", "always"],
-      "linebreak-style": ["error", "unix"],
-      "no-console": [
-        "error",
-        { allow: ["warn", "error", "time", "info", "timeEnd"] },
+      eqeqeq: ['error', 'always'],
+      'linebreak-style': ['error', 'unix'],
+      'no-console': [
+        'error',
+        { allow: ['warn', 'error', 'time', 'info', 'timeEnd'] },
       ],
-      "no-new": "error",
-      "no-var": "error",
-      "no-empty": ["error", { allowEmptyCatch: true }],
-      "no-multiple-empty-lines": ["error", { max: 1, maxEOF: 1 }],
-      "no-prototype-builtins": "error",
-      indent: "off",
-      "@typescript-eslint/indent": ["error", 2, { SwitchCase: 1 }],
-      quotes: "off",
-      "@typescript-eslint/quotes": ["error", "single"],
-      semi: "off",
-      "@typescript-eslint/semi": ["error", "always"],
-      "brace-style": "off",
-      "@typescript-eslint/brace-style": "error",
-      "space-infix-ops": "off",
-      "@typescript-eslint/space-infix-ops": "error",
-      "key-spacing": "off",
-      "@typescript-eslint/key-spacing": ["error", { mode: "strict" }],
-      "keyword-spacing": "off",
-      "@typescript-eslint/keyword-spacing": ["error", { before: true }],
-      "object-curly-spacing": "off",
-      "@typescript-eslint/object-curly-spacing": ["error", "always"],
-      "padding-line-between-statements": "off",
-      "@typescript-eslint/padding-line-between-statements": [
-        "error",
-        { blankLine: "never", prev: "import", next: "import" },
-        { blankLine: "always", prev: "*", next: ["return", "function"] },
-        { blankLine: "always", prev: "function", next: "*" },
+      'no-new': 'error',
+      'no-var': 'error',
+      'no-empty': ['error', { allowEmptyCatch: true }],
+      'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
+      'no-prototype-builtins': 'error',
+      indent: 'off',
+      '@typescript-eslint/indent': ['error', 2, { SwitchCase: 1 }],
+      quotes: 'off',
+      '@typescript-eslint/quotes': ['error', 'single'],
+      'prettier/prettier': ['error', { singleQuote: true }],
+      semi: 'off',
+      '@typescript-eslint/semi': ['error', 'always'],
+      'brace-style': 'off',
+      '@typescript-eslint/brace-style': 'error',
+      'space-infix-ops': 'off',
+      '@typescript-eslint/space-infix-ops': 'error',
+      'key-spacing': 'off',
+      '@typescript-eslint/key-spacing': ['error', { mode: 'strict' }],
+      'keyword-spacing': 'off',
+      '@typescript-eslint/keyword-spacing': ['error', { before: true }],
+      'object-curly-spacing': 'off',
+      '@typescript-eslint/object-curly-spacing': ['error', 'always'],
+      'padding-line-between-statements': 'off',
+      '@typescript-eslint/padding-line-between-statements': [
+        'error',
+        { blankLine: 'never', prev: 'import', next: 'import' },
+        { blankLine: 'always', prev: '*', next: ['return', 'function'] },
+        { blankLine: 'always', prev: 'function', next: '*' },
       ],
-      "space-before-blocks": "off",
-      "@typescript-eslint/space-before-blocks": "error",
-      "space-before-function-paren": "off",
-      "@typescript-eslint/space-before-function-paren": [
-        "error",
+      'space-before-blocks': 'off',
+      '@typescript-eslint/space-before-blocks': 'error',
+      'space-before-function-paren': 'off',
+      '@typescript-eslint/space-before-function-paren': [
+        'error',
         {
-          anonymous: "always",
-          named: "never",
-          asyncArrow: "always",
+          anonymous: 'always',
+          named: 'never',
+          asyncArrow: 'always',
         },
       ],
-      "@typescript-eslint/ban-ts-comment": "off",
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-non-null-assertion": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      '@typescript-eslint/ban-ts-comment': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-non-null-assertion': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
-      "vue/multi-word-component-names": "off",
-      "vue/attributes-order": "error",
-      "vue/html-indent": ["error", 2],
-      "vue/max-len": [
-        "error",
+      'vue/multi-word-component-names': 'off',
+      'vue/attributes-order': 'error',
+      'vue/html-indent': ['error', 2],
+      'vue/max-len': [
+        'error',
         {
           code: 120,
           template: 120,
@@ -102,45 +116,36 @@ export default withNuxt([
           ignoreHTMLAttributeValues: true,
         },
       ],
-      "vue/padding-line-between-blocks": ["error", "always"],
-      "vue/singleline-html-element-content-newline": [
-        "error",
+      'vue/padding-line-between-blocks': ['error', 'always'],
+      'vue/singleline-html-element-content-newline': [
+        'error',
         {
           ignoreWhenNoAttributes: true,
-          ignores: ["pre", "textarea"],
+          ignores: ['pre', 'textarea'],
         },
       ],
-      "vue/html-self-closing": [
-        "error",
+      'vue/html-self-closing': [
+        'error',
         {
           html: {
-            void: "always",
-            normal: "always",
-            component: "always",
+            void: 'always',
+            normal: 'always',
+            component: 'always',
           },
         },
       ],
-      "vue/max-attributes-per-line": ["error", { singleline: 3, multiline: 1 }],
-      "vue/block-lang": [
-        "error",
+      'vue/max-attributes-per-line': ['error', { singleline: 3, multiline: 1 }],
+      'vue/block-lang': [
+        'error',
         {
           script: {
-            lang: "ts",
+            lang: 'ts',
           },
         },
       ],
     },
   },
   {
-    files: ["*.ts", "*.tsx"],
-    rules: {
-      "no-undef": "off",
-    },
-  },
-  {
-    files: ["*.vue"],
-    rules: {
-      "no-undef": "off",
-    },
+    ignores: ['eslint.config.mjs', 'nuxt.config.ts', 'svgFontGenerator.js'],
   },
 ]);

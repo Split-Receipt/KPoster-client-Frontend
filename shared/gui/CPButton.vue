@@ -3,7 +3,7 @@
     <button
       :disabled="disabled"
       :type="type" 
-      :class="[classFigure, 'button', classSize, classColor]"
+      :class="[, 'button', , ]"
       @click="$emit('buttonClick')"
     >
       Sales
@@ -42,17 +42,22 @@ const props = defineProps({
   },
 });
 
-const classFigure = computed(() => {
-  props.figure === 'circle' ? 'button--circle' : props.figure === 'oval' ? 'button--oval' : 'button--square'
-})
+const figure = {circle: 'button--circle', 
+                oval: 'button--oval',
+                square: 'button--square'
+         }
 
-const classSize = computed(() => {
-  props.size === 'small' ? 'button--small' : props.size === 'middle' ? 'button--middle' : 'button--big'
-})
+const size = {small: 'button--small', 
+              middle: 'button--middle', 
+              big: 'button--big', huge: 'button--huge'
+       }
 
-const classColor = computed(() => {
-  props.color === 'gradient' ? 'button--gradient' : props.color === 'black' ? 'button--black' : props.color === 'white' ? 'button--white' : props.color === 'transperent' ? 'button--transperent' : 'button--grey'
-})
+const color = {yellow-grey: 'button--yellow-grey', 
+              black: 'button--black', 
+              white: 'button--white', 
+              transperent: 'button--transperent', 
+              grey: 'button--grey'
+        } 
 
 </script>
 
@@ -65,10 +70,7 @@ const classColor = computed(() => {
   border: none;
   background-color: transparent;
 
-  &__wrapper {
-  }
-
-  &--disabled {
+  &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
@@ -90,18 +92,42 @@ const classColor = computed(() => {
 
   &--small {
     height: 50px;
+    &--xs {
+      line-height: 21px;
+    }
+    &--xl {
+      line-height: 31px;
+    }
   }
 
   &--middle {
     height: 60px;
-  }
-
-  &--aboveMiddle {
-    height: 65;
+    &--xxs {
+      line-height: 17px;
+    }
+    &--xs {
+      line-height: 21px;
+    }
+    &--s {
+      line-height: 22px;
+    }
   }
 
   &--big {
+    height: 65;
+    &--m {
+      line-height: 25px;
+    }
+  }
+
+  &--huge {
     height: 70px;
+    &--l {
+      line-height: 28px;
+    }
+    &--xl {
+      line-height: 31px;
+    }
   }
 
   &--white {
@@ -117,36 +143,12 @@ const classColor = computed(() => {
     background: #e7e7e7;
   }
 
-  &--gradient {
+  &--yellow-grey {
     background: linear-gradient(82.62deg, #ffd600 0.76%, #aaaaaa 92.06%);
   }
 
   &--transperent {
     background: transparent;
-  }
-
-  &--17Text {
-    line-height: 17px;
-  }
-
-  &--21Text {
-    line-height: 21px;
-  }
-
-  &--22Text {
-    line-height: 22px;
-  }
-
-  &--25Text {
-    line-height: 25px;
-  }
-
-  &--28Text {
-    line-height: 28px;
-  }
-
-  &--31Text {
-    line-height: 31px;
   }
 }
 </style>
