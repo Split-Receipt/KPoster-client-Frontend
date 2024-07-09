@@ -1,8 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  // plugins: [{ src: "plugins/swiper" }],
   devtools: { enabled: true },
+  // build: {
+  //   transpile: ["swiper"],
+  // },
   modules: ["@nuxt/eslint"],
-  css: ['/app/styles/scss/styles.scss'],
+  css: ["/app/styles/scss/styles.scss"],
   vite: {
     css: {
       preprocessorOptions: {
@@ -11,10 +15,17 @@ export default defineNuxtConfig({
             @import "app/styles/scss/abstracts/_variables.scss" ;
             @import "app/styles/scss/components/_all.scss" ;
             @import "app/styles/scss/pages/_all.scss" ;
-          `
-        }
-      }
-    }
+          `,
+        },
+      },
+    },
+    vue: {
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.startsWith("swiper-"),
+        },
+      },
+    },
   },
   components: [
     {

@@ -72,6 +72,10 @@ type cardSizeDayType = keyof typeof cardSizeDay;
   border: 1px solid $date-card-default-border-color;
   cursor: pointer;
 
+  &__wrapper {
+    display: inline-block;
+  }
+
   &--mini {
     height: $date-card-height-mini;
   }
