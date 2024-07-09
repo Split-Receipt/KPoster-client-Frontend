@@ -7,6 +7,7 @@ export default defineNuxtConfig({
   // },
   modules: ["@nuxt/eslint"],
   css: ["/app/styles/scss/styles.scss"],
+  css: ["/app/styles/scss/styles.scss"],
   vite: {
     css: {
       preprocessorOptions: {
