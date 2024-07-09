@@ -1,64 +1,67 @@
 <template>
-  <div class="button__wrapper" @click="buttonClick">
+  <div class="button__wrapper">
     <button
       :disabled="disabled"
-      :type="type" 
-      :class="[, 'button', , ]"
-      @click="$emit('buttonClick')"
+      :type="props.type"
+      :class="[
+        'button',
+        buttonColors[props.color],
+        buttonShapes[props.shape],
+        buttonSizes[props.size],
+      ]"
+      @click="(event) => handleClick(event)"
     >
+      <i :class="['left-icon', 'icon', `icon-${props.leftIcon}`]" />
       Sales
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+type Props = {
+  type?: HTMLButtonElement['type'];
+  shape: keyof typeof buttonShapes;
+  disabled?: boolean;
+  size: keyof typeof buttonSizes;
+  color: keyof typeof buttonColors;
+  leftIcon: string;
+};
 
-const props = defineProps({
-  type: {
-    type: String,
-    default: 'button',
-  },
+type Emits = {
+  (event: 'click', eventData: MouseEvent): void;
+};
 
-  figure: {
-    type: String,
-  },
+const emit = defineEmits<Emits>();
 
-  disabled: {
-    type: boolean,
-    default: false,
-  },
+const handleClick = (clickEvent: MouseEvent) => {
+  emit('click', clickEvent);
+};
 
-  size: {
-    type: String,
-  },
-
-  color: {
-    type: String,
-  },
-
-  leftIcon: {
-    type: String,
-  },
+const props = withDefaults(defineProps<Props>(), {
+  type: 'button',
+  disabled: false,
 });
 
-const figure = {circle: 'button--circle', 
-                oval: 'button--oval',
-                square: 'button--square'
-         }
+enum buttonShapes {
+  circle = 'button--circle',
+  oval = 'button--oval',
+  square = 'button--square',
+}
 
-const size = {small: 'button--small', 
-              middle: 'button--middle', 
-              big: 'button--big', huge: 'button--huge'
-       }
+enum buttonSizes {
+  small = 'button--small',
+  middle = 'button--middle',
+  big = 'button--big',
+  huge = 'button--huge',
+}
 
-const color = {yellow-grey: 'button--yellow-grey', 
-              black: 'button--black', 
-              white: 'button--white', 
-              transperent: 'button--transperent', 
-              grey: 'button--grey'
-        } 
-
+enum buttonColors {
+  yellowGrey = 'button--yellow-grey',
+  black = 'button--black',
+  white = 'button--white',
+  transperent = 'button--transperent',
+  grey = 'button--grey',
+}
 </script>
 
 <style scoped lang="scss">
