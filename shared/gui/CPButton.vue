@@ -2,16 +2,16 @@
   <div class="button__wrapper">
     <button
       :disabled="disabled"
-      :type="props.type"
+      :type="type"
       :class="[
         'button',
-        buttonColors[props.color],
-        buttonShapes[props.shape],
-        buttonSizes[props.size],
+        buttonColors[color],
+        buttonShapes[shape],
+        buttonSizes[size],
       ]"
       @click="(event) => handleClick(event)"
     >
-      <i :class="['left-icon', 'icon', `icon-${props.leftIcon}`]" />
+      <i :class="['left-icon', 'icon', `icon-${leftIcon}`]" />
       Sales
     </button>
   </div>
@@ -31,16 +31,16 @@ type Emits = {
   (event: 'click', eventData: MouseEvent): void;
 };
 
+const props = withDefaults(defineProps<Props>(), {
+  type: 'button',
+  disabled: false,
+});
+
 const emit = defineEmits<Emits>();
 
 const handleClick = (clickEvent: MouseEvent) => {
   emit('click', clickEvent);
 };
-
-const props = withDefaults(defineProps<Props>(), {
-  type: 'button',
-  disabled: false,
-});
 
 enum buttonShapes {
   circle = 'button--circle',
