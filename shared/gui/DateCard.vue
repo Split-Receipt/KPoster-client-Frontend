@@ -34,25 +34,25 @@ interface Date {
 
 withDefaults(defineProps<Props>(), {
   date: () => ({
-    day: "1",
-    day_week: "vi",
+    day: '1',
+    day_week: 'vi',
   }),
-  size: () => "small",
+  size: () => 'small',
   active: false,
   disabled: false,
 });
 
-defineEmits(["dateClick"]);
+defineEmits(['dateClick']);
 
 enum cardSize {
-  mini = "date-card--mini",
-  small = "date-card--small",
-  medium = "date-card--medium",
-  large = "date-card--large",
+  mini = 'date-card--mini',
+  small = 'date-card--small',
+  medium = 'date-card--medium',
+  large = 'date-card--large',
 }
 
 enum cardSizeDay {
-  medium = "date-card__day--medium",
+  medium = 'date-card__day--medium',
 }
 
 type cardSizeType = keyof typeof cardSize;
