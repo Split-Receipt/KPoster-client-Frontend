@@ -146,6 +146,6 @@ export default withNuxt([
     },
   },
   {
-    ignores: ['eslint.config.mjs', 'nuxt.config.ts'],
+    ignores: ['eslint.config.mjs', 'nuxt.config.ts', 'svgFontGenerator.js'],
   },
 ]);
