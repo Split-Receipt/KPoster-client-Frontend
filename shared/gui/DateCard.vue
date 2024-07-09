@@ -42,7 +42,11 @@ withDefaults(defineProps<Props>(), {
   disabled: false,
 });
 
-defineEmits(['dateClick']);
+defineEmits<Events>();
+
+type Events = {
+  (event: 'dateClick', eventData: Date): void;
+};
 
 enum cardSize {
   mini = 'date-card--mini',
