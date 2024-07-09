@@ -4,7 +4,4 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-const pulka = 'pulda';
-console.warn(pulka);
-</script>
+<script lang="ts" setup></script>
