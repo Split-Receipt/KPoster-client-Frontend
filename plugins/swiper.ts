@@ -1,3 +1,8 @@
 import { register } from 'swiper/element/bundle';
 
-register();
+export default defineNuxtPlugin(nuxtApp => {
+    register();
+  })
+
+
+

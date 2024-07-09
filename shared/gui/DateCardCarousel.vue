@@ -1,6 +1,6 @@
 <template>
   <div class="date-card-carousel">
-    <swiper-container :init="false">
+    <swiper-container ref="swiperContainer" :init="false">
       <swiper-slide
         v-for="(card, index) in [
           dateData,
@@ -25,15 +25,16 @@
 </template>
 
 <script setup lang="ts">
-import DateCard from '../gui/DateCard.vue';
-import { register } from 'swiper/element/bundle';
-import { ref, onMounted } from 'vue';
+import DateCard from "../gui/DateCard.vue";
+// import { register } from 'swiper/element/bundle';
+import { ref, onMounted } from "vue";
 
-register();
+const swiperContainer = ref(null);
+// register();
 
 const dateData = {
-  day: '25',
-  day_week: 'su',
+  day: "25",
+  day_week: "su",
 };
 
 const testHandler = (data: object) => {
@@ -44,7 +45,11 @@ const activeItem: null | number = ref(null);
 
 const swiperEl = ref();
 onMounted(() => {
-  swiperEl.value = document.querySelector("swiper-container");
+  console.warn(swiperContainer.value);
+  swiperEl.value = swiperContainer.value;
+  Object.assign(swiperEl, swiperParams);
+  console.warn(swiperEl.value);
+  swiperEl.value.initialize();
 });
 
 const swiperParams = {
@@ -63,8 +68,6 @@ const swiperParams = {
     },
   },
 };
-// Object.assign(swiperEl, swiperParams);
-// swiperEl.value.initialize();
 </script>
 
 <style scoped lang="css">
