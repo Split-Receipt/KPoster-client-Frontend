@@ -13,7 +13,7 @@
     >
       <i
         v-if="leftIcon"
-        :class="['left-icon', 'icon', `icon-${leftIcon}`, 'button__icon']"
+        :class="['icon', `icon-${leftIcon}`, 'button__icon']"
       />
       <span v-if="!leftIcon">
         {{ text }}
