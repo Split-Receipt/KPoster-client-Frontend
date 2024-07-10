@@ -20,24 +20,24 @@
 </template>
 
 <script setup lang="ts">
-interface Props {
+type Props = {
   date: Date;
   size?: cardSizeType | cardSizeDayType;
   active?: boolean;
   disabled?: boolean;
-}
+};
 
-interface Date {
+type Date = {
   day: string;
   day_week: string;
-}
+};
 
 withDefaults(defineProps<Props>(), {
   date: () => ({
     day: '1',
     day_week: 'vi',
   }),
-  size: () => 'small',
+  size: 'small',
   active: false,
   disabled: false,
 });

@@ -25,10 +25,10 @@
 </template>
 
 <script setup lang="ts">
-interface Props {
+type Props = {
   header: string;
   list?: Array<List>;
-}
+};
 
 type List = {
   id: number | string;
@@ -37,7 +37,7 @@ type List = {
 };
 
 withDefaults(defineProps<Props>(), {
-  header: () => 'Header',
+  header: 'Header',
   list: () => [
     {
       id: '1',
