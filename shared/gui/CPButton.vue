@@ -11,8 +11,13 @@
       ]"
       @click="(event) => handleClick(event)"
     >
-      <i :class="['left-icon', 'icon', `icon-${leftIcon}`]" />
-      Sales
+      <i
+        v-if="leftIcon"
+        :class="['left-icon', 'icon', `icon-${leftIcon}`, 'button__icon']"
+      />
+      <span v-if="!leftIcon">
+        {{ text }}
+      </span>
     </button>
   </div>
 </template>
@@ -25,15 +30,17 @@ type Props = {
   size: keyof typeof buttonSizes;
   color: keyof typeof buttonColors;
   leftIcon: string;
+  text: string;
 };
 
 type Emits = {
   (event: 'click', eventData: MouseEvent): void;
 };
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   type: 'button',
   disabled: false,
+  text: 'button',
 });
 
 const emit = defineEmits<Emits>();
@@ -59,8 +66,7 @@ enum buttonColors {
   yellowGrey = 'button--yellow-grey',
   black = 'button--black',
   white = 'button--white',
-  transperent = 'button--transperent',
-  grey = 'button--grey',
+  transparent = 'button--transparent',
 }
 </script>
 
@@ -69,7 +75,7 @@ enum buttonColors {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0;
+  padding: $button-default-padding;
   border: none;
   background-color: transparent;
 
@@ -79,79 +85,74 @@ enum buttonColors {
   }
 
   &--circle {
-    border-radius: 99px;
-    padding: 20px 7px;
+    border-radius: $button-circle-border-radius;
+    padding: 0;
+    height: $button-circle-height;
+    width: $button-circle-width;
+
+    .button__icon {
+      font-size: $button-icon-circle-font-size;
+    }
   }
 
   &--square {
-    padding: 5px 12px;
-    border-radius: 15px;
+    border-radius: $button-square-border-radius;
+    height: $button-square-height;
+    width: $button-square-width;
+    padding: 0;
+
+    .button__icon {
+      font-size: $button-icon-square-font-size;
+    }
   }
 
   &--oval {
-    border-radius: 99px;
-    padding: 10px 60px;
+    border-radius: $button-oval-border-radius;
+    padding: $button-oval-padding;
   }
 
   &--small {
-    height: 50px;
-    &--xs {
-      line-height: 21px;
-    }
-    &--xl {
-      line-height: 31px;
-    }
+    height: $button-size-small;
+    line-height: $button-line-height-small;
+    font-size: $button-fon-size-small;
+    padding: $button-small-padding;
   }
 
   &--middle {
-    height: 60px;
-    &--xxs {
-      line-height: 17px;
-    }
-    &--xs {
-      line-height: 21px;
-    }
-    &--s {
-      line-height: 22px;
-    }
+    height: $button-size-middle;
+    line-height: $button-line-height-middle;
+    font-size: $button-fon-size-middle;
+    padding: $button-middle-padding;
   }
 
   &--big {
-    height: 65;
-    &--m {
-      line-height: 25px;
-    }
+    height: $button-size-big;
+    line-height: $button-line-height-big;
+    font-size: $button-fon-size-big;
   }
 
   &--huge {
-    height: 70px;
-    &--l {
-      line-height: 28px;
-    }
-    &--xl {
-      line-height: 31px;
-    }
+    height: $button-size-huge;
+    line-height: $button-line-height-huge;
+    font-size: $button-fon-size-huge;
   }
 
   &--white {
-    background: #f6f6f6;
+    background: $button-white-background-color;
   }
 
   &--black {
-    background: #353333;
-    color: #f6f6f6;
-  }
-
-  &--grey {
-    background: #e7e7e7;
+    background: $button-black-background-color;
+    color: $button-white-background-color;
   }
 
   &--yellow-grey {
-    background: linear-gradient(82.62deg, #ffd600 0.76%, #aaaaaa 92.06%);
+    background: $button-gradient-background-color;
   }
 
-  &--transperent {
+  &--transparent {
     background: transparent;
+    border: 1px solid $button-border-dusty-gray;
   }
 }
 </style>
