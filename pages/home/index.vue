@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <p>Main page <i class="icon icon-arrow-down"  /></p> -->
+    <!-- <p>Main page <i class="icon icon-arrow-down main-page__icon"  /></p> -->
     <p>Main page</p>
     <!-- <date-card-carousel :date-data="dateData" /> -->
     <!-- <carousel :date-data="dateData" /> -->

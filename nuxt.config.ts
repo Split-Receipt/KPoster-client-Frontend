@@ -23,7 +23,18 @@ export default defineNuxtConfig({
     //     },
     //   },
     // },
+      
   },
+  alias: {
+    "@pages": "/pages",
+    "@shared": "/shared",
+    "@enteties": "/enteties",
+    "@features": "/features",
+    "@styles": "/app/styles",
+    "@app": "/app",
+    "@widgets": "/widgets"
+  },
+    
 
   components: [
     {
@@ -58,6 +69,7 @@ export default defineNuxtConfig({
     },
   ],
 
+
   imports: {
     dirs: [
       "app/**/*.{ts, vue}",
@@ -68,6 +80,4 @@ export default defineNuxtConfig({
       "shared/**/*.{ts, vue}",
     ],
   },
-
-  compatibilityDate: "2024-07-10",
 });
