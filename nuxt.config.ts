@@ -16,6 +16,15 @@ export default defineNuxtConfig({
       },
     },
   },
+  alias: {
+    "@pages": "./pages",
+    "@shared": "./shared",
+    "@enteties": "./enteties",
+    "@features": "./features",
+    "@styles": "./app/styles",
+    "@app": "./app",
+    "@widgets": "./widgets"
+  },
   components: [
     {
       path: "app",
