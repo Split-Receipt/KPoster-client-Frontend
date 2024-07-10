@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxt/eslint"],
   css: ["/app/styles/scss/styles.scss"],
+
   vite: {
     css: {
       preprocessorOptions: {
@@ -15,16 +16,18 @@ export default defineNuxtConfig({
         },
       },
     },
+      
   },
   alias: {
-    "@pages": "./pages",
-    "@shared": "./shared",
-    "@enteties": "./enteties",
-    "@features": "./features",
-    "@styles": "./app/styles",
-    "@app": "./app",
-    "@widgets": "./widgets"
+    "@pages": "/pages",
+    "@shared": "/shared",
+    "@enteties": "/enteties",
+    "@features": "/features",
+    "@styles": "/app/styles",
+    "@app": "/app",
+    "@widgets": "/widgets"
   },
+    
   components: [
     {
       path: "app",
@@ -57,6 +60,7 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
+
   imports: {
     dirs: [
       "app/**/*.{ts, vue}",
@@ -67,4 +71,6 @@ export default defineNuxtConfig({
       "shared/**/*.{ts, vue}",
     ],
   },
+
+  compatibilityDate: "2024-07-10",
 });
