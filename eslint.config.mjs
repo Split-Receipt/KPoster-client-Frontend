@@ -193,6 +193,6 @@ export default withNuxt([
     },
   },
   {
-    ignores: ['eslint.config.mjs', 'nuxt.config.ts', 'svgFontGenerator.js'],
+    ignores: ['eslint.config.mjs', 'nuxt.config.ts', 'svgFontGenerator.js', 'tsconfig.json'],
   },
 ]);
