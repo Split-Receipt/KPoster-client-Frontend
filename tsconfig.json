@@ -11,14 +11,4 @@
       "@widgets": ["./widgets/*"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "*.json"
-  ],
-  "include": [
-    "./**/*.ts",
-    "./**/*.vue",
-    "./**/**/*.ts",
-    "./**/**/*.vue"
-  ]
 }
