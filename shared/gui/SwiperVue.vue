@@ -1,7 +1,7 @@
 <template>
   <div class="date-card-carousel__wrapper">
     <div class="date-card-carousel">
-        <button class="swiper-button-prev date-card-carousel__button" />
+      <button class="swiper-button-prev date-card-carousel__button" />
       <swiper
         ref="test"
         :modules="[
@@ -11,25 +11,8 @@
           SwiperEffectCreative,
         ]"
         :mousewheel="true"
-        :slides-per-view="'auto'"
-        :breakpoints="{
-          0: {
-            slidesPerView: 5,
-            spaceBetween: 25,
-          },
-          360: {
-            slidesPerView: 5.5,
-            spaceBetween: 25,
-          },
-          425: {
-            slidesPerView: 7,
-            spaceBetween: 25,
-          },
-          767: {
-            slidesPerView: 11,
-            spaceBetween: 25,
-          },
-        }"
+        slides-per-view="auto"
+        space-between="25"
         :navigation="{
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
@@ -40,7 +23,7 @@
             :date="card"
             :active="!!(index === activeItem)"
             @click="activeItem = index"
-            @dateClick="testHandler"
+            @date-click="testHandler"
           />
         </swiper-slide>
       </swiper>
@@ -80,9 +63,9 @@ const testHandler = (data: object) => {
 const activeItem: null | number = ref(null);
 
 const test = ref(null);
-onMounted(()=> {
-    console.log(JSON.stringify(test.value))
-})
+onMounted(() => {
+  console.log(test.value);
+});
 </script>
 
 <style scoped lang="scss">
@@ -93,13 +76,12 @@ onMounted(()=> {
   gap: 25px;
   background-color: rgb(135, 202, 222);
   width: 100%;
-//   left: 50px;
+  //   left: 50px;
 
   &__wrapper {
     // display: flex;
     // justify-content: center;
-  background-color: burlywood;
-
+    background-color: burlywood;
   }
 
   &__button {
@@ -122,5 +104,9 @@ onMounted(()=> {
 .swiper-button-prev,
 .swiper-rtl .swiper-button-prev {
   left: -35px;
+}
+
+.swiper-slide {
+  width: auto;
 }
 </style>
