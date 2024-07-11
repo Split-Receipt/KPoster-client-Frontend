@@ -1,85 +1,68 @@
 <template>
-  <div class="date-card-carousel">
-    <!-- <swiper-container ref="swiperContainer" :init="false"> -->
-    <!-- <swiper-container
-      :slides-per-view="10"
-      :space-between="10"
-      :pagination="{
-        clickable: true,
-      }"
-      :breakpoints="{
-        '640': {
-          slidesPerView: 2,
-          spaceBetween: 20,
-        },
-        '768': {
-          slidesPerView: 4,
-          spaceBetween: 40,
-        },
-        '1024': {
-          slidesPerView: 5,
-          spaceBetween: 50,
-        },
-      }"
-    >
-      <swiper-slide v-for="(card, index) in dateData" :key="index">
-        <date-card
-          :date="card"
-          :active="!!(index === activeItem)"
-          @click="activeItem = index"
-          @dateClick="testHandler"
-        />
-      </swiper-slide>
-    </swiper-container> -->
+  <div class="date-card-carousel__wrapper">
+    <div class="date-card-carousel">
+      <c-p-button
+        shape="circle"
+        color="transparent"
+        left-icon="arrow-left"
+        class="swiper-button-prev date-card-carousel__button"
+      />
 
-    <!-- <Swiper
-      :modules="[SwiperAutoplay, SwiperEffectCreative]"
-      :slides-per-view="1"
-      :loop="true"
-      effect="creative"
-      :autoplay="{
-        delay: 8000,
-        disableOnInteraction: true,
-      }"
-      :creative-effect="{
-        prev: {
-          shadow: false,
-          translate: ['-20%', 0, -1],
-        },
-        next: {
-          translate: ['100%', 0, 0],
-        },
-      }"
-    >
-      <SwiperSlide v-for="slide in 10" :key="slide">
-        <strong>{{ slide }}</strong>
-      </SwiperSlide> -->
-    <!-- </Swiper> -->
+      <swiper
+        :modules="[SwiperNavigation, SwiperMousewheel, SwiperEffectCreative]"
+        :mousewheel="true"
+        slides-per-view="auto"
+        space-between="15"
+        :breakpoints="{
+          0: {
+            navigation: {
+              enabled: false,
+            },
+          },
+          1280: {
+            navigation: {
+              enabled: true,
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+          },
+        }"
+      >
+        <swiper-slide
+          v-for="(card, index) in dateData"
+          :key="index"
+          class="date-card-carousel__item"
+        >
+          <div v-if="card.day == '1'" class="date-card-carousel__month">
+            August
+          </div>
+          <div>
+            <date-card
+              class="date-card-carousel__day"
+              :date="card"
+              :size="sizeCard"
+              :active="!!(index === activeItem)"
+              @click="activeItem = index"
+              @date-click="$emit('activeItemHandler', card)"
+            />
+          </div>
+        </swiper-slide>
+      </swiper>
 
-    <!-- <swiper
-      :loop="true"
-      :modules="modules"
-      :navigation="true"
-      :slides-per-view="1"
-      :space-between="150"
-      @slideChange="onSlideChange"
-      @swiper="onSwiper"
-      :pagination="true"
-      :draggable="true"
-    >
-      <swiper-slide v-for="slide in data" :key="slide.id">
-        <div class="swiper-item">
-          <img loading="lazy" :alt="slide.name" :src="slide.image" />
-        </div>
-      </swiper-slide>
-    </swiper> -->
+      <c-p-button
+        shape="circle"
+        color="black"
+        left-icon="arrow-right"
+        class="swiper-button-next date-card-carousel__button"
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import DateCard from '../gui/DateCard.vue';
+import type { Ref } from 'vue';
 import { ref, onMounted } from 'vue';
-// import { register } from 'swiper/element/bundle';
+
 withDefaults(defineProps<Props>(), {
   dateData: () => [
     {
@@ -89,10 +72,10 @@ withDefaults(defineProps<Props>(), {
   ],
 });
 
-// register();
+defineEmits<Events>();
 
 interface Props {
-  dateData: Array<Date>;
+  dateData?: Array<Date>;
 }
 
 interface Date {
@@ -100,43 +83,102 @@ interface Date {
   day_week: string;
 }
 
-const swiperContainer = ref(null);
-
-const testHandler = (data: object) => {
-  // console.log(data);
+type Events = {
+  (event: 'activeItemHandler', eventData: Date): void;
 };
 
-const activeItem: null | number = ref(null);
+const activeItem: Ref<number | null> = ref(null);
 
-// const swiperEl = ref();
+const sizeCard: Ref<string> = ref('');
 
-// const swiperParams = reactive({
-//   slidesPerView: 5,
-//   breakpoints: {
-//     767: {
-//       slidesPerView: 11,
-//     },
-//     // 1024: {
-//     //   slidesPerView: 3,
-//     // },
-//     on: {
-//       init() {
-//         // ...
-//       },
-//     },
-//   },
-// });
+onMounted(() => {
+  window.addEventListener('resize', resizeHandler);
 
-// onMounted(() => {
-//   swiperEl.value = swiperContainer.value;
-//   Object.assign(swiperEl, swiperParams);
-//   // swiperEl.value.initialize();
-// });
+  resizeHandler();
+});
+
+const resizeHandler = () => {
+  const width = document.body.clientWidth;
+
+  if (width > 767 && width < 1279) {
+    sizeCard.value = 'medium';
+  } else {
+    sizeCard.value = 'small';
+  }
+};
 </script>
 
-<style scoped lang="css">
+<style scoped lang="scss">
 .date-card-carousel {
-  /* width: 70%; */
-  background-color: burlywood;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  height: 100%;
+
+  &__wrapper {
+    height: $date-card-carousel-wrapper-height;
+  }
+
+  &__button {
+    position: static;
+    display: none;
+    width: auto;
+    margin: 0;
+    border: none;
+    background: none;
+
+    @media #{$screen-desktop} {
+      display: block;
+      margin: $date-card-carousel-button-margin;
+    }
+  }
+
+  &__item {
+    position: relative;
+  }
+
+  &__month {
+    position: absolute;
+    bottom: $date-card-carousel-month-bottom;
+    font-size: $date-card-carousel-month-font-size;
+    line-height: $date-card-carousel-month-line-height;
+    border-bottom: 1px solid $date-card-carousel-month-border-color;
+    color: $date-card-carousel-month-color;
+  }
+}
+
+.swiper {
+  height: 100%;
+}
+
+.swiper-button-next {
+  &::after {
+    content: '';
+  }
+
+  .swiper-rtl .swiper-button-next {
+    right: $date-card-carousel-button-next-right;
+  }
+}
+
+.swiper-button-prev {
+  &::after {
+    content: '';
+  }
+
+  .swiper-rtl .swiper-button-prev {
+    left: $date-card-carousel-button-prev-left;
+  }
+}
+
+.swiper-slide {
+  width: auto;
+  padding: $date-card-carousel-swiper-slide-padding-mobile;
+
+  @media #{$screen-tablet} {
+    padding: $date-card-carousel-swiper-slide-padding-tablet;
+  }
 }
 </style>

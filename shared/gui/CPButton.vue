@@ -27,10 +27,10 @@ type Props = {
   type?: HTMLButtonElement['type'];
   shape: keyof typeof buttonShapes;
   disabled?: boolean;
-  size: keyof typeof buttonSizes;
+  size?: keyof typeof buttonSizes;
   color: keyof typeof buttonColors;
   leftIcon: string;
-  text: string;
+  text?: string;
 };
 
 type Emits = {
@@ -78,6 +78,7 @@ enum buttonColors {
   padding: $button-default-padding;
   border: none;
   background-color: transparent;
+  cursor: pointer;
 
   &:disabled {
     opacity: 0.5;

@@ -22,7 +22,7 @@
 <script setup lang="ts">
 interface Props {
   date: Date;
-  size?: cardSizeType | cardSizeDayType;
+  size?: cardSizeType | cardSizeDayType | string;
   active?: boolean;
   disabled?: boolean;
 }

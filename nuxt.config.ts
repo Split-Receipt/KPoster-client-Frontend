@@ -1,9 +1,10 @@
+import { defineNuxtConfig } from "nuxt/config";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxt/eslint", "vue3-carousel-nuxt", 'nuxt-swiper'],
+  modules: ["@nuxt/eslint", "nuxt-swiper"],
   css: ["/app/styles/scss/styles.scss"],
-
   vite: {
     css: {
       preprocessorOptions: {
@@ -16,15 +17,8 @@ export default defineNuxtConfig({
         },
       },
     },
-    // vue: {
-    //   template: {
-    //     compilerOptions: {
-    //       isCustomElement: (tag) => tag.startsWith("swiper-"),
-    //     },
-    //   },
-    // },
-      
   },
+
   alias: {
     "@pages": "/pages",
     "@shared": "/shared",
@@ -34,7 +28,6 @@ export default defineNuxtConfig({
     "@app": "/app",
     "@widgets": "/widgets"
   },
-    
 
   components: [
     {
@@ -69,7 +62,6 @@ export default defineNuxtConfig({
     },
   ],
 
-
   imports: {
     dirs: [
       "app/**/*.{ts, vue}",
@@ -80,4 +72,6 @@ export default defineNuxtConfig({
       "shared/**/*.{ts, vue}",
     ],
   },
+
+  compatibilityDate: "2024-07-10",
 });
