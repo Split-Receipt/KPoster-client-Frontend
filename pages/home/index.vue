@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <p>Main page <i class="icon icon-arrow-down main-page__icon" /></p>
-  </div>
+  <CPFooter />
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Footer from '../../shared/gui/CPFooter.vue';
+</script>
