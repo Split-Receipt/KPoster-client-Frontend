@@ -5,9 +5,3 @@
 </template>
 
 <script setup lang="ts"></script>
-
-<style lang="scss">
-.main-page__icon {
-  font-size: 32px;
-}
-</style>
