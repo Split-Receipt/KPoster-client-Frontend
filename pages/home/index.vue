@@ -1,7 +1,7 @@
 <template>
-  <CPFooter />
+  <c-p-footer />
 </template>
 
 <script setup lang="ts">
-import Footer from '../../shared/gui/CPFooter.vue';
+import { CPFooter } from '@widgets/page-footer';
 </script>
