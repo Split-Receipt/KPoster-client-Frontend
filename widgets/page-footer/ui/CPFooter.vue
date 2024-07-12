@@ -25,40 +25,40 @@ import { footerLists } from '../model';
 <style scoped lang="scss">
 .footer {
   display: flex;
-  background: #222121;
+  background: $footer-default-background-color;
   flex-direction: column;
-  row-gap: 40px;
-  padding: 60px 15px 60px 10px;
+  row-gap: $footer-default-row-gap;
+  padding: $footer-default-padding;
 
   @media #{$screen-tablet} {
     flex-wrap: wrap;
     flex-direction: row;
-    column-gap: 78px;
-    row-gap: 30px;
-    padding: 60px 74px 60px 10px;
+    column-gap: $footer-media-tablet-column-gap;
+    row-gap: $footer-media-tablet-row-gap;
+    padding: $footer-media-tablet-padding;
   }
 
   @media #{$screen-desktop} {
-    column-gap: 10px;
-    padding: 60px 20px 85px;
+    column-gap: $footer-media-desktop-column-gap;
+    padding: $footer-media-desktop-padding;
     justify-content: space-around;
   }
 
   &__list {
     @media #{$screen-tablet} {
-      height: 149px;
-      width: 300px;
+      height: $footer-media-tablet-height;
+      width: $footer-media-tablet-width;
     }
 
     @media #{$screen-desktop} {
-      min-height: 176px;
-      width: 307px;
+      min-height: $footer-media-desktop-min-height;
+      width: $footer-media-desktop-width;
     }
 
     @media #{$screen-big-desktop} {
-      width: 307px;
+      width: $footer-big-desktop-width;
       &:nth-child(3) {
-        width: 505px;
+        width: $footer-big-desktop-width-child;
       }
     }
   }
