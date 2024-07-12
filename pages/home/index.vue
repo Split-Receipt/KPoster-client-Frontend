@@ -1,7 +1,7 @@
 <template>
-  <c-p-footer />
+  <div>
+    <p>Main page <i class="icon icon-arrow-down main-page__icon" /></p>
+  </div>
 </template>
 
-<script setup lang="ts">
-import { CPFooter } from '@widgets/page-footer';
-</script>
+<script setup lang="ts"></script>
