@@ -29,7 +29,7 @@ type Props = {
   disabled?: boolean;
   size: keyof typeof buttonSizes;
   color: keyof typeof buttonColors;
-  leftIcon: string;
+  leftIcon?: string;
   text: string;
 };
 
@@ -41,6 +41,7 @@ withDefaults(defineProps<Props>(), {
   type: 'button',
   disabled: false,
   text: 'button',
+  leftIcon: '',
 });
 
 const emit = defineEmits<Emits>();
