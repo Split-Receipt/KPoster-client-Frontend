@@ -1,6 +1,6 @@
 <template>
   <div class="date-card-carousel__wrapper">
-    <div class="date-card-carousel">
+    <div v-if="dateLoaded" class="date-card-carousel">
       <c-p-button
         shape="circle"
         color="transparent"
@@ -9,17 +9,22 @@
       />
 
       <swiper
-        :modules="[SwiperNavigation, SwiperMousewheel, SwiperEffectCreative]"
+        :modules="[SwiperNavigation, SwiperMousewheel]"
         :mousewheel="true"
         slides-per-view="auto"
         space-between="15"
         :breakpoints="{
           0: {
+            slidesPerGroup: 3,
             navigation: {
               enabled: false,
             },
           },
+          768: {
+            slidesPerGroup: 5,
+          },
           1280: {
+            slidesPerGroup: 7,
             navigation: {
               enabled: true,
               nextEl: '.swiper-button-next',
@@ -29,21 +34,21 @@
         }"
       >
         <swiper-slide
-          v-for="(card, index) in dateData"
+          v-for="(card, index) in allDaysOfInterval"
           :key="index"
           class="date-card-carousel__item"
         >
           <div v-if="card.day == '1'" class="date-card-carousel__month">
-            August
+            {{ card.mounth }}
           </div>
           <div>
             <date-card
               class="date-card-carousel__day"
               :date="card"
-              :size="sizeCard"
+              :disabled="card.disabled"
               :active="!!(index === activeItem)"
+              @date-click="$emit('activeItemHandler', card.dateString)"
               @click="activeItem = index"
-              @date-click="$emit('activeItemHandler', card)"
             />
           </div>
         </swiper-slide>
@@ -62,26 +67,39 @@
 <script setup lang="ts">
 import type { Ref } from 'vue';
 import { ref, onMounted } from 'vue';
+import {
+  eachDayOfInterval,
+  format,
+  setDefaultOptions,
+  startOfDay,
+} from 'date-fns';
+import { es } from 'date-fns/locale';
 
-withDefaults(defineProps<Props>(), {
-  dateData: () => [
-    {
-      day: '1',
-      day_week: 'vi',
-    },
-  ],
+const props = withDefaults(defineProps<Props>(), {
+  dateInterval: () => ({
+    dateStart: new Date(2024, 6, 1),
+    dateEnd: new Date(2024, 11, 31),
+  }),
 });
 
 defineEmits<Events>();
 
 interface Props {
-  dateData?: Array<Date>;
+  dateInterval: DateInterval;
 }
 
-interface Date {
-  day: string;
-  day_week: string;
+interface DateInterval {
+  dateStart: Date;
+  dateEnd: Date;
 }
+
+type AllDaysOfInterval = {
+  dateString: Date;
+  day: string;
+  weekDay: string;
+  mounth: string;
+  disabled: boolean;
+};
 
 type Events = {
   (event: 'activeItemHandler', eventData: Date): void;
@@ -89,23 +107,35 @@ type Events = {
 
 const activeItem: Ref<number | null> = ref(null);
 
-const sizeCard: Ref<string> = ref('');
+const dateLoaded = ref(false);
+const allDaysOfInterval: Ref<Array<AllDaysOfInterval>> = ref([]);
+const dateNow = new Date();
 
-onMounted(() => {
-  window.addEventListener('resize', resizeHandler);
+setDefaultOptions({ locale: es });
 
-  resizeHandler();
-});
+const createAllDaysOfInterval = () => {
+  eachDayOfInterval({
+    start: props.dateInterval.dateStart,
+    end: props.dateInterval.dateEnd,
+  }).forEach((date) => {
+    return allDaysOfInterval.value.push({
+      dateString: date,
+      day: format(date, 'd'),
+      weekDay: format(date, 'EEEEEE').toLowerCase(),
+      mounth: format(date, 'MMMM'),
+      disabled:
+        startOfDay(date).getTime() < startOfDay(dateNow).getTime()
+          ? true
+          : false,
+    });
+  });
 
-const resizeHandler = () => {
-  const width = document.body.clientWidth;
-
-  if (width > 767 && width < 1279) {
-    sizeCard.value = 'medium';
-  } else {
-    sizeCard.value = 'small';
-  }
+  dateLoaded.value = true;
 };
+
+onMounted(async () => {
+  createAllDaysOfInterval();
+});
 </script>
 
 <style scoped lang="scss">

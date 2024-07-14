@@ -2,9 +2,13 @@
   <div class="date-card__wrapper">
     <button
       type="button"
-      :class="[cardSize[size], { 'date-card--active': active }, 'date-card']"
+      :class="[
+        cardSize[size as cardSizeType],
+        { 'date-card--active': active },
+        'date-card',
+      ]"
       :disabled="disabled"
-      @click="$emit('dateClick', date)"
+      @click="$emit('dateClick', date.dateString)"
     >
       <span
         v-if="size !== 'mini'"
@@ -13,7 +17,7 @@
         {{ date.day }}
       </span>
       <span class="date-card__day-week">
-        {{ date.day_week }}
+        {{ date.weekDay }}
       </span>
     </button>
   </div>
@@ -21,21 +25,22 @@
 
 <script setup lang="ts">
 interface Props {
-  date: Date;
+  date: DateData;
   size?: cardSizeType | cardSizeDayType | string;
   active?: boolean;
   disabled?: boolean;
 }
 
-interface Date {
+interface DateData {
+  dateString: Date;
   day: string;
-  day_week: string;
+  weekDay: string;
 }
 
 withDefaults(defineProps<Props>(), {
-  date: () => ({
+  dateString: () => ({
     day: '1',
-    day_week: 'vi',
+    weekDay: 'vi',
   }),
   size: () => 'small',
   active: false,
