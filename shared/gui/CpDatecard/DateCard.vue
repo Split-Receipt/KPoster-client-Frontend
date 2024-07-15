@@ -24,6 +24,7 @@
 </template>
 
 <script setup lang="ts">
+import { cardSize, cardSizeDay } from './types';
 interface Props {
   date: DateData;
   size?: cardSizeType | cardSizeDayType | string;
@@ -52,17 +53,6 @@ defineEmits<Events>();
 type Events = {
   (event: 'dateClick', eventData: Date): void;
 };
-
-enum cardSize {
-  mini = 'date-card--mini',
-  small = 'date-card--small',
-  medium = 'date-card--medium',
-  large = 'date-card--large',
-}
-
-enum cardSizeDay {
-  medium = 'date-card__day--medium',
-}
 
 type cardSizeType = keyof typeof cardSize;
 type cardSizeDayType = keyof typeof cardSizeDay;
