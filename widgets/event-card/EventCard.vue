@@ -2,7 +2,7 @@
   <div class="event-card__wrapper">
     <div class="event-card" :class="[eventCardSize[size]]">
       <div class="event-card__img" :class="[eventCardImageSize[size]]">
-        <img class="event-card__img-pic" :src="eventCardData.image" />
+        <img class="event-card__img-pic" :src="photoUrl" />
       </div>
       <h4 class="event-card__title">
         {{ eventCardData.title }}
@@ -21,7 +21,7 @@
         <button
           class="event-card__button event-card__button--yellow-grey"
           :class="[eventCardButtonSize[size]]"
-          @click="$emit('buyTicketClick')"
+          @click="buyTicketHandler"
         >
           Buy ticket
         </button>
@@ -29,7 +29,7 @@
         <button
           class="event-card__button event-card__button--transparent"
           :class="[eventCardButtonSize[size]]"
-          @click="$emit('learnMoreClick')"
+          @click="learnMoreHandler"
         >
           Learn more
         </button>
@@ -56,7 +56,7 @@ type CardData = {
   dateEvent: string | number;
 };
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   size: 'small',
   eventCardData: () => ({
     image: '',
@@ -66,11 +66,15 @@ withDefaults(defineProps<Props>(), {
   }),
 });
 
-defineEmits<Events>();
+const photoUrl = `/images/${props.eventCardData.image}`;
 
-type Events = {
-  (event: 'buyTicketClick' | 'learnMoreClick'): void;
-};
+function buyTicketHandler() {
+  // ...
+}
+
+function learnMoreHandler() {
+  // ...
+}
 
 enum eventCardSize {
   small = 'event-card--small',
@@ -121,65 +125,65 @@ type eventCardTextSizeType = keyof typeof eventCardTextSize;
 
   &--small {
     gap: 15px;
-    height: 565px;
+    height: $event-card-small-height-mobile;
     border-radius: 30px;
 
     @media #{$screen-tablet} {
       gap: 20px;
-      height: 674px;
+      height: $event-card-small-height-tablet;
     }
 
     @media #{$screen-desktop} {
-      height: 676px;
+      height: $event-card-small-height-desktop;
       border-radius: 40px;
     }
 
     @media #{$screen-big-desktop} {
-      height: 761px;
+      height: $event-card-small-height-big-desktop;
     }
   }
 
   &--medium {
     gap: 14px;
-    height: 605px;
+    height: $event-card-medium-height-mobile;
 
     @media #{$screen-tablet} {
       gap: 20px;
-      height: 698px;
+      height: $event-card-medium-height-tablet;
     }
 
     @media #{$screen-desktop} {
       border-radius: 40px;
-      height: 665px;
+      height: $event-card-medium-height-desktop;
     }
 
     @media #{$screen-big-desktop} {
       border-radius: 35px;
-      height: 805px;
+      height: $event-card-medium-height-big-desktop;
     }
   }
 
   &--large {
     gap: 20px;
-    height: 800px;
+    height: $event-card-large-height;
   }
 
   &__img {
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 300px;
+    height: $event-card-image-default-height;
 
     &--small {
-      height: 255px;
+      height: $event-card-image-small-height-mobile;
 
       @media #{$screen-desktop} {
-        height: 300px;
+        height: $event-card-image-default-height;
       }
     }
 
     &--large {
-      height: 460px;
+      height: $event-card-image-large-height-mobile;
     }
 
     &-pic {
@@ -195,7 +199,7 @@ type eventCardTextSizeType = keyof typeof eventCardTextSize;
     position: relative;
     top: 3px;
     display: -webkit-box;
-    height: 29px;
+    height: $event-card-title-default-height;
     -webkit-box-orient: vertical;
     overflow: hidden;
     line-clamp: 1;
@@ -208,51 +212,51 @@ type eventCardTextSizeType = keyof typeof eventCardTextSize;
 
     @media #{$screen-desktop} {
       top: 3px;
-      height: 48px;
+      height: $event-card-title-height-desktop;
     }
   }
 
   &__text {
     position: relative;
     top: 5px;
-    font-size: 13px;
-    line-height: 21px;
+    font-size: $event-card-text-default-font-size;
+    line-height: $event-card-text-default-line-height;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
     color: $event-card-text-color;
-    height: 42px;
-    max-width: 80%;
+    height: $event-card-text-default-height;
+    max-width: $event-card-text-default-max-width;
     line-clamp: 2;
     -webkit-line-clamp: 2;
 
     @media #{$screen-tablet} {
-      font-size: 16px;
-      line-height: 26px;
+      font-size: $event-card-text-font-size-tablet;
+      line-height: $event-card-text-line-height-tablet;
     }
 
     @media #{$screen-big-desktop} {
-      font-size: 22px;
-      line-height: 35px;
+      font-size: $event-card-text-font-size-big-desktop;
+      line-height: $event-card-text-line-height-big-desktop;
     }
 
     &--small {
       @media #{$screen-tablet} {
-        height: 78px;
+        height: $event-card-text-small-height-tablet;
         line-clamp: 3;
         -webkit-line-clamp: 3;
       }
 
       @media #{$screen-desktop} {
         top: -2px;
-        height: 98px;
+        height: $event-card-text-small-height-desktop;
         line-clamp: 4;
         -webkit-line-clamp: 4;
       }
 
       @media #{$screen-big-desktop} {
         top: 10px;
-        height: 175px;
+        height: $event-card-text-small-height-big-desktop;
         line-clamp: 5;
         -webkit-line-clamp: 5;
       }
@@ -260,35 +264,35 @@ type eventCardTextSizeType = keyof typeof eventCardTextSize;
 
     &--medium {
       @media #{$screen-tablet} {
-        height: 52px;
+        height: $event-card-text-medium-height-tablet;
         line-clamp: 2;
         -webkit-line-clamp: 2;
       }
 
       @media #{$screen-desktop} {
-        height: 104px;
+        height: $event-card-text-medium-height-desktop;
         line-clamp: 4;
         -webkit-line-clamp: 4;
       }
 
       @media #{$screen-big-desktop} {
-        height: 210px;
+        height: $event-card-text-medium-height-big-desktop;
         line-clamp: 6;
         -webkit-line-clamp: 6;
       }
     }
 
     &--large {
-      height: 60px;
+      height: $event-card-text-large-height-mobile;
 
       @media #{$screen-tablet} {
-        height: 78px;
+        height: $event-card-text-large-height-desktop;
         line-clamp: 3;
         -webkit-line-clamp: 3;
       }
 
       @media #{$screen-big-desktop} {
-        height: 60px;
+        height: $event-card-text-large-height-big-desktop;
         line-clamp: 2;
         -webkit-line-clamp: 2;
       }
@@ -298,22 +302,22 @@ type eventCardTextSizeType = keyof typeof eventCardTextSize;
   &__date {
     position: relative;
     top: 3px;
-    font-size: 15px;
-    line-height: 21px;
-    height: 21px;
+    font-size: $event-card-date-default-font-size;
+    line-height: $event-card-date-default-line-height;
+    height: $event-card-date-default-height;
 
     @media #{$screen-tablet} {
-      font-size: 22px;
-      line-height: 31px;
-      height: 31px;
+      font-size: $event-card-date-font-size-tablet;
+      line-height: $event-card-date-line-height-tablet;
+      height: $event-card-date-height-tablet;
     }
 
     &--small {
       @media #{$screen-desktop} {
         top: 4px;
-        font-size: 30px;
-        line-height: 42px;
-        height: 42px;
+        font-size: $event-card-date-small-font-size-desktop;
+        line-height: $event-card-date-small-line-height-desktop;
+        height: $event-card-date-small-height-desktop;
       }
 
       @media #{$screen-big-desktop} {
@@ -323,15 +327,15 @@ type eventCardTextSizeType = keyof typeof eventCardTextSize;
 
     &--medium {
       @media #{$screen-desktop} {
-        font-size: 20px;
-        line-height: 28px;
-        height: 28px;
+        font-size: $event-card-date-medium-font-size-desktop;
+        line-height: $event-card-date-medium-line-height-desktop;
+        height: $event-card-date-medium-height-desktop;
       }
 
       @media #{$screen-big-desktop} {
-        font-size: 30px;
-        line-height: 42px;
-        height: 42px;
+        font-size: $event-card-date-medium-font-size-big-desktop;
+        line-height: $event-card-date-medium-line-height-big-desktop;
+        height: $event-card-date-small-height-big-desktop;
       }
     }
   }
