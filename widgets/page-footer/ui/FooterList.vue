@@ -2,11 +2,15 @@
   <div class="footer-list__wrapper">
     <ul class="footer-list">
       <h5 class="footer-list__header">
-        {{ header }}
+        {{ list.header }}
       </h5>
 
       <div class="footer-list__inner">
-        <li v-for="item in list" :key="item.id" class="footer-list__item">
+        <li
+          v-for="item in list.listItems"
+          :key="item.id"
+          class="footer-list__item"
+        >
           <a
             v-if="!!item.href"
             :href="item.href"
@@ -26,8 +30,10 @@
 
 <script setup lang="ts">
 type Props = {
-  header: string;
-  list?: Array<List>;
+  list: {
+    header: string;
+    listItems: Array<List>;
+  };
 };
 
 type List = {
@@ -36,16 +42,7 @@ type List = {
   href?: string | boolean;
 };
 
-withDefaults(defineProps<Props>(), {
-  header: 'Header',
-  list: () => [
-    {
-      id: '1',
-      text: 'item',
-      href: false,
-    },
-  ],
-});
+defineProps<Props>();
 </script>
 
 <style scoped lang="scss">
