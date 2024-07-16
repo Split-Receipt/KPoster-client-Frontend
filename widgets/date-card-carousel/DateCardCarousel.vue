@@ -5,7 +5,7 @@
         shape="circle"
         color="transparent"
         left-icon="arrow-left"
-        class="swiper-button-prev date-card-carousel__button"
+        class="date-card-button-prev date-card-carousel__button"
       />
 
       <swiper
@@ -13,23 +13,20 @@
         :mousewheel="true"
         slides-per-view="auto"
         space-between="15"
+        :navigation="{
+          enabled: true,
+          nextEl: '.date-card-button-next',
+          prevEl: '.date-card-button-prev',
+        }"
         :breakpoints="{
           0: {
             slidesPerGroup: 3,
-            navigation: {
-              enabled: false,
-            },
           },
           768: {
             slidesPerGroup: 5,
           },
           1280: {
             slidesPerGroup: 7,
-            navigation: {
-              enabled: true,
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            },
           },
         }"
       >
@@ -58,7 +55,7 @@
         shape="circle"
         color="black"
         left-icon="arrow-right"
-        class="swiper-button-next date-card-carousel__button"
+        class="date-card-button-next date-card-carousel__button"
       />
     </div>
   </div>
@@ -181,22 +178,22 @@ onMounted(async () => {
   margin-left: 0;
 }
 
-.swiper-button-next {
+.date-card-button-next {
   &::after {
     content: '';
   }
 
-  .swiper-rtl .swiper-button-next {
+  .swiper-rtl .date-card-button-next {
     right: $date-card-carousel-button-next-right;
   }
 }
 
-.swiper-button-prev {
+.date-card-button-prev {
   &::after {
     content: '';
   }
 
-  .swiper-rtl .swiper-button-prev {
+  .swiper-rtl .date-card-button-prev {
     left: $date-card-carousel-button-prev-left;
   }
 }

@@ -27,9 +27,6 @@
         :breakpoints="{
           0: {
             slidesPerView: 1.5,
-            navigation: {
-              enabled: true,
-            },
             grid: {
               fill: 'row',
               rows: 1,
@@ -37,11 +34,6 @@
           },
           768: {
             slidesPerView: 2.5,
-            navigation: {
-              enabled: true,
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            },
             grid: {
               fill: 'row',
               rows: 1,

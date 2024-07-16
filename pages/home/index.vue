@@ -1,13 +1,15 @@
 <template>
   <div class="main-page">
     <div class="main-page__header">
-      <header>Header</header>
+      <c-p-header />
     </div>
 
     <main class="main-page__main">
-      <h1>Culture events of Peru</h1>
+      <h1 class="main-page__title">Culture events of Peru</h1>
 
-      <date-card-carousel />
+      <div class="main-page__date-carousel">
+        <date-card-carousel />
+      </div>
 
       <div class="main-page__section-list">
         <section class="main-page__section-item">
@@ -163,11 +165,42 @@ const eventData = [
   background-color: $main-page-background-color;
 
   &__main {
-    margin-top: 20px;
+    margin-top: 2px;
     padding-left: 10px;
+
+    @media #{$screen-tablet} {
+      margin-top: 10px;
+    }
 
     @media #{$screen-desktop} {
       padding: 0 20px;
+      margin-top: 33px;
+    }
+  }
+
+  &__title {
+    @media #{$screen-tablet} {
+      max-width: 55%;
+      font-family: $font-family-medium-extra-expanded;
+    }
+
+    @media #{$screen-desktop} {
+      max-width: 100%;
+      font-family: $font-family-medium-ultra-expanded;
+    }
+  }
+
+  &__date-carousel {
+    @media #{$screen-tablet} {
+      margin-top: 30px;
+    }
+
+    @media #{$screen-desktop} {
+      margin-top: 40px;
+    }
+
+    @media #{$screen-big-desktop} {
+      margin-top: 32px;
     }
   }
 
