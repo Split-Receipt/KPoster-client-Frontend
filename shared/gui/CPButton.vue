@@ -78,6 +78,7 @@ enum buttonColors {
   padding: $button-default-padding;
   border: none;
   background-color: transparent;
+  cursor: pointer;
 
   &:disabled {
     opacity: 0.5;

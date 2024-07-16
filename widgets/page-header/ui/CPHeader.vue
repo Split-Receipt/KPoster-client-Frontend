@@ -1,52 +1,43 @@
 <template>
-  <div class="header">
-    <img src="/images/header-background.jpeg" class="header__img-pic" />
-  </div>
-  <div class="header__icons">
-    <img src="/images/logo.svg" class="icon icon-logo header__icon-logo" />
-    <div class="header__menu">
-      <div class="header__ovals">
-        <c-p-button
-          shape="oval"
-          color="yellowGrey"
-          text="Sales"
-          size="middle"
-        />
-        <c-p-button shape="oval" color="yellowGrey" text="News" size="middle" />
-        <c-p-button
-          shape="oval"
-          color="yellowGrey"
-          text="Charity"
-          size="middle"
-        />
-      </div>
-      <div class="header__circles">
-        <c-p-button
-          shape="circle"
-          color="transparent"
-          left-icon="icon icon-search"
-        />
-        <c-p-button
-          shape="circle"
-          color="transparent"
-          left-icon="icon icon-login"
-        />
-        <c-p-button
-          shape="circle"
-          color="transparent"
-          left-icon="icon icon-ticket"
-        />
-      </div>
+  <div class="header__wrapper">
+    <div class="header__img">
+      <img src="/images/header-background.jpeg" class="header__img-pic" />
     </div>
-    <img
-      src="/images/burger-menu.svg"
-      class="icon icon-burger-menu header__icon-burger-menu"
-    />
+
+    <div class="header__controls">
+      <img src="/images/logo.svg" class="icon icon-logo header__icon-logo" />
+
+      <div class="header__menu">
+        <div class="header__buttons header__buttons--oval">
+          <c-p-button shape="oval" color="yellowGrey" text="Sales" />
+          <c-p-button shape="oval" color="yellowGrey" text="News" />
+          <c-p-button shape="oval" color="yellowGrey" text="Charity" />
+        </div>
+
+        <div class="header__buttons header__buttons--circle">
+          <button class="header__button header__button--circle">
+            <i class="icon icon-search header__button-icon" />
+          </button>
+
+          <button class="header__button header__button--circle">
+            <i class="icon icon-login header__button-icon" />
+          </button>
+
+          <button class="header__button header__button--circle">
+            <i
+              class="icon icon-ticket header__button-icon header__button-ticket"
+            />
+          </button>
+        </div>
+      </div>
+
+      <img src="/images/burger-menu.svg" class="header__icon-burger-menu" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import CPButton from '../../../shared/gui/CPButton.vue';
+import CPButton from '@shared/gui/CPButton.vue';
 </script>
 
 <style scoped lang="scss">
@@ -58,6 +49,7 @@ import CPButton from '../../../shared/gui/CPButton.vue';
     overflow: hidden;
     width: 100%;
     height: 150px;
+
     &-pic {
       width: 100%;
       height: 150px;
@@ -65,79 +57,105 @@ import CPButton from '../../../shared/gui/CPButton.vue';
       font-family: 'object-fit: cover';
     }
   }
-  &__icons {
+
+  &__controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 87px;
+    padding: 0 10px;
+
     @media #{$screen-tablet} {
       height: 110px;
     }
+
     @media #{$screen-desktop} {
-      margin-top: 30px;
-      justify-content: space-around;
+      margin-top: 25px;
+      padding: 0 20px;
     }
   }
+
   &__icon-burger-menu {
-    margin-right: 10px;
     @media #{$screen-tablet} {
       background-color: #f6f6f6;
       border-radius: 99px;
-      margin-right: 10px;
       width: 140px;
       height: 74px;
       padding: 25px 20px;
     }
+
     @media #{$screen-desktop} {
       display: none;
     }
   }
+
   &__icon-logo {
-    margin-left: 10px;
     @media #{$screen-tablet} {
       background-color: #f6f6f6;
       border-radius: 99px;
-      margin-left: 10px;
       width: 191px;
       height: 79px;
       padding: 10px 15px;
     }
+
     @media #{$screen-desktop} {
       width: 241px;
       height: 104px;
       padding: 15px 20px;
     }
   }
+
   &__menu {
     display: none;
+
     @media #{$screen-desktop} {
       display: flex;
       align-items: center;
       padding: 5px 10px;
       gap: 40px;
-      background-color: #f6f6f6;
+      background-color: white;
       border-radius: 99px;
     }
   }
-  &__circles {
-    display: none;
-    @media #{$screen-desktop} {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      width: 60px;
+
+  &__buttons {
+    gap: 15px;
+
+    &--circle {
+      display: none;
+
+      @media #{$screen-desktop} {
+        display: flex;
+      }
+    }
+
+    &--oval {
+      display: none;
+
+      @media #{$screen-desktop} {
+        display: flex;
+      }
+    }
+  }
+
+  &__button {
+    border: none;
+    background-color: #e7e7e7;
+
+    &--circle {
       height: 60px;
+      width: 60px;
+      border-radius: 99px;
+    }
+
+    &-icon {
+      font-size: 35px;
+    }
+
+    &-ticket {
+      font-size: 40px;
+      line-height: 10px;
     }
   }
-  &__ovals {
-    display: none;
-    @media #{$screen-desktop} {
-      display: flex;
-      justify-content: space-around;
-      gap: 15px;
-    }
-  }
-  // @media #{$screen-big-desktop} {
-  // }
 }
 </style>
