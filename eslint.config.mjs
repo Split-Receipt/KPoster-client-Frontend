@@ -105,7 +105,6 @@ export default withNuxt([
       'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
       'no-prototype-builtins': 'error',
       indent: 'off',
-      '@typescript-eslint/indent': ['error', 2, { SwitchCase: 1 }],
       quotes: 'off',
       '@typescript-eslint/quotes': ['error', 'single'],
       'prettier/prettier': ['error', { singleQuote: true }],

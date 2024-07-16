@@ -41,11 +41,11 @@
 <script setup lang="ts">
 type Props = {
   size?:
-  | eventCardSizeType
-  | eventCardImageSizeType
-  | eventCardButtonSizeType
-  | eventCardDateSizeType
-  | eventCardTextSizeType;
+    | eventCardSizeType
+    | eventCardImageSizeType
+    | eventCardButtonSizeType
+    | eventCardDateSizeType
+    | eventCardTextSizeType;
   eventCardData: CardData;
 };
 
