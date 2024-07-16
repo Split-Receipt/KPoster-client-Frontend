@@ -25,3 +25,17 @@
     font-style: normal;
     src: local("#{$font-family-semi-bold-ultra-expanded}"), url("/app/styles/fonts/NeuethingSans-SemiBoldUltraExpanded.otf") format("opentype");
 }
+
+@font-face {
+    font-family: $font-family-medium-extra-expanded;
+    font-weight: $font-weight-medium;
+    font-style: normal;
+    src: local("#{$font-family-medium-extra-expanded}"), url("/app/styles/fonts/NeuethingSans-MediumExtraExpanded.otf") format("opentype");
+}
+
+@font-face {
+    font-family: $font-family-semi-bold-extra-expanded;
+    font-weight: $font-weight-semi-bold;
+    font-style: normal;
+    src: local("#{$font-family-semi-bold-extra-expanded}"), url("/app/styles/fonts/NeuethingSans-SemiBoldExtraExpanded.otf") format("opentype");
+}

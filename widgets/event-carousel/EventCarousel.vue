@@ -27,9 +27,6 @@
         :breakpoints="{
           0: {
             slidesPerView: 1.5,
-            navigation: {
-              enabled: true,
-            },
             grid: {
               fill: 'row',
               rows: 1,
@@ -37,11 +34,6 @@
           },
           768: {
             slidesPerView: 2.5,
-            navigation: {
-              enabled: true,
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            },
             grid: {
               fill: 'row',
               rows: 1,
@@ -102,6 +94,11 @@ withDefaults(defineProps<Props>(), {
     display: flex;
     justify-content: flex-end;
     gap: 20px;
+    margin-right: 10px;
+
+    @media #{$screen-desktop} {
+      margin-right: 0px;
+    }
   }
 
   &__button {
@@ -116,7 +113,9 @@ withDefaults(defineProps<Props>(), {
 }
 
 .swiper {
-  padding-top: 55px;
+  @media #{$screen-tablet} {
+    padding-top: 55px;
+  }
 }
 
 .swiper-button-next {
