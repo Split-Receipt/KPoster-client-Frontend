@@ -48,11 +48,11 @@ import CPButton from '@shared/gui/CPButton.vue';
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 150px;
+    height: $header-img-height;
 
     &-pic {
       width: 100%;
-      height: 150px;
+      height: $header-pic-height;
       object-fit: cover;
       font-family: 'object-fit: cover';
     }
@@ -62,26 +62,26 @@ import CPButton from '@shared/gui/CPButton.vue';
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 87px;
-    padding: 0 10px;
+    height: $header-controls-height;
+    padding: $header-controls-padding;
 
     @media #{$screen-tablet} {
-      height: 110px;
+      height: $header-controls-height-screen-tablet;
     }
 
     @media #{$screen-desktop} {
-      margin-top: 25px;
-      padding: 0 20px;
+      margin-top: $header-controls-margin-top-screen-desktop;
+      padding: $header-controls-padding-screen-desktop;
     }
   }
 
   &__icon-burger-menu {
     @media #{$screen-tablet} {
-      background-color: #f6f6f6;
-      border-radius: 99px;
-      width: 140px;
-      height: 74px;
-      padding: 25px 20px;
+      background-color: $header-icon-burger-menu-background-color-screen-tablet;
+      border-radius: $header-icon-burger-menu-border-radius-screen-tablet;
+      width: $header-icon-burger-menu-width-screen-tablet;
+      height: $header-icon-burger-menu-height-screen-tablet;
+      padding: $header-icon-burger-menu-padding-screen-tablet;
     }
 
     @media #{$screen-desktop} {
@@ -91,17 +91,17 @@ import CPButton from '@shared/gui/CPButton.vue';
 
   &__icon-logo {
     @media #{$screen-tablet} {
-      background-color: #f6f6f6;
-      border-radius: 99px;
-      width: 191px;
-      height: 79px;
-      padding: 10px 15px;
+      background-color: $header-icon-logo-background-color-screen-tablet;
+      border-radius: $header-icon-logo-border-radius-screen-tablet;
+      width: $header-icon-logo-width-screen-tablet;
+      height: $header-icon-logo-height-screen-tablet;
+      padding: $header-icon-logo-padding-screen-tablet;
     }
 
     @media #{$screen-desktop} {
-      width: 241px;
-      height: 104px;
-      padding: 15px 20px;
+      width: $header-icon-logo-width-screen-desktop;
+      height: $header-icon-logo-height-screen-desktop;
+      padding: $header-icon-logo-padding-screen-desktop;
     }
   }
 
@@ -111,15 +111,15 @@ import CPButton from '@shared/gui/CPButton.vue';
     @media #{$screen-desktop} {
       display: flex;
       align-items: center;
-      padding: 5px 10px;
-      gap: 40px;
-      background-color: white;
-      border-radius: 99px;
+      padding: $header-menu-padding-screen-desktop;
+      gap: $header-menu-gap-screen-desktop;
+      background-color: $header-menu-background-color-screen-desktop;
+      border-radius: $header-menu-border-radius-screen-desktop;
     }
   }
 
   &__buttons {
-    gap: 15px;
+    gap: $header-buttons-gap;
 
     &--circle {
       display: none;
@@ -140,21 +140,21 @@ import CPButton from '@shared/gui/CPButton.vue';
 
   &__button {
     border: none;
-    background-color: #e7e7e7;
+    background-color: $header-button-background-color;
 
     &--circle {
-      height: 60px;
-      width: 60px;
-      border-radius: 99px;
+      height: $header-button-circle-height;
+      width: $header-button-circle-width;
+      border-radius: $header-button-circle-border-radius;
     }
 
     &-icon {
-      font-size: 35px;
+      font-size: $header-button-icon-font-size;
     }
 
     &-ticket {
-      font-size: 40px;
-      line-height: 10px;
+      font-size: $header-button-ticket-font-size;
+      line-height: $header-button-ticket-line-height;
     }
   }
 }
