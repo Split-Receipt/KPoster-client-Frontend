@@ -2,9 +2,13 @@
   <div class="date-card__wrapper">
     <button
       type="button"
-      :class="[cardSize[size], { 'date-card--active': active }, 'date-card']"
+      :class="[
+        cardSize[size as cardSizeType],
+        { 'date-card--active': active },
+        'date-card',
+      ]"
       :disabled="disabled"
-      @click="$emit('dateClick', date)"
+      @click="$emit('dateClick', date.dateString)"
     >
       <span
         v-if="size !== 'mini'"
@@ -13,29 +17,31 @@
         {{ date.day }}
       </span>
       <span class="date-card__day-week">
-        {{ date.day_week }}
+        {{ date.weekDay }}
       </span>
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
+import { cardSize, cardSizeDay } from './types';
 type Props = {
-  date: Date;
+  date: DateData;
   size?: cardSizeType | cardSizeDayType;
   active?: boolean;
   disabled?: boolean;
 };
 
-type Date = {
+interface DateData {
+  dateString: Date;
   day: string;
-  day_week: string;
-};
+  weekDay: string;
+}
 
 withDefaults(defineProps<Props>(), {
-  date: () => ({
+  dateString: () => ({
     day: '1',
-    day_week: 'vi',
+    weekDay: 'vi',
   }),
   size: 'small',
   active: false,
@@ -47,17 +53,6 @@ defineEmits<Events>();
 type Events = {
   (event: 'dateClick', eventData: Date): void;
 };
-
-enum cardSize {
-  mini = 'date-card--mini',
-  small = 'date-card--small',
-  medium = 'date-card--medium',
-  large = 'date-card--large',
-}
-
-enum cardSizeDay {
-  medium = 'date-card__day--medium',
-}
 
 type cardSizeType = keyof typeof cardSize;
 type cardSizeDayType = keyof typeof cardSizeDay;
@@ -75,6 +70,10 @@ type cardSizeDayType = keyof typeof cardSizeDay;
   border-radius: $date-card-default-border-radius;
   border: 1px solid $date-card-default-border-color;
   cursor: pointer;
+
+  &__wrapper {
+    display: inline-block;
+  }
 
   &--mini {
     height: $date-card-height-mini;
