@@ -1,9 +1,9 @@
 @font-face {
 	font-family: "iconfont";
 	font-display: block;
-	src: url("iconfont.eot?8957437c14cebb046379be8cb8c7c934?#iefix") format("embedded-opentype"),
-url("iconfont.woff2?8957437c14cebb046379be8cb8c7c934") format("woff2"),
-url("iconfont.woff?8957437c14cebb046379be8cb8c7c934") format("woff");
+	src: url("iconfont.eot?38b93d3f327359cdcc916144922b61e9?#iefix") format("embedded-opentype"),
+url("iconfont.woff2?38b93d3f327359cdcc916144922b61e9") format("woff2"),
+url("iconfont.woff?38b93d3f327359cdcc916144922b61e9") format("woff");
 }
 
 .icon {
@@ -26,12 +26,18 @@ url("iconfont.woff?8957437c14cebb046379be8cb8c7c934") format("woff");
 .icon-arrow-right:before {
 	content: "\f103";
 }
-.icon-login:before {
+.icon-burger-menu:before {
 	content: "\f104";
 }
-.icon-search:before {
+.icon-login:before {
 	content: "\f105";
 }
-.icon-ticket:before {
+.icon-logo:before {
 	content: "\f106";
+}
+.icon-search:before {
+	content: "\f107";
+}
+.icon-ticket:before {
+	content: "\f108";
 }

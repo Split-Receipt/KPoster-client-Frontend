@@ -116,27 +116,27 @@ enum buttonColors {
   &--small {
     height: $button-size-small;
     line-height: $button-line-height-small;
-    font-size: $button-fon-size-small;
+    font-size: $button-font-size-small;
     padding: $button-small-padding;
   }
 
   &--middle {
     height: $button-size-middle;
     line-height: $button-line-height-middle;
-    font-size: $button-fon-size-middle;
+    font-size: $button-font-size-middle;
     padding: $button-middle-padding;
   }
 
   &--big {
     height: $button-size-big;
     line-height: $button-line-height-big;
-    font-size: $button-fon-size-big;
+    font-size: $button-font-size-big;
   }
 
   &--huge {
     height: $button-size-huge;
     line-height: $button-line-height-huge;
-    font-size: $button-fon-size-huge;
+    font-size: $button-font-size-huge;
   }
 
   &--white {
