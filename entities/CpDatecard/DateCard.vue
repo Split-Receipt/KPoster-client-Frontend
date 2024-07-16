@@ -27,7 +27,7 @@
 import { cardSize, cardSizeDay } from './types';
 interface Props {
   date: DateData;
-  size?: cardSizeType | cardSizeDayType | string;
+  size?: cardSizeType | cardSizeDayType;
   active?: boolean;
   disabled?: boolean;
 }

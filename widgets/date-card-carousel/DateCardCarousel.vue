@@ -72,26 +72,22 @@ import {
   format,
   setDefaultOptions,
   startOfDay,
+  addDays,
+  addMonths,
 } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 const props = withDefaults(defineProps<Props>(), {
-  dateInterval: () => ({
-    dateStart: new Date(2024, 6, 1),
-    dateEnd: new Date(2024, 11, 31),
-  }),
+  dateStart: () => addDays(new Date(), -3),
+  dateEnd: () => addMonths(new Date(), 3),
 });
 
 defineEmits<Events>();
 
-interface Props {
-  dateInterval: DateInterval;
-}
-
-interface DateInterval {
-  dateStart: Date;
-  dateEnd: Date;
-}
+type Props = {
+  dateStart?: Date;
+  dateEnd?: Date;
+};
 
 type AllDaysOfInterval = {
   dateString: Date;
@@ -111,12 +107,12 @@ const dateLoaded = ref(false);
 const allDaysOfInterval: Ref<Array<AllDaysOfInterval>> = ref([]);
 const dateNow = new Date();
 
-setDefaultOptions({ locale: es });
+setDefaultOptions({ locale: es }); // #TODO - вынести date fns в отдельный модуль
 
 const createAllDaysOfInterval = () => {
   eachDayOfInterval({
-    start: props.dateInterval.dateStart,
-    end: props.dateInterval.dateEnd,
+    start: props.dateStart,
+    end: props.dateEnd,
   }).forEach((date) => {
     return allDaysOfInterval.value.push({
       dateString: date,
@@ -181,6 +177,8 @@ onMounted(async () => {
 
 .swiper {
   height: 100%;
+  overflow: hidden;
+  margin-left: 0;
 }
 
 .swiper-button-next {
