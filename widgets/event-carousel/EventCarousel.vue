@@ -17,10 +17,8 @@
       </div>
 
       <swiper
-        :modules="[SwiperNavigation, SwiperGrid, SwiperMousewheel]"
+        :modules="[SwiperNavigation, SwiperGrid]"
         space-between="20"
-        :observer="true"
-        :observe-parents="true"
         :navigation="{
           enabled: true,
           nextEl: '.swiper-button-next',
@@ -36,9 +34,6 @@
               fill: 'row',
               rows: 1,
             },
-            mousewheel: {
-              enabled: true,
-            },
           },
           768: {
             slidesPerView: 2.5,
@@ -51,18 +46,12 @@
               fill: 'row',
               rows: 1,
             },
-            mousewheel: {
-              enabled: false,
-            },
           },
           1280: {
             slidesPerView: 2,
             grid: {
               fill: 'row',
               rows: 2,
-            },
-            mousewheel: {
-              enabled: false,
             },
           },
           1920: {
@@ -75,7 +64,7 @@
         }"
       >
         <swiper-slide v-for="(card, index) in eventData" :key="index">
-          <event-card :event-card-data="card" :size="sizeCard" />
+          <event-card :event-card-data="card" />
         </swiper-slide>
       </swiper>
     </div>
@@ -83,89 +72,27 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUpdated } from 'vue';
 type Props = {
-  sizeCard?: string;
+  eventData: Array<CardData>;
+};
+
+type CardData = {
+  image: string;
+  title: string;
+  text: string;
+  dateEvent: string;
 };
 
 withDefaults(defineProps<Props>(), {
-  sizeCard: 'small',
+  eventData: () => [
+    {
+      image: 'event-card-1.jpg',
+      title: 'Event Name',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      dateEvent: '01/01/2024',
+    },
+  ],
 });
-
-const eventData = [
-  {
-    image: 'event-card-1.jpg',
-    title: 'Event Name',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
-    dateEvent: '20/12/2024',
-  },
-  {
-    image: 'event-card-2.jpg',
-    title: 'Event Name',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
-    dateEvent: '20/12/2024',
-  },
-  {
-    image: 'event-card-3.jpg',
-    title: 'Event Name',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
-    dateEvent: '20/12/2024',
-  },
-  {
-    image: 'event-card-4.jpg',
-    title: 'Event Name',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
-    dateEvent: '20/12/2024',
-  },
-  {
-    image: 'event-card-5.jpg',
-    title: 'Event Name',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
-    dateEvent: '20/12/2024',
-  },
-  {
-    image: 'event-card-6.jpg',
-    title: 'Event Name',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
-    dateEvent: '20/12/2024',
-  },
-  {
-    image: 'event-card-7.jpg',
-    title: 'Event Name',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
-    dateEvent: '20/12/2024',
-  },
-  {
-    image: 'event-card-8.jpg',
-    title: 'Event Name',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
-    dateEvent: '20/12/2024',
-  },
-  {
-    image: 'event-card-9.jpg',
-    title: 'Event Name',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
-    dateEvent: '20/12/2024',
-  },
-  {
-    image: 'event-card-10.jpg',
-    title: 'Event Name',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
-    dateEvent: '20/12/2024',
-  },
-  {
-    image: 'event-card-11.jpg',
-    title: 'Event Name',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
-    dateEvent: '20/12/2024',
-  },
-  {
-    image: 'event-card-12.jpg',
-    title: 'Event Name',
-    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
-    dateEvent: '20/12/2024',
-  },
-];
 </script>
 
 <style scoped lang="scss">

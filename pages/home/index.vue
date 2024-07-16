@@ -1,7 +1,6 @@
 <template>
   <div>
     <p>Main page</p>
-    <event-carousel />
   </div>
 </template>
 
