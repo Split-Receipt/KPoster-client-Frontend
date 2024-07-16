@@ -25,12 +25,12 @@
 
 <script setup lang="ts">
 import { cardSize, cardSizeDay } from './types';
-interface Props {
+type Props = {
   date: DateData;
   size?: cardSizeType | cardSizeDayType;
   active?: boolean;
   disabled?: boolean;
-}
+};
 
 interface DateData {
   dateString: Date;
@@ -43,7 +43,7 @@ withDefaults(defineProps<Props>(), {
     day: '1',
     weekDay: 'vi',
   }),
-  size: () => 'small',
+  size: 'small',
   active: false,
   disabled: false,
 });
