@@ -1,0 +1,1 @@
+export { CPFooter } from './ui';

@@ -13,8 +13,10 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "date-fns": "^3.6.0",
     "normalize-scss": "^8.0.0",
     "nuxt": "^3.12.1",
+    "nuxt-swiper": "^1.2.2",
     "vue": "^3.4.27",
     "vue-router": "^4.3.3"
   },

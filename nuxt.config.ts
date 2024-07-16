@@ -1,23 +1,24 @@
+import { defineNuxtConfig } from "nuxt/config";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxt/eslint"],
+  modules: ["@nuxt/eslint", "nuxt-swiper"],
   css: ["/app/styles/scss/styles.scss"],
-
   vite: {
     css: {
       preprocessorOptions: {
         scss: {
           additionalData: `
-            @import 'app/styles/scss/abstracts/_variables.scss' ;
-            @import 'app/styles/scss/components/_all.scss' ;
-            @import 'app/styles/scss/pages/_all.scss' ;
+            @import "app/styles/scss/abstracts/_variables.scss" ;
+            @import "app/styles/scss/components/_all.scss" ;
+            @import "app/styles/scss/pages/_all.scss" ;
           `,
         },
       },
     },
-      
   },
+
   alias: {
     "@pages": "/pages",
     "@shared": "/shared",
@@ -27,7 +28,7 @@ export default defineNuxtConfig({
     "@app": "/app",
     "@widgets": "/widgets"
   },
-    
+
   components: [
     {
       path: "app",
