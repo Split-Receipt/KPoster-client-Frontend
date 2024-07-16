@@ -27,9 +27,9 @@ type Props = {
   type?: HTMLButtonElement['type'];
   shape: keyof typeof buttonShapes;
   disabled?: boolean;
-  size: keyof typeof buttonSizes;
+  size?: keyof typeof buttonSizes;
   color: keyof typeof buttonColors;
-  leftIcon: string;
+  leftIcon?: string;
   text: string;
 };
 
