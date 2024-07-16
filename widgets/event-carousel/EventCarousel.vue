@@ -102,6 +102,11 @@ withDefaults(defineProps<Props>(), {
     display: flex;
     justify-content: flex-end;
     gap: 20px;
+    margin-right: 10px;
+
+    @media #{$screen-desktop} {
+      margin-right: 0px;
+    }
   }
 
   &__button {
@@ -116,7 +121,9 @@ withDefaults(defineProps<Props>(), {
 }
 
 .swiper {
-  padding-top: 55px;
+  @media #{$screen-tablet} {
+    padding-top: 55px;
+  }
 }
 
 .swiper-button-next {
