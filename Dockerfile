@@ -6,6 +6,8 @@ RUN npm i
 RUN npm cache clean --force
 RUN npm run build
 
+ENV NITRO_PORT=3001
+
 EXPOSE 3001 
 
 CMD [ "node", ".output/server/index.mjs" ]
