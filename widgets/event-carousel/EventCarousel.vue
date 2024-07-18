@@ -6,23 +6,32 @@
           shape="square"
           color="transparent"
           left-icon="arrow-left"
-          class="swiper-button-prev event-carousel__button"
+          :class="[
+            `button-prev__${id}`,
+            'swiper-button-prev',
+            'event-carousel__button',
+          ]"
         />
         <c-p-button
           shape="square"
           color="black"
           left-icon="arrow-right"
-          class="swiper-button-next event-carousel__button"
+          :class="[
+            `button-next__${id}`,
+            'swiper-button-next',
+            'event-carousel__button',
+          ]"
         />
       </div>
 
       <swiper
+        :id="id"
         :modules="[SwiperNavigation, SwiperGrid]"
         space-between="20"
         :navigation="{
           enabled: true,
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
+          nextEl: `.button-next__${id}`,
+          prevEl: `.button-prev__${id}`,
         }"
         :breakpoints="{
           0: {
@@ -66,6 +75,7 @@
 <script setup lang="ts">
 type Props = {
   eventData: Array<CardData>;
+  id: string | number;
 };
 
 type CardData = {

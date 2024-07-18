@@ -14,6 +14,7 @@
       <div class="main-page__section-list">
         <main-section
           v-for="(sectionItem, index) in sectionData"
+          :id="sectionItem.id"
           :key="index"
           :title="sectionItem.title"
           :text="sectionItem.text"
@@ -31,6 +32,7 @@
 <script setup lang="ts">
 const sectionData = [
   {
+    id: '1',
     title: 'Popular events',
     eventData: [
       {
@@ -72,6 +74,7 @@ const sectionData = [
     ],
   },
   {
+    id: '2',
     title: 'List of events 1',
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc',
     eventData: [
@@ -126,6 +129,7 @@ const sectionData = [
     ],
   },
   {
+    id: '3',
     title: 'List of events 2',
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc',
     eventData: [
@@ -180,6 +184,7 @@ const sectionData = [
     ],
   },
   {
+    id: '4',
     title: 'List of events 3',
     text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc',
     eventData: [
