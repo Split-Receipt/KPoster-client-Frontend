@@ -17,7 +17,7 @@
         </div>
 
         <div class="main-section__carousel">
-          <event-carousel :event-data="eventData" />
+          <event-carousel :id="id" :event-data="eventData" />
         </div>
       </div>
     </section>
@@ -30,6 +30,7 @@ type Props = {
   text?: string;
   eventData: Array<CardData>;
   size?: string;
+  id: string | number;
 };
 
 type CardData = {
