@@ -181,12 +181,12 @@ const eventData = [
   &__title {
     @media #{$screen-tablet} {
       max-width: 55%;
-      font-family: $font-family-medium-extra-expanded;
+      font-family: $font-family-MediumExtraExpanded;
     }
 
     @media #{$screen-desktop} {
       max-width: 100%;
-      font-family: $font-family-medium-ultra-expanded;
+      font-family: $font-family-MediumUltraExpanded;
     }
   }
 

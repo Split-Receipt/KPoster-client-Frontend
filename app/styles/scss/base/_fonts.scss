@@ -1,41 +1,20 @@
 @font-face {
-    font-family: $font-family-medium;
+    font-family: 'NeuethingSans-MediumUltraExpanded';
     font-weight: $font-weight-medium;
     font-style: normal;
-    src: local("#{$font-family-medium}"), url("/app/styles/fonts/NeuethingSans-MediumSemiExpanded.otf") format("opentype");
+    src: local("NeuethingSans-MediumUltraExpanded"), url("/app/styles/fonts/AnotherSans/OTF/NeuethingSans-MediumUltraExpanded.otf") format("opentype");
 }
 
 @font-face {
-    font-family: $font-family-semi-bold;
-    font-weight: $font-weight-semi-bold;
-    font-style: normal;
-    src: local("#{$font-family-semi-bold}"), url("/app/styles/fonts/NeuethingSans-SemiBoldSemiExpanded.otf") format("opentype");
-}
-
-@font-face {
-    font-family: $font-family-medium-ultra-expanded;
+    font-family: 'NeuethingSans-MediumExtraExpanded';
     font-weight: $font-weight-medium;
     font-style: normal;
-    src: local("#{$font-family-medium-ultra-expanded}"), url("/app/styles/fonts/NeuethingSans-MediumUltraExpanded.otf") format("opentype");
+    src: local("NeuethingSans-MediumExtraExpanded"), url("/app/styles/fonts/AnotherSans/OTF/NeuethingSans-MediumExtraExpanded.otf") format("opentype");
 }
 
 @font-face {
-    font-family: $font-family-semi-bold-ultra-expanded;
+    font-family: 'NeuethingSans-MediumExpanded';
     font-weight: $font-weight-semi-bold;
     font-style: normal;
-    src: local("#{$font-family-semi-bold-ultra-expanded}"), url("/app/styles/fonts/NeuethingSans-SemiBoldUltraExpanded.otf") format("opentype");
-}
-
-@font-face {
-    font-family: $font-family-medium-extra-expanded;
-    font-weight: $font-weight-medium;
-    font-style: normal;
-    src: local("#{$font-family-medium-extra-expanded}"), url("/app/styles/fonts/NeuethingSans-MediumExtraExpanded.otf") format("opentype");
-}
-
-@font-face {
-    font-family: $font-family-semi-bold-extra-expanded;
-    font-weight: $font-weight-semi-bold;
-    font-style: normal;
-    src: local("#{$font-family-semi-bold-extra-expanded}"), url("/app/styles/fonts/NeuethingSans-SemiBoldExtraExpanded.otf") format("opentype");
+    src: local("NeuethingSans-MediumExpanded"), url("/app/styles/fonts/AnotherSans/OTF/NeuethingSans-MediumExpanded.otf") format("opentype");
 }
