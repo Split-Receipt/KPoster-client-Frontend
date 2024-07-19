@@ -1,19 +1,19 @@
 <template>
-  <div class="footer">
-    <footer-list
-      v-for="list in footerLists"
-      :key="list.id"
-      class="footer__list"
-      :list="list"
-    />
-    <c-p-button
-      class="footer__button"
-      color="yellowGrey"
-      shape="oval"
-      text="Become a partner"
-      size="middle"
-    />
-  </div>
+	<div class="footer">
+		<footer-list
+			v-for="list in footerLists"
+			:key="list.id"
+			class="footer__list"
+			:list="list"
+		/>
+		<c-p-button
+			class="footer__button"
+			color="yellowGrey"
+			shape="oval"
+			text="Become a partner"
+			size="middle"
+		/>
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -24,49 +24,49 @@ import { footerLists } from '../model';
 
 <style scoped lang="scss">
 .footer {
-  display: flex;
-  background: $footer-default-background-color;
-  flex-direction: column;
-  row-gap: $footer-default-row-gap;
-  padding: $footer-default-padding;
+	display: flex;
+	background: $footer-default-background-color;
+	flex-direction: column;
+	row-gap: $footer-default-row-gap;
+	padding: $footer-default-padding;
 
-  @media #{$screen-tablet} {
-    flex-wrap: wrap;
-    flex-direction: row;
-    column-gap: $footer-media-tablet-column-gap;
-    row-gap: $footer-media-tablet-row-gap;
-    padding: $footer-media-tablet-padding;
-  }
+	@media #{$screen-tablet} {
+		flex-wrap: wrap;
+		flex-direction: row;
+		column-gap: $footer-media-tablet-column-gap;
+		row-gap: $footer-media-tablet-row-gap;
+		padding: $footer-media-tablet-padding;
+	}
 
-  @media #{$screen-desktop} {
-    column-gap: $footer-media-desktop-column-gap;
-    padding: $footer-media-desktop-padding;
-    justify-content: space-around;
-  }
+	@media #{$screen-desktop} {
+		column-gap: $footer-media-desktop-column-gap;
+		padding: $footer-media-desktop-padding;
+		justify-content: space-around;
+	}
 
-  &__list {
-    @media #{$screen-tablet} {
-      height: $footer-media-tablet-height;
-      width: $footer-media-tablet-width;
-    }
+	&__list {
+		@media #{$screen-tablet} {
+			height: $footer-media-tablet-height;
+			width: $footer-media-tablet-width;
+		}
 
-    @media #{$screen-desktop} {
-      min-height: $footer-media-desktop-min-height;
-      width: $footer-media-desktop-width;
-    }
+		@media #{$screen-desktop} {
+			min-height: $footer-media-desktop-min-height;
+			width: $footer-media-desktop-width;
+		}
 
-    @media #{$screen-big-desktop} {
-      width: $footer-big-desktop-width;
-      &:nth-child(3) {
-        width: $footer-big-desktop-width-child;
-      }
-    }
-  }
+		@media #{$screen-big-desktop} {
+			width: $footer-big-desktop-width;
+			&:nth-child(3) {
+				width: $footer-big-desktop-width-child;
+			}
+		}
+	}
 
-  &__button {
-    @media #{$screen-desktop} {
-      align-self: end;
-    }
-  }
+	&__button {
+		@media #{$screen-desktop} {
+			align-self: end;
+		}
+	}
 }
 </style>
