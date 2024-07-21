@@ -29,6 +29,12 @@ export default defineNuxtConfig({
     "@widgets": "/widgets"
   },
 
+  runtimeConfig: {
+    public: {
+      apiBaseUrl: ''
+    }
+  },
+
   components: [
     {
       path: "app",
@@ -57,7 +63,7 @@ export default defineNuxtConfig({
     },
     {
       path: "shared",
-      extensions: [".vue"],
+      extensions: [".vue", ".ts"],
       pathPrefix: false,
     },
   ],

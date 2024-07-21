@@ -1,101 +1,101 @@
 <template>
-  <div class="date-card-carousel__wrapper">
-    <div v-if="dateLoaded" class="date-card-carousel">
-      <c-p-button
-        shape="circle"
-        color="transparent"
-        left-icon="arrow-left"
-        class="date-card-button-prev date-card-carousel__button"
-      />
+	<div class="date-card-carousel__wrapper">
+		<div v-if="dateLoaded" class="date-card-carousel">
+			<c-p-button
+				shape="circle"
+				color="transparent"
+				left-icon="arrow-left"
+				class="date-card-button-prev date-card-carousel__button"
+			/>
 
-      <swiper
-        :modules="[SwiperNavigation, SwiperMousewheel]"
-        :mousewheel="true"
-        slides-per-view="auto"
-        space-between="15"
-        :navigation="{
-          enabled: true,
-          nextEl: '.date-card-button-next',
-          prevEl: '.date-card-button-prev',
-        }"
-        :breakpoints="{
-          0: {
-            slidesPerGroup: 3,
-          },
-          768: {
-            slidesPerGroup: 5,
-          },
-          1280: {
-            slidesPerGroup: 7,
-          },
-        }"
-      >
-        <swiper-slide
-          v-for="(card, index) in allDaysOfInterval"
-          :key="index"
-          class="date-card-carousel__item"
-        >
-          <div v-if="card.day == '1'" class="date-card-carousel__month">
-            {{ card.mounth }}
-          </div>
-          <div>
-            <date-card
-              class="date-card-carousel__day"
-              :date="card"
-              :disabled="card.disabled"
-              :active="!!(index === activeItem)"
-              @date-click="$emit('activeItemHandler', card.dateString)"
-              @click="activeItem = index"
-            />
-          </div>
-        </swiper-slide>
-      </swiper>
+			<swiper
+				:modules="[SwiperNavigation, SwiperMousewheel]"
+				:mousewheel="true"
+				slides-per-view="auto"
+				space-between="15"
+				:navigation="{
+					enabled: true,
+					nextEl: '.date-card-button-next',
+					prevEl: '.date-card-button-prev',
+				}"
+				:breakpoints="{
+					0: {
+						slidesPerGroup: 3,
+					},
+					768: {
+						slidesPerGroup: 5,
+					},
+					1280: {
+						slidesPerGroup: 7,
+					},
+				}"
+			>
+				<swiper-slide
+					v-for="(card, index) in allDaysOfInterval"
+					:key="index"
+					class="date-card-carousel__item"
+				>
+					<div v-if="card.day == '1'" class="date-card-carousel__month">
+						{{ card.mounth }}
+					</div>
+					<div>
+						<date-card
+							class="date-card-carousel__day"
+							:date="card"
+							:disabled="card.disabled"
+							:active="!!(index === activeItem)"
+							@date-click="$emit('activeItemHandler', card.dateString)"
+							@click="activeItem = index"
+						/>
+					</div>
+				</swiper-slide>
+			</swiper>
 
-      <c-p-button
-        shape="circle"
-        color="black"
-        left-icon="arrow-right"
-        class="date-card-button-next date-card-carousel__button"
-      />
-    </div>
-  </div>
+			<c-p-button
+				shape="circle"
+				color="black"
+				left-icon="arrow-right"
+				class="date-card-button-next date-card-carousel__button"
+			/>
+		</div>
+	</div>
 </template>
 
 <script setup lang="ts">
 import type { Ref } from 'vue';
 import { ref, onMounted } from 'vue';
 import {
-  eachDayOfInterval,
-  format,
-  setDefaultOptions,
-  startOfDay,
-  addDays,
-  addMonths,
+	eachDayOfInterval,
+	format,
+	setDefaultOptions,
+	startOfDay,
+	addDays,
+	addMonths,
 } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 const props = withDefaults(defineProps<Props>(), {
-  dateStart: () => addDays(new Date(), -3),
-  dateEnd: () => addMonths(new Date(), 3),
+	dateStart: () => addDays(new Date(), -3),
+	dateEnd: () => addMonths(new Date(), 3),
 });
 
 defineEmits<Events>();
 
 type Props = {
-  dateStart?: Date;
-  dateEnd?: Date;
+	dateStart?: Date;
+	dateEnd?: Date;
 };
 
 type AllDaysOfInterval = {
-  dateString: Date;
-  day: string;
-  weekDay: string;
-  mounth: string;
-  disabled: boolean;
+	dateString: Date;
+	day: string;
+	weekDay: string;
+	mounth: string;
+	disabled: boolean;
 };
 
 type Events = {
-  (event: 'activeItemHandler', eventData: Date): void;
+	(event: 'activeItemHandler', eventData: Date): void;
 };
 
 const activeItem: Ref<number | null> = ref(null);
@@ -107,103 +107,103 @@ const dateNow = new Date();
 setDefaultOptions({ locale: es }); // #TODO - вынести date fns в отдельный модуль
 
 const createAllDaysOfInterval = () => {
-  eachDayOfInterval({
-    start: props.dateStart,
-    end: props.dateEnd,
-  }).forEach((date) => {
-    return allDaysOfInterval.value.push({
-      dateString: date,
-      day: format(date, 'd'),
-      weekDay: format(date, 'EEEEEE').toLowerCase(),
-      mounth: format(date, 'MMMM'),
-      disabled:
-        startOfDay(date).getTime() < startOfDay(dateNow).getTime()
-          ? true
-          : false,
-    });
-  });
+	eachDayOfInterval({
+		start: props.dateStart,
+		end: props.dateEnd,
+	}).forEach((date) => {
+		return allDaysOfInterval.value.push({
+			dateString: date,
+			day: format(date, 'd'),
+			weekDay: format(date, 'EEEEEE').toLowerCase(),
+			mounth: format(date, 'MMMM'),
+			disabled:
+				startOfDay(date).getTime() < startOfDay(dateNow).getTime()
+					? true
+					: false,
+		});
+	});
 
-  dateLoaded.value = true;
+	dateLoaded.value = true;
 };
 
 onMounted(async () => {
-  createAllDaysOfInterval();
+	createAllDaysOfInterval();
 });
 </script>
 
 <style scoped lang="scss">
 .date-card-carousel {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  width: 100%;
-  height: 100%;
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 15px;
+	width: 100%;
+	height: 100%;
 
-  &__wrapper {
-    height: $date-card-carousel-wrapper-height;
-  }
+	&__wrapper {
+		height: $date-card-carousel-wrapper-height;
+	}
 
-  &__button {
-    position: static;
-    display: none;
-    width: auto;
-    margin: 0;
-    border: none;
-    background: none;
+	&__button {
+		position: static;
+		display: none;
+		width: auto;
+		margin: 0;
+		border: none;
+		background: none;
 
-    @media #{$screen-desktop} {
-      display: block;
-      margin: $date-card-carousel-button-margin;
-    }
-  }
+		@media #{$screen-desktop} {
+			display: block;
+			margin: $date-card-carousel-button-margin;
+		}
+	}
 
-  &__item {
-    position: relative;
-  }
+	&__item {
+		position: relative;
+	}
 
-  &__month {
-    position: absolute;
-    bottom: $date-card-carousel-month-bottom;
-    font-size: $date-card-carousel-month-font-size;
-    line-height: $date-card-carousel-month-line-height;
-    border-bottom: 1px solid $date-card-carousel-month-border-color;
-    color: $date-card-carousel-month-color;
-  }
+	&__month {
+		position: absolute;
+		bottom: $date-card-carousel-month-bottom;
+		font-size: $date-card-carousel-month-font-size;
+		line-height: $date-card-carousel-month-line-height;
+		border-bottom: 1px solid $date-card-carousel-month-border-color;
+		color: $date-card-carousel-month-color;
+	}
 }
 
 .swiper {
-  height: 100%;
-  overflow: hidden;
-  margin-left: 0;
+	height: 100%;
+	overflow: hidden;
+	margin-left: 0;
 }
 
 .date-card-button-next {
-  &::after {
-    content: '';
-  }
+	&::after {
+		content: '';
+	}
 
-  .swiper-rtl .date-card-button-next {
-    right: $date-card-carousel-button-next-right;
-  }
+	.swiper-rtl .date-card-button-next {
+		right: $date-card-carousel-button-next-right;
+	}
 }
 
 .date-card-button-prev {
-  &::after {
-    content: '';
-  }
+	&::after {
+		content: '';
+	}
 
-  .swiper-rtl .date-card-button-prev {
-    left: $date-card-carousel-button-prev-left;
-  }
+	.swiper-rtl .date-card-button-prev {
+		left: $date-card-carousel-button-prev-left;
+	}
 }
 
 .swiper-slide {
-  width: auto;
-  padding: $date-card-carousel-swiper-slide-padding-mobile;
+	width: auto;
+	padding: $date-card-carousel-swiper-slide-padding-mobile;
 
-  @media #{$screen-tablet} {
-    padding: $date-card-carousel-swiper-slide-padding-tablet;
-  }
+	@media #{$screen-tablet} {
+		padding: $date-card-carousel-swiper-slide-padding-tablet;
+	}
 }
 </style>
