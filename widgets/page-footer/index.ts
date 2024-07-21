@@ -1,1 +1,1 @@
-export { CPFooter } from './ui';
+export { default as CPFooter } from './ui/CPFooter.vue';
