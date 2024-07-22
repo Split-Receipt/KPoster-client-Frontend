@@ -136,31 +136,11 @@
 			</p>
 			<cp-file-input />
 		</div>
-		<div>
-			<h2>Añadir datos de contacto de la empresa</h2>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua.
-			</p>
-			<cp-input placeholder="introduzca el texto" />
-			<cp-input
-				placeholder="introduzca el enlace"
-				input-name="País-y-ciudad"
-				label="País y ciudad"
-			/>
-			<cp-input
-				placeholder="introduzca el enlace"
-				input-name="Teléfono de la empresa"
-				label="Teléfono de la empresa"
-			/>
-			<cp-input
-				placeholder="introduzca el enlace"
-				input-name="Dirección de correo electrónico"
-				label="Dirección de correo electrónico"
-			/>
-			<cp-button shape="oval" color="transparent" text="Más información" />
-			<cp-button shape="oval" color="yellowGrey" text="Añadir más categorías" />
-		</div>
+		<section-with-inputs
+			v-for="section in sectionsWithInputs"
+			:key="section.blockCode"
+			:config="section"
+		/>
 
 		<cp-footer />
 	</div>
@@ -171,6 +151,41 @@ import CpFileInput from '@shared/gui/CpFileInput/CpFileInput.vue';
 import CpInput from '@shared/gui/CpInput/CpInput.vue';
 import { CpFooter } from '@widgets/page-footer';
 import CpButton from '@shared/gui/CpButton.vue';
+import SectionWithInputs from '@widgets/partner-registration-sections/SectionWithInput.vue';
+
+const sectionsWithInputs = [
+	{
+		blockCode: 'AñadirDatos',
+		title: 'Añadir datos de contacto de la empresa',
+		description:
+			'	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod	tempor incididunt ut labore et dolore magna aliqua.',
+		inputs: [
+			{
+				placeholder: 'introduzca el texto',
+			},
+			{
+				placeholder: 'introduzca el enlace',
+				inputName: 'País-y-ciudad',
+				label: 'País y ciudad',
+			},
+			{
+				placeholder: 'introduzca el enlace',
+				inputName: 'Dirección de correo electrónico',
+				label: 'Dirección de correo electrónico',
+			},
+		],
+		buttons: [
+			{
+				buttonText: 'Más información',
+				color: 'transparent',
+			},
+			{
+				buttonText: 'Añadir más categorías',
+				color: 'yellowGrey',
+			},
+		],
+	},
+];
 </script>
 
 <style scoped lang="scss">
