@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import CPButton from '@shared/gui/CPButton.vue';
+import CpButton from '@shared/gui/CpButton.vue';
 </script>
 
 <style scoped lang="scss">
