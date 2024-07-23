@@ -106,7 +106,7 @@ withDefaults(defineProps<Props>(), {
 
 	&__header {
 		@media #{$screen-desktop} {
-			font-family: $font-family-MediumExtraExpanded;
+			font-family: $font-family-medium-extra-expanded;
 		}
 	}
 
