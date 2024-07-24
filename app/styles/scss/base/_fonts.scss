@@ -2,19 +2,31 @@
     font-family: 'NeuethingSans-MediumUltraExpanded';
     font-weight: $font-weight-medium;
     font-style: normal;
-    src: local("NeuethingSans-MediumUltraExpanded"), url("/app/styles/fonts/AnotherSans/OTF/NeuethingSans-MediumUltraExpanded.otf") format("opentype");
+    src: local("NeuethingSans-MediumUltraExpanded"),
+		url("/app/styles/fonts/AnotherSans/OTF/NeuethingSans-MediumUltraExpanded.otf") format("opentype"),
+		url("/app/styles//fonts//AnotherSans//TTF//NeuethingSans-MediumUltraExpanded.ttf") format("truetype"),
+		url("/app/styles/fonts/AnotherSans/Web/WOFF/NeuethingSans-MediumUltraExpanded.woff") format("woff"),
+		url("/app/styles/fonts/AnotherSans/Web/WOFF2/NeuethingSans-MediumUltraExpanded.woff2") format("woff2");
 }
 
 @font-face {
     font-family: 'NeuethingSans-MediumExtraExpanded';
     font-weight: $font-weight-medium;
     font-style: normal;
-    src: local("NeuethingSans-MediumExtraExpanded"), url("/app/styles/fonts/AnotherSans/OTF/NeuethingSans-MediumExtraExpanded.otf") format("opentype");
+    src: local("NeuethingSans-MediumExtraExpanded"),
+		url("/app/styles/fonts/AnotherSans/OTF/NeuethingSans-MediumExtraExpanded.otf") format("opentype"),
+		url("/app/styles/fonts/AnotherSans/TTF/NeuethingSans-MediumExtraExpanded.ttf") format("truetype"),
+		url("/app/styles/fonts/AnotherSans/Web/WOFF/NeuethingSans-MediumExtraExpanded.woff") format("woff"),
+		url("/app/styles/fonts/AnotherSans/Web/WOFF2/NeuethingSans-MediumExtraExpanded.woff2") format("woff2");
 }
 
 @font-face {
     font-family: 'NeuethingSans-MediumExpanded';
     font-weight: $font-weight-semi-bold;
     font-style: normal;
-    src: local("NeuethingSans-MediumExpanded"), url("/app/styles/fonts/AnotherSans/OTF/NeuethingSans-MediumExpanded.otf") format("opentype");
+    src: local("NeuethingSans-MediumExpanded"),
+		url("/app/styles/fonts/AnotherSans/OTF/NeuethingSans-MediumExpanded.otf") format("opentype"),
+		url("/app/styles/fonts/AnotherSans/TTF/NeuethingSans-MediumExpanded.ttf") format("truetype"),
+		url("/app/styles/fonts/AnotherSans/Web/WOFF/NeuethingSans-MediumExpanded.woff") format("woff"),
+		url("/app/styles/fonts/AnotherSans/Web/WOFF2/NeuethingSans-MediumExpanded.woff2") format("woff2");
 }
