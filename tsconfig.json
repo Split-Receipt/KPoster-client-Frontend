@@ -1,14 +1,14 @@
 {
-  "extends": "./\/.nuxt/tsconfig.json",
-  "compilerOptions": {
-    "paths": {
-      "@pages": ["./pages/*"],
-      "@shared": ["./shared/*"],
-      "@enteties": ["./enteties/*"],
-      "@features": ["./features/*"],
-      "@styles": ["./app/styles/*"],
-      "@app": ["./app/*"],
-      "@widgets": ["./widgets/*"]
-    }
-  },
+	"extends": "./\/.nuxt/tsconfig.json",
+	"compilerOptions": {
+		"paths": {
+			"@pages/*": ["./pages/*"],
+			"@shared/*": ["./shared/*"],
+			"@entities/*": ["./entities/*"],
+			"@features/*": ["./features/*"],
+			"@styles/*": ["./app/styles/*"],
+			"@app/*": ["./app/*"],
+			"@widgets/*": ["./widgets/*"]
+		}
+	}
 }
