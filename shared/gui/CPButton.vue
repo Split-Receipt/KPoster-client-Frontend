@@ -42,6 +42,7 @@ withDefaults(defineProps<Props>(), {
 	disabled: false,
 	text: 'button',
 	leftIcon: '',
+	size: 'middle',
 });
 
 const emit = defineEmits<Emits>();

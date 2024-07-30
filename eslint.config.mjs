@@ -211,6 +211,7 @@ export default withNuxt([
 			'nuxt.config.ts',
 			'svgFontGenerator.js',
 			'tsconfig.json',
+			'global.d.ts',
 		],
 	},
 ]);
