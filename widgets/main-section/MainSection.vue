@@ -1,5 +1,15 @@
 <template>
 	<div>
+		<drop-down
+			:options="[
+				{ text: 'Any city', id: 'testId1' },
+				{ text: 'Any city', id: 'testId2' },
+				{ text: 'Any city', id: 'testId3' },
+			]"
+			drop-down-label="Filter by category"
+		/>
+	</div>
+	<div>
 		<section class="main-section__item">
 			<div class="main-section__wrapper">
 				<div class="main-section__info">
@@ -25,6 +35,8 @@
 </template>
 
 <script setup lang="ts">
+import DropDown from '@shared/gui/DropDown.vue';
+
 type Props = {
 	title: string;
 	text?: string;
