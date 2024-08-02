@@ -25,7 +25,12 @@
 					<li v-for="option in options" :key="option.id + '-key'">
 						<div class="checkbox-container">
 							<div class="checkbox-wrapper">
-								<input :id="'check-' + option.id" type="checkbox" />
+								<input
+									:id="'check-' + option.id"
+									:value="option.text"
+									type="checkbox"
+									@change="dataToFilter"
+								/>
 								<label :for="'check-' + option.id" style="--size: 22px">
 									<svg viewBox="0,0,50,50">
 										<path d="M5 30 L 20 45 L 45 5" />
@@ -47,10 +52,31 @@ interface Option {
 	id: any;
 }
 
-const props = defineProps<{
+interface Props {
 	dropDownLabel: string;
 	options: Option[];
-}>();
+}
+
+type Events = {
+	(event: 'response', eventData: string[]): void;
+};
+
+defineProps<Props>();
+const emit = defineEmits<Events>();
+let dataArray: string[] = [];
+
+const dataToFilter = (event: Event) => {
+	const target = event.target as HTMLInputElement;
+	const data = target.checked ? target.value : '';
+
+	if (target.checked) {
+		data ? dataArray.push(data) : null;
+	} else {
+		dataArray = dataArray.filter((e) => e !== target.value);
+	}
+
+	emit('response', dataArray);
+};
 </script>
 
 <style scoped lang="scss">

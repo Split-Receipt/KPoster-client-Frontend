@@ -2,19 +2,29 @@
 	<div class="filters">
 		<drop-down
 			:options="[
-				{ text: 'Any city', id: 'testId1' },
-				{ text: 'Any city', id: 'testId2' },
-				{ text: 'Any city', id: 'testId3' },
+				{ text: 'Any city6', id: 'testId1' },
+				{ text: 'Any city4', id: 'testId2' },
+				{ text: 'Any city5', id: 'testId3' },
 			]"
 			drop-down-label="Filter by category"
+			@response="
+				(res) => {
+					console.log(res);
+				}
+			"
 		/>
 		<drop-down
 			:options="[
-				{ text: 'Any city', id: 'testId11' },
-				{ text: 'Any city', id: 'testId22' },
-				{ text: 'Any city', id: 'testId33' },
+				{ text: 'Any city1', id: 'testId11' },
+				{ text: 'Any city2', id: 'testId22' },
+				{ text: 'Any city3', id: 'testId33' },
 			]"
 			drop-down-label="Filter by city"
+			@response="
+				(res) => {
+					console.log(res);
+				}
+			"
 		/>
 	</div>
 	<div>
