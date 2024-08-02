@@ -83,6 +83,11 @@ withDefaults(defineProps<Props>(), {
 	],
 	size: 'small',
 });
+
+// request for an options for dropdowns
+// fetch('https://admin-dev.culture-portal-cusco.online/api/categories')
+// 	.then((response) => response.json())
+// 	.then((result) => console.log(result.data));
 </script>
 
 <style scoped lang="scss">

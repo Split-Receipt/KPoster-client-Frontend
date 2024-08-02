@@ -49,7 +49,7 @@
 <script setup lang="ts">
 interface Option {
 	text: string;
-	id: any;
+	id: string;
 }
 
 interface Props {
@@ -63,6 +63,7 @@ type Events = {
 
 defineProps<Props>();
 const emit = defineEmits<Events>();
+
 let dataArray: string[] = [];
 
 const dataToFilter = (event: Event) => {
