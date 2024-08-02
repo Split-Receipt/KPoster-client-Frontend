@@ -174,7 +174,7 @@ const props = defineProps<{
 	display: flex;
 	align-items: center;
 	width: fit-content;
-	margin-bottom: 15px;
+	margin: 0 15px 15px 0;
 	position: relative;
 }
 
@@ -196,7 +196,7 @@ const props = defineProps<{
 	position: relative;
 	align-items: center;
 	justify-content: center;
-	background: var(--burger-bg);
+	background: transparent;
 	border: var(--nav-border-width) solid var(--nav-border-color);
 	width: var(--burger-diameter);
 	height: var(--burger-diameter);

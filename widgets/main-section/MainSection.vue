@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="filters">
 		<drop-down
 			:options="[
 				{ text: 'Any city', id: 'testId1' },
@@ -7,6 +7,14 @@
 				{ text: 'Any city', id: 'testId3' },
 			]"
 			drop-down-label="Filter by category"
+		/>
+		<drop-down
+			:options="[
+				{ text: 'Any city', id: 'testId11' },
+				{ text: 'Any city', id: 'testId22' },
+				{ text: 'Any city', id: 'testId33' },
+			]"
+			drop-down-label="Filter by city"
 		/>
 	</div>
 	<div>
@@ -148,5 +156,9 @@ withDefaults(defineProps<Props>(), {
 			bottom: 30px;
 		}
 	}
+}
+
+.filters {
+	display: flex;
 }
 </style>
