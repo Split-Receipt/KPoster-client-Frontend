@@ -9,6 +9,15 @@
 				}
 			"
 		/>
+		<drop-down
+			:options="remoteCityFilterOptions"
+			drop-down-label="Filter by city"
+			@response="
+				(res) => {
+					console.log(res);
+				}
+			"
+		/>
 	</div>
 	<div>
 		<section class="main-section__item">
@@ -73,11 +82,13 @@ withDefaults(defineProps<Props>(), {
 interface RequestOption {
 	id: number;
 	attributes: {
-		category_title: string;
-		category_UID: string;
-		category_value: string;
+		item_title: string;
+		item_UID: string;
+		item_value: string;
 		createdAt: string;
 		updatedAt: string;
+		publishedAt: string;
+		locale: string;
 	};
 }
 
@@ -87,7 +98,13 @@ const categoryOptionsUrl =
 	'https://admin-dev.culture-portal-cusco.online/api/categories';
 const remoteCategoryOptions = ref<Array<RequestOption['attributes']>>([]);
 
-// function to request (1st arg: API's urs, 2nd arg: ref to store response data)
+// city filter checkpoint
+
+const cityOptionsUrl =
+	'https://admin-dev.culture-portal-cusco.online/api/city-filters';
+const remoteCityFilterOptions = ref<Array<RequestOption['attributes']>>([]);
+
+// function to request (1st arg: API's url, 2nd arg: ref to store response data)
 
 const requestForAnOptions = async (url: string, dataTo: Ref) => {
 	try {
@@ -108,6 +125,7 @@ const requestForAnOptions = async (url: string, dataTo: Ref) => {
 
 onMounted(() => {
 	requestForAnOptions(categoryOptionsUrl, remoteCategoryOptions);
+	requestForAnOptions(cityOptionsUrl, remoteCityFilterOptions);
 });
 </script>
 

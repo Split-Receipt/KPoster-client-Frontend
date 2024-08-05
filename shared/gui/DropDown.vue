@@ -22,25 +22,22 @@
 			</div>
 			<nav class="popup-window">
 				<ul>
-					<li v-for="option in options" :key="option.category_UID + '-key'">
+					<li v-for="option in options" :key="option.item_UID + '-key'">
 						<div class="checkbox-container">
 							<div class="checkbox-wrapper">
 								<input
-									:id="'check-' + option.category_UID"
-									:value="option.category_value"
+									:id="'check-' + option.item_UID"
+									:value="option.item_value"
 									type="checkbox"
 									@change="dataToFilter"
 								/>
-								<label
-									:for="'check-' + option.category_UID"
-									style="--size: 22px"
-								>
+								<label :for="'check-' + option.item_UID" style="--size: 22px">
 									<svg viewBox="0,0,50,50">
 										<path d="M5 30 L 20 45 L 45 5" />
 									</svg>
 								</label>
 							</div>
-							<span>{{ option.category_title }}</span>
+							<span>{{ option.item_title }}</span>
 						</div>
 					</li>
 				</ul>
@@ -51,11 +48,13 @@
 
 <script setup lang="ts">
 interface Option {
-	category_title: string;
-	category_UID: string;
-	category_value: string;
+	item_title: string;
+	item_UID: string;
+	item_value: string;
 	createdAt: string;
 	updatedAt: string;
+	publishedAt: string;
+	locale: string;
 }
 
 interface Props {
