@@ -1,24 +1,4 @@
 <template>
-	<div class="filters">
-		<drop-down
-			:options="remoteCategoryOptions"
-			drop-down-label="Filter by category"
-			@response="
-				(res) => {
-					console.log(res);
-				}
-			"
-		/>
-		<drop-down
-			:options="remoteCityFilterOptions"
-			drop-down-label="Filter by city"
-			@response="
-				(res) => {
-					console.log(res);
-				}
-			"
-		/>
-	</div>
 	<div>
 		<section class="main-section__item">
 			<div class="main-section__wrapper">
@@ -45,9 +25,6 @@
 </template>
 
 <script setup lang="ts">
-import DropDown from '@shared/gui/DropDown.vue';
-import axios from 'axios';
-
 type Props = {
 	title: string;
 	text?: string;
@@ -75,57 +52,6 @@ withDefaults(defineProps<Props>(), {
 		},
 	],
 	size: 'small',
-});
-
-// request for an options for dropdowns
-
-interface RequestOption {
-	id: number;
-	attributes: {
-		item_title: string;
-		item_UID: string;
-		item_value: string;
-		createdAt: string;
-		updatedAt: string;
-		publishedAt: string;
-		locale: string;
-	};
-}
-
-// category check points
-
-const categoryOptionsUrl =
-	'https://admin-dev.culture-portal-cusco.online/api/categories';
-const remoteCategoryOptions = ref<Array<RequestOption['attributes']>>([]);
-
-// city filter checkpoint
-
-const cityOptionsUrl =
-	'https://admin-dev.culture-portal-cusco.online/api/city-filters';
-const remoteCityFilterOptions = ref<Array<RequestOption['attributes']>>([]);
-
-// function to request (1st arg: API's url, 2nd arg: ref to store response data)
-
-const requestForAnOptions = async (url: string, dataTo: Ref) => {
-	try {
-		await axios
-			.get(url)
-			.then((response) => response.data)
-			.then((result) =>
-				result.data.forEach((e: RequestOption) => {
-					dataTo.value.push(e.attributes);
-				})
-			);
-	} catch (err) {
-		throw new Error(`Error while requesting for an dropdown options: ${err}`);
-	}
-};
-
-// function trigger (when component did mount)
-
-onMounted(() => {
-	requestForAnOptions(categoryOptionsUrl, remoteCategoryOptions);
-	requestForAnOptions(cityOptionsUrl, remoteCityFilterOptions);
 });
 </script>
 
@@ -210,9 +136,5 @@ onMounted(() => {
 			bottom: 30px;
 		}
 	}
-}
-
-.filters {
-	display: flex;
 }
 </style>
