@@ -9,14 +9,6 @@
 				}
 			"
 		/>
-		<!-- <drop-down :options="[
-			{ text: 'Any city1', id: 'testId11' },
-			{ text: 'Any city2', id: 'testId22' },
-			{ text: 'Any city3', id: 'testId33' },
-		]" drop-down-label="Filter by city" @response="(res) => {
-			console.log(res);
-		}
-			" /> -->
 	</div>
 	<div>
 		<section class="main-section__item">
