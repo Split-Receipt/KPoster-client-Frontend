@@ -3,7 +3,11 @@
 		<div class="main-page__header">
 			<c-p-header />
 		</div>
-
+		<div>
+			<button @click="setLocale('en')">en</button>
+			<button @click="setLocale('fr')">fr</button>
+			<p>{{ $t('welcome') }}</p>
+		</div>
 		<main class="main-page__main">
 			<h1 class="main-page__title">Culture events of Peru</h1>
 
@@ -30,6 +34,8 @@
 </template>
 
 <script setup lang="ts">
+const { locale, setLocale } = useI18n();
+
 const sectionData = [
 	{
 		id: '1',
