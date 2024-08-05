@@ -1,11 +1,7 @@
 <template>
 	<div class="filters">
 		<drop-down
-			:options="[
-				{ text: 'Any city6', id: 'testId1' },
-				{ text: 'Any city4', id: 'testId2' },
-				{ text: 'Any city5', id: 'testId3' },
-			]"
+			:options="remoteCategoryOptions"
 			drop-down-label="Filter by category"
 			@response="
 				(res) => {
@@ -13,19 +9,14 @@
 				}
 			"
 		/>
-		<drop-down
-			:options="[
-				{ text: 'Any city1', id: 'testId11' },
-				{ text: 'Any city2', id: 'testId22' },
-				{ text: 'Any city3', id: 'testId33' },
-			]"
-			drop-down-label="Filter by city"
-			@response="
-				(res) => {
-					console.log(res);
-				}
-			"
-		/>
+		<!-- <drop-down :options="[
+			{ text: 'Any city1', id: 'testId11' },
+			{ text: 'Any city2', id: 'testId22' },
+			{ text: 'Any city3', id: 'testId33' },
+		]" drop-down-label="Filter by city" @response="(res) => {
+			console.log(res);
+		}
+			" /> -->
 	</div>
 	<div>
 		<section class="main-section__item">
@@ -54,6 +45,7 @@
 
 <script setup lang="ts">
 import DropDown from '@shared/gui/DropDown.vue';
+import axios from 'axios';
 
 type Props = {
 	title: string;
@@ -85,9 +77,46 @@ withDefaults(defineProps<Props>(), {
 });
 
 // request for an options for dropdowns
-// fetch('https://admin-dev.culture-portal-cusco.online/api/categories')
-// 	.then((response) => response.json())
-// 	.then((result) => console.log(result.data));
+
+interface RequestOption {
+	id: number;
+	attributes: {
+		category_title: string;
+		category_UID: string;
+		category_value: string;
+		createdAt: string;
+		updatedAt: string;
+	};
+}
+
+// category check points
+
+const categoryOptionsUrl =
+	'https://admin-dev.culture-portal-cusco.online/api/categories';
+const remoteCategoryOptions = ref<Array<RequestOption['attributes']>>([]);
+
+// function to request (1st arg: API's urs, 2nd arg: ref to store response data)
+
+const requestForAnOptions = async (url: string, dataTo: Ref) => {
+	try {
+		await axios
+			.get(url)
+			.then((response) => response.data)
+			.then((result) =>
+				result.data.forEach((e: RequestOption) => {
+					dataTo.value.push(e.attributes);
+				})
+			);
+	} catch (err) {
+		throw new Error(`Error while requesting for an dropdown options: ${err}`);
+	}
+};
+
+// function trigger (when component did mount)
+
+onMounted(() => {
+	requestForAnOptions(categoryOptionsUrl, remoteCategoryOptions);
+});
 </script>
 
 <style scoped lang="scss">
