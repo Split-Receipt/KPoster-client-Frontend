@@ -9,9 +9,9 @@
 
 			<div class="header__menu">
 				<div class="header__buttons header__buttons--oval">
-					<c-p-button shape="oval" color="yellowGrey" text="Sales" />
-					<c-p-button shape="oval" color="yellowGrey" text="News" />
-					<c-p-button shape="oval" color="yellowGrey" text="Charity" />
+					<c-p-button shape="oval" color="yellowGrey" :text="$t('sales')" />
+					<c-p-button shape="oval" color="yellowGrey" :text="$t('news')" />
+					<c-p-button shape="oval" color="yellowGrey" :text="$t('charity')" />
 				</div>
 
 				<div class="header__buttons header__buttons--circle">

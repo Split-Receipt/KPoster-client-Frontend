@@ -6,10 +6,12 @@
 		<div>
 			<button @click="setLocale('en')">en</button>
 			<button @click="setLocale('fr')">fr</button>
+			<button @click="setLocale('es')">es</button>
+			<button @click="setLocale('qu')">qu</button>
 			<p>{{ $t('welcome') }}</p>
 		</div>
 		<main class="main-page__main">
-			<h1 class="main-page__title">Culture events of Peru</h1>
+			<h1 class="main-page__title">{{ $t('main_title') }}</h1>
 
 			<div class="main-page__date-carousel">
 				<date-card-carousel />
@@ -35,6 +37,9 @@
 
 <script setup lang="ts">
 const { locale, setLocale } = useI18n();
+// console.log(locale.value)
+// console.log(navigator.languages);
+// console.log(navigator.language);
 
 const sectionData = [
 	{
