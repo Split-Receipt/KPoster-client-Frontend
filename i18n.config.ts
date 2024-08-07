@@ -1,6 +1,6 @@
 export default defineI18nConfig(() => ({
 	legacy: false,
-	locale: 'en',
+	locale: 'en-US',
 	messages: {
 		en: {
 			welcome: 'Welcome',
@@ -9,12 +9,12 @@ export default defineI18nConfig(() => ({
 			news: 'News',
 			charity: 'Charity',
 		},
-		fr: {
-			welcome: 'Bienvenue',
-			main_title: 'Événements culturels du Pérou',
-			sales: 'Ventes',
-			news: 'Nouvelles',
-			charity: 'Charité',
+		'en-US': {
+			welcome: 'Welcome',
+			main_title: 'Cultural Events in Peru',
+			sales: 'Sales',
+			news: 'News',
+			charity: 'Charity',
 		},
 		es: {
 			welcome: 'Bienvenido',
@@ -22,6 +22,41 @@ export default defineI18nConfig(() => ({
 			sales: 'Ventas',
 			news: 'Noticias',
 			charity: 'Caridad',
+		},
+		fr: {
+			welcome: 'Bienvenue',
+			main_title: 'Événements culturels du Pérou',
+			sales: 'Ventes',
+			news: 'Nouvelles',
+			charity: 'Charité',
+		},
+		ru: {
+			welcome: 'Добро пожаловать',
+			main_title: 'Культурные события Перу',
+			sales: 'Продажи',
+			news: 'Новости',
+			charity: 'Благотворительность',
+		},
+		'ru-RU': {
+			welcome: 'Добро пожаловать',
+			main_title: 'Культурные события Перу',
+			sales: 'Продажи',
+			news: 'Новости',
+			charity: 'Благотворительность',
+		},
+		'ru-BY': {
+			welcome: 'Сардэчная вітаем',
+			main_title: 'Культурные падзеі Перу',
+			sales: 'Продажы',
+			news: 'Навіны',
+			charity: 'Благадзейнасць',
+		},
+		zh: {
+			welcome: '欢迎',
+			main_title: '秘鲁的文化活动',
+			sales: '销售',
+			news: '新闻',
+			charity: '慈善',
 		},
 		qu: {
 			welcome: '¡Sumaq kawsay!',

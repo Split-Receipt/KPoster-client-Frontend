@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   modules: ["@nuxt/eslint", "nuxt-swiper", "@nuxtjs/i18n"],
   i18n: {
     vueI18n: './i18n.config.ts',
-    locales: ['en', 'fr', 'es', 'qu'],
+    locales: ['en', 'es', 'qu'],
     defaultLocale: 'en'
   },
   css: ["/app/styles/scss/styles.scss"],

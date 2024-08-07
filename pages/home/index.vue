@@ -4,10 +4,11 @@
 			<c-p-header />
 		</div>
 		<div>
-			<button @click="setLocale('en')">en</button>
-			<button @click="setLocale('fr')">fr</button>
-			<button @click="setLocale('es')">es</button>
-			<button @click="setLocale('qu')">qu</button>
+			<button @click="langChange('en')">en</button>
+			<button @click="langChange('es')">es</button>
+			<button @click="langChange('qu')">qu</button>
+			<button @click="langChange('ru-RU')">ru</button>
+			<button @click="langChange('zh')">zh</button>
 			<p>{{ $t('welcome') }}</p>
 		</div>
 		<main class="main-page__main">
@@ -36,10 +37,24 @@
 </template>
 
 <script setup lang="ts">
-const { locale, setLocale } = useI18n();
-// console.log(locale.value)
-// console.log(navigator.languages);
-// console.log(navigator.language);
+const { availableLocales, locale, setLocale } = useI18n();
+
+const langChange = (e: string) => {
+	localStorage.setItem('KPoster_selected-language', e);
+	setLocale(e);
+};
+
+onMounted(() => {
+	const selected_language = localStorage.getItem('KPoster_selected-language');
+
+	if (availableLocales.includes(navigator.language) && !selected_language) {
+		setLocale(navigator.language);
+	} else if (selected_language) {
+		setLocale(selected_language);
+	} else {
+		setLocale('es');
+	}
+});
 
 const sectionData = [
 	{
