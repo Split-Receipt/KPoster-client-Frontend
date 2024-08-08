@@ -9,9 +9,27 @@
 
 			<div class="header__menu">
 				<div class="header__buttons header__buttons--oval">
-					<c-p-button shape="oval" color="yellowGrey" text="Sales" />
-					<c-p-button shape="oval" color="yellowGrey" text="News" />
-					<c-p-button shape="oval" color="yellowGrey" text="Charity" />
+					<c-p-button
+						length="large"
+						size="small"
+						shape="oval"
+						color="yellowGrey"
+						text="Sales"
+					/>
+					<c-p-button
+						length="large"
+						size="small"
+						shape="oval"
+						color="yellowGrey"
+						text="News"
+					/>
+					<c-p-button
+						length="large"
+						size="small"
+						shape="oval"
+						color="yellowGrey"
+						text="Charity"
+					/>
 				</div>
 
 				<div class="header__buttons header__buttons--circle">
@@ -91,7 +109,7 @@ import CPButton from '@shared/gui/CPButton.vue';
 
 	&__icon-logo {
 		@media #{$screen-tablet} {
-			background-color: $header-icon-logo-background-color-screen-tablet;
+			background-color: transparent;
 			border-radius: $header-icon-logo-border-radius-screen-tablet;
 			width: $header-icon-logo-width-screen-tablet;
 			height: $header-icon-logo-height-screen-tablet;

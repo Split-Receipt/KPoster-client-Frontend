@@ -8,6 +8,7 @@
 				buttonColors[color],
 				buttonShapes[shape],
 				buttonSizes[size],
+				buttonLength[length],
 			]"
 			@click="(event) => handleClick(event)"
 		>
@@ -29,6 +30,7 @@ type Props = {
 	disabled?: boolean;
 	size?: keyof typeof buttonSizes;
 	color: keyof typeof buttonColors;
+	length?: keyof typeof buttonLength;
 	leftIcon?: string;
 	text?: string;
 };
@@ -43,6 +45,7 @@ withDefaults(defineProps<Props>(), {
 	text: 'button',
 	leftIcon: '',
 	size: 'middle',
+	length: 'medium',
 });
 
 const emit = defineEmits<Emits>();
@@ -69,6 +72,13 @@ enum buttonColors {
 	black = 'button--black',
 	white = 'button--white',
 	transparent = 'button--transparent',
+}
+
+enum buttonLength {
+	short = 'button--short',
+	medium = 'button--medium',
+	large = 'button--large',
+	extraLarge = 'button--extra-large',
 }
 </script>
 
@@ -119,6 +129,10 @@ enum buttonColors {
 		line-height: $button-line-height-small;
 		font-size: $button-font-size-small;
 		padding: $button-small-padding;
+
+		span {
+			padding-top: 5px;
+		}
 	}
 
 	&--middle {
@@ -156,6 +170,22 @@ enum buttonColors {
 	&--transparent {
 		background: transparent;
 		border: 1px solid $button-border-dusty-gray;
+	}
+
+	&--short {
+		width: $button-length-short;
+	}
+
+	&--medium {
+		width: $button-length-medium;
+	}
+
+	&--large {
+		width: $buttonn-length-large;
+	}
+
+	&--extra-large {
+		width: $buttonn-length-Extra-large;
 	}
 }
 </style>
