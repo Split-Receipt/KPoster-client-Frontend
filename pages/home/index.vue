@@ -3,14 +3,6 @@
 		<div class="main-page__header">
 			<c-p-header />
 		</div>
-		<div>
-			<button @click="langChange('en')">en</button>
-			<button @click="langChange('es')">es</button>
-			<button @click="langChange('qu')">qu</button>
-			<button @click="langChange('ru-RU')">ru</button>
-			<button @click="langChange('zh')">zh</button>
-			<p>{{ $t('welcome') }}</p>
-		</div>
 		<main class="main-page__main">
 			<h1 class="main-page__title">{{ $t('main_title') }}</h1>
 
@@ -38,11 +30,6 @@
 
 <script setup lang="ts">
 const { availableLocales, locale, setLocale } = useI18n();
-
-const langChange = (e: string) => {
-	localStorage.setItem('KPoster_selected-language', e);
-	setLocale(e);
-};
 
 onMounted(() => {
 	const selected_language = localStorage.getItem('KPoster_selected-language');

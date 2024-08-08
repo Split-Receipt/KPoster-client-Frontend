@@ -28,6 +28,7 @@
 							class="icon icon-ticket header__button-icon header__button-ticket"
 						/>
 					</button>
+					<lang-selector />
 				</div>
 			</div>
 
