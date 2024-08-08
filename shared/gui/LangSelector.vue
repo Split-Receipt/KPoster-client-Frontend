@@ -65,13 +65,19 @@ const currentLang = ref<string>('');
 const isOpenMenu = ref<HTMLDivElement | null>(null);
 const itIsOpen = ref<boolean>(false);
 
+const handleHideDropdown = () => {
+	isOpenMenu.value?.classList.remove('isOpen');
+	isOpenMenu.value?.classList.add('isClosed');
+	itIsOpen.value = false;
+};
+
 onMounted(() => {
-	document.addEventListener('click', () => {
-		isOpenMenu.value?.classList.remove('isOpen');
-		isOpenMenu.value?.classList.add('isClosed');
-		itIsOpen.value = false;
-	});
+	document.addEventListener('click', () => handleHideDropdown);
 	currentLang.value = localStorage.getItem('KPoster_selected-language') || '';
+});
+
+onBeforeUnmount(() => {
+	document.removeEventListener('click', () => handleHideDropdown);
 });
 
 const menuToggle = () => {
