@@ -34,7 +34,7 @@
 							<div class="checkbox-wrapper">
 								<input
 									:id="'radio-' + option.item_UID"
-									v-model="locale"
+									v-model="currentLang"
 									name="radio_name"
 									:value="option.item_value"
 									type="radio"
@@ -61,7 +61,7 @@ import { useI18n } from 'vue-i18n';
 
 const { locale, setLocale } = useI18n();
 
-const currentLang = ref<string>(locale.value);
+const currentLang = ref<string>('');
 const isOpenMenu = ref<HTMLDivElement | null>(null);
 const itIsOpen = ref<boolean>(false);
 
@@ -71,6 +71,7 @@ onMounted(() => {
 		isOpenMenu.value?.classList.add('isClosed');
 		itIsOpen.value = false;
 	});
+	currentLang.value = localStorage.getItem('KPoster_selected-language') || '';
 });
 
 const menuToggle = () => {
