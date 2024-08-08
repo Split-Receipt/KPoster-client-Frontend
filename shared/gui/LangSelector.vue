@@ -72,23 +72,20 @@ const handleHideDropdown = () => {
 };
 
 onMounted(() => {
-	document.addEventListener('click', () => handleHideDropdown);
 	currentLang.value = localStorage.getItem('KPoster_selected-language') || '';
+	document.addEventListener('click', handleHideDropdown);
 });
 
-onBeforeUnmount(() => {
-	document.removeEventListener('click', () => handleHideDropdown);
-});
-
-const menuToggle = () => {
-	if (!itIsOpen.value) {
+const menuToggle = (e: Event) => {
+	const target = e.target as HTMLInputElement;
+	if (!itIsOpen.value && target.checked) {
 		isOpenMenu.value?.classList.remove('isClosed');
 		isOpenMenu.value?.classList.add('isOpen');
-		itIsOpen.value = !itIsOpen.value;
-	} else {
+		itIsOpen.value = true;
+	} else if (itIsOpen.value && !target.checked) {
 		isOpenMenu.value?.classList.remove('isOpen');
 		isOpenMenu.value?.classList.add('isClosed');
-		itIsOpen.value = !itIsOpen.value;
+		itIsOpen.value = false;
 	}
 };
 
@@ -109,6 +106,10 @@ const availableLanguages = [
 watch(currentLang, (newLang) => {
 	localStorage.setItem('KPoster_selected-language', newLang);
 	setLocale(newLang);
+});
+
+onBeforeUnmount(() => {
+	document.removeEventListener('click', handleHideDropdown);
 });
 </script>
 
