@@ -22,7 +22,7 @@
 			</div>
 			<nav class="popup-window">
 				<ul>
-					<li v-for="option in options" :key="option.item_UID + '-key'">
+					<li v-for="option in options" :key="option.item_UID">
 						<div class="checkbox-container">
 							<div class="checkbox-wrapper">
 								<input
@@ -47,6 +47,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+
 interface Option {
 	item_title: string;
 	item_UID: string;
@@ -60,28 +62,29 @@ interface Option {
 interface Props {
 	dropDownLabel: string;
 	options: Option[];
+	value: string[];
 }
 
 type Events = {
-	(event: 'response', eventData: string[]): void;
+	(event: 'update:modelValue', eventData: string[]): void;
 };
 
-defineProps<Props>();
+const props = defineProps<Props>();
 const emit = defineEmits<Events>();
 
-let dataArray: string[] = [];
+const dataArray = ref<string[]>(props.value || []);
 
 const dataToFilter = (event: Event) => {
 	const target = event.target as HTMLInputElement;
 	const data = target.checked ? target.value : '';
 
 	if (target.checked) {
-		data ? dataArray.push(data) : null;
+		data ? dataArray.value.push(data) : null;
 	} else {
-		dataArray = dataArray.filter((e) => e !== target.value);
+		dataArray.value = dataArray.value.filter((e) => e !== target.value);
 	}
 
-	emit('response', dataArray);
+	emit('update:modelValue', dataArray.value);
 };
 </script>
 

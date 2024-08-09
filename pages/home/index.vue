@@ -12,23 +12,17 @@
 			</div>
 
 			<div class="main-page__filters">
-				<drop-down
+				<c-p-drop-down
+					v-model="categoriesToFilter"
 					:options="remoteCategoryOptions"
 					drop-down-label="Filter by category"
-					@response="
-						(res) => {
-							console.log(res);
-						}
-					"
+					:value="categoriesToFilter"
 				/>
-				<drop-down
+				<c-p-drop-down
+					v-model="citiesToFilter"
 					:options="remoteCityFilterOptions"
 					drop-down-label="Filter by city"
-					@response="
-						(res) => {
-							console.log(res);
-						}
-					"
+					:value="citiesToFilter"
 				/>
 			</div>
 
@@ -51,8 +45,11 @@
 </template>
 
 <script setup lang="ts">
-import DropDown from '@shared/gui/DropDown.vue';
+import CPDropDown from '@shared/gui/CPDropDown.vue';
 import axios from 'axios';
+
+const categoriesToFilter: string[] = [];
+const citiesToFilter: string[] = [];
 
 const sectionData = [
 	{
@@ -291,18 +288,18 @@ const cityOptionsUrl =
 	'https://admin-dev.culture-portal-cusco.online/api/city-filters';
 const remoteCityFilterOptions = ref<Array<RequestOption['attributes']>>([]);
 
-// function to request (1st arg: API's url, 2nd arg: ref to store response data)
-
 const requestForAnOptions = async (url: string, dataTo: Ref) => {
 	try {
 		await axios
 			.get(url)
 			.then((response) => response.data)
-			.then((result) =>
-				result.data.forEach((e: RequestOption) => {
-					dataTo.value.push(e.attributes);
-				})
-			);
+			.then((result) => {
+				if (Array.isArray(result.data)) {
+					result.data.forEach((e: RequestOption) => {
+						dataTo.value.push(e.attributes);
+					});
+				}
+			});
 	} catch (err) {
 		throw new Error(`Error while requesting for an dropdown options: ${err}`);
 	}
