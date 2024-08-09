@@ -26,12 +26,12 @@
 						<div class="checkbox-container">
 							<div class="checkbox-wrapper">
 								<input
-									:id="'check-' + option.item_UID"
+									:id="option.item_UID"
 									:value="option.item_value"
 									type="checkbox"
 									@change="dataToFilter"
 								/>
-								<label :for="'check-' + option.item_UID" style="--size: 22px">
+								<label :for="option.item_UID" style="--size: 22px">
 									<svg viewBox="0,0,50,50">
 										<path d="M5 30 L 20 45 L 45 5" />
 									</svg>
