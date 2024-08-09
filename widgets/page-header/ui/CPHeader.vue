@@ -9,9 +9,27 @@
 
 			<div class="header__menu">
 				<div class="header__buttons header__buttons--oval">
-					<cp-button shape="oval" color="yellowGrey" :text="$t('sales')" />
-					<cp-button shape="oval" color="yellowGrey" :text="$t('news')" />
-					<cp-button shape="oval" color="yellowGrey" :text="$t('charity')" />
+					<cp-button
+						length="large"
+						size="small"
+						shape="oval"
+						color="yellowGrey"
+						:text="$t('sales')"
+					/>
+					<cp-button
+						length="large"
+						size="small"
+						shape="oval"
+						color="yellowGrey"
+						:text="$t('sales')"
+					/>
+					<cp-button
+						length="large"
+						size="small"
+						shape="oval"
+						color="yellowGrey"
+						:text="$t('charity')"
+					/>
 				</div>
 
 				<div class="header__buttons header__buttons--circle">
@@ -92,7 +110,7 @@ import CpButton from '@shared/gui/CpButton.vue';
 
 	&__icon-logo {
 		@media #{$screen-tablet} {
-			background-color: $header-icon-logo-background-color-screen-tablet;
+			background-color: transparent;
 			border-radius: $header-icon-logo-border-radius-screen-tablet;
 			width: $header-icon-logo-width-screen-tablet;
 			height: $header-icon-logo-height-screen-tablet;
