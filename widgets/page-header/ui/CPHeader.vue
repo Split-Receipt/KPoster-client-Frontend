@@ -9,9 +9,9 @@
 
 			<div class="header__menu">
 				<div class="header__buttons header__buttons--oval">
-					<cp-button shape="oval" color="yellowGrey" text="Sales" />
-					<cp-button shape="oval" color="yellowGrey" text="News" />
-					<cp-button shape="oval" color="yellowGrey" text="Charity" />
+					<cp-button shape="oval" color="yellowGrey" :text="$t('sales')" />
+					<cp-button shape="oval" color="yellowGrey" :text="$t('news')" />
+					<cp-button shape="oval" color="yellowGrey" :text="$t('charity')" />
 				</div>
 
 				<div class="header__buttons header__buttons--circle">
@@ -28,6 +28,7 @@
 							class="icon icon-ticket header__button-icon header__button-ticket"
 						/>
 					</button>
+					<lang-selector />
 				</div>
 			</div>
 

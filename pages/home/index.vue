@@ -3,9 +3,8 @@
 		<div class="main-page__header">
 			<c-p-header />
 		</div>
-
 		<main class="main-page__main">
-			<h1 class="main-page__title">Culture events of Peru</h1>
+			<h1 class="main-page__title">{{ $t('main_title') }}</h1>
 
 			<div class="main-page__date-carousel">
 				<date-card-carousel />
@@ -50,6 +49,19 @@ import axios from 'axios';
 
 const categoriesToFilter: string[] = [];
 const citiesToFilter: string[] = [];
+const { availableLocales, locale, setLocale } = useI18n();
+
+onMounted(() => {
+	const selected_language = localStorage.getItem('KPoster_selected-language');
+
+	if (availableLocales.includes(navigator.language) && !selected_language) {
+		setLocale(navigator.language);
+	} else if (selected_language) {
+		setLocale(selected_language);
+	} else {
+		setLocale('es');
+	}
+});
 
 const sectionData = [
 	{
