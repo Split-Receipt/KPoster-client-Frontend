@@ -26,7 +26,7 @@
 						<div class="checkbox-container">
 							<div class="checkbox-wrapper">
 								<input
-									:id="'check-' + option.item_UID"
+									:id="option.item_UID"
 									:value="option.item_value"
 									type="checkbox"
 									@change="dataToFilter"
