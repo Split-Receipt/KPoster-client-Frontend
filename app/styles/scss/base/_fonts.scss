@@ -30,3 +30,13 @@
 		url("/app/styles/fonts/AnotherSans/Web/WOFF/NeuethingSans-MediumExpanded.woff") format("woff"),
 		url("/app/styles/fonts/AnotherSans/Web/WOFF2/NeuethingSans-MediumExpanded.woff2") format("woff2");
 }
+
+@font-face {
+  font-family: 'NeuethingSans-MediumSemiExpanded';
+  src: local('NeuethingSans-MediumSemiExpanded'),
+  url('/app/styles/fonts/NeuethingSans-MediumSemiExpanded.otf'),
+  url('/app/styles/fonts/AnotherSans/OTF/NeuethingSans-MediumSemiExpanded.otf'),
+  url('/app/styles/fonts/AnotherSan/TTF/NeuethingSans-MediumSemiExpanded.ttf'),
+  url('/app/styles/fonts/AnotherSans/Web/WOFF/NeuethingSans-MediumSemiExpanded.woff'),
+  url('/app/styles/fonts/AnotherSans/Web/WOFF2/NeuethingSans-MediumSemiExpanded.woff2')
+}
