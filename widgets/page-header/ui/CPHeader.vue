@@ -9,9 +9,9 @@
 
 			<div class="header__menu">
 				<div class="header__buttons header__buttons--oval">
-					<c-p-button shape="oval" color="yellowGrey" text="Sales" />
-					<c-p-button shape="oval" color="yellowGrey" text="News" />
-					<c-p-button shape="oval" color="yellowGrey" text="Charity" />
+					<cp-button shape="oval" color="yellowGrey" text="Sales" />
+					<cp-button shape="oval" color="yellowGrey" text="News" />
+					<cp-button shape="oval" color="yellowGrey" text="Charity" />
 				</div>
 
 				<div class="header__buttons header__buttons--circle">
@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import CPButton from '@shared/gui/CPButton.vue';
+import CpButton from '@shared/gui/CpButton.vue';
 </script>
 
 <style scoped lang="scss">
