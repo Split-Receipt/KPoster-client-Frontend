@@ -194,7 +194,7 @@ export default withNuxt([
 					},
 				},
 			],
-			'vue/max-attributes-per-line': ['error', { singleline: 3, multiline: 1 }],
+			'vue/max-attributes-per-line': ['error', { singleline: 4, multiline: 1 }],
 			'vue/block-lang': [
 				'error',
 				{
