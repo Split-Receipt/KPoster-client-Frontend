@@ -10,21 +10,21 @@
 			<div class="header__menu">
 				<div class="header__buttons header__buttons--oval">
 					<cp-button
-						length="large"
+						width="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
 						:text="$t('sales')"
 					/>
 					<cp-button
-						length="large"
+						width="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
 						:text="$t('sales')"
 					/>
 					<cp-button
-						length="large"
+						width="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
