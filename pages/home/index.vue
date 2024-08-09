@@ -10,6 +10,21 @@
 				<date-card-carousel />
 			</div>
 
+			<div class="main-page__filters">
+				<cp-drop-down
+					v-model="categoriesToFilter"
+					:options="remoteCategoryOptions"
+					drop-down-label="Filter by category"
+					:value="categoriesToFilter"
+				/>
+				<cp-drop-down
+					v-model="citiesToFilter"
+					:options="remoteCityFilterOptions"
+					drop-down-label="Filter by city"
+					:value="citiesToFilter"
+				/>
+			</div>
+
 			<div class="main-page__section-list">
 				<main-section
 					v-for="(sectionItem, index) in sectionData"
@@ -29,6 +44,11 @@
 </template>
 
 <script setup lang="ts">
+import CpDropDown from '@shared/gui/CpDropDown.vue';
+import axios from 'axios';
+
+const categoriesToFilter: string[] = [];
+const citiesToFilter: string[] = [];
 const { availableLocales, locale, setLocale } = useI18n();
 
 onMounted(() => {
@@ -252,6 +272,57 @@ const sectionData = [
 		],
 	},
 ];
+
+// request for an options for dropdowns
+
+interface RequestOption {
+	id: number;
+	attributes: {
+		item_title: string;
+		item_UID: string;
+		item_value: string;
+		createdAt: string;
+		updatedAt: string;
+		publishedAt: string;
+		locale: string;
+	};
+}
+
+// category check points
+
+const categoryOptionsUrl =
+	'https://admin-dev.culture-portal-cusco.online/api/categories';
+const remoteCategoryOptions = ref<Array<RequestOption['attributes']>>([]);
+
+// city filter checkpoint
+
+const cityOptionsUrl =
+	'https://admin-dev.culture-portal-cusco.online/api/city-filters';
+const remoteCityFilterOptions = ref<Array<RequestOption['attributes']>>([]);
+
+const requestForAnOptions = async (url: string, dataTo: Ref) => {
+	try {
+		await axios
+			.get(url)
+			.then((response) => response.data)
+			.then((result) => {
+				if (Array.isArray(result.data)) {
+					result.data.forEach((e: RequestOption) => {
+						dataTo.value.push(e.attributes);
+					});
+				}
+			});
+	} catch (err) {
+		throw new Error(`Error while requesting for an dropdown options: ${err}`);
+	}
+};
+
+// function trigger (when component did mount)
+
+onMounted(() => {
+	requestForAnOptions(categoryOptionsUrl, remoteCategoryOptions);
+	requestForAnOptions(cityOptionsUrl, remoteCityFilterOptions);
+});
 </script>
 
 <style scoped lang="scss">
@@ -321,5 +392,10 @@ const sectionData = [
 			}
 		}
 	}
+}
+
+.main-page__filters {
+	display: flex;
+	margin-top: 25px;
 }
 </style>
