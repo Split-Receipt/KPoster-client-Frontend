@@ -12,13 +12,13 @@
 			</div>
 
 			<div class="main-page__filters">
-				<c-p-drop-down
+				<cp-drop-down
 					v-model="categoriesToFilter"
 					:options="remoteCategoryOptions"
 					drop-down-label="Filter by category"
 					:value="categoriesToFilter"
 				/>
-				<c-p-drop-down
+				<cp-drop-down
 					v-model="citiesToFilter"
 					:options="remoteCityFilterOptions"
 					drop-down-label="Filter by city"
@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import CPDropDown from '@shared/gui/CPDropDown.vue';
+import CpDropDown from '@shared/gui/CpDropDown.vue';
 import axios from 'axios';
 
 const categoriesToFilter: string[] = [];
