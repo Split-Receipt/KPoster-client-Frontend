@@ -1,7 +1,7 @@
 <template>
 	<div class="date-card-carousel__wrapper">
 		<div v-if="dateLoaded" class="date-card-carousel">
-			<c-p-button
+			<cp-button
 				shape="circle"
 				color="transparent"
 				left-icon="arrow-left"
@@ -51,7 +51,7 @@
 				</swiper-slide>
 			</swiper>
 
-			<c-p-button
+			<cp-button
 				shape="circle"
 				color="black"
 				left-icon="arrow-right"

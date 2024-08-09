@@ -9,26 +9,26 @@
 
 			<div class="header__menu">
 				<div class="header__buttons header__buttons--oval">
-					<c-p-button
+					<cp-button
 						length="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						text="Sales"
+						:text="$t('sales')"
 					/>
-					<c-p-button
+					<cp-button
 						length="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						text="News"
+						:text="$t('sales')"
 					/>
-					<c-p-button
+					<cp-button
 						length="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						text="Charity"
+						:text="$t('charity')"
 					/>
 				</div>
 
@@ -46,6 +46,7 @@
 							class="icon icon-ticket header__button-icon header__button-ticket"
 						/>
 					</button>
+					<lang-selector />
 				</div>
 			</div>
 
@@ -55,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import CPButton from '@shared/gui/CPButton.vue';
+import CpButton from '@shared/gui/CpButton.vue';
 </script>
 
 <style scoped lang="scss">

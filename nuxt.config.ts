@@ -3,7 +3,12 @@ import { defineNuxtConfig } from "nuxt/config";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxt/eslint", "nuxt-swiper"],
+  modules: ["@nuxt/eslint", "nuxt-swiper", "@nuxtjs/i18n"],
+  i18n: {
+    vueI18n: './i18n.config.ts',
+    locales: ['en', 'es', 'qu'],
+    defaultLocale: 'en'
+  },
   css: ["/app/styles/scss/styles.scss"],
   vite: {
     css: {

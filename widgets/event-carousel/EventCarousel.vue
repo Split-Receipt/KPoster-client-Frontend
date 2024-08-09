@@ -2,7 +2,7 @@
 	<div class="event-carousel__wrapper">
 		<div class="event-carousel">
 			<div class="event-carousel__controls">
-				<c-p-button
+				<cp-button
 					shape="square"
 					color="transparent"
 					left-icon="arrow-left"
@@ -12,7 +12,7 @@
 						'event-carousel__button',
 					]"
 				/>
-				<c-p-button
+				<cp-button
 					shape="square"
 					color="black"
 					left-icon="arrow-right"

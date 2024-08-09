@@ -6,7 +6,7 @@
 			class="footer__list"
 			:list="list"
 		/>
-		<c-p-button
+		<cp-button
 			class="footer__button"
 			color="yellowGrey"
 			shape="oval"
@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import FooterList from './FooterList.vue';
-import CPButton from '@shared/gui/CPButton.vue';
+import CpButton from '@shared/gui/CpButton.vue';
 import { footerLists } from '../model';
 </script>
 
