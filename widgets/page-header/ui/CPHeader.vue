@@ -1,7 +1,7 @@
 <template>
 	<div class="header__wrapper">
 		<div class="header__img">
-			<img src="/images/header-background.jpeg" class="header__img-pic" />
+			<img src="/images/header-background.png" class="header__img-pic" />
 		</div>
 
 		<div class="header__controls">
