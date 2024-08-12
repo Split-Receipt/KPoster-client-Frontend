@@ -47,8 +47,6 @@
 import CpDropDown from '@shared/gui/CpDropDown.vue';
 import axios from 'axios';
 
-const testQWE = ref<string>('');
-
 const categoriesToFilter: string[] = [];
 const citiesToFilter: string[] = [];
 const { availableLocales, locale, setLocale } = useI18n();
