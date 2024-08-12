@@ -38,20 +38,22 @@
 						<div class="checkbox-container">
 							<div class="checkbox-wrapper">
 								<input
-									:id="'radio-' + option.item_UID"
+									:id="option.item_UID"
 									v-model="currentLang"
 									name="radio_name"
 									:value="option.item_value"
 									type="radio"
 									@change="closeMenu"
 								/>
-								<label :for="'radio-' + option.item_UID" style="--size: 22px">
+								<label :for="option.item_UID" style="--size: 22px">
 									<svg viewBox="0,0,50,50">
 										<path d="M5 30 L 20 45 L 45 5" />
 									</svg>
 								</label>
+								<label class="radioLabel" :for="option.item_UID">{{
+									option.item_title
+								}}</label>
 							</div>
-							<span>{{ option.item_title }}</span>
 						</div>
 					</li>
 				</ul>
@@ -128,6 +130,8 @@ onBeforeUnmount(() => {
 // checkbox scss -----------------------------------------------
 
 .checkbox-wrapper {
+	display: flex;
+	align-items: center;
 	* {
 		box-sizing: border-box;
 
@@ -344,10 +348,11 @@ onBeforeUnmount(() => {
 		display: flex;
 		align-items: center;
 
-		span {
+		.radioLabel {
 			font-size: 18px;
 			margin-left: 15px;
 			font-weight: 400;
+			cursor: pointer;
 			padding-right: 15px;
 			padding-top: 6px;
 			line-height: 28px;
