@@ -1,7 +1,12 @@
 <template>
 	<div class="dropDown__container">
 		<label class="popup">
-			<input type="checkbox" @change="menuToggle" />
+			<input
+				ref="menuTrigger"
+				class="isMenuTrigger"
+				type="checkbox"
+				@change="menuToggle"
+			/>
 			<div tabindex="0" class="burger">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -64,11 +69,17 @@ const { locale, setLocale } = useI18n();
 const currentLang = ref<string>('');
 const isOpenMenu = ref<HTMLDivElement | null>(null);
 const itIsOpen = ref<boolean>(false);
+const menuTrigger = ref<HTMLInputElement | null>(null);
 
-const handleHideDropdown = () => {
+const handleHideDropdown = (e: Event) => {
 	isOpenMenu.value?.classList.remove('isOpen');
 	isOpenMenu.value?.classList.add('isClosed');
 	itIsOpen.value = false;
+	if (menuTrigger.value && e.target && e.target instanceof HTMLElement) {
+		e.target.className !== 'isMenuTrigger'
+			? (menuTrigger.value.checked = false)
+			: null;
+	}
 };
 
 onMounted(() => {
