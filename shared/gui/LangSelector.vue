@@ -284,8 +284,9 @@ onBeforeUnmount(() => {
 	font-family: var(--nav-font-family);
 	color: var(--nav-text-color);
 	border-radius: var(--nav-border-radius);
-	box-shadow: var(--nav-shadow-width) var(--nav-shadow-color);
-	border: var(--nav-border-width) solid var(--nav-border-color);
+	-webkit-box-shadow: 0px 0px 29px -9px rgba(34, 60, 80, 0.2);
+	-moz-box-shadow: 0px 0px 29px -9px rgba(34, 60, 80, 0.2);
+	box-shadow: 0px 0px 29px -9px rgba(34, 60, 80, 0.2);
 	top: 30px;
 	right: 0;
 	transition: var(--burger-transition);

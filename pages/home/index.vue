@@ -338,7 +338,7 @@ onMounted(() => {
 		}
 
 		@media #{$screen-desktop} {
-			padding: 0 20px;
+			padding: 0 5%;
 			margin-top: 33px;
 		}
 	}

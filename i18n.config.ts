@@ -8,6 +8,7 @@ export default defineI18nConfig(() => ({
 			sales: 'Sales',
 			news: 'News',
 			charity: 'Charity',
+			Popular_events: 'Popular events',
 		},
 		'en-US': {
 			welcome: 'Welcome',
@@ -15,6 +16,7 @@ export default defineI18nConfig(() => ({
 			sales: 'Sales',
 			news: 'News',
 			charity: 'Charity',
+			Popular_events: 'Popular events',
 		},
 		es: {
 			welcome: 'Bienvenido',
@@ -22,6 +24,7 @@ export default defineI18nConfig(() => ({
 			sales: 'Ventas',
 			news: 'Noticias',
 			charity: 'Caridad',
+			Popular_events: 'Eventos populares',
 		},
 		fr: {
 			welcome: 'Bienvenue',
@@ -29,6 +32,7 @@ export default defineI18nConfig(() => ({
 			sales: 'Ventes',
 			news: 'Nouvelles',
 			charity: 'Charité',
+			Popular_events: 'Événements populaires',
 		},
 		ru: {
 			welcome: 'Добро пожаловать',
@@ -36,6 +40,7 @@ export default defineI18nConfig(() => ({
 			sales: 'Продажи',
 			news: 'Новости',
 			charity: 'Благотворительность',
+			Popular_events: 'Популярные события',
 		},
 		'ru-RU': {
 			welcome: 'Добро пожаловать',
@@ -43,6 +48,7 @@ export default defineI18nConfig(() => ({
 			sales: 'Продажи',
 			news: 'Новости',
 			charity: 'Благотворительность',
+			Popular_events: 'Популярные события',
 		},
 		'ru-BY': {
 			welcome: 'Сардэчная вітаем',
@@ -50,6 +56,7 @@ export default defineI18nConfig(() => ({
 			sales: 'Продажы',
 			news: 'Навіны',
 			charity: 'Благадзейнасць',
+			Popular_events: 'Папулярныя падзеі',
 		},
 		zh: {
 			welcome: '欢迎',
@@ -57,6 +64,7 @@ export default defineI18nConfig(() => ({
 			sales: '销售',
 			news: '新闻',
 			charity: '慈善',
+			Popular_events: '热门活动',
 		},
 		qu: {
 			welcome: '¡Sumaq kawsay!',
@@ -64,6 +72,7 @@ export default defineI18nConfig(() => ({
 			sales: 'Venta',
 			news: 'Ñukanchik',
 			charity: 'Kawsay',
+			Popular_events: 'Popular eventokuna',
 		},
 	},
 }));

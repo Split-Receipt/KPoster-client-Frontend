@@ -2,7 +2,13 @@
 	<div class="event-card__wrapper">
 		<div class="event-card" :class="[eventCardSize[size]]">
 			<div class="event-card__img" :class="[eventCardImageSize[size]]">
-				<img class="event-card__img-pic" :src="photoUrl" />
+				<!-- <img class="event-card__img-pic" :src="photoUrl" /> -->
+				<nuxt-img
+					placeholder="/images/event-card_blured.jpg"
+					loading="lazy"
+					class="event-card__img-pic"
+					:src="photoUrl"
+				/>
 			</div>
 			<h4 class="event-card__title">
 				{{ eventCardData.title }}
