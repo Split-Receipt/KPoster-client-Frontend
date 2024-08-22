@@ -54,8 +54,8 @@ jobs:
       uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{secrets.HOST}}
-        user: ${{secrets.HOST_USER}}
-        key: ${{ secrets.HOST_KEY }}
+        username: ${{secrets.HOST_USER}}
+        key: ${{secrets.HOST_KEY}}
         script: |
           echo '--- START WORK ON REMOTE SERVER ---';
           cd ${{ secrets.PROJECT_FOLDER }};
