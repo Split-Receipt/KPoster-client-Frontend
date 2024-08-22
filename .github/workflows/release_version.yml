@@ -65,3 +65,4 @@ jobs:
           git checkout main;
           git pull;
           echo "APP_VERSION=$(cat package.json | grep '"version"' | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')" > app-version.env;
+          docker-compose --env-file secret.env up --build
