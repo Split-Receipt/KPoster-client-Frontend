@@ -50,4 +50,4 @@ jobs:
         run: npm version patch
       
       - name: Commit and push changes
-        run: git commit -a -m "Release ${{ inputs.release_type }}" && git push origin HEAD:main
+        run: git commit --no-verify -a -m "Release ${{ inputs.release_type }}" && git push origin HEAD:main
