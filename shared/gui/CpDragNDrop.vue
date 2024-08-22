@@ -114,7 +114,7 @@ const isExpectedTypeError = ref<boolean>(false);
 const isExtensionError = ref<boolean>(false);
 
 // expected types: image | video | audio | application
-// expected extensions: mp3 | wav | mp4 | svg | png | jpeg | jpg | pdf
+// expected extensions: mp3 | wav | mpeg | mp4 | svg | png | jpeg | jpg | pdf
 
 const isImage = computed(() => {
 	return chosenFile.value && chosenFile.value.type.startsWith('image/');
