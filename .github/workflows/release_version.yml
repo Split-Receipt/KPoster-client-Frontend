@@ -27,6 +27,11 @@ jobs:
       
       - name: Install dependencies
         run: npm install
+
+      - name: Set Git author information
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
       
       - name: Get release type
         id: get_release_type
