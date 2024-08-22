@@ -1,0 +1,48 @@
+name: Release Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Choose release type'
+        required: true
+        default: ''
+        type: choice
+        options:
+          - Major
+          - Minor
+          - Patch
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Get release type
+        id: get_release_type
+        run: echo "::set-output name=release_type::${{ inputs.release_type }}"
+      
+      - name: Update package.json version
+        if: steps.get_release_type.outputs.release_type == 'Major'
+        run: npm version major
+      
+      - name: Update package.json version
+        if: steps.get_release_type.outputs.release_type == 'Minor'
+        run: npm version minor
+      
+      - name: Update package.json version
+        if: steps.get_release_type.outputs.release_type == 'Patch'
+        run: npm version patch
+      
+      - name: Commit and push changes
+        run: git commit -a -m "Release ${{ inputs.release_type }}" && git push origin HEAD:TAZ-XX_github-actions
