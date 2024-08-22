@@ -55,7 +55,7 @@ jobs:
       with:
         host: ${{secrets.HOST}}
         user: ${{secrets.HOST_USER}}
-        password: ${{ secrets.HOST_PASSWORD }}
+        key: ${{ secrets.HOST_KEY }}
         script: |
           echo '--- START WORK ON REMOTE SERVER ---';
           cd ${{ secrets.PROJECT_FOLDER }};
