@@ -65,4 +65,5 @@ jobs:
           git checkout main;
           git pull;
           echo "APP_VERSION=$(cat package.json | grep '"version"' | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')" > app-version.env;
-          docker-compose --env-file app-version.env up --build --detach
+          docker rmi $(docker images --filter "reference=culture-portal-cusco-client*" -q);
+          docker compose --env-file app-version.env up --build --detach;
