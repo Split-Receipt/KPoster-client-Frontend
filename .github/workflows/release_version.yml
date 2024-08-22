@@ -45,12 +45,6 @@ jobs:
         if: steps.get_release_type.outputs.release_type == 'Patch'
         run: npm version patch && git push origin main
 
-      - name: Tag release
-        uses: actions/tag-release@v2
-        with:
-          ref: main
-          tag-name: v${GITHUB_SHA}
-
   deploy:
     needs: update-project-version
     runs-on: ubuntu-latest
