@@ -1,7 +1,6 @@
 <template>
 	<div class="header__wrapper">
 		<div class="header__img">
-			<!-- <img src="/images/header-background.png" class="header__img-pic" /> -->
 			<nuxt-img
 				placeholder="/images/header-background_small_blured.jpg"
 				loading="lazy"
