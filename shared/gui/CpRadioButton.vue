@@ -23,15 +23,15 @@
 </template>
 
 <script setup lang="ts">
-interface RadioVar {
+type RadioVar = {
 	id: string;
 	value: string;
 	label?: string;
-}
+};
 
-interface RadioProps {
+type RadioProps = {
 	options: RadioVar[];
-}
+};
 
 type Events = {
 	(event: 'checkUpdate', eventData: string): void;
