@@ -14,7 +14,7 @@ on:
           - Patch
 
 jobs:
-  release:
+  Update project version:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -33,18 +33,36 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
       
-      - name: Get release type
-        id: get_release_type
-        run: echo "::set-output name=release_type::${{ inputs.release_type }}"
-      
-      - name: Update package.json version
+      - name: Major release
         if: steps.get_release_type.outputs.release_type == 'Major'
-        run: npm version major && git push origin HEAD:main
+        run: npm version major && git push origin main
       
-      - name: Update package.json version
+      - name: Minor release
         if: steps.get_release_type.outputs.release_type == 'Minor'
-        run: npm version minor && git push origin HEAD:main
+        run: npm version minor && git push origin main
       
-      - name: Update package.json version
+      - name: Patch release
         if: steps.get_release_type.outputs.release_type == 'Patch'
-        run: npm version patch && git push origin HEAD:main
+        run: npm version patch && git push origin main
+
+      - name: Tag release
+        uses: actions/tag-release@v2
+        with:
+          ref: main
+          tag-name: v${GITHUB_SHA}
+
+  Deploy:
+    uses: D3rHase/ssh-command-action@v0.2.2
+    with:
+      host: ${{secrets.SSH_HOST}}
+      user: ${{secrets.SSH_USER}}
+      private_key: ${{secrets.SSH_PRIVATE_KEY}}
+      command: |
+        echo '--- START WORK ON REMOTE SERVER ---';
+        cd ${{ secrets.PROJECT_FOLDER }};
+        echo '--- LIST OF FILES ---';
+        ls -al;
+        echo '--- GIT INFORMATION ---'
+        git checkout main;
+        git pull;
+        echo "APP_VERSION=$(cat package.json | grep '"version"' | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')" > app-version.env;
