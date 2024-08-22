@@ -86,7 +86,7 @@ export default defineI18nConfig(() => ({
 		},
 		ru: {
 			welcome: 'Добро пожаловать',
-			main_title: 'Культурные события Перу. Добро пожаловать!',
+			main_title: 'Культурные события Перу',
 			sales: 'Продажи',
 			news: 'Новости',
 			charity: 'Благотворительность',
