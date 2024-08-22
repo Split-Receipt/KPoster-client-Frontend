@@ -49,7 +49,7 @@ import axios from 'axios';
 
 const categoriesToFilter: string[] = [];
 const citiesToFilter: string[] = [];
-const { availableLocales, locale, setLocale } = useI18n();
+const { availableLocales, setLocale } = useI18n();
 
 onMounted(() => {
 	const selected_language = localStorage.getItem('KPoster_selected-language');

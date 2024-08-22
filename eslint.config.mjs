@@ -37,6 +37,7 @@ export default withNuxt([
 			},
 		},
 		rules: {
+			'no-useless-escape': 'off',
 			'vue/func-call-spacing': ['error', 'never'],
 			'vue/no-v-model-argument': 'off',
 			'vue/attribute-hyphenation': ['error', 'always'],
@@ -212,6 +213,7 @@ export default withNuxt([
 			'svgFontGenerator.js',
 			'tsconfig.json',
 			'global.d.ts',
+			'i18n.config.ts',
 		],
 	},
 ]);
