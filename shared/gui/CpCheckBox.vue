@@ -18,11 +18,11 @@
 </template>
 
 <script setup lang="ts">
-interface CheckProps {
+type CheckProps = {
 	id: string;
 	value: string;
 	title?: string;
-}
+};
 
 type CheckEmits = {
 	(event: 'update:checkboxUpdate', eventData: string): void;
