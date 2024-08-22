@@ -39,15 +39,12 @@ jobs:
       
       - name: Update package.json version
         if: steps.get_release_type.outputs.release_type == 'Major'
-        run: npm version major
+        run: npm version major && git push origin HEAD:main
       
       - name: Update package.json version
         if: steps.get_release_type.outputs.release_type == 'Minor'
-        run: npm version minor
+        run: npm version minor && git push origin HEAD:main
       
       - name: Update package.json version
         if: steps.get_release_type.outputs.release_type == 'Patch'
-        run: npm version patch
-      
-      - name: Commit and push changes
-        run: git commit --no-verify -a -m "Release ${{ inputs.release_type }}" && git push origin HEAD:main
+        run: npm version patch && git push origin HEAD:main
