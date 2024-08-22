@@ -14,7 +14,7 @@ on:
           - Patch
 
 jobs:
-  Update project version:
+  update-project-version:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -51,18 +51,22 @@ jobs:
           ref: main
           tag-name: v${GITHUB_SHA}
 
-  Deploy:
-    uses: D3rHase/ssh-command-action@v0.2.2
-    with:
-      host: ${{secrets.SSH_HOST}}
-      user: ${{secrets.SSH_USER}}
-      private_key: ${{secrets.SSH_PRIVATE_KEY}}
-      command: |
-        echo '--- START WORK ON REMOTE SERVER ---';
-        cd ${{ secrets.PROJECT_FOLDER }};
-        echo '--- LIST OF FILES ---';
-        ls -al;
-        echo '--- GIT INFORMATION ---'
-        git checkout main;
-        git pull;
-        echo "APP_VERSION=$(cat package.json | grep '"version"' | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')" > app-version.env;
+  deploy:
+    needs: update-project-version
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run command on remote server
+      uses: D3rHase/ssh-command-action@v0.2.2
+      with:
+        host: ${{secrets.SSH_HOST}}
+        user: ${{secrets.SSH_USER}}
+        private_key: ${{secrets.SSH_PRIVATE_KEY}}
+        command: |
+          echo '--- START WORK ON REMOTE SERVER ---';
+          cd ${{ secrets.PROJECT_FOLDER }};
+          echo '--- LIST OF FILES ---';
+          ls -al;
+          echo '--- GIT INFORMATION ---'
+          git checkout main;
+          git pull;
+          echo "APP_VERSION=$(cat package.json | grep '"version"' | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')" > app-version.env;
