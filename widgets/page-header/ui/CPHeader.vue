@@ -8,7 +8,6 @@
 				src="/images/header-background_small.png"
 			/>
 		</div>
-
 		<div class="header__controls">
 			<img src="/images/logo.svg" class="icon icon-logo header__icon-logo" />
 
