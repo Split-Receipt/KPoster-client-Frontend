@@ -49,14 +49,14 @@
 						},
 					},
 					1280: {
-						slidesPerView: 2,
+						slidesPerView: 3,
 						grid: {
 							fill: 'row',
 							rows: 2,
 						},
 					},
 					1920: {
-						slidesPerView: 4,
+						slidesPerView: 3,
 						grid: {
 							fill: 'row',
 							rows: 1,
