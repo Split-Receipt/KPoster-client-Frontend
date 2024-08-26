@@ -24,7 +24,6 @@
 					:value="citiesToFilter"
 				/>
 			</div>
-
 			<div class="main-page__section-list">
 				<main-section
 					v-for="(sectionItem, index) in sectionData"

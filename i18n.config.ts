@@ -3,11 +3,13 @@ export default defineI18nConfig(() => ({
 	locale: 'en-US',
 	messages: {
 		en: {
+			// home page features
 			welcome: 'Welcome',
 			main_title: 'Culture events of Peru',
 			sales: 'Sales',
 			news: 'News',
 			charity: 'Charity',
+			// drag n drop component features
 			clear: 'Clear',
 			drag_n_drop: 'Drag and drop some files here or click to select files',
 			file_drop: 'Drop the files here...',
@@ -21,13 +23,19 @@ export default defineI18nConfig(() => ({
 			dnd_resolution_min: 'Resolution at least',
 			dnd_resolution_max: 'Max resolution',
 			dnd_upTo: 'up to',
+			// partners page features
+			partners_title: `Sistema de gestión de contenidos del proveedor`,
+			partners_subtitle: 'Aquí puede editar la información de la tarjeta de empresa',
+			partners_formTitle: 'Cambiar la información',
 		},
 		'en-US': {
+			// home page features
 			welcome: 'Welcome',
 			main_title: 'Cultural Events in Peru',
 			sales: 'Sales',
 			news: 'News',
 			charity: 'Charity',
+			// drag n drop component features
 			clear: 'Clear',
 			drag_n_drop: 'Drag and drop some files here or click to select files',
 			file_drop: 'Drop the files here...',
@@ -41,13 +49,19 @@ export default defineI18nConfig(() => ({
 			dnd_resolution_min: 'Resolution at least',
 			dnd_resolution_max: 'Max resolution',
 			dnd_upTo: 'up to',
+			// partners page features
+			partners_title: 'Sistema de gestión de contenidos del proveedor',
+			partners_subtitle: 'Aquí puede editar la información de la tarjeta de empresa',
+			partners_formTitle: 'Cambiar la información',
 		},
 		es: {
+			// home page features
 			welcome: 'Bienvenido',
 			main_title: 'Eventos culturales de Perú',
 			sales: 'Ventas',
 			news: 'Noticias',
 			charity: 'Caridad',
+			// drag n drop component features
 			clear: 'Clara',
 			drag_n_drop:
 				'Arrastre y suelte algunos archivos aquí o haga clic para seleccionar archivos',
@@ -62,13 +76,19 @@ export default defineI18nConfig(() => ({
 			dnd_resolution_min: 'Resolución al menos',
 			dnd_resolution_max: 'Resolución máxima',
 			dnd_upTo: 'hasta',
+			// partners page features
+			partners_title: 'Sistema de gestión de contenidos del proveedor',
+			partners_subtitle: 'Aquí puede editar la información de la tarjeta de empresa',
+			partners_formTitle: 'Cambiar la información',
 		},
 		fr: {
+			// home page features
 			welcome: 'Bienvenue',
 			main_title: 'Événements culturels du Pérou',
 			sales: 'Ventes',
 			news: 'Nouvelles',
 			charity: 'Charité',
+			// drag n drop component features
 			clear: 'Claire',
 			drag_n_drop:
 				'Faites glisser et déposez quelques fichiers ici ou cliquez pour sélectionner des fichiers',
@@ -83,13 +103,19 @@ export default defineI18nConfig(() => ({
 			dnd_resolution_min: 'Résolution au moins',
 			dnd_resolution_max: 'Résolution maximale',
 			dnd_upTo: `jusqu'à`,
+			// partners page features
+			partners_title: 'Sistema de gestión de contenidos del proveedor',
+			partners_subtitle: 'Aquí puede editar la información de la tarjeta de empresa',
+			partners_formTitle: 'Cambiar la información',
 		},
 		ru: {
+			// home page features
 			welcome: 'Добро пожаловать',
 			main_title: 'Культурные события Перу',
 			sales: 'Продажи',
 			news: 'Новости',
 			charity: 'Благотворительность',
+			// drag n drop component features
 			clear: 'Очистить',
 			drag_n_drop: 'Перетащите сюда или щелкните, чтобы выбрать файлы.',
 			file_drop: 'Перетащите файлы сюда...',
@@ -103,13 +129,19 @@ export default defineI18nConfig(() => ({
 			dnd_resolution_min: 'Минимальное разрешение',
 			dnd_resolution_max: 'Максимальное разрешение',
 			dnd_upTo: 'до',
+			// partners page features
+			partners_title: 'Sistema de gestión de contenidos del proveedor',
+			partners_subtitle: 'Aquí puede editar la información de la tarjeta de empresa',
+			partners_formTitle: 'Cambiar la información',
 		},
 		'ru-RU': {
+			// home page features
 			welcome: 'Добро пожаловать',
 			main_title: 'Культурные события Перу',
 			sales: 'Продажи',
 			news: 'Новости',
 			charity: 'Благотворительность',
+			// drag n drop component features
 			clear: 'Очистить',
 			drag_n_drop: 'Перетащите сюда или щелкните, чтобы выбрать файлы.',
 			file_drop: 'Перетащите файлы сюда...',
@@ -123,13 +155,19 @@ export default defineI18nConfig(() => ({
 			dnd_resolution_min: 'Минимальное разрешение',
 			dnd_resolution_max: 'Максимальное разрешение',
 			dnd_upTo: 'до',
+			// partners page features
+			partners_title: 'Sistema de gestión de contenidos del proveedor',
+			partners_subtitle: 'Aquí puede editar la información de la tarjeta de empresa',
+			partners_formTitle: 'Cambiar la información',
 		},
 		'ru-BY': {
+			// home page features
 			welcome: 'Сардэчная вітаем',
 			main_title: 'Культурные падзеі Перу',
 			sales: 'Продажы',
 			news: 'Навіны',
 			charity: 'Благадзейнасць',
+			// drag n drop component features
 			clear: 'Ачысціць',
 			drag_n_drop: 'Перацягніце сюды або націсніце, каб выбраць файлы',
 			file_drop: 'Перацягніце файлы сюды...',
@@ -143,13 +181,19 @@ export default defineI18nConfig(() => ({
 			dnd_resolution_min: 'Раздзяленне як мінімум',
 			dnd_resolution_max: 'Максiмальнае раздзяленне',
 			dnd_upTo: 'да',
+			// partners page features
+			partners_title: 'Sistema de gestión de contenidos del proveedor',
+			partners_subtitle: 'Aquí puede editar la información de la tarjeta de empresa',
+			partners_formTitle: 'Cambiar la información',
 		},
 		zh: {
+			// home page features
 			welcome: '欢迎',
 			main_title: '秘鲁的文化活动',
 			sales: '销售',
 			news: '新闻',
 			charity: '慈善',
+			// drag n drop component features
 			clear: '清除',
 			drag_n_drop: '将一些文件拖放到此处或单击以选择文件',
 			file_drop: '将文件拖到此处',
@@ -163,13 +207,19 @@ export default defineI18nConfig(() => ({
 			dnd_resolution_min: '分辨率至少',
 			dnd_resolution_max: '最大分辨率',
 			dnd_upTo: '最多个',
+			// partners page features
+			partners_title: 'Sistema de gestión de contenidos del proveedor',
+			partners_subtitle: 'Aquí puede editar la información de la tarjeta de empresa',
+			partners_formTitle: 'Cambiar la información',
 		},
 		qu: {
+			// home page features
 			welcome: '¡Sumaq kawsay!',
 			main_title: 'Perúmanta jukukuy cultura kawsayninchik',
 			sales: 'Venta',
 			news: 'Ñukanchik',
 			charity: 'Kawsay',
+			// drag n drop component features
 			clear: 'Pichay',
 			drag_n_drop:
 				`Wakin willañiqikunata kaypi aysay hinaspa urmachiy utaq ñit'iy willañiqikunata akllanaykipaq`,
@@ -184,6 +234,10 @@ export default defineI18nConfig(() => ({
 			dnd_resolution_min: 'Resolución al menos',
 			dnd_resolution_max: 'Máxima resolución nisqa',
 			dnd_upTo: 'kama',
+			// partners page features
+			partners_title: 'Sistema de gestión de contenidos del proveedor',
+			partners_subtitle: 'Aquí puede editar la información de la tarjeta de empresa',
+			partners_formTitle: 'Cambiar la información',
 		},
 	},
 }));

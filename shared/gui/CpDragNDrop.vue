@@ -184,7 +184,7 @@ const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 <style scoped lang="scss">
 .dragNdrop {
 	box-sizing: border-box;
-	padding: 15px;
+	// padding: 15px;
 	position: relative;
 	width: 800px;
 	height: 250px;
@@ -282,8 +282,8 @@ const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 			height: 50px;
 			border-radius: 30px;
 			position: absolute;
-			bottom: -36px;
-			left: 0;
+			bottom: 0;
+			right: 0;
 		}
 
 		&-application {
@@ -300,6 +300,7 @@ const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 	}
 
 	&__info {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
