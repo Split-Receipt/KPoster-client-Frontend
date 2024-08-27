@@ -212,7 +212,7 @@ const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 		cursor: pointer;
 		padding: 10px;
 		width: 100%;
-		height: 200px;
+		height: 100%;
 		color: crimson;
 		border: 2px dashed crimson;
 		border-radius: 40px;

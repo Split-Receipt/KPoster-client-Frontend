@@ -79,6 +79,7 @@ enum buttonWidth {
 	medium = 'button--medium',
 	large = 'button--large',
 	extraLarge = 'button--extra-large',
+	maxLength = 'button--maxLength',
 }
 </script>
 
@@ -186,6 +187,10 @@ enum buttonWidth {
 
 	&--extra-large {
 		width: $button-width-Extra-large;
+	}
+
+	&--maxLength {
+		width: $button--width-maxLength;
 	}
 }
 </style>

@@ -1,8 +1,5 @@
 <template>
 	<div class="main-page">
-		<div class="main-page__header">
-			<c-p-header />
-		</div>
 		<main class="main-page__main">
 			<h1 class="main-page__title">{{ $t('main_title') }}</h1>
 
@@ -326,8 +323,6 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .main-page {
-	background-color: $main-page-background-color;
-
 	&__main {
 		margin-top: 2px;
 		padding-left: 10px;

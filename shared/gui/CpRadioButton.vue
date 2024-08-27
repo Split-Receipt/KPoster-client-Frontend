@@ -7,7 +7,7 @@
 		>
 			<input
 				:id="option.id"
-				name="radio_name"
+				:name="props.name"
 				:value="option.value"
 				type="radio"
 				@change="handleRadioCheck"
@@ -33,6 +33,7 @@ type RadioVar = {
 
 type RadioProps = {
 	options: RadioVar[];
+	name: string;
 };
 
 type Events = {
