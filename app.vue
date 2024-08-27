@@ -3,12 +3,8 @@
 	<nuxt-page />
 </template>
 
-<style>
-:root {
-	--main-bg: #eeeeee;
-}
-
+<style lang="scss">
 body {
-	background: var(--main-bg);
+	background: $default-background;
 }
 </style>

@@ -97,7 +97,25 @@
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<cp-drag-n-drop type="video" :max-size="50" />
+					<span class="partners__form-rowDnD-semiBlock">
+						<cp-drag-n-drop type="video" :max-size="50" />
+						<div>
+							<span class="partners__form-rowDnD-semiBlock-social">
+								<cp-social-media
+									id="test"
+									label-text="YouTube"
+									placeholder="https://www.youtube.com/"
+								/>
+							</span>
+							<span class="partners__form-rowDnD-semiBlock-social">
+								<cp-social-media
+									id="test2"
+									label-text="Vimeo"
+									placeholder="https://www.vimeo.com/"
+								/>
+							</span>
+						</div>
+					</span>
 				</div>
 			</div>
 
@@ -129,6 +147,63 @@
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<cp-drag-n-drop type="image" :max-size="5" />
+				</div>
+			</div>
+
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						Redes sociales
+						<cp-info-pop-up
+							id="Redes_info"
+							info="No se admitirán redes personales"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<div>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-social-media
+								id="test7"
+								label-text="Telegram"
+								placeholder="https://www.youtube.com/"
+							/>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-social-media
+								id="test2"
+								label-text="Twitter"
+								placeholder="https://www.vimeo.com/"
+							/>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-social-media
+								id="test3"
+								label-text="FaceBook"
+								placeholder="https://www.vimeo.com/"
+							/>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-social-media
+								id="test4"
+								label-text="Instagram"
+								placeholder="https://www.vimeo.com/"
+							/>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-social-media
+								id="test5"
+								label-text="YouTube"
+								placeholder="https://www.vimeo.com/"
+							/> </span
+						><span class="partners__form-rowDnD-semiBlock-social">
+							<cp-social-media
+								id="test6"
+								label-text="Linkedin"
+								placeholder="https://www.vimeo.com/"
+							/>
+						</span>
+					</div>
 				</div>
 			</div>
 
@@ -310,7 +385,19 @@ const radiooptions2 = [
 					flex-wrap: wrap;
 					align-items: center;
 					justify-content: flex-start;
+					justify-content: space-between;
 					width: 100%;
+				}
+			}
+
+			&-semiBlock {
+				display: flex !important;
+				flex-direction: column !important;
+
+				&-social {
+					width: 50%;
+					padding: 10px;
+					margin-top: 15px;
 				}
 			}
 		}

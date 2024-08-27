@@ -27,7 +27,7 @@
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						:text="$t('sales')"
+						:text="$t('news')"
 					/>
 					<cp-button
 						width="large"
