@@ -1,7 +1,7 @@
 <template>
 	<div class="socialMedia">
 		<label class="socialMedia__label" :for="props.id">
-			<span class="socialMedia__label-circle" />
+			<span v-if="props.circle" class="socialMedia__label-circle" />
 			{{ props.labelText }}
 		</label>
 		<input
@@ -20,6 +20,7 @@ type socialMediaProps = {
 	type?: string;
 	placeholder: string;
 	labelText: string;
+	circle?: boolean;
 };
 
 type Events = {

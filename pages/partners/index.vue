@@ -103,6 +103,7 @@
 							<span class="partners__form-rowDnD-semiBlock-social">
 								<cp-social-media
 									id="test"
+									:circle="true"
 									label-text="YouTube"
 									placeholder="https://www.youtube.com/"
 								/>
@@ -110,6 +111,7 @@
 							<span class="partners__form-rowDnD-semiBlock-social">
 								<cp-social-media
 									id="test2"
+									:circle="true"
 									label-text="Vimeo"
 									placeholder="https://www.vimeo.com/"
 								/>
@@ -165,6 +167,7 @@
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
 								id="test7"
+								:circle="true"
 								label-text="Telegram"
 								placeholder="https://www.youtube.com/"
 							/>
@@ -172,6 +175,7 @@
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
 								id="test2"
+								:circle="true"
 								label-text="Twitter"
 								placeholder="https://www.vimeo.com/"
 							/>
@@ -179,6 +183,7 @@
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
 								id="test3"
+								:circle="true"
 								label-text="FaceBook"
 								placeholder="https://www.vimeo.com/"
 							/>
@@ -186,6 +191,7 @@
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
 								id="test4"
+								:circle="true"
 								label-text="Instagram"
 								placeholder="https://www.vimeo.com/"
 							/>
@@ -193,12 +199,14 @@
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
 								id="test5"
+								:circle="true"
 								label-text="YouTube"
 								placeholder="https://www.vimeo.com/"
 							/> </span
 						><span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
 								id="test6"
+								:circle="true"
 								label-text="Linkedin"
 								placeholder="https://www.vimeo.com/"
 							/>
@@ -218,7 +226,7 @@
 					<div>
 						<cp-text-input type="url" placeholder="https://" />
 						<cp-button
-							class="catalogDigital__button"
+							class="partners__form__button"
 							width="maxLength"
 							size="small"
 							shape="oval"
@@ -241,6 +249,191 @@
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<cp-drag-n-drop type="image" :max-size="5" />
+				</div>
+			</div>
+
+			<div class="partners__form-soloInput">
+				<div class="partners__form-soloInput__container">
+					<div class="partners__form-soloInput__title">
+						<span class="partners__form-soloInput__title-main">
+							Primera categoría de bienes
+						</span>
+						<span class="partners__form-soloInput__title-second">
+							introduzca el texto
+						</span>
+					</div>
+					<div class="partners__form-soloInput__socials">
+						<span class="partners__form-soloInput__socials-item">
+							<cp-social-media
+								id="Mercancía1"
+								:circle="true"
+								label-text="Mercancía 1"
+								placeholder="introduzca el enlace"
+							/>
+						</span>
+						<span class="partners__form-soloInput__socials-item">
+							<cp-social-media
+								id="Mercancía2"
+								:circle="true"
+								label-text="Mercancía 2"
+								placeholder="introduzca el enlace"
+							/>
+						</span>
+						<span class="partners__form-soloInput__socials-item">
+							<cp-social-media
+								id="Mercancía3"
+								:circle="true"
+								label-text="Mercancía 3"
+								placeholder="introduzca el enlace"
+							/>
+						</span>
+						<span class="partners__form-soloInput__socials-item">
+							<cp-social-media
+								id="Mercancía4"
+								:circle="true"
+								label-text="Mercancía 4"
+								placeholder="introduzca el enlace"
+							/>
+						</span>
+					</div>
+					<cp-button
+						class="partners__form__button"
+						width="maxLength"
+						size="small"
+						shape="oval"
+						color="transparent"
+						text="Más información"
+					/>
+				</div>
+			</div>
+
+			<div class="partners__form-soloInput">
+				<div class="partners__form-soloInput__container">
+					<div class="partners__form-soloInput__title">
+						<span class="partners__form-soloInput__title-main">
+							Segunda categoría de bienes
+						</span>
+						<span class="partners__form-soloInput__title-second">
+							introduzca el texto
+						</span>
+					</div>
+					<div class="partners__form-soloInput__socials">
+						<span class="partners__form-soloInput__socials-item">
+							<cp-social-media
+								id="Mercancía1"
+								:circle="true"
+								label-text="Mercancía 1"
+								placeholder="introduzca el enlace"
+							/>
+						</span>
+						<span class="partners__form-soloInput__socials-item">
+							<cp-social-media
+								id="Mercancía2"
+								:circle="true"
+								label-text="Mercancía 2"
+								placeholder="introduzca el enlace"
+							/>
+						</span>
+						<span class="partners__form-soloInput__socials-item">
+							<cp-social-media
+								id="Mercancía3"
+								:circle="true"
+								label-text="Mercancía 3"
+								placeholder="introduzca el enlace"
+							/>
+						</span>
+						<span class="partners__form-soloInput__socials-item">
+							<cp-social-media
+								id="Mercancía4"
+								:circle="true"
+								label-text="Mercancía 4"
+								placeholder="introduzca el enlace"
+							/>
+						</span>
+					</div>
+					<cp-button
+						class="partners__form__button"
+						width="maxLength"
+						size="small"
+						shape="oval"
+						color="transparent"
+						text="Más información"
+					/>
+					<cp-button
+						class="partners__form__button"
+						width="maxLength"
+						size="small"
+						shape="oval"
+						color="yellowGrey"
+						text="Añadir más categorías"
+					/>
+				</div>
+			</div>
+
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						Añadir fotos a la galería
+						<cp-info-pop-up
+							id="galería_info"
+							info="Sube un máximo de 6 fotos que no excedan los 2MB"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<cp-drag-n-drop type="image" :max-size="2" />
+				</div>
+			</div>
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						Añadir datos del contacto de la empresa
+						<cp-info-pop-up
+							id="Redes_info"
+							info="Agregar número activo para la comunicación y con formato internacional. ej: 51 933625150 "
+						/>
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<div>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-social-media
+								id="test7"
+								label-text="País y ciudad"
+								placeholder="introduzca el enlace"
+							/>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-social-media
+								id="test2"
+								label-text="Teléfono de la empresa"
+								placeholder="introduzca el enlace"
+							/>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-social-media
+								id="test3"
+								label-text="Email"
+								placeholder="introduzca el enlace"
+							/>
+						</span>
+					</div>
+					<cp-button
+						class="partners__form__button"
+						width="maxLength"
+						size="small"
+						shape="oval"
+						color="transparent"
+						text="Más información"
+					/>
+					<cp-button
+						class="partners__form__button"
+						width="maxLength"
+						size="small"
+						shape="oval"
+						color="yellowGrey"
+						text="Añadir más categorías"
+					/>
 				</div>
 			</div>
 		</div>
@@ -337,6 +530,7 @@ const radiooptions2 = [
 			&-input {
 				display: flex;
 				align-items: center;
+				flex-direction: column;
 				width: 55%;
 				input {
 					width: 100%;
@@ -376,6 +570,7 @@ const radiooptions2 = [
 			&-input {
 				display: flex;
 				align-items: center;
+				flex-direction: column;
 				width: 55%;
 				input {
 					width: 100%;
@@ -401,9 +596,54 @@ const radiooptions2 = [
 				}
 			}
 		}
+
+		&-soloInput {
+			display: flex;
+			justify-content: end;
+			margin: 60px 0 60px 0;
+			width: 100%;
+
+			&__container {
+				width: 50%;
+			}
+
+			&__socials {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				margin-left: -10px;
+
+				&-item {
+					width: 50%;
+					padding: 10px;
+					margin-top: 15px;
+				}
+			}
+
+			&__title {
+				display: flex;
+				flex-direction: column;
+
+				&-main {
+					font-size: 30px;
+					line-height: 42px;
+					font-weight: 500;
+					color: #353333;
+					margin-bottom: 12px;
+				}
+
+				&-second {
+					font-size: 18px;
+					line-height: 28.8px;
+					font-weight: 400;
+					color: #888888;
+					margin-bottom: 20px;
+				}
+			}
+		}
 	}
 }
-.catalogDigital__button {
+.partners__form__button {
 	margin-top: 20px;
 }
 </style>
