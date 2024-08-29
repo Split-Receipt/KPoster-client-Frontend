@@ -141,18 +141,30 @@ enum buttonWidth {
 		line-height: $button-line-height-middle;
 		font-size: $button-font-size-middle;
 		padding: $button-middle-padding;
+
+		span {
+			padding-top: 5px;
+		}
 	}
 
 	&--big {
 		height: $button-size-big;
 		line-height: $button-line-height-big;
 		font-size: $button-font-size-big;
+
+		span {
+			padding-top: 5px;
+		}
 	}
 
 	&--huge {
 		height: $button-size-huge;
 		line-height: $button-line-height-huge;
 		font-size: $button-font-size-huge;
+
+		span {
+			padding-top: 5px;
+		}
 	}
 
 	&--white {

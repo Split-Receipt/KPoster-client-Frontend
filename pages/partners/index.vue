@@ -98,8 +98,8 @@
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<span class="partners__form-rowDnD-semiBlock">
-						<cp-drag-n-drop type="video" :max-size="50" />
 						<div>
+							<cp-drag-n-drop type="video" :max-size="50" />
 							<span class="partners__form-rowDnD-semiBlock-social">
 								<cp-social-media
 									id="test"

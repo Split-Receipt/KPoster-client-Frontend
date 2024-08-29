@@ -39,7 +39,7 @@ type Props = {
 type List = {
 	id: number | string;
 	text: string;
-	href?: string | boolean;
+	href?: string;
 };
 
 defineProps<Props>();

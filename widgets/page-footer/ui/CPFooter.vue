@@ -1,8 +1,8 @@
 <template>
 	<div class="footer">
 		<footer-list
-			v-for="list in footerLists"
-			:key="list.id"
+			v-for="(list, index) in footerLists"
+			:key="index"
 			class="footer__list"
 			:list="list"
 		/>
@@ -11,6 +11,7 @@
 			color="yellowGrey"
 			shape="oval"
 			text="Become a partner"
+			width="maxLength"
 			size="middle"
 		/>
 	</div>

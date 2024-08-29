@@ -32,10 +32,6 @@
 				/>
 			</div>
 		</main>
-
-		<div class="main-page__footer">
-			<c-p-footer />
-		</div>
 	</div>
 </template>
 
