@@ -9,8 +9,11 @@
 			/>
 		</div>
 		<div class="header__controls">
-			<img src="/images/logo.svg" class="icon icon-logo header__icon-logo" />
-
+			<nuxt-img
+				loading="lazy"
+				src="/images/logo.svg"
+				class="icon icon-logo header__icon-logo"
+			/>
 			<div class="header__menu">
 				<div class="header__buttons header__buttons--oval">
 					<cp-button
