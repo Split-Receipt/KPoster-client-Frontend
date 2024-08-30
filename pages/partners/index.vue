@@ -16,7 +16,7 @@
 			<h3>{{ $t('partners_formTitle') }}</h3>
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
-					<span>Tipo de organizaón</span>
+					<span>{{ $t('partners_oranization_type') }}</span>
 				</div>
 				<div class="partners__form-row-input">
 					<cp-radio-button :options="radioOptions1" name="radio1" />
@@ -26,7 +26,7 @@
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
-						Nombre comercial
+						{{ $t('partners_trade_name') }}
 						<cp-info-pop-up id="Nombre_info" info="test info Nombre" />
 					</span>
 				</div>
@@ -38,7 +38,7 @@
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
-						Razón social
+						{{ $t('partners_company_name') }}
 						<cp-info-pop-up id="Razón_info" info="test info Razón" />
 					</span>
 				</div>
@@ -49,7 +49,7 @@
 
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
-					<span>RUC</span>
+					<span>{{ $t('partners_RUC') }}</span>
 				</div>
 				<div class="partners__form-row-input">
 					<cp-text-input type="text" placeholder="RUC" />
@@ -59,7 +59,7 @@
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
-						Dónde se ubica tu organización?
+						{{ $t('partners_oranization_locate') }}
 						<cp-info-pop-up id="Dónde_info" info="test info Dónde" />
 					</span>
 				</div>
@@ -71,8 +71,7 @@
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
-						Sube el video que explica su servicio y producto o incrusta el
-						enlace desde Yuotube o Vimeo
+						{{ $t('partners_oranization_explaining') }}
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
@@ -82,7 +81,7 @@
 
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
-					<span>Subir el banner principal</span>
+					<span>{{ $t('partners_main_banner') }}</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<cp-drag-n-drop type="image" :max-size="5" />
@@ -92,8 +91,7 @@
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
-						Sube el vídeo de tu empresa o incrusta un enlace desde youtube o
-						vimeo
+						{{ $t('partners_compony_explaining') }}
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
@@ -140,7 +138,7 @@
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
-						Descargar el producto más popular
+						{{ $t('partners_compony_popular_product') }}
 						<cp-info-pop-up
 							id="Descargar_info"
 							info="El banner debe cargarse a 1100 por 278 píxeles en formato .png"
@@ -155,7 +153,7 @@
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
-						Redes sociales
+						{{ $t('partners_social_networks') }}
 						<cp-info-pop-up
 							id="Redes_info"
 							info="No se admitirán redes personales"
@@ -218,7 +216,7 @@
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
-						Catalogo digital
+						{{ $t('partners_digital_catalog') }}
 						<cp-info-pop-up id="Catalogo_info" info="Catalogo digital info" />
 					</span>
 				</div>
@@ -240,7 +238,7 @@
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
-						Sube tus principales productos y sus descripciones
+						{{ $t('partners_main_products_descriptions') }}
 						<cp-info-pop-up
 							id="principales_info"
 							info="El banner debe cargarse a 1100 por 278 píxeles en formato .png"
@@ -256,10 +254,10 @@
 				<div class="partners__form-soloInput__container">
 					<div class="partners__form-soloInput__title">
 						<span class="partners__form-soloInput__title-main">
-							Primera categoría de bienes
+							{{ $t('partners_first_category_goods') }}
 						</span>
 						<span class="partners__form-soloInput__title-second">
-							introduzca el texto
+							{{ $t('partners_enter_text') }}
 						</span>
 					</div>
 					<div class="partners__form-soloInput__socials">
@@ -311,10 +309,10 @@
 				<div class="partners__form-soloInput__container">
 					<div class="partners__form-soloInput__title">
 						<span class="partners__form-soloInput__title-main">
-							Segunda categoría de bienes
+							{{ $t('partners_second_category_goods') }}
 						</span>
 						<span class="partners__form-soloInput__title-second">
-							introduzca el texto
+							{{ $t('partners_enter_text') }}
 						</span>
 					</div>
 					<div class="partners__form-soloInput__socials">
@@ -373,7 +371,7 @@
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
-						Añadir fotos a la galería
+						{{ $t('partners_photos_gallery') }}
 						<cp-info-pop-up
 							id="galería_info"
 							info="Sube un máximo de 6 fotos que no excedan los 2MB"
@@ -387,7 +385,7 @@
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
-						Añadir datos del contacto de la empresa
+						{{ $t('partners_company_contact_information') }}
 						<cp-info-pop-up
 							id="Redes_info"
 							info="Agregar número activo para la comunicación y con formato internacional. ej: 51 933625150 "
