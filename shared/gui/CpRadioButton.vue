@@ -76,6 +76,7 @@ const handleRadioCheck = (e: Event) => {
 		}
 
 		+ label {
+			z-index: 2;
 			display: block;
 			border: 2px solid rgb(35, 33, 33);
 			width: var(--size);

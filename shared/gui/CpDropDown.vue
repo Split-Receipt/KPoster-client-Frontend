@@ -24,12 +24,20 @@
 				<ul>
 					<li v-for="option in options" :key="option.item_UID">
 						<div class="checkbox-container">
-							<cp-check-box
-								:id="option.item_UID"
-								:value="option.item_value"
-								:title="option.item_title"
-								@change="dataToFilter"
-							/>
+							<div class="checkbox-wrapper">
+								<input
+									:id="option.item_UID"
+									:value="option.item_value"
+									type="checkbox"
+									@change="dataToFilter"
+								/>
+								<label :for="option.item_UID" style="--size: 22px">
+									<svg viewBox="0,0,50,50">
+										<path d="M5 30 L 20 45 L 45 5" />
+									</svg>
+								</label>
+							</div>
+							<span>{{ option.item_title }}</span>
 						</div>
 					</li>
 				</ul>
@@ -81,6 +89,63 @@ const dataToFilter = (event: Event) => {
 </script>
 
 <style scoped lang="scss">
+// checkbox scss -----------------------------------------------
+
+.checkbox-wrapper {
+	* {
+		box-sizing: border-box;
+
+		&:after,
+		&:before {
+			box-sizing: border-box;
+		}
+	}
+
+	input {
+		position: absolute;
+		opacity: 0;
+
+		&:checked + label svg path {
+			stroke-dashoffset: 0;
+		}
+
+		&:focus + label {
+			transform: scale(1.03);
+		}
+
+		+ label {
+			display: block;
+			border: 2px solid rgb(35, 33, 33);
+			width: var(--size);
+			height: var(--size);
+			border-radius: 6px;
+			cursor: pointer;
+			transition: all 0.2s ease;
+
+			&:active {
+				transform: scale(1.05);
+				border-radius: 12px;
+			}
+
+			svg {
+				pointer-events: none;
+				padding: 10%;
+
+				path {
+					fill: none;
+					stroke: rgb(35, 33, 33);
+					stroke-width: 7px;
+					stroke-linecap: round;
+					stroke-linejoin: round;
+					stroke-dasharray: 100;
+					stroke-dashoffset: 101;
+					transition: all 250ms cubic-bezier(1, 0, 0.37, 0.91);
+				}
+			}
+		}
+	}
+}
+
 // dropDown menu scss ------------------------------------------
 
 .popup {
@@ -158,7 +223,7 @@ const dataToFilter = (event: Event) => {
 	border-radius: 30px;
 	background-color: #f6f6f6;
 	height: 50px;
-	padding: 8px 20px 5px 20px;
+	padding: 5px 20px 5px 20px;
 }
 
 .burger {
@@ -166,7 +231,8 @@ const dataToFilter = (event: Event) => {
 	position: relative;
 	align-items: center;
 	justify-content: center;
-	background: #f6f6f6;
+	background: transparent;
+	border: var(--nav-border-width) solid var(--nav-border-color);
 	width: var(--burger-diameter);
 	height: var(--burger-diameter);
 	border-radius: var(--burger-btn-border-radius);
@@ -192,9 +258,8 @@ const dataToFilter = (event: Event) => {
 	font-family: var(--nav-font-family);
 	color: var(--nav-text-color);
 	border-radius: var(--nav-border-radius);
-	-webkit-box-shadow: 0px 0px 29px -9px rgba(34, 60, 80, 0.2);
-	-moz-box-shadow: 0px 0px 29px -9px rgba(34, 60, 80, 0.2);
-	box-shadow: 0px 0px 29px -9px rgba(34, 60, 80, 0.2);
+	box-shadow: var(--nav-shadow-width) var(--nav-shadow-color);
+	border: var(--nav-border-width) solid var(--nav-border-color);
 	top: calc(
 		var(--burger-diameter) + var(--burger-enable-outline-width) +
 			var(--burger-enable-outline-offset)
@@ -266,7 +331,6 @@ const dataToFilter = (event: Event) => {
 			font-size: 16px;
 			margin-left: 15px;
 			padding-right: 15px;
-			padding-top: 5px;
 			line-height: 28px;
 			color: var(--nav-button-text-color);
 
