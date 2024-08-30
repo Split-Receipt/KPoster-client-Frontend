@@ -501,7 +501,7 @@
 </template>
 
 <script setup lang="ts">
-import CpButton from '@shared/gui/CPButton.vue';
+import CpButton from '@shared/gui/CpButton.vue';
 import CpDragNDrop from '@shared/gui/CpDragNDrop.vue';
 import CpTextInput from '@shared/gui/CpTextInput.vue';
 import CpRadioButton from '@shared/gui/CpRadioButton.vue';
