@@ -89,7 +89,7 @@
 </template>
 
 <script setup lang="ts">
-import CpButton from './CpButton.vue';
+import CpButton from './CPButton.vue';
 import { useDropzone } from 'vue3-dropzone';
 import { ref, computed } from 'vue';
 

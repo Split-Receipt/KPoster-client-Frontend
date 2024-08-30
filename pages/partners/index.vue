@@ -19,7 +19,11 @@
 					<span>Tipo de organizaón</span>
 				</div>
 				<div class="partners__form-row-input">
-					<cp-radio-button :options="radioOptions1" name="radio1" />
+					<cp-radio-button
+						v-model="formData.orgType"
+						:options="radioOptions1"
+						name="radio1"
+					/>
 				</div>
 			</div>
 
@@ -27,11 +31,18 @@
 				<div class="partners__form-row-info">
 					<span>
 						Nombre comercial
-						<cp-info-pop-up id="Nombre_info" info="test info Nombre" />
+						<cp-info-pop-up
+							id="Nombre_comercial_info"
+							info="test info Nombre"
+						/>
 					</span>
 				</div>
 				<div class="partners__form-row-input">
-					<cp-text-input type="text" placeholder="Nombre comercial" />
+					<cp-text-input
+						v-model="formData.tradeName"
+						type="text"
+						placeholder="Nombre comercial"
+					/>
 				</div>
 			</div>
 
@@ -39,11 +50,15 @@
 				<div class="partners__form-row-info">
 					<span>
 						Razón social
-						<cp-info-pop-up id="Razón_info" info="test info Razón" />
+						<cp-info-pop-up id="Razón_social_info" info="test info Razón" />
 					</span>
 				</div>
 				<div class="partners__form-row-input">
-					<cp-text-input type="text" placeholder="Razón social" />
+					<cp-text-input
+						v-model="formData.compName"
+						type="text"
+						placeholder="Razón social"
+					/>
 				</div>
 			</div>
 
@@ -52,7 +67,7 @@
 					<span>RUC</span>
 				</div>
 				<div class="partners__form-row-input">
-					<cp-text-input type="text" placeholder="RUC" />
+					<cp-text-input v-model="formData.ruc" type="text" placeholder="RUC" />
 				</div>
 			</div>
 
@@ -60,11 +75,15 @@
 				<div class="partners__form-row-info">
 					<span>
 						Dónde se ubica tu organización?
-						<cp-info-pop-up id="Dónde_info" info="test info Dónde" />
+						<cp-info-pop-up id="Dónde_se_ubica_info" info="test info Dónde" />
 					</span>
 				</div>
 				<div class="partners__form-row-input">
-					<cp-radio-button :options="radiooptions2" name="radio2" />
+					<cp-radio-button
+						v-model="formData.orgLocation"
+						:options="radiooptions2"
+						name="radio2"
+					/>
 				</div>
 			</div>
 
@@ -76,7 +95,11 @@
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<cp-drag-n-drop type="video" :max-size="50" />
+					<cp-drag-n-drop
+						v-model="formData.Video_businessСard"
+						type="video"
+						:max-size="50"
+					/>
 				</div>
 			</div>
 
@@ -85,39 +108,11 @@
 					<span>Subir el banner principal</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<cp-drag-n-drop type="image" :max-size="5" />
-				</div>
-			</div>
-
-			<div class="partners__form-rowDnD">
-				<div class="partners__form-rowDnD-info">
-					<span>
-						Sube el vídeo de tu empresa o incrusta un enlace desde youtube o
-						vimeo
-					</span>
-				</div>
-				<div class="partners__form-rowDnD-input">
-					<span class="partners__form-rowDnD-semiBlock">
-						<div>
-							<cp-drag-n-drop type="video" :max-size="50" />
-							<span class="partners__form-rowDnD-semiBlock-social">
-								<cp-social-media
-									id="test"
-									:circle="true"
-									label-text="YouTube"
-									placeholder="https://www.youtube.com/"
-								/>
-							</span>
-							<span class="partners__form-rowDnD-semiBlock-social">
-								<cp-social-media
-									id="test2"
-									:circle="true"
-									label-text="Vimeo"
-									placeholder="https://www.vimeo.com/"
-								/>
-							</span>
-						</div>
-					</span>
+					<cp-drag-n-drop
+						v-model="formData.mainBanner"
+						type="image"
+						:max-size="5"
+					/>
 				</div>
 			</div>
 
@@ -127,13 +122,42 @@
 						Sube el vídeo de tu empresa o incrusta un enlace desde youtube o
 						vimeo
 						<cp-info-pop-up
-							id="incrusta_info"
+							id="youtube_o_vimeo_info"
 							info="Si subes tu propio vídeo, debe estar en formato .mp4 y no debe superar los 50 megabytes de tamaño"
 						/>
+						<div class="partners__form-switcherBlock">
+							<cp-switcher
+								v-model="switcherValue"
+								:default-option="switcherValue"
+								switcher-name="qwe"
+								:switcher-options="switcherOptions"
+							/>
+						</div>
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<cp-drag-n-drop type="video" :max-size="50" />
+					<span class="partners__form-rowDnD-semiBlock">
+						<div>
+							<cp-drag-n-drop
+								v-if="switcherValue === 'File'"
+								v-model="formData.compVideo"
+								type="video"
+								:max-size="50"
+							/>
+							<span
+								v-else
+								class="partners__form-rowDnD-semiBlock-social-maxWidth"
+							>
+								<cp-social-media
+									id="compVideo_id"
+									v-model="formData.compVideo"
+									:circle="true"
+									label-text="YouTube / Vimeo"
+									placeholder="https://www.youtube.com/"
+								/>
+							</span>
+						</div>
+					</span>
 				</div>
 			</div>
 
@@ -148,7 +172,11 @@
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<cp-drag-n-drop type="image" :max-size="5" />
+					<cp-drag-n-drop
+						v-model="formData.mostPopularProduct"
+						type="image"
+						:max-size="5"
+					/>
 				</div>
 			</div>
 
@@ -157,7 +185,7 @@
 					<span>
 						Redes sociales
 						<cp-info-pop-up
-							id="Redes_info"
+							id="Redes_sociales_info"
 							info="No se admitirán redes personales"
 						/>
 					</span>
@@ -166,7 +194,8 @@
 					<div>
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
-								id="test7"
+								id="telegram_id"
+								v-model="formData.socialMedias.telegram"
 								:circle="true"
 								label-text="Telegram"
 								placeholder="https://www.youtube.com/"
@@ -174,7 +203,8 @@
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
-								id="test2"
+								id="twitter_id"
+								v-model="formData.socialMedias.twitter"
 								:circle="true"
 								label-text="Twitter"
 								placeholder="https://www.vimeo.com/"
@@ -182,7 +212,8 @@
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
-								id="test3"
+								id="faceBook_id"
+								v-model="formData.socialMedias.faceBook"
 								:circle="true"
 								label-text="FaceBook"
 								placeholder="https://www.vimeo.com/"
@@ -190,7 +221,8 @@
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
-								id="test4"
+								id="instagram_id"
+								v-model="formData.socialMedias.instagram"
 								:circle="true"
 								label-text="Instagram"
 								placeholder="https://www.vimeo.com/"
@@ -198,14 +230,16 @@
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
-								id="test5"
+								id="youTube_id"
+								v-model="formData.socialMedias.youTube"
 								:circle="true"
 								label-text="YouTube"
 								placeholder="https://www.vimeo.com/"
 							/> </span
 						><span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
-								id="test6"
+								id="linkedIn_id"
+								v-model="formData.socialMedias.linkedIn"
 								:circle="true"
 								label-text="Linkedin"
 								placeholder="https://www.vimeo.com/"
@@ -219,12 +253,19 @@
 				<div class="partners__form-rowDnD-info">
 					<span>
 						Catalogo digital
-						<cp-info-pop-up id="Catalogo_info" info="Catalogo digital info" />
+						<cp-info-pop-up
+							id="Catalogo_digital_info"
+							info="Catalogo digital info"
+						/>
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<div>
-						<cp-text-input type="url" placeholder="https://" />
+						<cp-text-input
+							v-model="formData.digitalCatalog"
+							type="url"
+							placeholder="https://"
+						/>
 						<cp-button
 							class="partners__form__button"
 							width="maxLength"
@@ -242,13 +283,17 @@
 					<span>
 						Sube tus principales productos y sus descripciones
 						<cp-info-pop-up
-							id="principales_info"
+							id="principales_productos_info"
 							info="El banner debe cargarse a 1100 por 278 píxeles en formato .png"
 						/>
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<cp-drag-n-drop type="image" :max-size="5" />
+					<cp-drag-n-drop
+						v-model="formData.mainProducts"
+						type="image"
+						:max-size="5"
+					/>
 				</div>
 			</div>
 
@@ -265,7 +310,8 @@
 					<div class="partners__form-soloInput__socials">
 						<span class="partners__form-soloInput__socials-item">
 							<cp-social-media
-								id="Mercancía1"
+								id="cat1_product1"
+								v-model="formData.firstProdCategory.cat1_product1"
 								:circle="true"
 								label-text="Mercancía 1"
 								placeholder="introduzca el enlace"
@@ -273,7 +319,8 @@
 						</span>
 						<span class="partners__form-soloInput__socials-item">
 							<cp-social-media
-								id="Mercancía2"
+								id="cat1_product2"
+								v-model="formData.firstProdCategory.cat1_product2"
 								:circle="true"
 								label-text="Mercancía 2"
 								placeholder="introduzca el enlace"
@@ -281,7 +328,8 @@
 						</span>
 						<span class="partners__form-soloInput__socials-item">
 							<cp-social-media
-								id="Mercancía3"
+								id="cat1_product3"
+								v-model="formData.firstProdCategory.cat1_product3"
 								:circle="true"
 								label-text="Mercancía 3"
 								placeholder="introduzca el enlace"
@@ -289,7 +337,8 @@
 						</span>
 						<span class="partners__form-soloInput__socials-item">
 							<cp-social-media
-								id="Mercancía4"
+								id="cat1_product4"
+								v-model="formData.firstProdCategory.cat1_product4"
 								:circle="true"
 								label-text="Mercancía 4"
 								placeholder="introduzca el enlace"
@@ -320,7 +369,8 @@
 					<div class="partners__form-soloInput__socials">
 						<span class="partners__form-soloInput__socials-item">
 							<cp-social-media
-								id="Mercancía1"
+								id="cat2_product1"
+								v-model="formData.secondProdCategory.cat2_product1"
 								:circle="true"
 								label-text="Mercancía 1"
 								placeholder="introduzca el enlace"
@@ -328,7 +378,8 @@
 						</span>
 						<span class="partners__form-soloInput__socials-item">
 							<cp-social-media
-								id="Mercancía2"
+								id="cat2_product2"
+								v-model="formData.secondProdCategory.cat2_product2"
 								:circle="true"
 								label-text="Mercancía 2"
 								placeholder="introduzca el enlace"
@@ -336,7 +387,8 @@
 						</span>
 						<span class="partners__form-soloInput__socials-item">
 							<cp-social-media
-								id="Mercancía3"
+								id="cat2_product3"
+								v-model="formData.secondProdCategory.cat2_product3"
 								:circle="true"
 								label-text="Mercancía 3"
 								placeholder="introduzca el enlace"
@@ -344,7 +396,8 @@
 						</span>
 						<span class="partners__form-soloInput__socials-item">
 							<cp-social-media
-								id="Mercancía4"
+								id="cat2_product4"
+								v-model="formData.secondProdCategory.cat2_product4"
 								:circle="true"
 								label-text="Mercancía 4"
 								placeholder="introduzca el enlace"
@@ -381,7 +434,11 @@
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<cp-drag-n-drop type="image" :max-size="2" />
+					<cp-drag-n-drop
+						v-model="formData.gelaryImages"
+						type="image"
+						:max-size="2"
+					/>
 				</div>
 			</div>
 			<div class="partners__form-rowDnD">
@@ -389,7 +446,7 @@
 					<span>
 						Añadir datos del contacto de la empresa
 						<cp-info-pop-up
-							id="Redes_info"
+							id="contact_info"
 							info="Agregar número activo para la comunicación y con formato internacional. ej: 51 933625150 "
 						/>
 					</span>
@@ -398,21 +455,24 @@
 					<div>
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
-								id="test7"
+								id="place_id"
+								v-model="formData.contacts.place"
 								label-text="País y ciudad"
 								placeholder="introduzca el enlace"
 							/>
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
-								id="test2"
+								id="tel_id"
+								v-model="formData.contacts.tel"
 								label-text="Teléfono de la empresa"
 								placeholder="introduzca el enlace"
 							/>
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
-								id="test3"
+								id="mail_id"
+								v-model="formData.contacts.mail"
 								label-text="Email"
 								placeholder="introduzca el enlace"
 							/>
@@ -441,7 +501,14 @@
 </template>
 
 <script setup lang="ts">
-import CpButton from '@shared/gui/CpButton.vue';
+import CpButton from '@shared/gui/CPButton.vue';
+import CpDragNDrop from '@shared/gui/CpDragNDrop.vue';
+import CpTextInput from '@shared/gui/CpTextInput.vue';
+import CpRadioButton from '@shared/gui/CpRadioButton.vue';
+import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
+import CpSocialMedia from '@shared/gui/CpSocialMedia.vue';
+
+// test values ----------------------------------------------------------
 const radioOptions1 = [
 	{ id: 'emp', value: 'Empresa', label: 'Empresa' },
 	{ id: 'ong', value: 'ONG', label: 'ONG' },
@@ -457,6 +524,99 @@ const radiooptions2 = [
 	{ id: 'Paruro', value: 'Paruro', label: 'Paruro' },
 	{ id: 'Aguas_Calientes', value: 'Aguas_Calientes', label: 'Aguas Calientes' },
 ];
+
+const switcherOptions = [
+	{ optionName: 'Upload File', optionValue: 'File', optionKey: 'FileKey' },
+	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },
+];
+
+// ----------------------------------------------------------------------
+
+type formDataType = {
+	orgType: string;
+	tradeName: string;
+	compName: string;
+	ruc: string;
+	orgLocation: string;
+	Video_businessСard: File | null;
+	mainBanner: File | null;
+	compVideo: File | string | null;
+	mostPopularProduct: File | null;
+	socialMedias: {
+		telegram: string;
+		twitter: string;
+		faceBook: string;
+		instagram: string;
+		youTube: string;
+		linkedIn: string;
+	};
+	digitalCatalog: string;
+	mainProducts: File | null;
+	firstProdCategory: {
+		cat1_product1: string;
+		cat1_product2: string;
+		cat1_product3: string;
+		cat1_product4: string;
+	};
+	secondProdCategory: {
+		cat2_product1: string;
+		cat2_product2: string;
+		cat2_product3: string;
+		cat2_product4: string;
+	};
+	gelaryImages: File | null;
+	contacts: {
+		place: string;
+		tel: string;
+		mail: string;
+	};
+};
+
+const formData = reactive<formDataType>({
+	orgType: '',
+	tradeName: '',
+	compName: '',
+	ruc: '',
+	orgLocation: '',
+	Video_businessСard: null,
+	mainBanner: null,
+	compVideo: null,
+	mostPopularProduct: null,
+	socialMedias: {
+		telegram: '',
+		twitter: '',
+		faceBook: '',
+		instagram: '',
+		youTube: '',
+		linkedIn: '',
+	},
+	digitalCatalog: '',
+	mainProducts: null,
+	firstProdCategory: {
+		cat1_product1: '',
+		cat1_product2: '',
+		cat1_product3: '',
+		cat1_product4: '',
+	},
+	secondProdCategory: {
+		cat2_product1: '',
+		cat2_product2: '',
+		cat2_product3: '',
+		cat2_product4: '',
+	},
+	gelaryImages: null,
+	contacts: {
+		place: '',
+		tel: '',
+		mail: '',
+	},
+});
+
+const switcherValue = ref<string | null>('File');
+
+watch(switcherValue, () => {
+	formData.compVideo = null;
+});
 </script>
 
 <style scoped lang="scss">
@@ -588,13 +748,25 @@ const radiooptions2 = [
 			&-semiBlock {
 				display: flex !important;
 				flex-direction: column !important;
+				min-width: 100%;
+				min-height: 250px;
 
 				&-social {
 					width: 50%;
 					padding: 10px;
 					margin-top: 15px;
+
+					&-maxWidth {
+						width: 100%;
+					}
 				}
 			}
+		}
+
+		&-switcherBlock {
+			display: flex;
+			height: 45px;
+			margin-top: 30px;
 		}
 
 		&-soloInput {

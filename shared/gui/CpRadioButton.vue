@@ -56,6 +56,7 @@ const handleRadioCheck = (e: Event) => {
 
 	* {
 		box-sizing: border-box;
+		line-height: 35px;
 
 		&:after,
 		&:before {
@@ -92,7 +93,8 @@ const handleRadioCheck = (e: Event) => {
 
 			svg {
 				pointer-events: none;
-				padding: 15%;
+				padding: 14%;
+				margin-bottom: 4px;
 
 				path {
 					fill: none;
