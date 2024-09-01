@@ -4,7 +4,7 @@ services:
   nuxt:
     build:
       context: .
-    image: nuxt-app
-    container_name: nuxt-app
+    image: culture-portal-cusco-client:${APP_VERSION}
+    container_name: culture-portal-cusco-client
     ports:
       - 3001:3001

@@ -3,12 +3,26 @@
 		<div class="main-page__header">
 			<c-p-header />
 		</div>
-
 		<main class="main-page__main">
-			<h1 class="main-page__title">Culture events of Peru</h1>
+			<h1 class="main-page__title">{{ $t('main_title') }}</h1>
 
 			<div class="main-page__date-carousel">
 				<date-card-carousel />
+			</div>
+
+			<div class="main-page__filters">
+				<cp-drop-down
+					v-model="categoriesToFilter"
+					:options="remoteCategoryOptions"
+					drop-down-label="Filter by category"
+					:value="categoriesToFilter"
+				/>
+				<cp-drop-down
+					v-model="citiesToFilter"
+					:options="remoteCityFilterOptions"
+					drop-down-label="Filter by city"
+					:value="citiesToFilter"
+				/>
 			</div>
 
 			<div class="main-page__section-list">
@@ -30,43 +44,62 @@
 </template>
 
 <script setup lang="ts">
+import CpDropDown from '@shared/gui/CpDropDown.vue';
+import axios from 'axios';
+
+const categoriesToFilter: string[] = [];
+const citiesToFilter: string[] = [];
+const { availableLocales, setLocale } = useI18n();
+
+onMounted(() => {
+	const selected_language = localStorage.getItem('KPoster_selected-language');
+
+	if (availableLocales.includes(navigator.language) && !selected_language) {
+		setLocale(navigator.language);
+	} else if (selected_language) {
+		setLocale(selected_language);
+	} else {
+		setLocale('es');
+	}
+});
+
 const sectionData = [
 	{
 		id: '1',
 		title: 'Popular events',
 		eventData: [
 			{
-				image: 'event-card-1.jpg',
+				image: 'event-card-1.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-2.jpg',
+				image: 'event-card-2.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-4.jpg',
+				image: 'event-card-4.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-13.jpg',
+				image: 'event-card-13.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-14.jpg',
+				image: 'event-card-14.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-15.jpg',
+				image: 'event-card-15.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
@@ -79,49 +112,49 @@ const sectionData = [
 		text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc',
 		eventData: [
 			{
-				image: 'event-card-3.jpg',
+				image: 'event-card-3.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-5.jpg',
+				image: 'event-card-5.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-6.jpg',
+				image: 'event-card-6.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-7.jpg',
+				image: 'event-card-7.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-8.jpg',
+				image: 'event-card-8.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-9.jpg',
+				image: 'event-card-9.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-10.jpg',
+				image: 'event-card-10.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-11.jpg',
+				image: 'event-card-11.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
@@ -134,49 +167,49 @@ const sectionData = [
 		text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc',
 		eventData: [
 			{
-				image: 'event-card-3.jpg',
+				image: 'event-card-3.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-5.jpg',
+				image: 'event-card-5.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-6.jpg',
+				image: 'event-card-6.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-7.jpg',
+				image: 'event-card-7.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-8.jpg',
+				image: 'event-card-8.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-9.jpg',
+				image: 'event-card-9.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-10.jpg',
+				image: 'event-card-10.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-11.jpg',
+				image: 'event-card-11.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
@@ -189,49 +222,49 @@ const sectionData = [
 		text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc',
 		eventData: [
 			{
-				image: 'event-card-3.jpg',
+				image: 'event-card-3.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-5.jpg',
+				image: 'event-card-5.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-6.jpg',
+				image: 'event-card-6.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-7.jpg',
+				image: 'event-card-7.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-8.jpg',
+				image: 'event-card-8.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-9.jpg',
+				image: 'event-card-9.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-10.jpg',
+				image: 'event-card-10.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
 			},
 			{
-				image: 'event-card-11.jpg',
+				image: 'event-card-11.png',
 				title: 'Event Name',
 				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
 				dateEvent: '20/12/2024',
@@ -239,6 +272,57 @@ const sectionData = [
 		],
 	},
 ];
+
+// request for an options for dropdowns
+
+interface RequestOption {
+	id: number;
+	attributes: {
+		item_title: string;
+		item_UID: string;
+		item_value: string;
+		createdAt: string;
+		updatedAt: string;
+		publishedAt: string;
+		locale: string;
+	};
+}
+
+// category check points
+
+const categoryOptionsUrl =
+	'https://admin-dev.culture-portal-cusco.online/api/categories';
+const remoteCategoryOptions = ref<Array<RequestOption['attributes']>>([]);
+
+// city filter checkpoint
+
+const cityOptionsUrl =
+	'https://admin-dev.culture-portal-cusco.online/api/city-filters';
+const remoteCityFilterOptions = ref<Array<RequestOption['attributes']>>([]);
+
+const requestForAnOptions = async (url: string, dataTo: Ref) => {
+	try {
+		await axios
+			.get(url)
+			.then((response) => response.data)
+			.then((result) => {
+				if (Array.isArray(result.data)) {
+					result.data.forEach((e: RequestOption) => {
+						dataTo.value.push(e.attributes);
+					});
+				}
+			});
+	} catch (err) {
+		throw new Error(`Error while requesting for an dropdown options: ${err}`);
+	}
+};
+
+// function trigger (when component did mount)
+
+onMounted(() => {
+	requestForAnOptions(categoryOptionsUrl, remoteCategoryOptions);
+	requestForAnOptions(cityOptionsUrl, remoteCityFilterOptions);
+});
 </script>
 
 <style scoped lang="scss">
@@ -254,7 +338,7 @@ const sectionData = [
 		}
 
 		@media #{$screen-desktop} {
-			padding: 0 20px;
+			padding: 0 5%;
 			margin-top: 33px;
 		}
 	}
@@ -308,5 +392,10 @@ const sectionData = [
 			}
 		}
 	}
+}
+
+.main-page__filters {
+	display: flex;
+	margin-top: 25px;
 }
 </style>

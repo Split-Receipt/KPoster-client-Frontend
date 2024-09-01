@@ -2,7 +2,7 @@
 	<div class="event-carousel__wrapper">
 		<div class="event-carousel">
 			<div class="event-carousel__controls">
-				<c-p-button
+				<cp-button
 					shape="square"
 					color="transparent"
 					left-icon="arrow-left"
@@ -12,7 +12,7 @@
 						'event-carousel__button',
 					]"
 				/>
-				<c-p-button
+				<cp-button
 					shape="square"
 					color="black"
 					left-icon="arrow-right"
@@ -49,14 +49,14 @@
 						},
 					},
 					1280: {
-						slidesPerView: 2,
+						slidesPerView: 3,
 						grid: {
 							fill: 'row',
 							rows: 2,
 						},
 					},
 					1920: {
-						slidesPerView: 4,
+						slidesPerView: 3,
 						grid: {
 							fill: 'row',
 							rows: 1,
@@ -88,7 +88,7 @@ type CardData = {
 withDefaults(defineProps<Props>(), {
 	eventData: () => [
 		{
-			image: 'event-card-1.jpg',
+			image: 'event-card-1.png',
 			title: 'Event Name',
 			text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 			dateEvent: '01/01/2024',

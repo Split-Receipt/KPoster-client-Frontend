@@ -22,4 +22,5 @@ logs
 # Local env files
 .env
 .env.*
+app-version.env
 !.env.example

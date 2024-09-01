@@ -45,7 +45,7 @@ withDefaults(defineProps<Props>(), {
 	text: '',
 	eventData: () => [
 		{
-			image: 'event-card-1.jpg',
+			image: 'event-card-1.png',
 			title: 'Event Name',
 			text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 			dateEvent: '01/01/2024',

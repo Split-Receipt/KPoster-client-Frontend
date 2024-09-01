@@ -1,17 +1,39 @@
 <template>
 	<div class="header__wrapper">
 		<div class="header__img">
-			<img src="/images/header-background.jpeg" class="header__img-pic" />
+			<nuxt-img
+				placeholder="/images/header-background_small_blured.jpg"
+				loading="lazy"
+				class="header__img-pic"
+				src="/images/header-background_small.png"
+			/>
 		</div>
-
 		<div class="header__controls">
 			<img src="/images/logo.svg" class="icon icon-logo header__icon-logo" />
 
 			<div class="header__menu">
 				<div class="header__buttons header__buttons--oval">
-					<c-p-button shape="oval" color="yellowGrey" text="Sales" />
-					<c-p-button shape="oval" color="yellowGrey" text="News" />
-					<c-p-button shape="oval" color="yellowGrey" text="Charity" />
+					<cp-button
+						width="large"
+						size="small"
+						shape="oval"
+						color="yellowGrey"
+						:text="$t('sales')"
+					/>
+					<cp-button
+						width="large"
+						size="small"
+						shape="oval"
+						color="yellowGrey"
+						:text="$t('sales')"
+					/>
+					<cp-button
+						width="large"
+						size="small"
+						shape="oval"
+						color="yellowGrey"
+						:text="$t('charity')"
+					/>
 				</div>
 
 				<div class="header__buttons header__buttons--circle">
@@ -28,6 +50,7 @@
 							class="icon icon-ticket header__button-icon header__button-ticket"
 						/>
 					</button>
+					<lang-selector />
 				</div>
 			</div>
 
@@ -37,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import CPButton from '@shared/gui/CPButton.vue';
+import CpButton from '@shared/gui/CpButton.vue';
 </script>
 
 <style scoped lang="scss">
@@ -91,7 +114,7 @@ import CPButton from '@shared/gui/CPButton.vue';
 
 	&__icon-logo {
 		@media #{$screen-tablet} {
-			background-color: $header-icon-logo-background-color-screen-tablet;
+			background-color: transparent;
 			border-radius: $header-icon-logo-border-radius-screen-tablet;
 			width: $header-icon-logo-width-screen-tablet;
 			height: $header-icon-logo-height-screen-tablet;
