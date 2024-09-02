@@ -39,7 +39,7 @@
 				</div>
 				<div class="partners__form-row-input">
 					<cp-text-input
-						v-model="formData.tradeName"
+						v-model="formData.commercialName"
 						type="text"
 						placeholder="Nombre comercial"
 					/>
@@ -96,7 +96,7 @@
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<cp-drag-n-drop
-						v-model="formData.Video_businessСard"
+						v-model="formData.videoBusinessСard"
 						type="video"
 						:max-size="50"
 					/>
@@ -507,6 +507,8 @@ import CpTextInput from '@shared/gui/CpTextInput.vue';
 import CpRadioButton from '@shared/gui/CpRadioButton.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpSocialMedia from '@shared/gui/CpSocialMedia.vue';
+import type { PartnerRegistration } from '@shared/api/types.ts';
+import { registerPartner } from '@shared/api';
 
 // test values ----------------------------------------------------------
 const radioOptions1 = [
@@ -532,53 +534,13 @@ const switcherOptions = [
 
 // ----------------------------------------------------------------------
 
-type formDataType = {
-	orgType: string;
-	tradeName: string;
-	compName: string;
-	ruc: string;
-	orgLocation: string;
-	Video_businessСard: File | null;
-	mainBanner: File | null;
-	compVideo: File | string | null;
-	mostPopularProduct: File | null;
-	socialMedias: {
-		telegram: string;
-		twitter: string;
-		faceBook: string;
-		instagram: string;
-		youTube: string;
-		linkedIn: string;
-	};
-	digitalCatalog: string;
-	mainProducts: File | null;
-	firstProdCategory: {
-		cat1_product1: string;
-		cat1_product2: string;
-		cat1_product3: string;
-		cat1_product4: string;
-	};
-	secondProdCategory: {
-		cat2_product1: string;
-		cat2_product2: string;
-		cat2_product3: string;
-		cat2_product4: string;
-	};
-	gelaryImages: File | null;
-	contacts: {
-		place: string;
-		tel: string;
-		mail: string;
-	};
-};
-
-const formData = reactive<formDataType>({
+const formData = reactive<PartnerRegistration>({
 	orgType: '',
-	tradeName: '',
+	commercialName: '',
 	compName: '',
 	ruc: '',
 	orgLocation: '',
-	Video_businessСard: null,
+	videoBusinessСard: null,
 	mainBanner: null,
 	compVideo: null,
 	mostPopularProduct: null,
@@ -617,6 +579,21 @@ const switcherValue = ref<string | null>('File');
 watch(switcherValue, () => {
 	formData.compVideo = null;
 });
+
+/*Функция ниже отправит запрос на бэк с данными регистрации партнiера,
+ тем самым создавая его, исполнение этой функции цепляем на кнопку отправки формы
+ */
+const sendPartnerRegistrationForm = async () => {
+	/*Тут внедрить валидаци формы с помощью vee-validate и в идеале запустить лоадер на страницу,
+	если валидация не пройдена, делать простой ретурн без превент дефолт, так проще) . */
+	try {
+		await registerPartner(formData);
+	} catch (error) {
+		console.error(error); //Заменить вывод в консоль на всплывающее предупреждение об ошибке
+	} finally {
+		// Тут отключать лоадер
+	}
+};
 </script>
 
 <style scoped lang="scss">
