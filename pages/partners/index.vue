@@ -268,7 +268,7 @@
 						/>
 						<cp-button
 							class="partners__form__button"
-							width="maxLength"
+							width="maxWidth"
 							size="small"
 							shape="oval"
 							color="yellowGrey"
@@ -347,7 +347,7 @@
 					</div>
 					<cp-button
 						class="partners__form__button"
-						width="maxLength"
+						width="maxWidth"
 						size="small"
 						shape="oval"
 						color="transparent"
@@ -406,7 +406,7 @@
 					</div>
 					<cp-button
 						class="partners__form__button"
-						width="maxLength"
+						width="maxWidth"
 						size="small"
 						shape="oval"
 						color="transparent"
@@ -414,7 +414,7 @@
 					/>
 					<cp-button
 						class="partners__form__button"
-						width="maxLength"
+						width="maxWidth"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
@@ -480,7 +480,7 @@
 					</div>
 					<cp-button
 						class="partners__form__button"
-						width="maxLength"
+						width="maxWidth"
 						size="small"
 						shape="oval"
 						color="transparent"
@@ -488,7 +488,7 @@
 					/>
 					<cp-button
 						class="partners__form__button"
-						width="maxLength"
+						width="maxWidth"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
