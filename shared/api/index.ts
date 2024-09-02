@@ -4,5 +4,5 @@ import type { PartnerRegistration } from '@shared/api/types.ts';
 export const registerPartner = (partnerInfo: PartnerRegistration) => {
 	const { $api } = useNuxtApp();
 
-	return $api.post('/api/partners', partnerInfo);
+	return $api.post('/api/partners', { data: partnerInfo });
 };

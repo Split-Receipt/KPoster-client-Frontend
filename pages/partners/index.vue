@@ -506,7 +506,7 @@
 						shape="oval"
 						color="yellowGrey"
 						text="submit"
-						@click="testFunc"
+						@click="sendPartnerRegistrationForm"
 					/>
 				</div>
 			</div>
@@ -614,7 +614,7 @@ const testFunc = () => {
 	isSpin.value = true;
 	setTimeout(() => {
 		isSpin.value = false;
-	}, 15000);
+	}, 1500);
 };
 </script>
 
