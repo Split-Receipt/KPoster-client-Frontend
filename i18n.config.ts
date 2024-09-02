@@ -45,6 +45,22 @@ export default defineI18nConfig(() => ({
 			partners_enter_text: 'enter the text',
 			partners_second_category_goods: 'Second category of goods',
 			partners_create_button_catalog: 'Create your own digital catalog',
+			partners_button_more_information: 'More information',
+			partners_button_add_more_categories: 'Add more categories',
+			partners_country_city: 'Country and city',
+			partners_company_phone: 'Company phone',
+			partners_placeholder_enter_link: 'enter the link',
+			partners_choose_compony: 'Company',
+			partners_choose_NGO: 'NGO',
+			// grey info circles
+			partners_upload_video_info: 'If you upload your own video, it must be in .mp4 format and must not exceed 50 megabytes in size',
+			partners_banner_uploaded_info: 'Banner must be uploaded at 1100 by 278 pixels in .png format',
+			partners_upload_photos_info: 'Upload a maximum of 6 photos that do not exceed 2MB',
+			partners_add_active_number_info: 'Add active number for communication and with international format. ex: 51 933625150',
+			//footer
+			partners_our_contacts: 'Contacts',
+			partners_our_social_networks: 'Our social networks',
+			partners_button_become_partner: 'Become a partner',
 		},
 		'en-US': {
 			// home page features
@@ -88,6 +104,23 @@ export default defineI18nConfig(() => ({
 			partners_first_category_goods: 'First category of goods',
 			partners_enter_text: 'enter the text',
 			partners_second_category_goods: 'Second category of goods',
+			partners_create_button_catalog: 'Create your own digital catalog',
+			partners_button_more_information: 'More information',
+			partners_button_add_more_categories: 'Add more categories',
+			partners_country_city: 'Country and city',
+			partners_company_phone: 'Company phone',
+			partners_placeholder_enter_link: 'enter the link',
+			partners_choose_compony: 'Company',
+			partners_choose_NGO: 'NGO',
+			// grey info circles
+			partners_upload_video_info: 'If you upload your own video, it must be in .mp4 format and must not exceed 50 megabytes in size',
+			partners_banner_uploaded_info: 'Banner must be uploaded at 1100 by 278 pixels in .png format',
+			partners_upload_photos_info: 'Upload a maximum of 6 photos that do not exceed 2MB',
+			partners_add_active_number_info: 'Add active number for communication and with international format. ex: 51 933625150',
+			//footer
+			partners_our_contacts: 'Contacts',
+			partners_our_social_networks: 'Our social networks',
+			partners_button_become_partner: 'Become a partner',
 		},
 		es: {
 			// home page features
@@ -132,6 +165,23 @@ export default defineI18nConfig(() => ({
 			partners_first_category_goods: 'Primera categoría de bienes',
 			partners_enter_text: 'introduzca el texto',
 			partners_second_category_goods: 'Segunda categoría de bienes',
+			partners_create_button_catalog: 'Crea tu propio catalogo digital',
+			partners_button_more_information: 'Más información',
+			partners_button_add_more_categories: 'Añadir más categorías',
+			partners_country_city: 'País y ciudad',
+			partners_company_phone: 'Teléfono de la empresa',
+			partners_placeholder_enter_link: 'introduzca el enlace',
+			partners_choose_compony: 'Empresa',
+			partners_choose_NGO: 'ONG',
+			// grey info circles
+			partners_upload_video_info: 'Si subes tu propio vídeo, debe estar en formato .mp4 y no debe superar los 50 megabytes de tamaño',
+			partners_banner_uploaded_info: 'El banner debe cargarse a 1100 por 278 píxeles en formato .png',
+			partners_upload_photos_info: 'Sube un máximo de 6 fotos que no excedan los 2MB',
+			partners_add_active_number_info: 'Agregar número activo para la comunicación y con formato internacional. ej: 51 933625150',
+			//footer
+			partners_our_contacts: 'Contactos',
+			partners_our_social_networks: 'Nuestras redes sociales',
+			partners_button_become_partner: 'Conviértete en socio',
 		},
 		fr: {
 			// home page features
@@ -176,6 +226,23 @@ export default defineI18nConfig(() => ({
 			partners_first_category_goods: 'Première catégorie de biens',
 			partners_enter_text: 'entrez le texte',
 			partners_second_category_goods: 'Deuxième catégorie de biens',
+			partners_create_button_catalog: 'Créez votre propre catalogue numérique',
+			partners_button_more_information: 'Plus d`informations',
+			partners_button_add_more_categories: 'Ajouter plus de catégories',
+			partners_country_city: 'Pays et ville',
+			partners_company_phone: 'Téléphone d`entreprise',
+			partners_placeholder_enter_link: 'entrez le lien',
+			partners_choose_compony: 'Entreprise',
+			partners_choose_NGO: 'ONG',
+			// grey info circles
+			partners_upload_video_info: 'Si vous téléchargez votre propre vidéo, elle doit être au format .mp4 et ne doit pas dépasser 50 mégaoctets.',
+			partners_banner_uploaded_info: 'La bannière doit être téléchargée à 1 100 x 278 pixels au format .png',
+			partners_upload_photos_info: 'Téléchargez un maximum de 6 photos ne dépassant pas 2 Mo',
+			partners_add_active_number_info: 'Ajouter un numéro actif pour la communication et au format international. ex: 51 933625150',
+			//footer
+			partners_our_contacts: 'Contacts',
+			partners_our_social_networks: 'Nos réseaux sociaux',
+			partners_button_become_partner: 'Devenez partenaire',
 		},
 		ru: {
 			// home page features
@@ -219,6 +286,23 @@ export default defineI18nConfig(() => ({
 			partners_first_category_goods: 'Первая категория товаров',
 			partners_enter_text: 'введите текст',
 			partners_second_category_goods: 'Вторая категория товаров',
+			partners_create_button_catalog: 'Создайте свой собственный цифровой каталог',
+			partners_button_more_information: 'Дополнительная информация',
+			partners_button_add_more_categories: 'Добавить больше категорий',
+			partners_country_city: 'Страна и город',
+			partners_company_phone: 'Телефон компании',
+			partners_placeholder_enter_link: 'введите ссылку',
+			partners_choose_compony: 'Компания',
+			partners_choose_NGO: 'НПО',
+			// grey info circles
+			partners_upload_video_info: 'Если вы загружаете собственное видео, оно должно быть в формате .mp4 и его размер не должен превышать 50 мегабайт.',
+			partners_banner_uploaded_info: 'Баннер необходимо загрузить размером 1100 на 278 пикселей в формате .png.',
+			partners_upload_photos_info: 'Загрузите максимум 6 фотографий размером не более 2 МБ.',
+			partners_add_active_number_info: 'Добавьте активный номер для связи и в международном формате. например: 51 933625150',
+			//footer
+			partners_our_contacts: 'Контакты',
+			partners_our_social_networks: 'Наши социальные сети',
+			partners_button_become_partner: 'Стать партнером',
 		},
 		'ru-RU': {
 			// home page features
@@ -262,6 +346,23 @@ export default defineI18nConfig(() => ({
 			partners_first_category_goods: 'Первая категория товаров',
 			partners_enter_text: 'введите текст',
 			partners_second_category_goods: 'Вторая категория товаров',
+			partners_create_button_catalog: 'Создайте свой собственный цифровой каталог',
+			partners_button_more_information: 'Дополнительная информация',
+			partners_button_add_more_categories: 'Добавить больше категорий',
+			partners_country_city: 'Страна и город',
+			partners_company_phone: 'Телефон компании',
+			partners_placeholder_enter_link: 'введите ссылку',
+			partners_choose_compony: 'Компания',
+			partners_choose_NGO: 'НПО',
+			// grey info circles
+			partners_upload_video_info: 'Если вы загружаете собственное видео, оно должно быть в формате .mp4 и его размер не должен превышать 50 мегабайт.',
+			partners_banner_uploaded_info: 'Баннер необходимо загрузить размером 1100 на 278 пикселей в формате .png.',
+			partners_upload_photos_info: 'Загрузите максимум 6 фотографий размером не более 2 МБ.',
+			partners_add_active_number_info: 'Добавьте активный номер для связи и в международном формате. например: 51 933625150',
+			//footer
+			partners_our_contacts: 'Контакты',
+			partners_our_social_networks: 'Наши социальные сети',
+			partners_button_become_partner: 'Стать партнером',
 		},
 		'ru-BY': {
 			// home page features
@@ -305,6 +406,23 @@ export default defineI18nConfig(() => ({
 			partners_first_category_goods: 'Тавар першай катэгорыі',
 			partners_enter_text: 'увядзіце тэкст',
 			partners_second_category_goods: 'Тавар другой катэгорыі',
+			partners_create_button_catalog: 'Стварыце свой уласны лічбавы каталог',
+			partners_button_more_information: 'Дадатковая інфармацыя',
+			partners_button_add_more_categories: 'Дадайце больш катэгорый',
+			partners_country_city: 'Краіна і горад',
+			partners_company_phone: 'Тэлефон кампаніі',
+			partners_placeholder_enter_link: 'увядзіце спасылку',
+			partners_choose_compony: 'Кампанія',
+			partners_choose_NGO: 'НДА',
+			// grey info circles
+			partners_upload_video_info: 'Калі вы загружаеце ўласнае відэа, яно павінна быць у фармаце .mp4 і памерам не больш за 50 мегабайт',
+			partners_banner_uploaded_info: 'Банер павінен быць загружаны памерам 1100 на 278 пікселяў у фармаце .png',
+			partners_upload_photos_info: 'Загрузіце максімум 6 фатаграфій памерам не больш за 2 МБ',
+			partners_add_active_number_info: 'Дадаць актыўны нумар для сувязі і з міжнародным фарматам. напрыклад: 51 933625150',
+			//footer
+			partners_our_contacts: 'Кантакты',
+			partners_our_social_networks: 'Нашы сацыяльныя сеткі',
+			partners_button_become_partner: 'Стаць партнёрам',
 		},
 		zh: {
 			// home page features
@@ -348,6 +466,23 @@ export default defineI18nConfig(() => ({
 			partners_first_category_goods: '第一类货物',
 			partners_enter_text: '输入文字',
 			partners_second_category_goods: '第二类商品',
+			partners_create_button_catalog: '创建您自己的数字目录',
+			partners_button_more_information: '更多信息',
+			partners_button_add_more_categories: '添加更多类别',
+			partners_country_city: '国家和城市',
+			partners_company_phone: '公司电话',
+			partners_placeholder_enter_link: '输入链接',
+			partners_choose_compony: '公司',
+			partners_choose_NGO: '非政府组织',
+			// grey info circles
+			partners_upload_video_info: '如果您上传自己的视频，则必须采用 .mp4 格式，且大小不得超过 50 MB',
+			partners_banner_uploaded_info: '横幅必须以 .png 格式上传，尺寸为 1100 x 278 像素',
+			partners_upload_photos_info: '最多上传 6 张不超过 2MB 的照片',
+			partners_add_active_number_info: '添加用于通信的有效号码并采用国际格式。例如：51 933625150',
+			//footer
+			partners_our_contacts: '联系方式',
+			partners_our_social_networks: '我们的社交网络',
+			partners_button_become_partner: '成为合作伙伴',
 		},
 		qu: {
 			// home page features
@@ -392,6 +527,23 @@ export default defineI18nConfig(() => ({
 			partners_first_category_goods: 'Ñawpaq kaq categoría de bienes',
 			partners_enter_text: 'qillqasqata qillqay',
 			partners_second_category_goods: 'Iskay kaq t’aqa qhatukuna',
+			partners_create_button_catalog: 'Kikin catálogo digital nisqa ruway',
+			partners_button_more_information: 'Astawan yachaykuna',
+			partners_button_add_more_categories: 'Astawan categoría nisqakunata yapay',
+			partners_country_city: 'Llaqta, llaqta',
+			partners_company_phone: 'Empresapa telefonon',
+			partners_placeholder_enter_link: 'chay link nisqaman yaykuy',
+			partners_choose_compony: 'Ruwana',
+			partners_choose_NGO: 'ONG',
+			// grey info circles
+			partners_upload_video_info: 'Sichus kikiykiq videoykita churanki chayqa, .mp4 formatopin kanan, manataqmi 50 megabytemanta aswan hatunchu kanan',
+			partners_banner_uploaded_info: 'Bannerqa 1100 278 pixel nisqapi .png nisqapi churasqa kanan tiyan',
+			partners_upload_photos_info: '6 fotokunata aswan achkata churay, mana 2MB nisqamanta aswan hatun kaqta',
+			partners_add_active_number_info: 'Yapay activo yupayta willanapaq chaymanta formato internacional kaqwan. ex: 51 933625150 nisqapi',
+			//footer
+			partners_our_contacts: 'Contactos nisqakuna',
+			partners_our_social_networks: 'Redes sociales nisqayku',
+			partners_button_become_partner: 'Socioman tukupuy',
 		},
 	},
 }));
