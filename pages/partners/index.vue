@@ -1,5 +1,6 @@
 <template>
 	<div class="partners__main">
+		<cp-spinner :is-spinned="isSpin" />
 		<h1 class="partners__title">
 			{{ $t('partners_title') }}
 		</h1>
@@ -496,6 +497,19 @@
 					/>
 				</div>
 			</div>
+			<div class="partners__form-submit">
+				<div class="partners__form-submit-btnContainer">
+					<cp-button
+						class="partners__form__button"
+						width="maxWidth"
+						size="small"
+						shape="oval"
+						color="yellowGrey"
+						text="submit"
+						@click="testFunc"
+					/>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -575,6 +589,7 @@ const formData = reactive<PartnerRegistration>({
 });
 
 const switcherValue = ref<string | null>('File');
+const isSpin = ref<boolean>(false);
 
 watch(switcherValue, () => {
 	formData.compVideo = null;
@@ -593,6 +608,13 @@ const sendPartnerRegistrationForm = async () => {
 	} finally {
 		// Тут отключать лоадер
 	}
+};
+
+const testFunc = () => {
+	isSpin.value = true;
+	setTimeout(() => {
+		isSpin.value = false;
+	}, 15000);
 };
 </script>
 
@@ -788,6 +810,18 @@ const sendPartnerRegistrationForm = async () => {
 					color: #888888;
 					margin-bottom: 20px;
 				}
+			}
+		}
+
+		&-submit {
+			margin-bottom: 60px;
+			padding: 0 15%;
+			display: flex;
+			justify-content: space-around;
+			align-items: center;
+
+			&-btnContainer {
+				width: 45%;
 			}
 		}
 	}
