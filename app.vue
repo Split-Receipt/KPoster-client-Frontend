@@ -5,6 +5,10 @@
 </template>
 
 <style lang="scss">
+:root {
+	scroll-behavior: smooth;
+}
+
 body {
 	background: $default-background;
 }

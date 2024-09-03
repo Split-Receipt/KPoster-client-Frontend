@@ -1,5 +1,6 @@
 <template>
-	<div class="header__wrapper">
+	<div id="upSide" class="header__wrapper">
+		<cp-up-scroll up-side-id="upSide" />
 		<div class="header__img">
 			<nuxt-img
 				placeholder="/images/header-background_small_blured.jpg"
@@ -63,6 +64,7 @@
 
 <script setup lang="ts">
 import CpButton from '@shared/gui/CpButton.vue';
+import CpUpScroll from '@shared/gui/CpUpScroll.vue';
 </script>
 
 <style scoped lang="scss">
