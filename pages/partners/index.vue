@@ -506,7 +506,7 @@
 						shape="oval"
 						color="yellowGrey"
 						text="submit"
-						@click="sendPartnerRegistrationForm"
+						@click="testFunc"
 					/>
 				</div>
 			</div>
@@ -515,6 +515,7 @@
 </template>
 
 <script setup lang="ts">
+import { toast } from 'vue3-toastify';
 import CpButton from '@shared/gui/CpButton.vue';
 import CpDragNDrop from '@shared/gui/CpDragNDrop.vue';
 import CpTextInput from '@shared/gui/CpTextInput.vue';
@@ -611,6 +612,7 @@ const sendPartnerRegistrationForm = async () => {
 };
 
 const testFunc = () => {
+	toast.success('request succesfully sended');
 	isSpin.value = true;
 	setTimeout(() => {
 		isSpin.value = false;
