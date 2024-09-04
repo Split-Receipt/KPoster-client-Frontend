@@ -13,7 +13,7 @@
 				scelerisque.
 			</span>
 		</div>
-		<form class="partners__form" @submit="testFunc">
+		<v-form ref="partnerRegForm" class="partners__form">
 			<h3>{{ $t('partners_formTitle') }}</h3>
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
@@ -43,11 +43,19 @@
 					</span>
 				</div>
 				<div class="partners__form-row-input">
-					<cp-text-input
-						v-model="formData.commercialName"
-						type="text"
-						placeholder="Nombre comercial"
-					/>
+					<v-field
+						v-slot="{ errors }"
+						:model-value="formData.orgType"
+						name="Номер организации"
+						rules="required"
+					>
+						<cp-text-input
+							v-model="formData.commercialName"
+							type="text"
+							placeholder="Nombre comercial"
+						/>
+						<span v-if="errors">{{ errors[0] }}</span>
+					</v-field>
 				</div>
 			</div>
 
@@ -525,13 +533,13 @@
 						width="maxWidth"
 						size="small"
 						shape="oval"
-						type="submit"
 						color="yellowGrey"
 						text="submit"
+						@click="sendPartnerRegistrationForm"
 					/>
 				</div>
 			</div>
-		</form>
+		</v-form>
 	</div>
 </template>
 
@@ -545,6 +553,7 @@ import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpSocialMedia from '@shared/gui/CpSocialMedia.vue';
 import type { PartnerRegistration } from '@shared/api/types.ts';
 import { registerPartner } from '@shared/api';
+import { Form as VForm, Field as VField } from 'vee-validate';
 
 // test values ----------------------------------------------------------
 const radioOptions1 = [
@@ -569,6 +578,8 @@ const switcherOptions = [
 ];
 
 // ----------------------------------------------------------------------
+
+const partnerRegForm = ref();
 
 const formData = reactive<PartnerRegistration>({
 	orgType: '',
@@ -623,6 +634,10 @@ watch(switcherValue, () => {
 const sendPartnerRegistrationForm = async () => {
 	/*Тут внедрить валидаци формы с помощью vee-validate и в идеале запустить лоадер на страницу,
 	если валидация не пройдена, делать простой ретурн без превент дефолт, так проще) . */
+	const isValid = await partnerRegForm.value.validate();
+	if (!isValid.valid) {
+		return;
+	}
 	try {
 		await registerPartner(formData);
 	} catch (error) {
@@ -632,7 +647,7 @@ const sendPartnerRegistrationForm = async () => {
 	}
 };
 
-const testFunc = (e: Event) => {
+const testFunc = (e: SubmitEvent) => {
 	e.preventDefault();
 	isSpin.value = true;
 	setTimeout(() => {
