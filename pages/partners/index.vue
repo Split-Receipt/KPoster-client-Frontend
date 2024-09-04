@@ -13,7 +13,7 @@
 				scelerisque.
 			</span>
 		</div>
-		<div class="partners__form">
+		<form class="partners__form" @submit="testFunc">
 			<h3>{{ $t('partners_formTitle') }}</h3>
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
@@ -525,13 +525,13 @@
 						width="maxWidth"
 						size="small"
 						shape="oval"
+						type="submit"
 						color="yellowGrey"
 						text="submit"
-						@click="testFunc"
 					/>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 </template>
 
@@ -632,7 +632,8 @@ const sendPartnerRegistrationForm = async () => {
 	}
 };
 
-const testFunc = () => {
+const testFunc = (e: Event) => {
+	e.preventDefault();
 	isSpin.value = true;
 	setTimeout(() => {
 		isSpin.value = false;
