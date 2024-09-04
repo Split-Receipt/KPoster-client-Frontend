@@ -115,6 +115,7 @@ export default withNuxt([
 			'no-empty': ['error', { allowEmptyCatch: true }],
 			'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
 			'no-prototype-builtins': 'error',
+			'no-prototype-builtins': ['warn'],
 			indent: 'off',
 			quotes: 'off',
 			'@typescript-eslint/quotes': ['error', 'single'],

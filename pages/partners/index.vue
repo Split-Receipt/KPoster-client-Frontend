@@ -25,12 +25,12 @@
 				<div class="partners__form-row-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="formData.orgType"
+						:model-value="partnerRegistrationForm.orgType"
 						name="orgType"
 						rules="required"
 					>
 						<cp-radio-button
-							v-model="formData.orgType"
+							v-model="partnerRegistrationForm.orgType"
 							:options="radioOptions1"
 							name="radio1"
 						/>
@@ -53,12 +53,12 @@
 				<div class="partners__form-row-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="formData.commercialName"
+						:model-value="partnerRegistrationForm.commercialName"
 						name="commercialName"
 						rules="required"
 					>
 						<cp-text-input
-							v-model="formData.commercialName"
+							v-model="partnerRegistrationForm.commercialName"
 							type="text"
 							placeholder="Nombre comercial"
 						/>
@@ -78,12 +78,12 @@
 				<div class="partners__form-row-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="formData.compName"
+						:model-value="partnerRegistrationForm.compName"
 						name="compName"
 						rules="required"
 					>
 						<cp-text-input
-							v-model="formData.compName"
+							v-model="partnerRegistrationForm.compName"
 							type="text"
 							placeholder="Razón social"
 						/>
@@ -102,12 +102,12 @@
 				<div class="partners__form-row-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="formData.compName"
+						:model-value="partnerRegistrationForm.compName"
 						name="ruc"
 						rules="required"
 					>
 						<cp-text-input
-							v-model="formData.ruc"
+							v-model="partnerRegistrationForm.ruc"
 							type="text"
 							placeholder="RUC"
 						/>
@@ -127,12 +127,12 @@
 				<div class="partners__form-row-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="formData.orgLocation"
+						:model-value="partnerRegistrationForm.orgLocation"
 						name="orgLocation"
 						rules="required"
 					>
 						<cp-radio-button
-							v-model="formData.orgLocation"
+							v-model="partnerRegistrationForm.orgLocation"
 							:options="radiooptions2"
 							name="radio2"
 						/>
@@ -150,7 +150,7 @@
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<cp-drag-n-drop
-						v-model="formData.videoBusinessСard"
+						v-model="partnerRegistrationForm.videoBusinessСard"
 						type="video"
 						:max-size="50"
 					/>
@@ -167,12 +167,12 @@
 				<div class="partners__form-rowDnD-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="formData.mainBanner"
+						:model-value="partnerRegistrationForm.mainBanner"
 						name="banner"
 						rules="required_file"
 					>
 						<cp-drag-n-drop
-							v-model="formData.mainBanner"
+							v-model="partnerRegistrationForm.mainBanner"
 							type="image"
 							:max-size="5"
 						/>
@@ -205,7 +205,7 @@
 						<div>
 							<cp-drag-n-drop
 								v-if="switcherValue === 'File'"
-								v-model="formData.compVideo"
+								v-model="partnerRegistrationForm.compVideo"
 								type="video"
 								:max-size="50"
 							/>
@@ -215,7 +215,7 @@
 							>
 								<cp-social-media
 									id="compVideo_id"
-									v-model="formData.compVideo"
+									v-model="partnerRegistrationForm.compVideo"
 									:circle="true"
 									label-text="YouTube / Vimeo"
 									placeholder="https://www.youtube.com/"
@@ -238,7 +238,7 @@
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<cp-drag-n-drop
-						v-model="formData.mostPopularProduct"
+						v-model="partnerRegistrationForm.mostPopularProduct"
 						type="image"
 						:max-size="5"
 					/>
@@ -260,7 +260,7 @@
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
 								id="telegram_id"
-								v-model="formData.socialMedias.telegram"
+								v-model="partnerRegistrationForm.socialMedias.telegram"
 								:circle="true"
 								label-text="Telegram"
 								placeholder="https://www.youtube.com/"
@@ -269,7 +269,7 @@
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
 								id="twitter_id"
-								v-model="formData.socialMedias.twitter"
+								v-model="partnerRegistrationForm.socialMedias.twitter"
 								:circle="true"
 								label-text="Twitter"
 								placeholder="https://www.vimeo.com/"
@@ -278,7 +278,7 @@
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
 								id="faceBook_id"
-								v-model="formData.socialMedias.faceBook"
+								v-model="partnerRegistrationForm.socialMedias.faceBook"
 								:circle="true"
 								label-text="FaceBook"
 								placeholder="https://www.vimeo.com/"
@@ -287,7 +287,7 @@
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
 								id="instagram_id"
-								v-model="formData.socialMedias.instagram"
+								v-model="partnerRegistrationForm.socialMedias.instagram"
 								:circle="true"
 								label-text="Instagram"
 								placeholder="https://www.vimeo.com/"
@@ -296,7 +296,7 @@
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
 								id="youTube_id"
-								v-model="formData.socialMedias.youTube"
+								v-model="partnerRegistrationForm.socialMedias.youTube"
 								:circle="true"
 								label-text="YouTube"
 								placeholder="https://www.vimeo.com/"
@@ -304,7 +304,7 @@
 						><span class="partners__form-rowDnD-semiBlock-social">
 							<cp-social-media
 								id="linkedIn_id"
-								v-model="formData.socialMedias.linkedIn"
+								v-model="partnerRegistrationForm.socialMedias.linkedIn"
 								:circle="true"
 								label-text="Linkedin"
 								placeholder="https://www.vimeo.com/"
@@ -327,7 +327,7 @@
 				<div class="partners__form-rowDnD-input">
 					<div>
 						<cp-text-input
-							v-model="formData.digitalCatalog"
+							v-model="partnerRegistrationForm.digitalCatalog"
 							type="url"
 							placeholder="https://"
 						/>
@@ -357,12 +357,12 @@
 				<div class="partners__form-rowDnD-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="formData.mainProducts"
+						:model-value="partnerRegistrationForm.mainProducts"
 						name="productDescription"
 						rules="required_file"
 					>
 						<cp-drag-n-drop
-							v-model="formData.mainProducts"
+							v-model="partnerRegistrationForm.mainProducts"
 							type="image"
 							:max-size="5"
 						/>
@@ -388,13 +388,17 @@
 						<span class="partners__form-soloInput__socials-item">
 							<v-field
 								v-slot="{ errors }"
-								:model-value="formData.firstProdCategory.cat1_product1"
+								:model-value="
+									partnerRegistrationForm.firstProdCategory.cat1_product1
+								"
 								name="cat1_product1"
 								rules="required"
 							>
 								<cp-social-media
 									id="cat1_product1"
-									v-model="formData.firstProdCategory.cat1_product1"
+									v-model="
+										partnerRegistrationForm.firstProdCategory.cat1_product1
+									"
 									:circle="true"
 									label-text="Mercancía 1"
 									placeholder="introduzca el enlace"
@@ -405,13 +409,17 @@
 						<span class="partners__form-soloInput__socials-item">
 							<v-field
 								v-slot="{ errors }"
-								:model-value="formData.firstProdCategory.cat1_product2"
+								:model-value="
+									partnerRegistrationForm.firstProdCategory.cat1_product2
+								"
 								name="cat1_product2"
 								rules="required"
 							>
 								<cp-social-media
 									id="cat1_product2"
-									v-model="formData.firstProdCategory.cat1_product2"
+									v-model="
+										partnerRegistrationForm.firstProdCategory.cat1_product2
+									"
 									:circle="true"
 									label-text="Mercancía 2"
 									placeholder="introduzca el enlace"
@@ -422,13 +430,17 @@
 						<span class="partners__form-soloInput__socials-item">
 							<v-field
 								v-slot="{ errors }"
-								:model-value="formData.firstProdCategory.cat1_product3"
+								:model-value="
+									partnerRegistrationForm.firstProdCategory.cat1_product3
+								"
 								name="cat1_product3"
 								rules="required"
 							>
 								<cp-social-media
 									id="cat1_product3"
-									v-model="formData.firstProdCategory.cat1_product3"
+									v-model="
+										partnerRegistrationForm.firstProdCategory.cat1_product3
+									"
 									:circle="true"
 									label-text="Mercancía 3"
 									placeholder="introduzca el enlace"
@@ -439,13 +451,17 @@
 						<span class="partners__form-soloInput__socials-item">
 							<v-field
 								v-slot="{ errors }"
-								:model-value="formData.firstProdCategory.cat1_product4"
+								:model-value="
+									partnerRegistrationForm.firstProdCategory.cat1_product4
+								"
 								name="cat1_product4"
 								rules="required"
 							>
 								<cp-social-media
 									id="cat1_product4"
-									v-model="formData.firstProdCategory.cat1_product4"
+									v-model="
+										partnerRegistrationForm.firstProdCategory.cat1_product4
+									"
 									:circle="true"
 									label-text="Mercancía 4"
 									placeholder="introduzca el enlace"
@@ -482,13 +498,17 @@
 						<span class="partners__form-soloInput__socials-item">
 							<v-field
 								v-slot="{ errors }"
-								:model-value="formData.secondProdCategory.cat2_product1"
+								:model-value="
+									partnerRegistrationForm.secondProdCategory.cat2_product1
+								"
 								name="cat2_product1"
 								rules="required"
 							>
 								<cp-social-media
 									id="cat2_product1"
-									v-model="formData.secondProdCategory.cat2_product1"
+									v-model="
+										partnerRegistrationForm.secondProdCategory.cat2_product1
+									"
 									:circle="true"
 									label-text="Mercancía 1"
 									placeholder="introduzca el enlace"
@@ -499,13 +519,17 @@
 						<span class="partners__form-soloInput__socials-item">
 							<v-field
 								v-slot="{ errors }"
-								:model-value="formData.secondProdCategory.cat2_product2"
+								:model-value="
+									partnerRegistrationForm.secondProdCategory.cat2_product2
+								"
 								name="cat2_product2"
 								rules="required"
 							>
 								<cp-social-media
 									id="cat2_product2"
-									v-model="formData.secondProdCategory.cat2_product2"
+									v-model="
+										partnerRegistrationForm.secondProdCategory.cat2_product2
+									"
 									:circle="true"
 									label-text="Mercancía 2"
 									placeholder="introduzca el enlace"
@@ -516,13 +540,17 @@
 						<span class="partners__form-soloInput__socials-item">
 							<v-field
 								v-slot="{ errors }"
-								:model-value="formData.secondProdCategory.cat2_product3"
+								:model-value="
+									partnerRegistrationForm.secondProdCategory.cat2_product3
+								"
 								name="cat2_product3"
 								rules="required"
 							>
 								<cp-social-media
 									id="cat2_product3"
-									v-model="formData.secondProdCategory.cat2_product3"
+									v-model="
+										partnerRegistrationForm.secondProdCategory.cat2_product3
+									"
 									:circle="true"
 									label-text="Mercancía 3"
 									placeholder="introduzca el enlace"
@@ -533,13 +561,17 @@
 						<span class="partners__form-soloInput__socials-item">
 							<v-field
 								v-slot="{ errors }"
-								:model-value="formData.secondProdCategory.cat2_product4"
+								:model-value="
+									partnerRegistrationForm.secondProdCategory.cat2_product4
+								"
 								name="cat2_product4"
 								rules="required"
 							>
 								<cp-social-media
 									id="cat2_product4"
-									v-model="formData.secondProdCategory.cat2_product4"
+									v-model="
+										partnerRegistrationForm.secondProdCategory.cat2_product4
+									"
 									:circle="true"
 									label-text="Mercancía 4"
 									placeholder="introduzca el enlace"
@@ -581,12 +613,12 @@
 				<div class="partners__form-rowDnD-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="formData.galleryImages"
+						:model-value="partnerRegistrationForm.galleryImages"
 						name="gallery_DnD"
 						rules="required_file"
 					>
 						<cp-drag-n-drop
-							v-model="formData.galleryImages"
+							v-model="partnerRegistrationForm.galleryImages"
 							type="image"
 							:max-size="2"
 						/>
@@ -610,13 +642,13 @@
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<v-field
 								v-slot="{ errors }"
-								:model-value="formData.contacts.place"
+								:model-value="partnerRegistrationForm.contacts.place"
 								name="place_id"
 								rules="required"
 							>
 								<cp-social-media
 									id="place"
-									v-model="formData.contacts.place"
+									v-model="partnerRegistrationForm.contacts.place"
 									label-text="País y ciudad"
 									placeholder="introduzca el enlace"
 								/>
@@ -626,13 +658,13 @@
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<v-field
 								v-slot="{ errors }"
-								:model-value="formData.contacts.tel"
+								:model-value="partnerRegistrationForm.contacts.tel"
 								name="tel"
 								rules="required"
 							>
 								<cp-social-media
 									id="tel_id"
-									v-model="formData.contacts.tel"
+									v-model="partnerRegistrationForm.contacts.tel"
 									label-text="Teléfono de la empresa"
 									placeholder="introduzca el enlace"
 								/>
@@ -642,13 +674,13 @@
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<v-field
 								v-slot="{ errors }"
-								:model-value="formData.contacts.mail"
+								:model-value="partnerRegistrationForm.contacts.mail"
 								name="mail"
 								rules="email"
 							>
 								<cp-social-media
 									id="mail_id"
-									v-model="formData.contacts.mail"
+									v-model="partnerRegistrationForm.contacts.mail"
 									label-text="Email"
 									placeholder="introduzca el enlace"
 								/>
@@ -703,6 +735,7 @@ import type { PartnerRegistration } from '@shared/api/types.ts';
 import { registerPartner } from '@shared/api';
 import { Form as VForm, Field as VField } from 'vee-validate';
 
+const { $objToFormData } = useNuxtApp();
 // test values ----------------------------------------------------------
 const radioOptions1 = [
 	{ id: 'emp', value: 'Empresa', label: 'Empresa' },
@@ -727,7 +760,7 @@ const switcherOptions = [
 
 // ----------------------------------------------------------------------
 
-const formData = reactive<PartnerRegistration>({
+const partnerRegistrationForm = reactive<PartnerRegistration>({
 	orgType: '',
 	commercialName: '',
 	compName: '',
@@ -772,7 +805,7 @@ const isSpin = ref<boolean>(false);
 const partnerRegForm = ref<HTMLFormElement | null>(null);
 
 watch(switcherValue, () => {
-	formData.compVideo = null;
+	partnerRegistrationForm.compVideo = null;
 });
 
 const sendPartnerRegistrationForm = async () => {
@@ -784,8 +817,9 @@ const sendPartnerRegistrationForm = async () => {
 
 		return;
 	}
+	const partnerRegPayload = $objToFormData(partnerRegistrationForm);
 	try {
-		await registerPartner(formData);
+		await registerPartner(partnerRegPayload);
 		isSpin.value = false;
 		toast.success('Success!');
 	} catch (error) {

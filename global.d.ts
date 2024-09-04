@@ -9,5 +9,6 @@ declare module '*.vue' {
 declare module 'nuxt/app' {
   interface NuxtApp {
     $api: AxiosInstance;
+		$objToFormData: any
   }
 }
