@@ -17,7 +17,10 @@
 			<h3>{{ $t('partners_formTitle') }}</h3>
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
-					<span>Tipo de organizaón</span>
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Tipo de organizaón
+					</span>
 				</div>
 				<div class="partners__form-row-input">
 					<cp-radio-button
@@ -31,6 +34,7 @@
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
+						<strong class="partners__form-row-info-required">*</strong>
 						Nombre comercial
 						<cp-info-pop-up
 							id="Nombre_comercial_info"
@@ -50,6 +54,7 @@
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
+						<strong class="partners__form-row-info-required">*</strong>
 						Razón social
 						<cp-info-pop-up id="Razón_social_info" info="test info Razón" />
 					</span>
@@ -65,7 +70,10 @@
 
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
-					<span>RUC</span>
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						RUC
+					</span>
 				</div>
 				<div class="partners__form-row-input">
 					<cp-text-input v-model="formData.ruc" type="text" placeholder="RUC" />
@@ -75,6 +83,7 @@
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
+						<strong class="partners__form-row-info-required">*</strong>
 						Dónde se ubica tu organización?
 						<cp-info-pop-up id="Dónde_se_ubica_info" info="test info Dónde" />
 					</span>
@@ -106,7 +115,10 @@
 
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
-					<span>Subir el banner principal</span>
+					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Subir el banner principal
+					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<cp-drag-n-drop
@@ -282,6 +294,7 @@
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
 						Sube tus principales productos y sus descripciones
 						<cp-info-pop-up
 							id="principales_productos_info"
@@ -302,6 +315,9 @@
 				<div class="partners__form-soloInput__container">
 					<div class="partners__form-soloInput__title">
 						<span class="partners__form-soloInput__title-main">
+							<strong class="partners__form-soloInput__title-main-required">
+								*
+							</strong>
 							Primera categoría de bienes
 						</span>
 						<span class="partners__form-soloInput__title-second">
@@ -361,6 +377,9 @@
 				<div class="partners__form-soloInput__container">
 					<div class="partners__form-soloInput__title">
 						<span class="partners__form-soloInput__title-main">
+							<strong class="partners__form-soloInput__title-main-required">
+								*
+							</strong>
 							Segunda categoría de bienes
 						</span>
 						<span class="partners__form-soloInput__title-second">
@@ -427,6 +446,7 @@
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
 						Añadir fotos a la galería
 						<cp-info-pop-up
 							id="galería_info"
@@ -445,6 +465,7 @@
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
 						Añadir datos del contacto de la empresa
 						<cp-info-pop-up
 							id="contact_info"
@@ -612,10 +633,13 @@ const sendPartnerRegistrationForm = async () => {
 };
 
 const testFunc = () => {
-	toast.success('request succesfully sended');
 	isSpin.value = true;
 	setTimeout(() => {
 		isSpin.value = false;
+		toast.success('request succesfully sended');
+		toast.error('request succesfully sended');
+		toast.info('request succesfully sended');
+		toast('request succesfully sended');
 	}, 1500);
 };
 </script>
@@ -686,6 +710,12 @@ const testFunc = () => {
 					padding-top: 5px;
 					text-align: start;
 				}
+
+				&-required {
+					color: red;
+					font-size: 32px;
+					margin-left: -20px;
+				}
 			}
 
 			&-input {
@@ -725,6 +755,12 @@ const testFunc = () => {
 				span {
 					padding-top: 5px;
 					text-align: start;
+				}
+
+				&-required {
+					color: red;
+					font-size: 32px;
+					margin-left: -20px;
 				}
 			}
 
@@ -803,6 +839,12 @@ const testFunc = () => {
 					font-weight: 500;
 					color: #353333;
 					margin-bottom: 12px;
+
+					&-required {
+						color: red;
+						font-size: 32px;
+						margin-left: -20px;
+					}
 				}
 
 				&-second {
