@@ -4,10 +4,6 @@ export type PartnerRegistration = {
 	compName: string;
 	ruc: string;
 	orgLocation: string;
-	videoBusinessСard: File | null;
-	mainBanner: File | null;
-	compVideo: File | string | null;
-	mostPopularProduct: File | null;
 	socialMedias: {
 		telegram: string;
 		twitter: string;
@@ -17,7 +13,6 @@ export type PartnerRegistration = {
 		linkedIn: string;
 	};
 	digitalCatalog: string;
-	mainProducts: File | null;
 	firstProdCategory: {
 		cat1_product1: string;
 		cat1_product2: string;
@@ -30,10 +25,17 @@ export type PartnerRegistration = {
 		cat2_product3: string;
 		cat2_product4: string;
 	};
-	galleryImages: File | null;
 	contacts: {
 		place: string;
 		tel: string;
 		mail: string;
+	};
+	files: {
+		videoBusinessСard: File | null;
+		mainBanner: File | null;
+		compVideo: File | string | null;
+		mostPopularProduct: File | null;
+		mainProducts: File | null;
+		galleryImages: File | null;
 	};
 };

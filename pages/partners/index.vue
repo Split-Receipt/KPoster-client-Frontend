@@ -150,7 +150,7 @@
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<cp-drag-n-drop
-						v-model="partnerRegistrationForm.videoBusinessСard"
+						v-model="partnerRegistrationForm.files.videoBusinessСard"
 						type="video"
 						:max-size="50"
 					/>
@@ -167,12 +167,12 @@
 				<div class="partners__form-rowDnD-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="partnerRegistrationForm.mainBanner"
+						:model-value="partnerRegistrationForm.files.mainBanner"
 						name="banner"
 						rules="required_file"
 					>
 						<cp-drag-n-drop
-							v-model="partnerRegistrationForm.mainBanner"
+							v-model="partnerRegistrationForm.files.mainBanner"
 							type="image"
 							:max-size="5"
 						/>
@@ -205,7 +205,7 @@
 						<div>
 							<cp-drag-n-drop
 								v-if="switcherValue === 'File'"
-								v-model="partnerRegistrationForm.compVideo"
+								v-model="partnerRegistrationForm.files.compVideo"
 								type="video"
 								:max-size="50"
 							/>
@@ -215,7 +215,7 @@
 							>
 								<cp-social-media
 									id="compVideo_id"
-									v-model="partnerRegistrationForm.compVideo"
+									v-model="partnerRegistrationForm.files.compVideo"
 									:circle="true"
 									label-text="YouTube / Vimeo"
 									placeholder="https://www.youtube.com/"
@@ -238,7 +238,7 @@
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<cp-drag-n-drop
-						v-model="partnerRegistrationForm.mostPopularProduct"
+						v-model="partnerRegistrationForm.files.mostPopularProduct"
 						type="image"
 						:max-size="5"
 					/>
@@ -357,12 +357,12 @@
 				<div class="partners__form-rowDnD-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="partnerRegistrationForm.mainProducts"
+						:model-value="partnerRegistrationForm.files.mainProducts"
 						name="productDescription"
 						rules="required_file"
 					>
 						<cp-drag-n-drop
-							v-model="partnerRegistrationForm.mainProducts"
+							v-model="partnerRegistrationForm.files.mainProducts"
 							type="image"
 							:max-size="5"
 						/>
@@ -613,12 +613,12 @@
 				<div class="partners__form-rowDnD-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="partnerRegistrationForm.galleryImages"
+						:model-value="partnerRegistrationForm.files.galleryImages"
 						name="gallery_DnD"
 						rules="required_file"
 					>
 						<cp-drag-n-drop
-							v-model="partnerRegistrationForm.galleryImages"
+							v-model="partnerRegistrationForm.files.galleryImages"
 							type="image"
 							:max-size="2"
 						/>
@@ -766,10 +766,6 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 	compName: '',
 	ruc: '',
 	orgLocation: '',
-	videoBusinessСard: null,
-	mainBanner: null,
-	compVideo: null,
-	mostPopularProduct: null,
 	socialMedias: {
 		telegram: '',
 		twitter: '',
@@ -779,7 +775,7 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		linkedIn: '',
 	},
 	digitalCatalog: '',
-	mainProducts: null,
+
 	firstProdCategory: {
 		cat1_product1: '',
 		cat1_product2: '',
@@ -792,11 +788,19 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		cat2_product3: '',
 		cat2_product4: '',
 	},
-	galleryImages: null,
+
 	contacts: {
 		place: '',
 		tel: '',
 		mail: '',
+	},
+	files: {
+		videoBusinessСard: null,
+		mainBanner: null,
+		compVideo: null,
+		mostPopularProduct: null,
+		mainProducts: null,
+		galleryImages: null,
 	},
 });
 
@@ -805,7 +809,7 @@ const isSpin = ref<boolean>(false);
 const partnerRegForm = ref<HTMLFormElement | null>(null);
 
 watch(switcherValue, () => {
-	partnerRegistrationForm.compVideo = null;
+	partnerRegistrationForm.files.compVideo = null;
 });
 
 const sendPartnerRegistrationForm = async () => {
@@ -817,7 +821,8 @@ const sendPartnerRegistrationForm = async () => {
 
 		return;
 	}
-	const partnerRegPayload = $objToFormData(partnerRegistrationForm);
+
+	const partnerRegPayload = $objToFormData(toRaw(partnerRegistrationForm));
 	try {
 		await registerPartner(partnerRegPayload);
 		isSpin.value = false;
