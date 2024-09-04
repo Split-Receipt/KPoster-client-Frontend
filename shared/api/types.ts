@@ -30,7 +30,7 @@ export type PartnerRegistration = {
 		cat2_product3: string;
 		cat2_product4: string;
 	};
-	gelaryImages: File | null;
+	galleryImages: File | null;
 	contacts: {
 		place: string;
 		tel: string;

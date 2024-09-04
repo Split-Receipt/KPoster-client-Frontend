@@ -456,7 +456,7 @@
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<cp-drag-n-drop
-						v-model="formData.gelaryImages"
+						v-model="formData.galleryImages"
 						type="image"
 						:max-size="2"
 					/>
@@ -602,7 +602,7 @@ const formData = reactive<PartnerRegistration>({
 		cat2_product3: '',
 		cat2_product4: '',
 	},
-	gelaryImages: null,
+	galleryImages: null,
 	contacts: {
 		place: '',
 		tel: '',
