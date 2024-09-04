@@ -23,11 +23,19 @@
 					</span>
 				</div>
 				<div class="partners__form-row-input">
-					<cp-radio-button
-						v-model="formData.orgType"
-						:options="radioOptions1"
-						name="radio1"
-					/>
+					<v-field
+						v-slot="{ errors }"
+						:model-value="formData.orgType"
+						name="orgType"
+						rules="required"
+					>
+						<cp-radio-button
+							v-model="formData.orgType"
+							:options="radioOptions1"
+							name="radio1"
+						/>
+						<span v-if="errors">{{ errors[0] }}</span>
+					</v-field>
 				</div>
 			</div>
 
@@ -45,8 +53,8 @@
 				<div class="partners__form-row-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="formData.orgType"
-						name="Номер организации"
+						:model-value="formData.commercialName"
+						name="commercialName"
 						rules="required"
 					>
 						<cp-text-input
@@ -68,11 +76,19 @@
 					</span>
 				</div>
 				<div class="partners__form-row-input">
-					<cp-text-input
-						v-model="formData.compName"
-						type="text"
-						placeholder="Razón social"
-					/>
+					<v-field
+						v-slot="{ errors }"
+						:model-value="formData.compName"
+						name="compName"
+						rules="required"
+					>
+						<cp-text-input
+							v-model="formData.compName"
+							type="text"
+							placeholder="Razón social"
+						/>
+						<span v-if="errors">{{ errors[0] }}</span>
+					</v-field>
 				</div>
 			</div>
 
@@ -84,7 +100,19 @@
 					</span>
 				</div>
 				<div class="partners__form-row-input">
-					<cp-text-input v-model="formData.ruc" type="text" placeholder="RUC" />
+					<v-field
+						v-slot="{ errors }"
+						:model-value="formData.compName"
+						name="ruc"
+						rules="required"
+					>
+						<cp-text-input
+							v-model="formData.ruc"
+							type="text"
+							placeholder="RUC"
+						/>
+						<span v-if="errors">{{ errors[0] }}</span>
+					</v-field>
 				</div>
 			</div>
 
@@ -97,11 +125,19 @@
 					</span>
 				</div>
 				<div class="partners__form-row-input">
-					<cp-radio-button
-						v-model="formData.orgLocation"
-						:options="radiooptions2"
-						name="radio2"
-					/>
+					<v-field
+						v-slot="{ errors }"
+						:model-value="formData.orgLocation"
+						name="orgLocation"
+						rules="required"
+					>
+						<cp-radio-button
+							v-model="formData.orgLocation"
+							:options="radiooptions2"
+							name="radio2"
+						/>
+						<span v-if="errors">{{ errors[0] }}</span>
+					</v-field>
 				</div>
 			</div>
 
@@ -129,11 +165,19 @@
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<cp-drag-n-drop
-						v-model="formData.mainBanner"
-						type="image"
-						:max-size="5"
-					/>
+					<v-field
+						v-slot="{ errors }"
+						:model-value="formData.mainBanner"
+						name="banner"
+						rules="required_file"
+					>
+						<cp-drag-n-drop
+							v-model="formData.mainBanner"
+							type="image"
+							:max-size="5"
+						/>
+						<span v-if="errors">{{ errors[0] }}</span>
+					</v-field>
 				</div>
 			</div>
 
@@ -311,11 +355,19 @@
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<cp-drag-n-drop
-						v-model="formData.mainProducts"
-						type="image"
-						:max-size="5"
-					/>
+					<v-field
+						v-slot="{ errors }"
+						:model-value="formData.mainProducts"
+						name="productDescription"
+						rules="required_file"
+					>
+						<cp-drag-n-drop
+							v-model="formData.mainProducts"
+							type="image"
+							:max-size="5"
+						/>
+						<span v-if="errors">{{ errors[0] }}</span>
+					</v-field>
 				</div>
 			</div>
 
@@ -334,40 +386,72 @@
 					</div>
 					<div class="partners__form-soloInput__socials">
 						<span class="partners__form-soloInput__socials-item">
-							<cp-social-media
-								id="cat1_product1"
-								v-model="formData.firstProdCategory.cat1_product1"
-								:circle="true"
-								label-text="Mercancía 1"
-								placeholder="introduzca el enlace"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="formData.firstProdCategory.cat1_product1"
+								name="cat1_product1"
+								rules="required"
+							>
+								<cp-social-media
+									id="cat1_product1"
+									v-model="formData.firstProdCategory.cat1_product1"
+									:circle="true"
+									label-text="Mercancía 1"
+									placeholder="introduzca el enlace"
+								/>
+								<span v-if="errors">{{ errors[0] }}</span>
+							</v-field>
 						</span>
 						<span class="partners__form-soloInput__socials-item">
-							<cp-social-media
-								id="cat1_product2"
-								v-model="formData.firstProdCategory.cat1_product2"
-								:circle="true"
-								label-text="Mercancía 2"
-								placeholder="introduzca el enlace"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="formData.firstProdCategory.cat1_product2"
+								name="cat1_product2"
+								rules="required"
+							>
+								<cp-social-media
+									id="cat1_product2"
+									v-model="formData.firstProdCategory.cat1_product2"
+									:circle="true"
+									label-text="Mercancía 2"
+									placeholder="introduzca el enlace"
+								/>
+								<span v-if="errors">{{ errors[0] }}</span>
+							</v-field>
 						</span>
 						<span class="partners__form-soloInput__socials-item">
-							<cp-social-media
-								id="cat1_product3"
-								v-model="formData.firstProdCategory.cat1_product3"
-								:circle="true"
-								label-text="Mercancía 3"
-								placeholder="introduzca el enlace"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="formData.firstProdCategory.cat1_product3"
+								name="cat1_product3"
+								rules="required"
+							>
+								<cp-social-media
+									id="cat1_product3"
+									v-model="formData.firstProdCategory.cat1_product3"
+									:circle="true"
+									label-text="Mercancía 3"
+									placeholder="introduzca el enlace"
+								/>
+								<span v-if="errors">{{ errors[0] }}</span>
+							</v-field>
 						</span>
 						<span class="partners__form-soloInput__socials-item">
-							<cp-social-media
-								id="cat1_product4"
-								v-model="formData.firstProdCategory.cat1_product4"
-								:circle="true"
-								label-text="Mercancía 4"
-								placeholder="introduzca el enlace"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="formData.firstProdCategory.cat1_product4"
+								name="cat1_product4"
+								rules="required"
+							>
+								<cp-social-media
+									id="cat1_product4"
+									v-model="formData.firstProdCategory.cat1_product4"
+									:circle="true"
+									label-text="Mercancía 4"
+									placeholder="introduzca el enlace"
+								/>
+								<span v-if="errors">{{ errors[0] }}</span>
+							</v-field>
 						</span>
 					</div>
 					<cp-button
@@ -396,40 +480,72 @@
 					</div>
 					<div class="partners__form-soloInput__socials">
 						<span class="partners__form-soloInput__socials-item">
-							<cp-social-media
-								id="cat2_product1"
-								v-model="formData.secondProdCategory.cat2_product1"
-								:circle="true"
-								label-text="Mercancía 1"
-								placeholder="introduzca el enlace"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="formData.secondProdCategory.cat2_product1"
+								name="cat2_product1"
+								rules="required"
+							>
+								<cp-social-media
+									id="cat2_product1"
+									v-model="formData.secondProdCategory.cat2_product1"
+									:circle="true"
+									label-text="Mercancía 1"
+									placeholder="introduzca el enlace"
+								/>
+								<span v-if="errors">{{ errors[0] }}</span>
+							</v-field>
 						</span>
 						<span class="partners__form-soloInput__socials-item">
-							<cp-social-media
-								id="cat2_product2"
-								v-model="formData.secondProdCategory.cat2_product2"
-								:circle="true"
-								label-text="Mercancía 2"
-								placeholder="introduzca el enlace"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="formData.secondProdCategory.cat2_product2"
+								name="cat2_product2"
+								rules="required"
+							>
+								<cp-social-media
+									id="cat2_product2"
+									v-model="formData.secondProdCategory.cat2_product2"
+									:circle="true"
+									label-text="Mercancía 2"
+									placeholder="introduzca el enlace"
+								/>
+								<span v-if="errors">{{ errors[0] }}</span>
+							</v-field>
 						</span>
 						<span class="partners__form-soloInput__socials-item">
-							<cp-social-media
-								id="cat2_product3"
-								v-model="formData.secondProdCategory.cat2_product3"
-								:circle="true"
-								label-text="Mercancía 3"
-								placeholder="introduzca el enlace"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="formData.secondProdCategory.cat2_product3"
+								name="cat2_product3"
+								rules="required"
+							>
+								<cp-social-media
+									id="cat2_product3"
+									v-model="formData.secondProdCategory.cat2_product3"
+									:circle="true"
+									label-text="Mercancía 3"
+									placeholder="introduzca el enlace"
+								/>
+								<span v-if="errors">{{ errors[0] }}</span>
+							</v-field>
 						</span>
 						<span class="partners__form-soloInput__socials-item">
-							<cp-social-media
-								id="cat2_product4"
-								v-model="formData.secondProdCategory.cat2_product4"
-								:circle="true"
-								label-text="Mercancía 4"
-								placeholder="introduzca el enlace"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="formData.secondProdCategory.cat2_product4"
+								name="cat2_product4"
+								rules="required"
+							>
+								<cp-social-media
+									id="cat2_product4"
+									v-model="formData.secondProdCategory.cat2_product4"
+									:circle="true"
+									label-text="Mercancía 4"
+									placeholder="introduzca el enlace"
+								/>
+								<span v-if="errors">{{ errors[0] }}</span>
+							</v-field>
 						</span>
 					</div>
 					<cp-button
@@ -463,11 +579,19 @@
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<cp-drag-n-drop
-						v-model="formData.galleryImages"
-						type="image"
-						:max-size="2"
-					/>
+					<v-field
+						v-slot="{ errors }"
+						:model-value="formData.galleryImages"
+						name="gallery_DnD"
+						rules="required_file"
+					>
+						<cp-drag-n-drop
+							v-model="formData.galleryImages"
+							type="image"
+							:max-size="2"
+						/>
+						<span v-if="errors">{{ errors[0] }}</span>
+					</v-field>
 				</div>
 			</div>
 			<div class="partners__form-rowDnD">
@@ -484,28 +608,52 @@
 				<div class="partners__form-rowDnD-input">
 					<div>
 						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-social-media
-								id="place_id"
-								v-model="formData.contacts.place"
-								label-text="País y ciudad"
-								placeholder="introduzca el enlace"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="formData.contacts.place"
+								name="place_id"
+								rules="required"
+							>
+								<cp-social-media
+									id="place"
+									v-model="formData.contacts.place"
+									label-text="País y ciudad"
+									placeholder="introduzca el enlace"
+								/>
+								<span v-if="errors">{{ errors[0] }}</span>
+							</v-field>
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-social-media
-								id="tel_id"
-								v-model="formData.contacts.tel"
-								label-text="Teléfono de la empresa"
-								placeholder="introduzca el enlace"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="formData.contacts.tel"
+								name="tel"
+								rules="required"
+							>
+								<cp-social-media
+									id="tel_id"
+									v-model="formData.contacts.tel"
+									label-text="Teléfono de la empresa"
+									placeholder="introduzca el enlace"
+								/>
+								<span v-if="errors">{{ errors[0] }}</span>
+							</v-field>
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-social-media
-								id="mail_id"
-								v-model="formData.contacts.mail"
-								label-text="Email"
-								placeholder="introduzca el enlace"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="formData.contacts.mail"
+								name="mail"
+								rules="email"
+							>
+								<cp-social-media
+									id="mail_id"
+									v-model="formData.contacts.mail"
+									label-text="Email"
+									placeholder="introduzca el enlace"
+								/>
+								<span v-if="errors">{{ errors[0] }}</span>
+							</v-field>
 						</span>
 					</div>
 					<cp-button

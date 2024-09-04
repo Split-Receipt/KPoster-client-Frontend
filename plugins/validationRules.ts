@@ -24,4 +24,12 @@ export default defineNuxtPlugin(() => {
 
 		return true;
 	});
+
+	defineRule('required_file', (value: FileList | null) => {
+		if (!value || value.length === 0) {
+			return 'A file is required';
+		}
+
+		return true;
+	});
 });
