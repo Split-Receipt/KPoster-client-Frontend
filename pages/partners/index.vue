@@ -727,8 +727,6 @@ const switcherOptions = [
 
 // ----------------------------------------------------------------------
 
-const partnerRegForm = ref();
-
 const formData = reactive<PartnerRegistration>({
 	orgType: '',
 	commercialName: '',
@@ -771,27 +769,30 @@ const formData = reactive<PartnerRegistration>({
 
 const switcherValue = ref<string | null>('File');
 const isSpin = ref<boolean>(false);
+const partnerRegForm = ref<HTMLFormElement | null>(null);
 
 watch(switcherValue, () => {
 	formData.compVideo = null;
 });
 
-/*Функция ниже отправит запрос на бэк с данными регистрации партнiера,
- тем самым создавая его, исполнение этой функции цепляем на кнопку отправки формы
- */
 const sendPartnerRegistrationForm = async () => {
-	/*Тут внедрить валидаци формы с помощью vee-validate и в идеале запустить лоадер на страницу,
-	если валидация не пройдена, делать простой ретурн без превент дефолт, так проще) . */
-	const isValid = await partnerRegForm.value.validate();
+	isSpin.value = true;
+	const isValid = await partnerRegForm.value?.validate();
 	if (!isValid.valid) {
+		isSpin.value = false;
+		toast.error('form is invalid');
+
 		return;
 	}
 	try {
 		await registerPartner(formData);
+		isSpin.value = false;
+		toast.success('Success!');
 	} catch (error) {
-		console.error(error); //Заменить вывод в консоль на всплывающее предупреждение об ошибке
+		toast.error('error');
+		isSpin.value = false;
 	} finally {
-		// Тут отключать лоадер
+		isSpin.value = false;
 	}
 };
 
