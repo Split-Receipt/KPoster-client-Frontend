@@ -2,7 +2,10 @@
 	<div class="dragNdrop">
 		<div
 			v-if="!isSizeError && !isExpectedTypeError && !isExtensionError"
-			class="dragNdrop__container"
+			:class="{
+				'dragNdrop__container-isInvalid': isInvalid,
+				dragNdrop__container: !isInvalid,
+			}"
 			v-bind="getRootProps()"
 		>
 			<input v-bind="getInputProps()" />
@@ -97,6 +100,7 @@ interface DnDProps {
 	type: string;
 	maxSize: number;
 	extensions?: string[];
+	isInvalid?: boolean;
 }
 
 type Events = {
@@ -201,6 +205,20 @@ const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 		height: 100%;
 		border: 2px dashed #9b9494;
 		border-radius: 40px;
+
+		&-isInvalid {
+			overflow: auto;
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+			background-color: #f6f6f6;
+			cursor: pointer;
+			padding: 10px 15px 10px 15px;
+			width: 100%;
+			height: 100%;
+			border: 2px dashed crimson;
+			border-radius: 40px;
+		}
 	}
 
 	&__error {

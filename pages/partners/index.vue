@@ -33,8 +33,11 @@
 							v-model="partnerRegistrationForm.orgType"
 							:options="radioOptions1"
 							name="radio1"
+							style="margin-left: -30px"
 						/>
-						<span v-if="errors">{{ errors[0] }}</span>
+						<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+							errors[0]
+						}}</span>
 					</v-field>
 				</div>
 			</div>
@@ -61,8 +64,11 @@
 							v-model="partnerRegistrationForm.commercialName"
 							type="text"
 							placeholder="Nombre comercial"
+							:class="{ 'requiredInput-error-textInput': errors.length > 0 }"
 						/>
-						<span v-if="errors">{{ errors[0] }}</span>
+						<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+							errors[0]
+						}}</span>
 					</v-field>
 				</div>
 			</div>
@@ -86,8 +92,11 @@
 							v-model="partnerRegistrationForm.compName"
 							type="text"
 							placeholder="Razón social"
+							:class="{ 'requiredInput-error-textInput': errors.length > 0 }"
 						/>
-						<span v-if="errors">{{ errors[0] }}</span>
+						<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+							errors[0]
+						}}</span>
 					</v-field>
 				</div>
 			</div>
@@ -110,8 +119,11 @@
 							v-model="partnerRegistrationForm.ruc"
 							type="text"
 							placeholder="RUC"
+							:class="{ 'requiredInput-error-textInput': errors.length > 0 }"
 						/>
-						<span v-if="errors">{{ errors[0] }}</span>
+						<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+							errors[0]
+						}}</span>
 					</v-field>
 				</div>
 			</div>
@@ -135,8 +147,11 @@
 							v-model="partnerRegistrationForm.orgLocation"
 							:options="radiooptions2"
 							name="radio2"
+							style="margin-left: -30px"
 						/>
-						<span v-if="errors">{{ errors[0] }}</span>
+						<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+							errors[0]
+						}}</span>
 					</v-field>
 				</div>
 			</div>
@@ -175,8 +190,11 @@
 							v-model="partnerRegistrationForm.files.mainBanner"
 							type="image"
 							:max-size="5"
+							:is-invalid="errors.length > 0"
 						/>
-						<span v-if="errors">{{ errors[0] }}</span>
+						<span v-if="errors" class="requiredInput-error-info-center">{{
+							errors[0]
+						}}</span>
 					</v-field>
 				</div>
 			</div>
@@ -365,8 +383,11 @@
 							v-model="partnerRegistrationForm.files.mainProducts"
 							type="image"
 							:max-size="5"
+							:is-invalid="errors.length > 0"
 						/>
-						<span v-if="errors">{{ errors[0] }}</span>
+						<span v-if="errors" class="requiredInput-error-info-center">{{
+							errors[0]
+						}}</span>
 					</v-field>
 				</div>
 			</div>
@@ -402,8 +423,13 @@
 									:circle="true"
 									label-text="Mercancía 1"
 									placeholder="introduzca el enlace"
+									:class="{
+										'requiredInput-error-socialMedia': errors.length > 0,
+									}"
 								/>
-								<span v-if="errors">{{ errors[0] }}</span>
+								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+									errors[0]
+								}}</span>
 							</v-field>
 						</span>
 						<span class="partners__form-soloInput__socials-item">
@@ -423,8 +449,13 @@
 									:circle="true"
 									label-text="Mercancía 2"
 									placeholder="introduzca el enlace"
+									:class="{
+										'requiredInput-error-socialMedia': errors.length > 0,
+									}"
 								/>
-								<span v-if="errors">{{ errors[0] }}</span>
+								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+									errors[0]
+								}}</span>
 							</v-field>
 						</span>
 						<span class="partners__form-soloInput__socials-item">
@@ -444,8 +475,13 @@
 									:circle="true"
 									label-text="Mercancía 3"
 									placeholder="introduzca el enlace"
+									:class="{
+										'requiredInput-error-socialMedia': errors.length > 0,
+									}"
 								/>
-								<span v-if="errors">{{ errors[0] }}</span>
+								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+									errors[0]
+								}}</span>
 							</v-field>
 						</span>
 						<span class="partners__form-soloInput__socials-item">
@@ -465,8 +501,13 @@
 									:circle="true"
 									label-text="Mercancía 4"
 									placeholder="introduzca el enlace"
+									:class="{
+										'requiredInput-error-socialMedia': errors.length > 0,
+									}"
 								/>
-								<span v-if="errors">{{ errors[0] }}</span>
+								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+									errors[0]
+								}}</span>
 							</v-field>
 						</span>
 					</div>
@@ -512,8 +553,13 @@
 									:circle="true"
 									label-text="Mercancía 1"
 									placeholder="introduzca el enlace"
+									:class="{
+										'requiredInput-error-socialMedia': errors.length > 0,
+									}"
 								/>
-								<span v-if="errors">{{ errors[0] }}</span>
+								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+									errors[0]
+								}}</span>
 							</v-field>
 						</span>
 						<span class="partners__form-soloInput__socials-item">
@@ -533,8 +579,13 @@
 									:circle="true"
 									label-text="Mercancía 2"
 									placeholder="introduzca el enlace"
+									:class="{
+										'requiredInput-error-socialMedia': errors.length > 0,
+									}"
 								/>
-								<span v-if="errors">{{ errors[0] }}</span>
+								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+									errors[0]
+								}}</span>
 							</v-field>
 						</span>
 						<span class="partners__form-soloInput__socials-item">
@@ -554,8 +605,13 @@
 									:circle="true"
 									label-text="Mercancía 3"
 									placeholder="introduzca el enlace"
+									:class="{
+										'requiredInput-error-socialMedia': errors.length > 0,
+									}"
 								/>
-								<span v-if="errors">{{ errors[0] }}</span>
+								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+									errors[0]
+								}}</span>
 							</v-field>
 						</span>
 						<span class="partners__form-soloInput__socials-item">
@@ -575,8 +631,13 @@
 									:circle="true"
 									label-text="Mercancía 4"
 									placeholder="introduzca el enlace"
+									:class="{
+										'requiredInput-error-socialMedia': errors.length > 0,
+									}"
 								/>
-								<span v-if="errors">{{ errors[0] }}</span>
+								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+									errors[0]
+								}}</span>
 							</v-field>
 						</span>
 					</div>
@@ -621,8 +682,11 @@
 							v-model="partnerRegistrationForm.files.galleryImages"
 							type="image"
 							:max-size="2"
+							:is-invalid="errors.length > 0"
 						/>
-						<span v-if="errors">{{ errors[0] }}</span>
+						<span v-if="errors" class="requiredInput-error-info-center">{{
+							errors[0]
+						}}</span>
 					</v-field>
 				</div>
 			</div>
@@ -643,7 +707,7 @@
 							<v-field
 								v-slot="{ errors }"
 								:model-value="partnerRegistrationForm.contacts.place"
-								name="place_id"
+								name="place"
 								rules="required"
 							>
 								<cp-social-media
@@ -651,8 +715,13 @@
 									v-model="partnerRegistrationForm.contacts.place"
 									label-text="País y ciudad"
 									placeholder="introduzca el enlace"
+									:class="{
+										'requiredInput-error-socialMedia': errors.length > 0,
+									}"
 								/>
-								<span v-if="errors">{{ errors[0] }}</span>
+								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+									errors[0]
+								}}</span>
 							</v-field>
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
@@ -667,8 +736,13 @@
 									v-model="partnerRegistrationForm.contacts.tel"
 									label-text="Teléfono de la empresa"
 									placeholder="introduzca el enlace"
+									:class="{
+										'requiredInput-error-socialMedia': errors.length > 0,
+									}"
 								/>
-								<span v-if="errors">{{ errors[0] }}</span>
+								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+									errors[0]
+								}}</span>
 							</v-field>
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
@@ -676,15 +750,20 @@
 								v-slot="{ errors }"
 								:model-value="partnerRegistrationForm.contacts.mail"
 								name="mail"
-								rules="email"
+								rules="required|email"
 							>
 								<cp-social-media
 									id="mail_id"
 									v-model="partnerRegistrationForm.contacts.mail"
 									label-text="Email"
 									placeholder="introduzca el enlace"
+									:class="{
+										'requiredInput-error-socialMedia': errors.length > 0,
+									}"
 								/>
-								<span v-if="errors">{{ errors[0] }}</span>
+								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+									errors[0]
+								}}</span>
 							</v-field>
 						</span>
 					</div>
@@ -815,6 +894,7 @@ watch(switcherValue, () => {
 const sendPartnerRegistrationForm = async () => {
 	isSpin.value = true;
 	const isValid = await partnerRegForm.value?.validate();
+
 	if (!isValid.valid) {
 		isSpin.value = false;
 		toast.error('form is invalid');
@@ -833,18 +913,6 @@ const sendPartnerRegistrationForm = async () => {
 	} finally {
 		isSpin.value = false;
 	}
-};
-
-const testFunc = (e: SubmitEvent) => {
-	e.preventDefault();
-	isSpin.value = true;
-	setTimeout(() => {
-		isSpin.value = false;
-		toast.success('request succesfully sended');
-		toast.error('request succesfully sended');
-		toast.info('request succesfully sended');
-		toast('request succesfully sended');
-	}, 1500);
 };
 </script>
 
@@ -1074,7 +1142,41 @@ const testFunc = (e: SubmitEvent) => {
 		}
 	}
 }
+
 .partners__form__button {
 	margin-top: 20px;
+}
+
+.requiredInput {
+	&-error {
+		&-socialMedia {
+			border-bottom: 1px solid crimson;
+		}
+
+		&-textInput {
+			border: 1px solid crimson;
+			border-radius: 12px;
+		}
+
+		&-info {
+			&-leftSide {
+				display: flex;
+				align-items: center;
+				width: 100%;
+				color: crimson;
+				justify-content: flex-start;
+				line-height: 35px;
+			}
+
+			&-center {
+				display: flex;
+				align-items: center;
+				width: 100%;
+				color: crimson;
+				justify-content: space-around;
+				line-height: 35px;
+			}
+		}
+	}
 }
 </style>
