@@ -175,8 +175,8 @@ export default withNuxt([
 			'vue/max-len': [
 				'error',
 				{
-					code: 120,
-					template: 120,
+					code: 130,
+					template: 130,
 					ignoreUrls: true,
 					ignoreRegExpLiterals: true,
 					ignoreStrings: true,
