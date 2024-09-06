@@ -41,3 +41,16 @@ export type PartnerRegistration = {
 		galleryImages: File | null;
 	};
 };
+
+export type RequestOption = {
+	id: number;
+	attributes: {
+		item_title: string;
+		item_UID: string;
+		item_value: string;
+		createdAt: string;
+		updatedAt: string;
+		publishedAt: string;
+		locale: string;
+	};
+};

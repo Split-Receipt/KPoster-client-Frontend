@@ -14,8 +14,6 @@
 
 			<div class="header__menu">
 				<div class="header__buttons header__buttons--oval">
-					<!-- <nuxt-link to="/home">home</nuxt-link> -->
-					<!-- <nuxt-link to="/partners">partners</nuxt-link> -->
 					<cp-button
 						width="large"
 						size="small"
