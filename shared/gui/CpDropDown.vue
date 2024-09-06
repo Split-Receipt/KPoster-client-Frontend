@@ -158,7 +158,7 @@ const dataToFilter = (event: Event) => {
 	border-radius: 30px;
 	background-color: #f6f6f6;
 	height: 50px;
-	padding: 8px 20px 5px 20px;
+	padding: $button-small-padding;
 }
 
 .burger {

@@ -377,7 +377,7 @@ type eventCardTextSizeType = keyof typeof eventCardTextSize;
 
 		&--small {
 			@media #{$screen-tablet} {
-				padding: 20px 50px;
+				padding: 20px 50px 17px 50px;
 			}
 
 			@media #{$screen-desktop} {

@@ -1,6 +1,7 @@
 <template>
 	<div class="button__wrapper">
 		<button
+			v-if="!islik"
 			:disabled="disabled"
 			:type="type"
 			:class="[
@@ -20,6 +21,26 @@
 				{{ text }}
 			</span>
 		</button>
+		<nuxt-link
+			v-if="islik"
+			:disabled="disabled"
+			:class="[
+				'button',
+				buttonColors[color],
+				buttonShapes[shape],
+				buttonSizes[size],
+				buttonWidth[width],
+			]"
+			:to="linkTo"
+		>
+			<i
+				v-if="leftIcon"
+				:class="['icon', `icon-${leftIcon}`, 'button__icon']"
+			/>
+			<span v-if="!leftIcon">
+				{{ text }}
+			</span>
+		</nuxt-link>
 	</div>
 </template>
 
@@ -33,6 +54,8 @@ type Props = {
 	width?: keyof typeof buttonWidth;
 	leftIcon?: string;
 	text?: string;
+	islik?: boolean;
+	linkTo?: string;
 };
 
 type Emits = {
@@ -91,6 +114,8 @@ enum buttonWidth {
 	padding: $button-default-padding;
 	border: none;
 	background-color: transparent;
+	text-decoration: none;
+	color: #000000;
 	cursor: pointer;
 
 	&:disabled {
