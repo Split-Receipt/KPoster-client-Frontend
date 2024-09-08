@@ -165,7 +165,7 @@
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<cp-drag-n-drop
-						v-model="partnerRegistrationForm.files.videoBusinessСard"
+						v-model="partnerRegistrationForm.files.videoBusinessCard"
 						type="video"
 						:max-size="50"
 					/>
@@ -408,17 +408,17 @@
 					<div class="partners__form-soloInput__socials">
 						<span class="partners__form-soloInput__socials-item">
 							<v-field
+								v-for="(category, index) in partnerRegistrationForm.data.productCategory"
+								:key="index + generateUniqueId()"
 								v-slot="{ errors }"
-								:model-value="
-									partnerRegistrationForm.data.firstProdCategory.cat1_product1
-								"
+								:model-value="category"
 								name="cat1_product1"
 								rules="required"
 							>
 								<cp-social-media
 									id="cat1_product1"
 									v-model="
-										partnerRegistrationForm.data.firstProdCategory.cat1_product1
+										partnerRegistrationForm.data.productCategory[index]
 									"
 									:circle="true"
 									label-text="Mercancía 1"
@@ -430,84 +430,18 @@
 								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
 									errors[0]
 								}}</span>
-							</v-field>
-						</span>
-						<span class="partners__form-soloInput__socials-item">
-							<v-field
-								v-slot="{ errors }"
-								:model-value="
-									partnerRegistrationForm.data.firstProdCategory.cat1_product2
-								"
-								name="cat1_product2"
-								rules="required"
-							>
-								<cp-social-media
-									id="cat1_product2"
-									v-model="
-										partnerRegistrationForm.data.firstProdCategory.cat1_product2
-									"
-									:circle="true"
-									label-text="Mercancía 2"
-									placeholder="introduzca el enlace"
-									:class="{
-										'requiredInput-error-socialMedia': errors.length > 0,
-									}"
-								/>
-								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
-									errors[0]
-								}}</span>
-							</v-field>
-						</span>
-						<span class="partners__form-soloInput__socials-item">
-							<v-field
-								v-slot="{ errors }"
-								:model-value="
-									partnerRegistrationForm.data.firstProdCategory.cat1_product3
-								"
-								name="cat1_product3"
-								rules="required"
-							>
-								<cp-social-media
-									id="cat1_product3"
-									v-model="
-										partnerRegistrationForm.data.firstProdCategory.cat1_product3
-									"
-									:circle="true"
-									label-text="Mercancía 3"
-									placeholder="introduzca el enlace"
-									:class="{
-										'requiredInput-error-socialMedia': errors.length > 0,
-									}"
-								/>
-								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
-									errors[0]
-								}}</span>
-							</v-field>
-						</span>
-						<span class="partners__form-soloInput__socials-item">
-							<v-field
-								v-slot="{ errors }"
-								:model-value="
-									partnerRegistrationForm.data.firstProdCategory.cat1_product4
-								"
-								name="cat1_product4"
-								rules="required"
-							>
-								<cp-social-media
-									id="cat1_product4"
-									v-model="
-										partnerRegistrationForm.data.firstProdCategory.cat1_product4
-									"
-									:circle="true"
-									label-text="Mercancía 4"
-									placeholder="introduzca el enlace"
-									:class="{
-										'requiredInput-error-socialMedia': errors.length > 0,
-									}"
-								/>
-								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
-									errors[0]
-								}}</span>
+								<cp-button
+									shape="circle"
+									color="transparent"
+									:disabled="!category || index < partnerRegistrationForm.data.productCategory.length-1"
+									text="Add category"
+									@click="addNewCategoryInput"/>
+								<cp-button
+									shape="circle"
+									color="transparent"
+									:disabled="index === 0"
+									text="Delete category"
+									@click="deleteCategory(index)"/>
 							</v-field>
 						</span>
 					</div>
@@ -522,7 +456,7 @@
 				</div>
 			</div>
 
-			<div class="partners__form-soloInput">
+			<!-- <div class="partners__form-soloInput">
 				<div class="partners__form-soloInput__container">
 					<div class="partners__form-soloInput__title">
 						<span class="partners__form-soloInput__title-main">
@@ -662,7 +596,7 @@
 						text="Añadir más categorías"
 					/>
 				</div>
-			</div>
+			</div> -->
 
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
@@ -817,6 +751,7 @@ import CpSocialMedia from '@shared/gui/CpSocialMedia.vue';
 import type { PartnerRegistration } from '@shared/api/types.ts';
 import { registerPartner } from '@shared/api';
 import { Form as VForm, Field as VField } from 'vee-validate';
+import { generateUniqueId } from '@shared/helpers/generateUid';
 
 const { $objToFormData } = useNuxtApp();
 // test values ----------------------------------------------------------
@@ -859,20 +794,7 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 			linkedIn: '',
 		},
 		digitalCatalog: '',
-
-		firstProdCategory: {
-			cat1_product1: '',
-			cat1_product2: '',
-			cat1_product3: '',
-			cat1_product4: '',
-		},
-		secondProdCategory: {
-			cat2_product1: '',
-			cat2_product2: '',
-			cat2_product3: '',
-			cat2_product4: '',
-		},
-
+		productCategory: [''],
 		contacts: {
 			place: '',
 			tel: '',
@@ -880,7 +802,7 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		},
 	},
 	files: {
-		videoBusinessСard: null,
+		videoBusinessCard: null,
 		mainBanner: null,
 		compVideo: null,
 		mostPopularProduct: null,
@@ -896,6 +818,14 @@ const partnerRegForm = ref<HTMLFormElement | null>(null);
 watch(switcherValue, () => {
 	partnerRegistrationForm.files.compVideo = null;
 });
+
+const addNewCategoryInput = () => {
+	partnerRegistrationForm.data.productCategory.push('');
+};
+
+const deleteCategory = (index: number) => {
+	partnerRegistrationForm.data.productCategory.splice(index, 1);
+};
 
 const sendPartnerRegistrationForm = async () => {
 	isSpin.value = true;

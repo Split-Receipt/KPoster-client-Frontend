@@ -14,18 +14,19 @@ export type PartnerRegistration = {
 			linkedIn: string;
 		};
 		digitalCatalog: string;
-		firstProdCategory: {
-			cat1_product1: string;
-			cat1_product2: string;
-			cat1_product3: string;
-			cat1_product4: string;
-		};
-		secondProdCategory: {
-			cat2_product1: string;
-			cat2_product2: string;
-			cat2_product3: string;
-			cat2_product4: string;
-		};
+		productCategory: string[];
+		// firstProdCategory: {
+		// 	cat1_product1: string;
+		// 	cat1_product2: string;
+		// 	cat1_product3: string;
+		// 	cat1_product4: string;
+		// };
+		// secondProdCategory: {
+		// 	cat2_product1: string;
+		// 	cat2_product2: string;
+		// 	cat2_product3: string;
+		// 	cat2_product4: string;
+		// };
 		contacts: {
 			place: string;
 			tel: string;
@@ -33,7 +34,7 @@ export type PartnerRegistration = {
 		};
 	};
 	files: {
-		videoBusinessСard: File | null;
+		videoBusinessCard: File | null;
 		mainBanner: File | null;
 		compVideo: File | string | null;
 		mostPopularProduct: File | null;
