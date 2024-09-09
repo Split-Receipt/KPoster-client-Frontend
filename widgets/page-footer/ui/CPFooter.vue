@@ -11,8 +11,10 @@
 			color="yellowGrey"
 			shape="oval"
 			text="Become a partner"
-			width="maxLength"
+			width="maxWidth"
 			size="middle"
+			:islik="true"
+			link-to="/partners"
 		/>
 	</div>
 </template>

@@ -37,7 +37,8 @@
 
 <script setup lang="ts">
 import CpDropDown from '@shared/gui/CpDropDown.vue';
-import axios from 'axios';
+import type { RequestOption } from '@shared/api/types.ts';
+import { requestForAnOptions } from '@shared/api';
 
 const categoriesToFilter: string[] = [];
 const citiesToFilter: string[] = [];
@@ -265,21 +266,6 @@ const sectionData = [
 	},
 ];
 
-// request for an options for dropdowns
-
-interface RequestOption {
-	id: number;
-	attributes: {
-		item_title: string;
-		item_UID: string;
-		item_value: string;
-		createdAt: string;
-		updatedAt: string;
-		publishedAt: string;
-		locale: string;
-	};
-}
-
 // category check points
 
 const categoryOptionsUrl =
@@ -291,23 +277,6 @@ const remoteCategoryOptions = ref<Array<RequestOption['attributes']>>([]);
 const cityOptionsUrl =
 	'https://admin-dev.culture-portal-cusco.online/api/city-filters';
 const remoteCityFilterOptions = ref<Array<RequestOption['attributes']>>([]);
-
-const requestForAnOptions = async (url: string, dataTo: Ref) => {
-	try {
-		await axios
-			.get(url)
-			.then((response) => response.data)
-			.then((result) => {
-				if (Array.isArray(result.data)) {
-					result.data.forEach((e: RequestOption) => {
-						dataTo.value.push(e.attributes);
-					});
-				}
-			});
-	} catch (err) {
-		throw new Error(`Error while requesting for an dropdown options: ${err}`);
-	}
-};
 
 // function trigger (when component did mount)
 
