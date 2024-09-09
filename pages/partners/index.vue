@@ -406,43 +406,48 @@
 						</span>
 					</div>
 					<div class="partners__form-soloInput__socials">
-						<span class="partners__form-soloInput__socials-item">
-							<v-field
-								v-for="(category, index) in partnerRegistrationForm.data.productCategory"
-								:key="index + generateUniqueId()"
-								v-slot="{ errors }"
-								:model-value="category"
-								name="cat1_product1"
-								rules="required"
-							>
-								<cp-social-media
-									id="cat1_product1"
-									v-model="
-										partnerRegistrationForm.data.productCategory[index]
-									"
-									:circle="true"
-									label-text="Mercancía 1"
-									placeholder="introduzca el enlace"
-									:class="{
-										'requiredInput-error-socialMedia': errors.length > 0,
-									}"
-								/>
-								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
-									errors[0]
-								}}</span>
-								<cp-button
-									shape="circle"
-									color="transparent"
-									:disabled="!category || index < partnerRegistrationForm.data.productCategory.length-1"
-									text="Add category"
-									@click="addNewCategoryInput"/>
-								<cp-button
-									shape="circle"
-									color="transparent"
-									:disabled="index === 0"
-									text="Delete category"
-									@click="deleteCategory(index)"/>
-							</v-field>
+						<span class="partners__form-soloInput__socials-item">  
+							<v-field  
+								v-for="(category, index) in productCategory"  
+								:key="index"  
+								v-slot="{ errors }"  
+								:model-value="category"  
+								:name="'cat1_product'+(index + 1)"  
+								rules="required"  
+							>  
+								<div class="partners__form-soloInput__socials-item-block">  
+									<cp-social-media  
+										:id="'cat1_product'+(index + 1)"  
+										v-model="productCategory[index]"  
+										:circle="true"  
+										:label-text="'Mercancía ' + (index + 1)"  
+										placeholder="introduzca el enlace"  
+										:class="{  
+											'requiredInput-error-socialMedia': errors.length > 0,  
+											'requiredInput-default-socialMedia': errors.length < 1  
+										}"  
+									/>  
+									<cp-button  
+										v-if="productCategory.length > 1"
+										shape="circle"  
+										color="yellowGrey"  
+										text=""  
+										with-image="../public/images/trash.svg"  
+										@click="deleteCategory(index)"  
+									/>  
+								</div>  
+								<span v-if="errors.length" class="cascadError requiredInput-error-info-leftSide">  
+									{{ errors[0] }}  
+								</span>  
+							</v-field>  
+							<cp-button
+								  
+								shape="circle"  
+								color="yellowGrey"  
+								text=""  
+								with-image="../public/images/plus.svg"  
+								@click="addNewCategoryInput"  
+							/>  
 						</span>
 					</div>
 					<cp-button
@@ -776,6 +781,10 @@ const switcherOptions = [
 	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },
 ];
 
+const randomId = () => {
+	return generateUniqueId();
+};
+
 // ----------------------------------------------------------------------
 
 const partnerRegistrationForm = reactive<PartnerRegistration>({
@@ -794,7 +803,7 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 			linkedIn: '',
 		},
 		digitalCatalog: '',
-		productCategory: [''],
+		productCategory: ['', ''],
 		contacts: {
 			place: '',
 			tel: '',
@@ -819,13 +828,17 @@ watch(switcherValue, () => {
 	partnerRegistrationForm.files.compVideo = null;
 });
 
-const addNewCategoryInput = () => {
-	partnerRegistrationForm.data.productCategory.push('');
-};
+const productCategory = computed(() => partnerRegistrationForm.data.productCategory);  
 
-const deleteCategory = (index: number) => {
-	partnerRegistrationForm.data.productCategory.splice(index, 1);
-};
+const addNewCategoryInput = () => {  
+  productCategory.value.push(''); 
+};  
+
+const deleteCategory = (index: number) => {  
+    if (index > -1 && index < partnerRegistrationForm.data.productCategory.length) {  
+    partnerRegistrationForm.data.productCategory.splice(index, 1);  
+    }  
+}; 
 
 const sendPartnerRegistrationForm = async () => {
 	isSpin.value = true;
@@ -1031,9 +1044,15 @@ const sendPartnerRegistrationForm = async () => {
 				margin-left: -10px;
 
 				&-item {
-					width: 50%;
+					width: 100%;
 					padding: 10px;
 					margin-top: 15px;
+
+					&-block {
+						display: flex;
+						width: 100%;
+						margin-bottom: 15px
+					}
 				}
 			}
 
@@ -1084,9 +1103,20 @@ const sendPartnerRegistrationForm = async () => {
 }
 
 .requiredInput {
+	&-default {
+		width: 100%;
+
+		&-socialMedia {
+			width: 100%;
+			margin-right: 25px
+		}
+	}
+
 	&-error {
 		&-socialMedia {
 			border-bottom: 1px solid crimson;
+			width: 100%;
+			margin-right: 25px
 		}
 
 		&-textInput {
@@ -1114,5 +1144,9 @@ const sendPartnerRegistrationForm = async () => {
 			}
 		}
 	}
+}
+
+.cascadError {
+	margin-top: -15px
 }
 </style>

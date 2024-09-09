@@ -13,6 +13,7 @@
 			]"
 			@click="(event) => handleClick(event)"
 		>
+			<nuxt-img v-if="withImage" class="button--circle--withImage" :src="withImage"/>
 			<i
 				v-if="leftIcon"
 				:class="['icon', `icon-${leftIcon}`, 'button__icon']"
@@ -33,6 +34,7 @@
 			]"
 			:to="linkTo"
 		>
+			<nuxt-img v-if="withImage" class="button--circle--withImage" :src="withImage"/>
 			<i
 				v-if="leftIcon"
 				:class="['icon', `icon-${leftIcon}`, 'button__icon']"
@@ -53,6 +55,7 @@ type Props = {
 	color: keyof typeof buttonColors;
 	width?: keyof typeof buttonWidth;
 	leftIcon?: string;
+	withImage?: string;
 	text?: string;
 	islik?: boolean;
 	linkTo?: string;
@@ -125,12 +128,18 @@ enum buttonWidth {
 
 	&--circle {
 		border-radius: $button-circle-border-radius;
-		padding: 0;
+		padding: 0 !important;
 		height: $button-circle-height;
 		width: $button-circle-width;
 
 		.button__icon {
 			font-size: $button-icon-circle-font-size;
+		}
+
+		&--withImage {
+			z-index: 2;
+			width: $button-circle-withImage-width;
+			height: $button-circle-withImage-height;
 		}
 	}
 

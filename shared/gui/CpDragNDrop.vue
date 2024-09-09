@@ -188,7 +188,6 @@ const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 <style scoped lang="scss">
 .dragNdrop {
 	box-sizing: border-box;
-	// padding: 15px;
 	position: relative;
 	width: 800px;
 	height: 250px;
