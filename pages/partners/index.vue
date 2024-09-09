@@ -406,48 +406,55 @@
 						</span>
 					</div>
 					<div class="partners__form-soloInput__socials">
-						<span class="partners__form-soloInput__socials-item">  
-							<v-field  
-								v-for="(category, index) in productCategory"  
-								:key="index"  
-								v-slot="{ errors }"  
-								:model-value="category"  
-								:name="'cat1_product'+(index + 1)"  
-								rules="required"  
-							>  
-								<div class="partners__form-soloInput__socials-item-block">  
-									<cp-social-media  
-										:id="'cat1_product'+(index + 1)"  
-										v-model="productCategory[index]"  
-										:circle="true"  
-										:label-text="'Mercancía ' + (index + 1)"  
-										placeholder="introduzca el enlace"  
-										:class="{  
-											'requiredInput-error-socialMedia': errors.length > 0,  
-											'requiredInput-default-socialMedia': errors.length < 1  
-										}"  
-									/>  
-									<cp-button  
-										v-if="productCategory.length > 1"
-										shape="circle"  
-										color="yellowGrey"  
-										text=""  
-										with-image="../public/images/trash.svg"  
-										@click="deleteCategory(index)"  
-									/>  
-								</div>  
-								<span v-if="errors.length" class="cascadError requiredInput-error-info-leftSide">  
-									{{ errors[0] }}  
-								</span>  
-							</v-field>  
+						<span class="partners__form-soloInput__socials-item">
+							<v-field
+								v-for="(category, index) in partnerRegistrationForm.data
+									.productCategory"
+								:key="category.id"
+								v-slot="{ errors }"
+								:model-value="category"
+								:name="'cat1_product' + (index + 1)"
+								rules="required"
+							>
+								<div class="partners__form-soloInput__socials-item-block">
+									<cp-social-media
+										:id="'cat1_product' + (index + 1)"
+										v-model="
+											partnerRegistrationForm.data.productCategory[index].title
+										"
+										:circle="true"
+										:label-text="'Mercancía ' + (index + 1)"
+										placeholder="introduzca el enlace"
+										:class="{
+											'requiredInput-error-socialMedia': errors.length > 0,
+											'requiredInput-default-socialMedia': errors.length < 1,
+										}"
+									/>
+									<cp-button
+										v-if="
+											partnerRegistrationForm.data.productCategory.length > 1
+										"
+										shape="circle"
+										color="yellowGrey"
+										text=""
+										with-image="../public/images/trash.svg"
+										@click="deleteCategory(index)"
+									/>
+								</div>
+								<span
+									v-if="errors.length"
+									class="required-input__error-info-leftSide cascade-error"
+								>
+									{{ errors[0] }}
+								</span>
+							</v-field>
 							<cp-button
-								  
-								shape="circle"  
-								color="yellowGrey"  
-								text=""  
-								with-image="../public/images/plus.svg"  
-								@click="addNewCategoryInput"  
-							/>  
+								shape="circle"
+								color="yellowGrey"
+								text=""
+								with-image="../public/images/plus.svg"
+								@click="addNewCategoryInput"
+							/>
 						</span>
 					</div>
 					<cp-button
@@ -460,149 +467,6 @@
 					/>
 				</div>
 			</div>
-
-			<!-- <div class="partners__form-soloInput">
-				<div class="partners__form-soloInput__container">
-					<div class="partners__form-soloInput__title">
-						<span class="partners__form-soloInput__title-main">
-							<strong class="partners__form-soloInput__title-main-required">
-								*
-							</strong>
-							Segunda categoría de bienes
-						</span>
-						<span class="partners__form-soloInput__title-second">
-							introduzca el texto
-						</span>
-					</div>
-					<div class="partners__form-soloInput__socials">
-						<span class="partners__form-soloInput__socials-item">
-							<v-field
-								v-slot="{ errors }"
-								:model-value="
-									partnerRegistrationForm.data.secondProdCategory.cat2_product1
-								"
-								name="cat2_product1"
-								rules="required"
-							>
-								<cp-social-media
-									id="cat2_product1"
-									v-model="
-										partnerRegistrationForm.data.secondProdCategory
-											.cat2_product1
-									"
-									:circle="true"
-									label-text="Mercancía 1"
-									placeholder="introduzca el enlace"
-									:class="{
-										'requiredInput-error-socialMedia': errors.length > 0,
-									}"
-								/>
-								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
-									errors[0]
-								}}</span>
-							</v-field>
-						</span>
-						<span class="partners__form-soloInput__socials-item">
-							<v-field
-								v-slot="{ errors }"
-								:model-value="
-									partnerRegistrationForm.data.secondProdCategory.cat2_product2
-								"
-								name="cat2_product2"
-								rules="required"
-							>
-								<cp-social-media
-									id="cat2_product2"
-									v-model="
-										partnerRegistrationForm.data.secondProdCategory
-											.cat2_product2
-									"
-									:circle="true"
-									label-text="Mercancía 2"
-									placeholder="introduzca el enlace"
-									:class="{
-										'requiredInput-error-socialMedia': errors.length > 0,
-									}"
-								/>
-								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
-									errors[0]
-								}}</span>
-							</v-field>
-						</span>
-						<span class="partners__form-soloInput__socials-item">
-							<v-field
-								v-slot="{ errors }"
-								:model-value="
-									partnerRegistrationForm.data.secondProdCategory.cat2_product3
-								"
-								name="cat2_product3"
-								rules="required"
-							>
-								<cp-social-media
-									id="cat2_product3"
-									v-model="
-										partnerRegistrationForm.data.secondProdCategory
-											.cat2_product3
-									"
-									:circle="true"
-									label-text="Mercancía 3"
-									placeholder="introduzca el enlace"
-									:class="{
-										'requiredInput-error-socialMedia': errors.length > 0,
-									}"
-								/>
-								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
-									errors[0]
-								}}</span>
-							</v-field>
-						</span>
-						<span class="partners__form-soloInput__socials-item">
-							<v-field
-								v-slot="{ errors }"
-								:model-value="
-									partnerRegistrationForm.data.secondProdCategory.cat2_product4
-								"
-								name="cat2_product4"
-								rules="required"
-							>
-								<cp-social-media
-									id="cat2_product4"
-									v-model="
-										partnerRegistrationForm.data.secondProdCategory
-											.cat2_product4
-									"
-									:circle="true"
-									label-text="Mercancía 4"
-									placeholder="introduzca el enlace"
-									:class="{
-										'requiredInput-error-socialMedia': errors.length > 0,
-									}"
-								/>
-								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
-									errors[0]
-								}}</span>
-							</v-field>
-						</span>
-					</div>
-					<cp-button
-						class="partners__form__button"
-						width="maxWidth"
-						size="small"
-						shape="oval"
-						color="transparent"
-						text="Más información"
-					/>
-					<cp-button
-						class="partners__form__button"
-						width="maxWidth"
-						size="small"
-						shape="oval"
-						color="yellowGrey"
-						text="Añadir más categorías"
-					/>
-				</div>
-			</div> -->
-
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -803,7 +667,7 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 			linkedIn: '',
 		},
 		digitalCatalog: '',
-		productCategory: ['', ''],
+		productCategory: [],
 		contacts: {
 			place: '',
 			tel: '',
@@ -828,17 +692,29 @@ watch(switcherValue, () => {
 	partnerRegistrationForm.files.compVideo = null;
 });
 
-const productCategory = computed(() => partnerRegistrationForm.data.productCategory);  
+const productCategory = computed(
+	() => partnerRegistrationForm.data.productCategory
+);
 
-const addNewCategoryInput = () => {  
-  productCategory.value.push(''); 
-};  
+onBeforeMount(() => {
+	addNewCategoryInput();
+});
 
-const deleteCategory = (index: number) => {  
-    if (index > -1 && index < partnerRegistrationForm.data.productCategory.length) {  
-    partnerRegistrationForm.data.productCategory.splice(index, 1);  
-    }  
-}; 
+const addNewCategoryInput = () => {
+	productCategory.value.push({
+		id: generateUniqueId(),
+		title: '',
+	});
+};
+
+const deleteCategory = (index: number) => {
+	if (
+		index > -1 &&
+		index < partnerRegistrationForm.data.productCategory.length
+	) {
+		partnerRegistrationForm.data.productCategory.splice(index, 1);
+	}
+};
 
 const sendPartnerRegistrationForm = async () => {
 	isSpin.value = true;
@@ -1051,7 +927,7 @@ const sendPartnerRegistrationForm = async () => {
 					&-block {
 						display: flex;
 						width: 100%;
-						margin-bottom: 15px
+						margin-bottom: 15px;
 					}
 				}
 			}
@@ -1108,7 +984,7 @@ const sendPartnerRegistrationForm = async () => {
 
 		&-socialMedia {
 			width: 100%;
-			margin-right: 25px
+			margin-right: 25px;
 		}
 	}
 
@@ -1116,7 +992,7 @@ const sendPartnerRegistrationForm = async () => {
 		&-socialMedia {
 			border-bottom: 1px solid crimson;
 			width: 100%;
-			margin-right: 25px
+			margin-right: 25px;
 		}
 
 		&-textInput {
@@ -1146,7 +1022,7 @@ const sendPartnerRegistrationForm = async () => {
 	}
 }
 
-.cascadError {
-	margin-top: -15px
+.cascade-error {
+	margin-top: -15px;
 }
 </style>
