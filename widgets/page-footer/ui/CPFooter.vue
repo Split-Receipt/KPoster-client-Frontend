@@ -14,7 +14,7 @@
 			width="maxWidth"
 			size="middle"
 			:islik="true"
-			link-to="/partners"
+			link-to="/partners-registration"
 		/>
 	</div>
 </template>
