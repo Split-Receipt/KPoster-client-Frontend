@@ -457,7 +457,7 @@
 						<span class="partners__form-soloInput__socials-item">
 							<v-field
 								v-for="(category, index) in partnerRegistrationForm.data
-									.productCategory"
+									.productCategories"
 								:key="category.categoryId"
 								v-slot="{ errors }"
 								:model-value="category"
@@ -468,7 +468,7 @@
 									<cp-social-media
 										:id="'cat1_product' + (index + 1)"
 										v-model="
-											partnerRegistrationForm.data.productCategory[index].title
+											partnerRegistrationForm.data.productCategories[index].title
 										"
 										:circle="true"
 										:label-text="'Mercancía ' + (index + 1)"
@@ -480,7 +480,7 @@
 									/>
 									<cp-button
 										v-if="
-											partnerRegistrationForm.data.productCategory.length > 1
+											partnerRegistrationForm.data.productCategories.length > 1
 										"
 										shape="circle"
 										color="yellowGrey"
@@ -497,7 +497,7 @@
 								</span>
 							</v-field>
 							<cp-button
-								:disabled="partnerRegistrationForm.data.productCategory.length > 14"
+								:disabled="partnerRegistrationForm.data.productCategories.length > 14"
 								shape="circle"
 								color="yellowGrey"
 								text=""
@@ -721,7 +721,7 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 			linkedIn: '',
 		},
 		digitalCatalog: '',
-		productCategory: [],
+		productCategories: [],
 		contacts: {
 			place: '',
 			tel: '',
@@ -760,7 +760,7 @@ onBeforeMount(() => {
 });
 
 const addNewCategoryInput = () => {
-	partnerRegistrationForm.data.productCategory.push({
+	partnerRegistrationForm.data.productCategories.push({
 		categoryId: generateUniqueId(),
 		title: '',
 	});
@@ -769,9 +769,9 @@ const addNewCategoryInput = () => {
 const deleteCategory = (index: number) => {
 	if (
 		index > -1 &&
-		index < partnerRegistrationForm.data.productCategory.length
+		index < partnerRegistrationForm.data.productCategories.length
 	) {
-		partnerRegistrationForm.data.productCategory.splice(index, 1);
+		partnerRegistrationForm.data.productCategories.splice(index, 1);
 	}
 };
 

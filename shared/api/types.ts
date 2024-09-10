@@ -17,7 +17,7 @@ export type PartnerRegistration = {
 			linkedIn: string;
 		};
 		digitalCatalog: string;
-		productCategory: { categoryId: string, title: string }[];
+		productCategories: { categoryId: string, title: string }[];
 		contacts: {
 			place: string;
 			tel: string;
