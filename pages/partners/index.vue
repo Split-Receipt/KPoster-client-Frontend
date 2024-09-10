@@ -751,16 +751,12 @@ watch(mainProdValue, () => {
 	partnerRegistrationForm.files.productDescriptionFile = null;
 });
 
-const productCategory = computed(
-	() => partnerRegistrationForm.data.productCategory
-);
-
 onBeforeMount(() => {
 	addNewCategoryInput();
 });
 
 const addNewCategoryInput = () => {
-	productCategory.value.push({
+	partnerRegistrationForm.data.productCategory.value.push({
 		categoryId: generateUniqueId(),
 		title: '',
 	});
@@ -785,7 +781,7 @@ const sendPartnerRegistrationForm = async () => {
 
 		return;
 	}
-	
+
 	const partnerRegPayload = $objToFormData(toRaw(partnerRegistrationForm));
 	try {
 		await registerPartner(partnerRegPayload);
