@@ -35,7 +35,7 @@
 							name="radio1"
 							style="margin-left: -30px"
 						/>
-						<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
 							errors[0]
 						}}</span>
 					</v-field>
@@ -64,9 +64,9 @@
 							v-model="partnerRegistrationForm.data.commercialName"
 							type="text"
 							placeholder="Nombre comercial"
-							:class="{ 'requiredInput-error-textInput': errors.length > 0 }"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
-						<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
 							errors[0]
 						}}</span>
 					</v-field>
@@ -92,9 +92,9 @@
 							v-model="partnerRegistrationForm.data.compName"
 							type="text"
 							placeholder="Razón social"
-							:class="{ 'requiredInput-error-textInput': errors.length > 0 }"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
-						<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
 							errors[0]
 						}}</span>
 					</v-field>
@@ -119,9 +119,9 @@
 							v-model="partnerRegistrationForm.data.ruc"
 							type="text"
 							placeholder="RUC"
-							:class="{ 'requiredInput-error-textInput': errors.length > 0 }"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
-						<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
 							errors[0]
 						}}</span>
 					</v-field>
@@ -149,7 +149,7 @@
 							name="radio2"
 							style="margin-left: -30px"
 						/>
-						<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
 							errors[0]
 						}}</span>
 					</v-field>
@@ -192,7 +192,7 @@
 							:max-size="5"
 							:is-invalid="errors.length > 0"
 						/>
-						<span v-if="errors" class="requiredInput-error-info-center">{{
+						<span v-if="errors" class="required-input-error-info-center">{{
 							errors[0]
 						}}</span>
 					</v-field>
@@ -210,10 +210,10 @@
 						/>
 						<div class="partners__form-switcherBlock">
 							<cp-switcher
-								v-model="switcherValue"
-								:default-option="switcherValue"
-								switcher-name="qwe"
-								:switcher-options="switcherOptions"
+								v-model="compVideoValue"
+								:default-option="compVideoValue"
+								switcher-name="compVideo"
+								:switcher-options="compVideoSwitcherOptions"
 							/>
 						</div>
 					</span>
@@ -222,7 +222,7 @@
 					<span class="partners__form-rowDnD-semiBlock">
 						<div>
 							<cp-drag-n-drop
-								v-if="switcherValue === 'File'"
+								v-if="compVideoValue === 'File'"
 								v-model="partnerRegistrationForm.files.compVideo"
 								type="video"
 								:max-size="50"
@@ -230,6 +230,7 @@
 							<span
 								v-else
 								class="partners__form-rowDnD-semiBlock-social-maxWidth"
+								style="padding-top: 12px;"
 							>
 								<cp-social-media
 									id="compVideo_id"
@@ -370,24 +371,71 @@
 							id="principales_productos_info"
 							info="El banner debe cargarse a 1100 por 278 píxeles en formato .png"
 						/>
+						<div class="partners__form-switcherBlock">
+							<cp-switcher
+								v-model="mainProdValue"
+								:default-option="mainProdValue"
+								switcher-name="mainProd"
+								:switcher-options="mainProdSwitcherOptions"
+							/>
+						</div>
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="partnerRegistrationForm.files.mainProducts"
+						:model-value="partnerRegistrationForm.files.productDescriptionFile"
 						name="productDescription"
 						rules="required_file"
 					>
 						<cp-drag-n-drop
-							v-model="partnerRegistrationForm.files.mainProducts"
+							v-if="mainProdValue === 'File'"
+							v-model="partnerRegistrationForm.files.productDescriptionFile"
 							type="image"
 							:max-size="5"
 							:is-invalid="errors.length > 0"
 						/>
-						<span v-if="errors" class="requiredInput-error-info-center">{{
+						<span v-if="errors && mainProdValue === 'File'" class="required-input-error-info-center">{{
 							errors[0]
 						}}</span>
+						<span
+							v-if="mainProdValue === 'Link'"
+							class="partners__form-rowDnD-semiBlock-social-maxWidth"
+							style="padding-top: 12px;"
+						>
+							<cp-social-media
+								id="compVideo_id"
+								v-model="partnerRegistrationForm.data.productDescriptionLink"
+								:circle="true"
+								label-text="Descripción del Producto"
+								placeholder="Descripción del Producto"
+								:class="
+									{
+										'required-input-error-socialMedia': errors.length > 0,
+										'required-input-default-socialMedia': errors.length < 1,
+									}"
+							/>
+							<span v-if="errors && mainProdValue === 'Link'" class="required-input-error-info-leftSide">
+								{{ errors[0] }}
+							</span>
+						</span>
+						<span
+							v-if="mainProdValue === 'Text'"
+							class="partners__form-rowDnD-semiBlock-social-maxWidth"
+							style="padding-top: 12px;"
+						>
+							<label class="input-laabel" for="mainProdTextArea">Descripción del Producto</label>
+							<cp-text-area
+								v-model="partnerRegistrationForm.data.productDescriptionText"
+								:class="{ 'required-input-error-textInput': errors.length > 0 }"
+								text-area-id="mainProdTextArea"
+								text-area-label="Descripción del Producto"
+								text-area-placeholder="por favor escriba una descripción del producto"
+							/>
+							<span v-if="errors && mainProdValue === 'Text'" class="required-input-error-info-center">
+								{{ errors[0] }}
+							</span>
+						</span>
 					</v-field>
 				</div>
 			</div>
@@ -426,8 +474,8 @@
 										:label-text="'Mercancía ' + (index + 1)"
 										placeholder="introduzca el enlace"
 										:class="{
-											'requiredInput-error-socialMedia': errors.length > 0,
-											'requiredInput-default-socialMedia': errors.length < 1,
+											'required-input-error-socialMedia': errors.length > 0,
+											'required-input-default-socialMedia': errors.length < 1,
 										}"
 									/>
 									<cp-button
@@ -492,7 +540,7 @@
 							:max-size="2"
 							:is-invalid="errors.length > 0"
 						/>
-						<span v-if="errors" class="requiredInput-error-info-center">{{
+						<span v-if="errors" class="required-input-error-info-center">{{
 							errors[0]
 						}}</span>
 					</v-field>
@@ -524,10 +572,10 @@
 									label-text="País y ciudad"
 									placeholder="introduzca el enlace"
 									:class="{
-										'requiredInput-error-socialMedia': errors.length > 0,
+										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+								<span v-if="errors" class="required-input-error-info-leftSide">{{
 									errors[0]
 								}}</span>
 							</v-field>
@@ -545,10 +593,10 @@
 									label-text="Teléfono de la empresa"
 									placeholder="introduzca el enlace"
 									:class="{
-										'requiredInput-error-socialMedia': errors.length > 0,
+										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+								<span v-if="errors" class="required-input-error-info-leftSide">{{
 									errors[0]
 								}}</span>
 							</v-field>
@@ -566,10 +614,10 @@
 									label-text="Email"
 									placeholder="introduzca el enlace"
 									:class="{
-										'requiredInput-error-socialMedia': errors.length > 0,
+										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span v-if="errors" class="requiredInput-error-info-leftSide">{{
+								<span v-if="errors" class="required-input-error-info-leftSide">{{
 									errors[0]
 								}}</span>
 							</v-field>
@@ -641,9 +689,15 @@ const radiooptions2 = [
 	{ id: 'Aguas_Calientes', value: 'Aguas_Calientes', label: 'Aguas Calientes' },
 ];
 
-const switcherOptions = [
+const compVideoSwitcherOptions = [
 	{ optionName: 'Upload File', optionValue: 'File', optionKey: 'FileKey' },
 	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },
+];
+
+const mainProdSwitcherOptions = [
+	{ optionName: 'Upload File', optionValue: 'File', optionKey: 'FileKey' },
+	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },
+	{ optionName: 'Type text', optionValue: 'Text', optionKey: 'TextKey' },
 ];
 
 // ----------------------------------------------------------------------
@@ -655,6 +709,8 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		compName: '',
 		ruc: '',
 		orgLocation: '',
+		productDescriptionLink: '',
+		productDescriptionText: '',
 		socialMedias: {
 			telegram: '',
 			twitter: '',
@@ -676,17 +732,23 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		mainBanner: null,
 		compVideo: null,
 		mostPopularProduct: null,
-		mainProducts: null,
+		productDescriptionFile: null,
 		galleryImages: null,
 	},
 });
 
-const switcherValue = ref<string | null>('File');
+const compVideoValue = ref<string | null>('File');
+const mainProdValue = ref<string | null>('File');
+
 const isSpin = ref<boolean>(false);
 const partnerRegForm = ref<HTMLFormElement | null>(null);
 
-watch(switcherValue, () => {
+watch(compVideoValue, () => {
 	partnerRegistrationForm.files.compVideo = null;
+});
+
+watch(mainProdValue, () => {
+	partnerRegistrationForm.files.productDescriptionFile = null;
 });
 
 const productCategory = computed(
@@ -889,6 +951,7 @@ const sendPartnerRegistrationForm = async () => {
 
 					&-maxWidth {
 						width: 100%;
+						min-height: 250px
 					}
 				}
 			}
@@ -975,7 +1038,7 @@ const sendPartnerRegistrationForm = async () => {
 	margin-top: 20px;
 }
 
-.requiredInput {
+.required-input {
 	&-default {
 		width: 100%;
 
@@ -1021,5 +1084,12 @@ const sendPartnerRegistrationForm = async () => {
 
 .cascade-error {
 	margin-top: -15px;
+}
+
+.input-laabel {
+	margin-bottom: 15px;
+    font-size: 22px;
+    line-height: 35.2px;
+    color: #353333;
 }
 </style>

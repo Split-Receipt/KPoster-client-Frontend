@@ -41,7 +41,7 @@ const handleTextValueUpdate = (e: Event) => {
 		color: #353333;
 
 		&:focus {
-			outline-color: #888888;
+			outline: none;
 		}
 	}
 }

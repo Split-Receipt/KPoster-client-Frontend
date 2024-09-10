@@ -5,6 +5,8 @@ export type PartnerRegistration = {
 		compName: string;
 		ruc: string;
 		orgLocation: string;
+		productDescriptionLink: string;
+		productDescriptionText: string;
 		socialMedias: {
 			telegram: string;
 			twitter: string;
@@ -38,7 +40,7 @@ export type PartnerRegistration = {
 		mainBanner: File | null;
 		compVideo: File | string | null;
 		mostPopularProduct: File | null;
-		mainProducts: File | null;
+		productDescriptionFile: File | null;
 		galleryImages: File | null;
 	};
 };
