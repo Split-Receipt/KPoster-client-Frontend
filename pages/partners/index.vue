@@ -449,6 +449,7 @@
 								</span>
 							</v-field>
 							<cp-button
+								:disabled="partnerRegistrationForm.data.productCategory.length > 14"
 								shape="circle"
 								color="yellowGrey"
 								text=""
@@ -644,10 +645,6 @@ const switcherOptions = [
 	{ optionName: 'Upload File', optionValue: 'File', optionKey: 'FileKey' },
 	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },
 ];
-
-const randomId = () => {
-	return generateUniqueId();
-};
 
 // ----------------------------------------------------------------------
 

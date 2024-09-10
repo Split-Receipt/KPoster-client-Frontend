@@ -41,6 +41,7 @@ import type { RequestOption } from '@shared/api/types.ts';
 import { requestForAnOptions } from '@shared/api';
 
 const categoriesToFilter: string[] = [];
+
 const citiesToFilter: string[] = [];
 const { availableLocales, setLocale } = useI18n();
 
