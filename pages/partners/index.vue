@@ -458,7 +458,7 @@
 							<v-field
 								v-for="(category, index) in partnerRegistrationForm.data
 									.productCategory"
-								:key="category.id"
+								:key="category.categoryId"
 								v-slot="{ errors }"
 								:model-value="category"
 								:name="'cat1_product' + (index + 1)"
@@ -761,7 +761,7 @@ onBeforeMount(() => {
 
 const addNewCategoryInput = () => {
 	productCategory.value.push({
-		id: generateUniqueId(),
+		categoryId: generateUniqueId(),
 		title: '',
 	});
 };
@@ -785,7 +785,7 @@ const sendPartnerRegistrationForm = async () => {
 
 		return;
 	}
-	// const partnerRegPayload = new FormData()
+	
 	const partnerRegPayload = $objToFormData(toRaw(partnerRegistrationForm));
 	try {
 		await registerPartner(partnerRegPayload);
