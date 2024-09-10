@@ -223,7 +223,7 @@
 						<div>
 							<cp-drag-n-drop
 								v-if="compVideoValue === 'File'"
-								v-model="partnerRegistrationForm.files.compVideo"
+								v-model="partnerRegistrationForm.files.compVideoFile"
 								type="video"
 								:max-size="50"
 							/>
@@ -234,7 +234,7 @@
 							>
 								<cp-social-media
 									id="compVideo_id"
-									v-model="partnerRegistrationForm.files.compVideo"
+									v-model="partnerRegistrationForm.data.compVideoLink"
 									:circle="true"
 									label-text="YouTube / Vimeo"
 									placeholder="https://www.youtube.com/"
@@ -711,6 +711,7 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		orgLocation: '',
 		productDescriptionLink: '',
 		productDescriptionText: '',
+		compVideoLink: '',
 		socialMedias: {
 			telegram: '',
 			twitter: '',
@@ -730,7 +731,7 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 	files: {
 		videoBusinessCard: null,
 		mainBanner: null,
-		compVideo: null,
+		compVideoFile: null,
 		mostPopularProduct: null,
 		productDescriptionFile: null,
 		galleryImages: null,
@@ -744,11 +745,14 @@ const isSpin = ref<boolean>(false);
 const partnerRegForm = ref<HTMLFormElement | null>(null);
 
 watch(compVideoValue, () => {
-	partnerRegistrationForm.files.compVideo = null;
+	partnerRegistrationForm.data.compVideoLink = '';
+	partnerRegistrationForm.files.compVideoFile = null;
 });
 
 watch(mainProdValue, () => {
 	partnerRegistrationForm.files.productDescriptionFile = null;
+	partnerRegistrationForm.data.productDescriptionLink = '';
+	partnerRegistrationForm.data.productDescriptionText = '';
 });
 
 onBeforeMount(() => {
@@ -756,7 +760,7 @@ onBeforeMount(() => {
 });
 
 const addNewCategoryInput = () => {
-	partnerRegistrationForm.data.productCategory.value.push({
+	partnerRegistrationForm.data.productCategory.push({
 		categoryId: generateUniqueId(),
 		title: '',
 	});

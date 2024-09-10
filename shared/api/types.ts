@@ -7,6 +7,7 @@ export type PartnerRegistration = {
 		orgLocation: string;
 		productDescriptionLink: string;
 		productDescriptionText: string;
+		compVideoLink: string;
 		socialMedias: {
 			telegram: string;
 			twitter: string;
@@ -26,7 +27,7 @@ export type PartnerRegistration = {
 	files: {
 		videoBusinessCard: File | null;
 		mainBanner: File | null;
-		compVideo: File | string | null;
+		compVideoFile: File | string | null;
 		mostPopularProduct: File | null;
 		productDescriptionFile: File | null;
 		galleryImages: File | null;
