@@ -27,7 +27,7 @@ export type PartnerRegistration = {
 	files: {
 		videoBusinessCard: File | null;
 		mainBanner: File | null;
-		compVideoFile: File | string | null;
+		compVideoFile: File | null;
 		mostPopularProduct: File | null;
 		productDescriptionFile: File | null;
 		galleryImages: File | null;
