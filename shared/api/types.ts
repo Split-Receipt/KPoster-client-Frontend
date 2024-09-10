@@ -14,19 +14,7 @@ export type PartnerRegistration = {
 			linkedIn: string;
 		};
 		digitalCatalog: string;
-		productCategory: { id: string, title: string }[];
-		// firstProdCategory: {
-		// 	cat1_product1: string;
-		// 	cat1_product2: string;
-		// 	cat1_product3: string;
-		// 	cat1_product4: string;
-		// };
-		// secondProdCategory: {
-		// 	cat2_product1: string;
-		// 	cat2_product2: string;
-		// 	cat2_product3: string;
-		// 	cat2_product4: string;
-		// };
+		productCategory: { categoryId: string, title: string }[];
 		contacts: {
 			place: string;
 			tel: string;
