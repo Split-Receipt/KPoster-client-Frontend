@@ -383,13 +383,13 @@
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<v-field
+						v-if="mainProdValue === 'File'"
 						v-slot="{ errors }"
 						:model-value="partnerRegistrationForm.files.productDescriptionFile"
 						name="productDescription"
 						rules="required_file"
 					>
 						<cp-drag-n-drop
-							v-if="mainProdValue === 'File'"
 							v-model="partnerRegistrationForm.files.productDescriptionFile"
 							type="image"
 							:max-size="5"
@@ -398,8 +398,15 @@
 						<span v-if="errors && mainProdValue === 'File'" class="required-input-error-info-center">{{
 							errors[0]
 						}}</span>
+					</v-field>
+					<v-field
+						v-if="mainProdValue === 'Link'"
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.data.productDescriptionLink"
+						name="productDescription"
+						rules="required"
+					>
 						<span
-							v-if="mainProdValue === 'Link'"
 							class="partners__form-rowDnD-semiBlock-social-maxWidth"
 							style="padding-top: 12px;"
 						>
@@ -419,8 +426,15 @@
 								{{ errors[0] }}
 							</span>
 						</span>
+					</v-field>
+					<v-field
+						v-if="mainProdValue === 'Text'"
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.data.productDescriptionText"
+						name="productDescription"
+						rules="required"
+					>
 						<span
-							v-if="mainProdValue === 'Text'"
 							class="partners__form-rowDnD-semiBlock-social-maxWidth"
 							style="padding-top: 12px;"
 						>
