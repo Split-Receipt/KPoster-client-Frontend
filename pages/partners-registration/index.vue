@@ -166,6 +166,7 @@
 				<div class="partners__form-rowDnD-input">
 					<cp-drag-n-drop
 						v-model="partnerRegistrationForm.files.videoBusinessCard"
+						:is-single="true"
 						type="video"
 						:max-size="50"
 					/>
@@ -188,6 +189,7 @@
 					>
 						<cp-drag-n-drop
 							v-model="partnerRegistrationForm.files.mainBanner"
+							:is-single="true"
 							type="image"
 							:max-size="5"
 							:is-invalid="errors.length > 0"
@@ -224,6 +226,7 @@
 							<cp-drag-n-drop
 								v-if="compVideoValue === 'File'"
 								v-model="partnerRegistrationForm.files.compVideoFile"
+								:is-single="true"
 								type="video"
 								:max-size="50"
 							/>
@@ -258,6 +261,7 @@
 				<div class="partners__form-rowDnD-input">
 					<cp-drag-n-drop
 						v-model="partnerRegistrationForm.files.mostPopularProduct"
+						:is-single="true"
 						type="image"
 						:max-size="5"
 					/>
@@ -391,6 +395,7 @@
 					>
 						<cp-drag-n-drop
 							v-model="partnerRegistrationForm.files.productDescriptionFile"
+							:is-single="true"
 							type="image"
 							:max-size="5"
 							:is-invalid="errors.length > 0"
@@ -550,6 +555,7 @@
 					>
 						<cp-drag-n-drop
 							v-model="partnerRegistrationForm.files.galleryImages"
+							:is-multi="true"
 							type="image"
 							:max-size="2"
 							:is-invalid="errors.length > 0"
