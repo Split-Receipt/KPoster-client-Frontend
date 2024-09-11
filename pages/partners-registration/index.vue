@@ -475,11 +475,10 @@
 					<div class="partners__form-soloInput__socials">
 						<span class="partners__form-soloInput__socials-item">
 							<v-field
-								v-for="(category, index) in partnerRegistrationForm.data
-									.productCategories"
+								v-for="(category, index) in partnerRegistrationForm.data.productCategories"
 								:key="category.categoryId"
 								v-slot="{ errors }"
-								:model-value="category"
+								:model-value="partnerRegistrationForm.data.productCategories[index].title"
 								:name="'cat1_product' + (index + 1)"
 								rules="required"
 							>
@@ -510,7 +509,7 @@
 								</div>
 								<span
 									v-if="errors.length"
-									class="required-input__error-info-leftSide cascade-error"
+									class="cascade-error-leftSide"
 								>
 									{{ errors[0] }}
 								</span>
@@ -1103,7 +1102,25 @@ const sendPartnerRegistrationForm = async () => {
 }
 
 .cascade-error {
-	margin-top: -15px;
+	&-leftSide {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		color: crimson;
+		justify-content: flex-start;
+		line-height: 35px;
+		margin-top: -15px;
+	}
+
+	&-center {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		color: crimson;
+		justify-content: space-around;
+		line-height: 35px;
+		margin-top: -15px;
+	}
 }
 
 .input-laabel {
