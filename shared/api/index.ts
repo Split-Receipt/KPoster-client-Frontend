@@ -12,16 +12,12 @@ export const registerPartner = (partnerInfo: PartnerRegistration) => {
 export const requestForAnOptions = async (url: string, dataTo: Ref) => {
 	const { $api } = useNuxtApp();
 
-	try {
-		const response = await $api.get(url);
-		const result = response.data;
+	const response = await $api.get(url);
+	const result = response.data;
 
-		if (Array.isArray(result.data)) {
-			result.data.forEach((e: RequestOption) => {
-				dataTo.value.push(e.attributes);
-			});
-		}
-	} catch (err) {
-		throw new Error(`Error while requesting for dropdown options: ${err}`);
+	if (Array.isArray(result.data)) {
+		result.data.forEach((e: RequestOption) => {
+			dataTo.value.push(e.attributes);
+		});
 	}
 };

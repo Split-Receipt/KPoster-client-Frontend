@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import CpDropDown from '@shared/gui/CpDropDown.vue';
-import type { RequestOption } from '@shared/api/types.ts';
+import type { RequestOption } from '@shared/api/types';
 import { requestForAnOptions } from '@shared/api';
 
 const categoriesToFilter: string[] = [];

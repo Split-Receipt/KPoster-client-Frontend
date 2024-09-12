@@ -235,7 +235,7 @@
 								class="partners__form-rowDnD-semiBlock-social-maxWidth"
 								style="padding-top: 12px;"
 							>
-								<cp-social-media
+								<cp-text-input2
 									id="compVideo_id"
 									v-model="partnerRegistrationForm.data.compVideoLink"
 									:circle="true"
@@ -281,7 +281,7 @@
 				<div class="partners__form-rowDnD-input">
 					<div>
 						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-social-media
+							<cp-text-input2
 								id="telegram_id"
 								v-model="partnerRegistrationForm.data.socialMedias.telegram"
 								:circle="true"
@@ -290,7 +290,7 @@
 							/>
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-social-media
+							<cp-text-input2
 								id="twitter_id"
 								v-model="partnerRegistrationForm.data.socialMedias.twitter"
 								:circle="true"
@@ -299,7 +299,7 @@
 							/>
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-social-media
+							<cp-text-input2
 								id="faceBook_id"
 								v-model="partnerRegistrationForm.data.socialMedias.faceBook"
 								:circle="true"
@@ -308,7 +308,7 @@
 							/>
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-social-media
+							<cp-text-input2
 								id="instagram_id"
 								v-model="partnerRegistrationForm.data.socialMedias.instagram"
 								:circle="true"
@@ -317,7 +317,7 @@
 							/>
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-social-media
+							<cp-text-input2
 								id="youTube_id"
 								v-model="partnerRegistrationForm.data.socialMedias.youTube"
 								:circle="true"
@@ -325,7 +325,7 @@
 								placeholder="https://www.vimeo.com/"
 							/> </span
 						><span class="partners__form-rowDnD-semiBlock-social">
-							<cp-social-media
+							<cp-text-input2
 								id="linkedIn_id"
 								v-model="partnerRegistrationForm.data.socialMedias.linkedIn"
 								:circle="true"
@@ -415,7 +415,7 @@
 							class="partners__form-rowDnD-semiBlock-social-maxWidth"
 							style="padding-top: 12px;"
 						>
-							<cp-social-media
+							<cp-text-input2
 								id="compVideo_id"
 								v-model="partnerRegistrationForm.data.productDescriptionLink"
 								:circle="true"
@@ -483,7 +483,7 @@
 								rules="required"
 							>
 								<div class="partners__form-soloInput__socials-item-block">
-									<cp-social-media
+									<cp-text-input2
 										:id="'cat1_product' + (index + 1)"
 										v-model="
 											partnerRegistrationForm.data.productCategories[index].title
@@ -585,7 +585,7 @@
 								name="place"
 								rules="required"
 							>
-								<cp-social-media
+								<cp-text-input2
 									id="place"
 									v-model="partnerRegistrationForm.data.contacts.place"
 									label-text="País y ciudad"
@@ -606,7 +606,7 @@
 								name="tel"
 								rules="required"
 							>
-								<cp-social-media
+								<cp-text-input2
 									id="tel_id"
 									v-model="partnerRegistrationForm.data.contacts.tel"
 									label-text="Teléfono de la empresa"
@@ -627,7 +627,7 @@
 								name="mail"
 								rules="required|email"
 							>
-								<cp-social-media
+								<cp-text-input2
 									id="mail_id"
 									v-model="partnerRegistrationForm.data.contacts.mail"
 									label-text="Email"
@@ -684,7 +684,7 @@ import CpDragNDrop from '@shared/gui/CpDragNDrop.vue';
 import CpTextInput from '@shared/gui/CpTextInput.vue';
 import CpRadioButton from '@shared/gui/CpRadioButton.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
-import CpSocialMedia from '@shared/gui/CpSocialMedia.vue';
+import CpTextInput2 from '@shared/gui/CpTextInput2.vue';
 import type { PartnerRegistration } from '@shared/api/types.ts';
 import { registerPartner } from '@shared/api';
 import { Form as VForm, Field as VField } from 'vee-validate';
