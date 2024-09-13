@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import CpDropDown from '@shared/gui/CpDropDown.vue';
 import type { RequestOption } from '@shared/api/types';
-import { requestForAnOptions } from '@shared/api';
+import { requestCities, requestCategories } from '@shared/api';
 
 const categoriesToFilter: string[] = [];
 
@@ -269,21 +269,35 @@ const sectionData = [
 
 // category check points
 
-const categoryOptionsUrl =
-	'https://admin-dev.culture-portal-cusco.online/api/categories';
 const remoteCategoryOptions = ref<Array<RequestOption['attributes']>>([]);
 
 // city filter checkpoint
 
-const cityOptionsUrl =
-	'https://admin-dev.culture-portal-cusco.online/api/city-filters';
 const remoteCityFilterOptions = ref<Array<RequestOption['attributes']>>([]);
 
 // function trigger (when component did mount)
 
+const requestForAnFilters = async (
+	requestCallback: () => Promise<any>,
+	dataTo: Ref<any>
+) => {
+	try {
+		const response = await requestCallback();
+		const result = response.data;
+
+		if (Array.isArray(result.data)) {
+			result.data.forEach((e: RequestOption) => {
+				dataTo.value.push(e.attributes);
+			});
+		}
+	} catch (e) {
+		console.error(e);
+	}
+};
+
 onMounted(() => {
-	requestForAnOptions(categoryOptionsUrl, remoteCategoryOptions);
-	requestForAnOptions(cityOptionsUrl, remoteCityFilterOptions);
+	requestForAnFilters(requestCategories, remoteCategoryOptions);
+	requestForAnFilters(requestCities, remoteCityFilterOptions);
 });
 </script>
 
