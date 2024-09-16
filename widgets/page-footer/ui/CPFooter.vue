@@ -13,7 +13,7 @@
 			text="Become a partner"
 			width="maxWidth"
 			size="middle"
-			:islik="true"
+			:islink="true"
 			link-to="/partners-registration"
 		/>
 	</div>
