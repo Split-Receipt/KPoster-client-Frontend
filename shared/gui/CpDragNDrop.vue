@@ -1,8 +1,11 @@
 <template>
 	<div class="dragNdrop">
 		<div
-			v-if="!isSizeError && !isExpectedTypeError && !isExtensionError"
-			class="dragNdrop__container"
+			v-if="!isSizeError && !isExpectedTypeError && !isExtensionError && !singleFileError"
+			:class="{
+				'dragNdrop__container-isInvalid': isInvalid,
+				dragNdrop__container: !isInvalid,
+			}"
 			v-bind="getRootProps()"
 		>
 			<input v-bind="getInputProps()" />
@@ -10,11 +13,12 @@
 			<div v-if="chosenFile && !isDragActive" class="dragNdrop__loaded">
 				<div class="dragNdrop__preview">
 					<img
-						v-if="isImage"
+						v-if="isImage && props.isSingle"
 						:src="previewUrl ? previewUrl : undefined"
 						alt="Preview"
 						class="preview-image"
 					/>
+					<span v-if="isMulti" class="preview-multi">Files: {{ filesCount }}</span>
 					<span v-if="isApplication" class="preview-application" />
 					<video v-if="isVideo" class="preview-video" controls>
 						<source
@@ -73,7 +77,7 @@
 			</div>
 		</div>
 		<div
-			v-if="isSizeError || isExpectedTypeError || isExtensionError"
+			v-if="isSizeError || isExpectedTypeError || isExtensionError || singleFileError"
 			class="dragNdrop__error"
 		>
 			<p v-if="isSizeError">{{ $t('size_exceeded') }}</p>
@@ -84,6 +88,7 @@
 					{{ ext }}&nbsp;/
 				</span>
 			</p>
+			<p v-if="singleFileError">{{ $t('file_quantityError') }}</p>
 		</div>
 	</div>
 </template>
@@ -97,20 +102,26 @@ interface DnDProps {
 	type: string;
 	maxSize: number;
 	extensions?: string[];
+	isInvalid?: boolean;
+	isMulti?: boolean;
+	isSingle?: boolean;
 }
 
 type Events = {
-	(event: 'update:modelValue', eventData: File | null): void;
+	(event: 'update:modelValue', eventData: File[] | null): void;
 };
 
 const props = defineProps<DnDProps>();
 const emit = defineEmits<Events>();
 
 const chosenFile = ref<File | null>(null);
+const chosenMultiFiles = ref<File[] | null>(null);
+const filesCount = ref<number>(0);
 const previewUrl = ref<string | null>(null);
 const maxFileSize: number = props.maxSize * 1048576;
 const isSizeError = ref<boolean>(false);
 const isExpectedTypeError = ref<boolean>(false);
+const singleFileError = ref<boolean>(false);
 const isExtensionError = ref<boolean>(false);
 
 // expected types: image | video | audio | application
@@ -138,9 +149,20 @@ const isApplication = computed(() => {
 });
 
 const onDrop = (acceptedFiles: File[]) => {
-	const file = acceptedFiles[0];
-
-	if (file.size > maxFileSize) {
+	const singleFile = acceptedFiles[0];
+	const multiFiles = acceptedFiles;
+	filesCount.value = acceptedFiles.length;
+	
+	if (acceptedFiles.length > 1 && props.isSingle) {  
+        singleFileError.value = true;
+        setTimeout(() => {  
+            singleFileError.value = false;  
+        }, 2000);
+  
+        return; 
+    }
+	
+	if (singleFile.size > maxFileSize) {
 		isSizeError.value = true;
 		setTimeout(() => {
 			isSizeError.value = false;
@@ -148,7 +170,7 @@ const onDrop = (acceptedFiles: File[]) => {
 
 		return;
 	}
-	if (!file.type.startsWith(`${props.type}/`)) {
+	if (!singleFile.type.startsWith(`${props.type}/`)) {
 		isExpectedTypeError.value = true;
 		setTimeout(() => {
 			isExpectedTypeError.value = false;
@@ -156,7 +178,7 @@ const onDrop = (acceptedFiles: File[]) => {
 
 		return;
 	}
-	if (props.extensions && !props.extensions.includes(file.type.split('/')[1])) {
+	if (props.extensions && !props.extensions.includes(singleFile.type.split('/')[1])) {
 		isExtensionError.value = true;
 		setTimeout(() => {
 			isExtensionError.value = false;
@@ -166,9 +188,14 @@ const onDrop = (acceptedFiles: File[]) => {
 	}
 
 	chosenFile.value = acceptedFiles[0];
+	chosenMultiFiles.value = acceptedFiles;
 	previewUrl.value = URL.createObjectURL(chosenFile.value);
 
-	emit('update:modelValue', chosenFile.value);
+	if (props.isSingle) {
+		emit('update:modelValue', [chosenFile.value]);
+	} else {
+		emit('update:modelValue', chosenMultiFiles.value);
+	}
 };
 
 const clearInput = (e: Event) => {
@@ -184,7 +211,6 @@ const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 <style scoped lang="scss">
 .dragNdrop {
 	box-sizing: border-box;
-	padding: 15px;
 	position: relative;
 	width: 800px;
 	height: 250px;
@@ -201,6 +227,20 @@ const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 		height: 100%;
 		border: 2px dashed #9b9494;
 		border-radius: 40px;
+
+		&-isInvalid {
+			overflow: auto;
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+			background-color: #f6f6f6;
+			cursor: pointer;
+			padding: 10px 15px 10px 15px;
+			width: 100%;
+			height: 100%;
+			border: 2px dashed crimson;
+			border-radius: 40px;
+		}
 	}
 
 	&__error {
@@ -212,7 +252,7 @@ const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 		cursor: pointer;
 		padding: 10px;
 		width: 100%;
-		height: 200px;
+		height: 100%;
 		color: crimson;
 		border: 2px dashed crimson;
 		border-radius: 40px;
@@ -229,6 +269,20 @@ const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 		justify-content: flex-end;
 		height: 100%;
 		width: 40%;
+
+		&-multi {
+			font-size: 22px;
+			line-height: 35px;
+			width: 120px;
+			height: 155px;
+			border-radius: 30px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+		}
 	}
 
 	&__title {
@@ -282,8 +336,8 @@ const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 			height: 50px;
 			border-radius: 30px;
 			position: absolute;
-			bottom: -36px;
-			left: 0;
+			bottom: 0;
+			right: 0;
 		}
 
 		&-application {
@@ -297,9 +351,24 @@ const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 			top: 0;
 			left: 0;
 		}
+
+		&-multi {
+			font-size: 22px;
+			line-height: 35px;
+			width: 120px;
+			height: 155px;
+			border-radius: 30px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+		}
 	}
 
 	&__info {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;

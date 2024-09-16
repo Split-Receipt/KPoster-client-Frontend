@@ -1,8 +1,5 @@
 <template>
 	<div class="main-page">
-		<div class="main-page__header">
-			<c-p-header />
-		</div>
 		<main class="main-page__main">
 			<h1 class="main-page__title">{{ $t('main_title') }}</h1>
 
@@ -24,7 +21,6 @@
 					:value="citiesToFilter"
 				/>
 			</div>
-
 			<div class="main-page__section-list">
 				<main-section
 					v-for="(sectionItem, index) in sectionData"
@@ -36,18 +32,16 @@
 				/>
 			</div>
 		</main>
-
-		<div class="main-page__footer">
-			<c-p-footer />
-		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
 import CpDropDown from '@shared/gui/CpDropDown.vue';
-import axios from 'axios';
+import type { RequestOption } from '@shared/api/types';
+import { requestCities, requestCategories } from '@shared/api';
 
 const categoriesToFilter: string[] = [];
+
 const citiesToFilter: string[] = [];
 const { availableLocales, setLocale } = useI18n();
 
@@ -273,62 +267,42 @@ const sectionData = [
 	},
 ];
 
-// request for an options for dropdowns
-
-interface RequestOption {
-	id: number;
-	attributes: {
-		item_title: string;
-		item_UID: string;
-		item_value: string;
-		createdAt: string;
-		updatedAt: string;
-		publishedAt: string;
-		locale: string;
-	};
-}
-
 // category check points
 
-const categoryOptionsUrl =
-	'https://admin-dev.culture-portal-cusco.online/api/categories';
 const remoteCategoryOptions = ref<Array<RequestOption['attributes']>>([]);
 
 // city filter checkpoint
 
-const cityOptionsUrl =
-	'https://admin-dev.culture-portal-cusco.online/api/city-filters';
 const remoteCityFilterOptions = ref<Array<RequestOption['attributes']>>([]);
-
-const requestForAnOptions = async (url: string, dataTo: Ref) => {
-	try {
-		await axios
-			.get(url)
-			.then((response) => response.data)
-			.then((result) => {
-				if (Array.isArray(result.data)) {
-					result.data.forEach((e: RequestOption) => {
-						dataTo.value.push(e.attributes);
-					});
-				}
-			});
-	} catch (err) {
-		throw new Error(`Error while requesting for an dropdown options: ${err}`);
-	}
-};
 
 // function trigger (when component did mount)
 
+const requestForAnFilters = async (
+	requestCallback: () => Promise<any>,
+	dataTo: Ref<any>
+) => {
+	try {
+		const response = await requestCallback();
+		const result = response.data;
+
+		if (Array.isArray(result.data)) {
+			result.data.forEach((e: RequestOption) => {
+				dataTo.value.push(e.attributes);
+			});
+		}
+	} catch (e) {
+		console.error(e);
+	}
+};
+
 onMounted(() => {
-	requestForAnOptions(categoryOptionsUrl, remoteCategoryOptions);
-	requestForAnOptions(cityOptionsUrl, remoteCityFilterOptions);
+	requestForAnFilters(requestCategories, remoteCategoryOptions);
+	requestForAnFilters(requestCities, remoteCityFilterOptions);
 });
 </script>
 
 <style scoped lang="scss">
 .main-page {
-	background-color: $main-page-background-color;
-
 	&__main {
 		margin-top: 2px;
 		padding-left: 10px;

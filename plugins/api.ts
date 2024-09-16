@@ -1,4 +1,4 @@
-import axios, { type AxiosInstance } from 'axios';
+import axios from 'axios';
 
 export default defineNuxtPlugin((nuxtApp) => {
 	const config = useRuntimeConfig();

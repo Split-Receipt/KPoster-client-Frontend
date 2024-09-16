@@ -1,5 +1,4 @@
 import withNuxt from './.nuxt/eslint.config.mjs';
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import pkg from '@eslint/js';
 import tsEslintPlugin from 'typescript-eslint';
 import vueEslint from 'eslint-plugin-vue';
@@ -8,7 +7,6 @@ import vueParser from 'vue-eslint-parser';
 const { configs: eslintConfigs } = pkg;
 
 export default withNuxt([
-	eslintPluginPrettierRecommended,
 	eslintConfigs.recommended,
 	tsEslintPlugin.configs.recommended[2],
 	vueEslint.configs.flat,
@@ -115,17 +113,10 @@ export default withNuxt([
 			'no-empty': ['error', { allowEmptyCatch: true }],
 			'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
 			'no-prototype-builtins': 'error',
+			'no-prototype-builtins': ['warn'],
 			indent: 'off',
 			quotes: 'off',
 			'@typescript-eslint/quotes': ['error', 'single'],
-			'prettier/prettier': [
-				'error',
-				{
-					singleQuote: true,
-					useTabs: true,
-					tabWidth: 2,
-				},
-			],
 			semi: 'off',
 			'@typescript-eslint/semi': ['error', 'always'],
 			'brace-style': 'off',
@@ -174,8 +165,8 @@ export default withNuxt([
 			'vue/max-len': [
 				'error',
 				{
-					code: 120,
-					template: 120,
+					code: 130,
+					template: 130,
 					ignoreUrls: true,
 					ignoreRegExpLiterals: true,
 					ignoreStrings: true,

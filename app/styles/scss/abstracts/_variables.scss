@@ -10,8 +10,13 @@ $dusty-gray: #9b9494;
 $boulder: #777777;
 $gold: #ffd600;
 $silver-chalice: #aaaaaa;
+$default-background: #eeeeee;
 
-$yellow-gray-gradient: linear-gradient(82.62deg, $gold 0.76%, $silver-chalice 92.06%);
+$yellow-gray-gradient: linear-gradient(
+	82.62deg,
+	$gold 0.76%,
+	$silver-chalice 92.06%
+);
 
 // Fonts
 $font-family-medium-ultra-expanded: 'NeuethingSans-MediumUltraExpanded';

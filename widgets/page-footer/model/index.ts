@@ -5,17 +5,17 @@ export const footerLists = {
 			{
 				id: 1,
 				text: 'referencia',
-				href: false,
+				href: '#',
 			},
 			{
 				id: 2,
 				text: 'referencia 2',
-				href: false,
+				href: '#',
 			},
 			{
 				id: 3,
 				text: 'referencia 3',
-				href: false,
+				href: '#',
 			},
 		],
 	},
@@ -29,7 +29,7 @@ export const footerLists = {
 			{
 				id: 2,
 				text: 'dirección dirección dirección ',
-				href: false,
+				href: '#',
 			},
 			{
 				id: 3,
@@ -43,17 +43,17 @@ export const footerLists = {
 			{
 				id: 1,
 				text: 'Facebook',
-				href: '',
+				href: '#',
 			},
 			{
 				id: 2,
 				text: 'Twitter',
-				href: '',
+				href: '#',
 			},
 			{
 				id: 3,
 				text: 'Linked In',
-				href: '',
+				href: '#',
 			},
 		],
 	},

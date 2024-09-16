@@ -1,24 +1,26 @@
 <template>
-	<div
-		v-for="(option, index) in props.options"
-		:key="index"
-		class="checkbox-wrapper"
-	>
-		<input
-			:id="option.id"
-			name="radio_name"
-			:value="option.value"
-			type="radio"
-			@change="hanldeRadioCheck"
-		/>
-		<label :for="option.id" style="--size: 22px">
-			<svg viewBox="0,0,50,50">
-				<path d="M5 30 L 20 45 L 45 5" />
-			</svg>
-		</label>
-		<label v-if="option.label" :for="option.id" class="redioLabel">{{
-			option.label
-		}}</label>
+	<div v-bind="$attrs">
+		<div
+			v-for="(option, index) in props.options"
+			:key="index"
+			class="checkbox-wrapper"
+		>
+			<input
+				:id="option.id"
+				:name="props.name"
+				:value="option.value"
+				type="radio"
+				@change="handleRadioCheck"
+			/>
+			<label :for="option.id" style="--size: 22px">
+				<svg viewBox="0,0,50,50">
+					<path d="M5 30 L 20 45 L 45 5" />
+				</svg>
+			</label>
+			<label v-if="option.label" :for="option.id" class="redioLabel">{{
+				option.label
+			}}</label>
+		</div>
 	</div>
 </template>
 
@@ -31,17 +33,18 @@ type RadioVar = {
 
 type RadioProps = {
 	options: RadioVar[];
+	name: string;
 };
 
 type Events = {
-	(event: 'checkUpdate', eventData: string): void;
+	(event: 'update:modelValue', eventData: string): void;
 };
 const props = defineProps<RadioProps>();
 const emit = defineEmits<Events>();
 
-const hanldeRadioCheck = (e: Event) => {
+const handleRadioCheck = (e: Event) => {
 	const target = e.target as HTMLInputElement;
-	emit('checkUpdate', target.value);
+	emit('update:modelValue', target.value);
 };
 </script>
 
@@ -49,8 +52,11 @@ const hanldeRadioCheck = (e: Event) => {
 .checkbox-wrapper {
 	display: flex;
 	align-items: center;
+	margin: 0 15px 0 15px;
+
 	* {
 		box-sizing: border-box;
+		line-height: 35px;
 
 		&:after,
 		&:before {
@@ -71,6 +77,7 @@ const hanldeRadioCheck = (e: Event) => {
 		}
 
 		+ label {
+			z-index: 2;
 			display: block;
 			border: 2px solid rgb(35, 33, 33);
 			width: var(--size);
@@ -86,7 +93,8 @@ const hanldeRadioCheck = (e: Event) => {
 
 			svg {
 				pointer-events: none;
-				padding: 13%;
+				padding: 14%;
+				margin-bottom: 4px;
 
 				path {
 					fill: none;

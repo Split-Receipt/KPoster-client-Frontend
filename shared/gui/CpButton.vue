@@ -1,6 +1,7 @@
 <template>
 	<div class="button__wrapper">
 		<button
+			v-if="!islik"
 			:disabled="disabled"
 			:type="type"
 			:class="[
@@ -12,6 +13,7 @@
 			]"
 			@click="(event) => handleClick(event)"
 		>
+			<nuxt-img v-if="withImage" class="button--circle--withImage" :src="withImage"/>
 			<i
 				v-if="leftIcon"
 				:class="['icon', `icon-${leftIcon}`, 'button__icon']"
@@ -20,6 +22,27 @@
 				{{ text }}
 			</span>
 		</button>
+		<nuxt-link
+			v-if="islik"
+			:disabled="disabled"
+			:class="[
+				'button',
+				buttonColors[color],
+				buttonShapes[shape],
+				buttonSizes[size],
+				buttonWidth[width],
+			]"
+			:to="linkTo"
+		>
+			<nuxt-img v-if="withImage" class="button--circle--withImage" :src="withImage"/>
+			<i
+				v-if="leftIcon"
+				:class="['icon', `icon-${leftIcon}`, 'button__icon']"
+			/>
+			<span v-if="!leftIcon">
+				{{ text }}
+			</span>
+		</nuxt-link>
 	</div>
 </template>
 
@@ -32,7 +55,10 @@ type Props = {
 	color: keyof typeof buttonColors;
 	width?: keyof typeof buttonWidth;
 	leftIcon?: string;
+	withImage?: string;
 	text?: string;
+	islik?: boolean;
+	linkTo?: string;
 };
 
 type Emits = {
@@ -79,6 +105,7 @@ enum buttonWidth {
 	medium = 'button--medium',
 	large = 'button--large',
 	extraLarge = 'button--extra-large',
+	maxWidth = 'button--maxWidth',
 }
 </script>
 
@@ -90,6 +117,8 @@ enum buttonWidth {
 	padding: $button-default-padding;
 	border: none;
 	background-color: transparent;
+	text-decoration: none;
+	color: #000000;
 	cursor: pointer;
 
 	&:disabled {
@@ -99,12 +128,18 @@ enum buttonWidth {
 
 	&--circle {
 		border-radius: $button-circle-border-radius;
-		padding: 0;
+		padding: 0 !important;
 		height: $button-circle-height;
 		width: $button-circle-width;
 
 		.button__icon {
 			font-size: $button-icon-circle-font-size;
+		}
+
+		&--withImage {
+			z-index: 2;
+			width: $button-circle-withImage-width;
+			height: $button-circle-withImage-height;
 		}
 	}
 
@@ -186,6 +221,10 @@ enum buttonWidth {
 
 	&--extra-large {
 		width: $button-width-Extra-large;
+	}
+
+	&--maxWidth {
+		width: $button-width-maxWidth;
 	}
 }
 </style>

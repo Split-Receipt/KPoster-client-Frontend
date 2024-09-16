@@ -12,16 +12,20 @@ $button-size-big: 65px;
 $button-size-middle: 60px;
 $button-size-small: 50px;
 
-$button-circle-height: 50px;
-$button-circle-width: 50px;
+$button-circle-height: 60px !important;
+$button-circle-width: 60px !important;
 $button-square-height: 70px;
 $button-square-width: 70px;
+
+$button-circle-withImage-width: 65%;
+$button-circle-withImage-height: 65%;
 
 // length
 $button-width-short: 120px;
 $button-width-medium: 150px;
 $button-width-large: 200px;
 $button-width-Extra-large: 250px;
+$button-width-maxWidth: 100%;
 
 //Fonts
 $button-line-height-small: 21px;
@@ -34,16 +38,16 @@ $button-font-size-middle: 20px;
 $button-font-size-big: 22px;
 $button-font-size-huge: 24px;
 
-$button-circle-border-radius: 99px;
+$button-circle-border-radius: 50%;
 $button-oval-border-radius: 99px;
 $button-square-border-radius: 15px;
 
-$button-oval-padding: 10px 60px;
+$button-oval-padding: 10px 60px 5px 60px;
 
-$button-small-padding: 15px 40px;
-$button-middle-padding: 20px 60px;
+$button-small-padding: 15px 40px 11px 40px;
+$button-middle-padding: 25px 60px 20px 60px;
 
-$button-default-padding: 20px 60px;
+$button-default-padding: 25px 60px 20px 60px;
 
 $button-icon-circle-font-size: 22px;
 $button-icon-square-font-size: 31px;
