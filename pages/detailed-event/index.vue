@@ -48,9 +48,26 @@
 				/>
 			</div>
 		</div>
+
 		<div class="detailed__map">
 			<h2 class="detailed__map-title">Dirección del evento</h2>
 			<cp-map :map-markers="testMarkers" :center="testMapCenter"/>
+		</div>
+
+		<div class="detailed__comments">
+			<h2 class="detailed__comments-title">¿ Que le pareció nuestro evento?</h2>
+			<div class="detailed__comments-textArea">
+				<cp-text-area text-area-id="detailed-event-comments" text-area-placeholder="Deja tus comentarios"/>
+				<span class="detailed__comments-textArea-submit">
+					<cp-button
+						shape="oval"
+						color="yellowGrey"
+						text="Enviar"
+						size="small"
+						width="extraLarge"
+					/>
+				</span>
+			</div>
 		</div>
 	</div>
 </template>
@@ -59,6 +76,7 @@
 import CpSocialLink from '@shared/gui/CpSocialLink.vue';
 import CpHugeLinkBtn from '@shared/gui/CpHugeLinkBtn.vue';
 import CpMap from '@shared/gui/CpMap.vue';
+import CpButton from '@shared/gui/CpButton.vue';
 
 const testMarkers = [{ coordinates: [-12.046016, -77.030554] }];
 const testMapCenter = [-12.046016, -77.030554];
@@ -204,5 +222,26 @@ const testMapCenter = [-12.046016, -77.030554];
             }
         }
 
+        &__comments {
+
+            &-title {
+                margin-bottom: 45px;
+                display: block;
+                font-size: 60px;
+                line-height: 84px;
+                font-weight: 500;
+                color: #353333;
+            }
+
+            &-textArea {
+
+                &-submit {
+                    margin-top: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: end;
+                }
+            }
+        }
     }
 </style>
