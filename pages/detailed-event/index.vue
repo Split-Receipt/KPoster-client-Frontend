@@ -47,15 +47,21 @@
 					link-to="/partners-registration"
 				/>
 			</div>
-			<!-- <NuxtImg class="detailed__mainImage-BG" loading="lazy" src="../public/images/event-card-14.png"/> -->
 		</div>
-        
+		<div class="detailed__map">
+			<h2 class="detailed__map-title">Dirección del evento</h2>
+			<cp-map :map-markers="testMarkers" :center="testMapCenter"/>
+		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
 import CpSocialLink from '@shared/gui/CpSocialLink.vue';
 import CpHugeLinkBtn from '@shared/gui/CpHugeLinkBtn.vue';
+import CpMap from '@shared/gui/CpMap.vue';
+
+const testMarkers = [{ coordinates: [-12.046016, -77.030554] }];
+const testMapCenter = [-12.046016, -77.030554];
 </script>
 
 <style scoped lang="scss">
@@ -178,6 +184,23 @@ import CpHugeLinkBtn from '@shared/gui/CpHugeLinkBtn.vue';
                     margin-top: 20px;
                     margin-bottom: 25px;
                 }
+            }
+        }
+
+        &__map {
+            width: calc(100vw - 1.12%);
+            height: 30vw;
+            margin-bottom: calc(120px + 4.5em);
+            margin-left: -5vw;
+
+            &-title {
+                margin-top: 100px;
+                margin-left: 5vw;
+                margin-bottom: 40px;
+                font-size: 60px;
+                line-height: 84px;
+                font-weight: 500;
+                color: #353333;
             }
         }
 

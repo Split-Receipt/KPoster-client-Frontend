@@ -110,7 +110,7 @@ defineProps<SocialLinkProps>();
 		&-facebook {
 			position: absolute;
 			bottom: 0;
-			height: 33px;
+			height: 36px;
 		}
 
 		&-linkedin {
