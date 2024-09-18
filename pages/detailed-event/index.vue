@@ -44,7 +44,7 @@
 					width="maxWidth"
 					size="middle"
 					:islink="true"
-					link-to="/partners-registration"
+					link-to="#"
 				/>
 			</div>
 		</div>
@@ -54,11 +54,11 @@
 			<cp-map :map-markers="testMarkers" :center="testMapCenter"/>
 		</div>
 
-		<div class="detailed__comments">
-			<h2 class="detailed__comments-title">¿ Que le pareció nuestro evento?</h2>
-			<div class="detailed__comments-textArea">
+		<div class="detailed__comment">
+			<h2 class="detailed__comment-title">¿ Que le pareció nuestro evento?</h2>
+			<div class="detailed__comment-textArea">
 				<cp-text-area text-area-id="detailed-event-comments" text-area-placeholder="Deja tus comentarios"/>
-				<span class="detailed__comments-textArea-submit">
+				<span class="detailed__comment-textArea-submit">
 					<cp-button
 						shape="oval"
 						color="yellowGrey"
@@ -68,6 +68,95 @@
 					/>
 				</span>
 			</div>
+
+			<div class="detailed__comment__block">
+				<span class="detailed__comment__block-title">
+					<h3>Comentarios</h3>
+					<cp-button
+						shape="oval"
+						size="small"
+						color="transparent"
+						text="Eso es todo"
+						width="large"
+					/>
+				</span>
+				<span class="detailed__comment__block-buttons">
+					<cp-button
+						shape="circle"
+						color="transparent"
+						text=""
+						with-image="../public/images/sort.svg"
+					/>
+					<span>
+						<cp-button
+							class="sort-button"
+							shape="oval"
+							size="small"
+							color="transparent"
+							text="Positivos"
+						/>
+						<cp-button
+							class="sort-button"
+							shape="oval"
+							size="small"
+							color="transparent"
+							text="Negativos"
+						/>
+					</span>
+				</span>
+			</div>
+
+			<div class="detailed__comment__list">
+				<div class="detailed__comment__list-item">
+					<span class="detailed__comment__list-item-avatar">
+						<nuxt-img src="../public/images/user.svg"/>
+					</span>
+					<span class="detailed__comment__list-item-info">
+						<p class="detailed__comment__list-item-info-name">Usuario afshi</p>
+						<p class="detailed__comment__list-item-info-comment">me gustó todo el evento</p>
+					</span>
+					<span class="detailed__comment__list-item-date">
+						12.07.2024
+					</span>
+				</div>
+
+				<div class="detailed__comment__list-item">
+					<span class="detailed__comment__list-item-avatar">
+						<nuxt-img src="../public/images/user.svg"/>
+					</span>
+					<span class="detailed__comment__list-item-info">
+						<p class="detailed__comment__list-item-info-name">Usuario afshi</p>
+						<p class="detailed__comment__list-item-info-comment">me gustó todo el evento</p>
+					</span>
+					<span class="detailed__comment__list-item-date">
+						12.07.2024
+					</span>
+				</div>
+
+				<div class="detailed__comment__list-item">
+					<span class="detailed__comment__list-item-avatar">
+						<nuxt-img src="../public/images/user.svg"/>
+					</span>
+					<span class="detailed__comment__list-item-info">
+						<p class="detailed__comment__list-item-info-name">Usuario afshi</p>
+						<p class="detailed__comment__list-item-info-comment">me gustó todo el evento</p>
+					</span>
+					<span class="detailed__comment__list-item-date">
+						12.07.2024
+					</span>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="detailed__carousel slider-recomended">
+			<h2 class="detailed__carousel-title-recomended">Recomendaciones para usted</h2>
+			<event-carousel id="detailed-carousel" :event-data="sectionData[0].eventData" />
+		</div>
+
+		<div class="detailed__carousel slider-closestPlaces">
+			<h2 class="detailed__carousel-title-closestPlaces">Lugares cercanos</h2>
+			<event-carousel id="detailed-carousel" :event-data="sectionData[0].eventData" />
 		</div>
 	</div>
 </template>
@@ -80,6 +169,216 @@ import CpButton from '@shared/gui/CpButton.vue';
 
 const testMarkers = [{ coordinates: [-12.046016, -77.030554] }];
 const testMapCenter = [-12.046016, -77.030554];
+
+const sectionData = [
+	{
+		id: '1',
+		title: 'Popular events',
+		eventData: [
+			{
+				image: 'event-card-1.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-2.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-4.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-13.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-14.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-15.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+		],
+	},
+	{
+		id: '2',
+		title: 'List of events 1',
+		text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc',
+		eventData: [
+			{
+				image: 'event-card-3.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-5.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-6.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-7.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-8.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-9.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-10.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-11.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+		],
+	},
+	{
+		id: '3',
+		title: 'List of events 2',
+		text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc',
+		eventData: [
+			{
+				image: 'event-card-3.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-5.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-6.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-7.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-8.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-9.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-10.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-11.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+		],
+	},
+	{
+		id: '4',
+		title: 'List of events 3',
+		text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc',
+		eventData: [
+			{
+				image: 'event-card-3.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-5.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-6.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-7.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-8.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-9.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-10.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+			{
+				image: 'event-card-11.png',
+				title: 'Event Name',
+				text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut',
+				dateEvent: '20/12/2024',
+			},
+		],
+	},
+];
 </script>
 
 <style scoped lang="scss">
@@ -222,7 +521,7 @@ const testMapCenter = [-12.046016, -77.030554];
             }
         }
 
-        &__comments {
+        &__comment {
 
             &-title {
                 margin-bottom: 45px;
@@ -242,6 +541,154 @@ const testMapCenter = [-12.046016, -77.030554];
                     justify-content: end;
                 }
             }
+
+            &__block {
+                width: 100%;
+                margin-top: 85px;
+                margin-bottom: 60px;
+
+                &-title {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    h3 {
+                        display: block;
+                        font-size: 60px;
+                        line-height: 84px;
+                        font-weight: 500;
+                        color: #353333;
+                    }
+                }
+
+                &-buttons {
+                    width: 100%;
+                    margin-top: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+
+                    span{
+                        display: flex;
+                        margin-left: 80px;
+
+                        .sort-button {
+                            margin-right: 25px;
+                        }
+                    }
+                }
+            }
+
+            &__list {
+                width: 100%;
+                height: 500px;
+                margin-bottom: 125px;
+                display: flex;
+                flex-direction: column;
+
+                &-item {
+                    padding: 15px;
+                    margin-bottom: 45px;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+
+                    &-avatar {
+                        width: 125px;
+                        height: 125px;
+                        left: 0;
+                        top: 10px;
+                        position: absolute;
+                        padding: 22px;
+                        overflow: hidden;
+                        border-radius: 50%;
+                        background-color: #F6F6F6;
+                    }
+
+                    &-info {
+                        height: 100%;
+                        margin-left: 147px;
+                        display: flex;
+                        flex-direction: column;
+
+                        &-name {
+                            display: block;
+                            font-size: 30px;
+                            line-height: 42px;
+                            font-weight: 500;
+                            color: #000000;
+                        }
+
+                        &-comment {
+                            display: block;
+                            width: 100%;
+                            margin-top: 30px;
+                            font-size: 22px;
+                            line-height: 35.2px;
+                            font-weight: 500;
+                            color: #888888;
+                        }
+                    }
+
+                    &-date {
+                        position: absolute;
+                        right: 10px;
+                        top: 15px;
+                    }
+                }
+            }
+        }
+
+        &__carousel {
+            position: relative;
+            margin-top: 80px;
+
+            @media #{$screen-tablet} {
+                position: relative;
+                bottom: 20px;
+            }
+
+            @media #{$screen-desktop} {
+                bottom: 30px;
+            }
+
+            &-title {
+
+                &-recomended {
+                    display: block;
+                    width: 75%;
+                    position: absolute;
+                    top: -125px;
+                    font-size: 60px;
+                    line-height: 84px;
+                    font-weight: 500;
+                    color: #353333; 
+                }
+
+                &-closestPlaces {
+                    display: block;
+                    width: 75%;
+                    position: absolute;
+                    top: -40px;
+                    font-size: 60px;
+                    line-height: 84px;
+                    font-weight: 500;
+                    color: #353333;
+                }
+            }
+
+        }
+    }
+
+    .slider {
+        &-recomended {
+            margin-top: 260px;
+        }
+
+        &-closestPlaces {
+            margin-top: 160px
         }
     }
 </style>
