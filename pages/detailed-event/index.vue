@@ -37,15 +37,17 @@
 				<span class="detailed__mainImage-info-title">Vajilla de barro</span>
 				<span class="detailed__mainImage-info-text">Propuesta comercial única</span>
 				<span class="detailed__mainImage-info-date">de 22.07 a 5.08</span>
-				<cp-button 
-					color="yellowGrey"
-					shape="oval"
-					text="Horarios y entradas"
-					width="maxWidth"
-					size="middle"
-					:islink="true"
-					link-to="#"
-				/>
+				<span class="detailed__mainImage-info-button">
+					<cp-button 
+						color="yellowGrey"
+						shape="oval"
+						text="Horarios y entradas"
+						width="maxWidth"
+						size="middle"
+						:islink="true"
+						link-to="#"
+					/>
+				</span>
 			</div>
 		</div>
 
@@ -108,9 +110,7 @@
 
 			<div class="detailed__comment__list">
 				<div class="detailed__comment__list-item">
-					<span class="detailed__comment__list-item-avatar">
-						<nuxt-img src="../public/images/user.svg"/>
-					</span>
+					<span class="detailed__comment__list-item-avatar"/>
 					<span class="detailed__comment__list-item-info">
 						<p class="detailed__comment__list-item-info-name">Usuario afshi</p>
 						<p class="detailed__comment__list-item-info-comment">me gustó todo el evento</p>
@@ -121,9 +121,7 @@
 				</div>
 
 				<div class="detailed__comment__list-item">
-					<span class="detailed__comment__list-item-avatar">
-						<nuxt-img src="../public/images/user.svg"/>
-					</span>
+					<span class="detailed__comment__list-item-avatar"/>
 					<span class="detailed__comment__list-item-info">
 						<p class="detailed__comment__list-item-info-name">Usuario afshi</p>
 						<p class="detailed__comment__list-item-info-comment">me gustó todo el evento</p>
@@ -134,9 +132,7 @@
 				</div>
 
 				<div class="detailed__comment__list-item">
-					<span class="detailed__comment__list-item-avatar">
-						<nuxt-img src="../public/images/user.svg"/>
-					</span>
+					<span class="detailed__comment__list-item-avatar"/>
 					<span class="detailed__comment__list-item-info">
 						<p class="detailed__comment__list-item-info-name">Usuario afshi</p>
 						<p class="detailed__comment__list-item-info-comment">me gustó todo el evento</p>
@@ -460,23 +456,19 @@ const sectionData = [
             background-repeat: no-repeat;
             background-size: cover;
 
-            &-BG {
-                width: 100%;
-                height: 100%;
-            }
-
             &-info {
                 position: absolute;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
-                width: 35%;
-                height: calc(60% - 40px);
+                width: 60%;
+                height: calc(85% - 40px);
                 bottom: 40px;
                 left: 40px;
 
                 &-title {
                     display: block;
+                    margin-top: 45px;
                     font-size: 44px;
                     line-height: 61.6px;
                     font-weight: 500;
@@ -489,7 +481,7 @@ const sectionData = [
                     line-height: 42px;
                     font-weight: 500;
                     color: #F6F6F6;
-                    margin-top: -10px;
+                    margin-top: -15px;
                 }
 
                 &-date {
@@ -500,6 +492,10 @@ const sectionData = [
                     color: #F6F6F6;
                     margin-top: 20px;
                     margin-bottom: 25px;
+                }
+
+                &-button {
+                    width: 60%;
                 }
             }
         }
@@ -605,6 +601,10 @@ const sectionData = [
                         overflow: hidden;
                         border-radius: 50%;
                         background-color: #F6F6F6;
+                        background-image: url('../../public/images/user.svg');
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        background-size: 95px;
                     }
 
                     &-info {
