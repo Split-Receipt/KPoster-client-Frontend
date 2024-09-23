@@ -36,6 +36,8 @@
 </template>
 
 <script setup lang="ts">
+// expected social names: instagram \ facebook \ linkedin \ tiktok
+
 type SocialLinkProps = {
 	socialName: string;
 	socialLink: string;
@@ -108,7 +110,7 @@ defineProps<SocialLinkProps>();
 		&-facebook {
 			position: absolute;
 			bottom: 0;
-			height: 33px;
+			height: 36px;
 		}
 
 		&-linkedin {

@@ -1,7 +1,7 @@
 <template>
 	<div class="button__wrapper">
 		<button
-			v-if="!islik"
+			v-if="!islink"
 			:disabled="disabled"
 			:type="type"
 			:class="[
@@ -23,7 +23,7 @@
 			</span>
 		</button>
 		<nuxt-link
-			v-if="islik"
+			v-if="islink"
 			:disabled="disabled"
 			:class="[
 				'button',
@@ -57,7 +57,7 @@ type Props = {
 	leftIcon?: string;
 	withImage?: string;
 	text?: string;
-	islik?: boolean;
+	islink?: boolean;
 	linkTo?: string;
 };
 
