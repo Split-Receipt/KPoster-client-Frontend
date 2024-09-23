@@ -177,7 +177,7 @@
 				<div class="partners__form-rowDnD-info">
 					<span>
 						<strong class="partners__form-rowDnD-info-required">*</strong>
-						Subir el banner principal
+						Subir el logo o imagen principal
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
@@ -695,6 +695,8 @@ const { $objToFormData } = useNuxtApp();
 const radioOptions1 = [
 	{ id: 'emp', value: 'Empresa', label: 'Empresa' },
 	{ id: 'ong', value: 'ONG', label: 'ONG' },
+	{ id: 'Organizacion Cultural', value: 'Organizacion_Cultural', label: 'Organizacion Cultural' },
+	{ id: 'Persona Natural', value: 'Persona_Natural', label: 'Persona Natural' },
 ];
 
 const radiooptions2 = [

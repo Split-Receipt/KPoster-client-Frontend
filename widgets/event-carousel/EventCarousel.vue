@@ -52,7 +52,7 @@
 						slidesPerView: 3,
 						grid: {
 							fill: 'row',
-							rows: 2,
+							rows: 1,
 						},
 					},
 					1920: {
