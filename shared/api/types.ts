@@ -4,6 +4,13 @@ export type PartnerRegistration = {
 		commercialName: string;
 		compName: string;
 		ruc: string;
+		startDate: string;
+		personCount: number | null;
+		middleAge: number | null;
+		womenPercentage: number | null;
+		orgResume: string;
+		cultureType: string[];
+		orgWorkType: string;
 		orgLocation: string;
 		productDescriptionLink: string;
 		productDescriptionText: string;

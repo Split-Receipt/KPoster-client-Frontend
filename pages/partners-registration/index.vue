@@ -15,7 +15,7 @@
 		</div>
 		<v-form ref="partnerRegForm" class="partners__form">
 			<h3>{{ $t('partners_formTitle') }}</h3>
-			<div class="partners__form-row">
+			<div class="partners__form-rowDnD">
 				<div class="partners__form-row-info">
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
@@ -39,6 +39,21 @@
 							errors[0]
 						}}</span>
 					</v-field>
+
+					<div v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'" class="partners__form-row-input-subInputs">
+						<cp-text-input
+							id="persona_apellidos_id"
+							class="partners__form-row-input-subInputs-item"
+							placeholder="apellidos"
+							type="text"
+							label-text="Apellidos"/>
+						<cp-text-input
+							id="persona_edad_id"
+							class="partners__form-row-input-subInputs-item"
+							placeholder="edad"
+							type="text"
+							label-text="Edad"/>
+					</div>
 				</div>
 			</div>
 
@@ -132,6 +147,122 @@
 				<div class="partners__form-row-info">
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
+						Fecha de inicio de actividades
+						<cp-info-pop-up
+							id="startDate_info"
+							info="start date info"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.data.startDate"
+						name="startDate"
+						rules="required"
+					>
+						<cp-text-input
+							v-model="partnerRegistrationForm.data.startDate"
+							type="date"
+							placeholder="ingrese la fecha"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<div class="partners__form-row">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Numero de personas de tu organización
+						<cp-info-pop-up
+							id="personCount"
+							info="person count info"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.data.personCount"
+						name="personCount"
+						rules="require_number"
+					>
+						<cp-text-input
+							v-model="partnerRegistrationForm.data.personCount"
+							type="number"
+							placeholder="Numero de personas"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<div class="partners__form-row">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Rango de edad y porcentaje de mujeres, aprox
+						<cp-info-pop-up
+							id="middleAge"
+							info="tmiddle age and woman percentage info"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<div class="partners__form-row-input-flexBlock">
+						<span>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="partnerRegistrationForm.data.middleAge"
+								name="middleAge"
+								rules="require_number"
+							>
+								<cp-text-input
+									v-model="partnerRegistrationForm.data.middleAge"
+									type="number"
+									placeholder="Numero de personas"
+									:class="{ 'required-input-error-textInput': errors.length > 0 }"
+								/>
+								<span v-if="errors" class="required-input-error-info-leftSide">{{
+									errors[0]
+								}}</span>
+							</v-field>
+						</span>
+						<span>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="partnerRegistrationForm.data.womenPercentage"
+								name="womenPercentage"
+								rules="require_number"
+							>
+								<cp-text-input
+									v-model="partnerRegistrationForm.data.womenPercentage"
+									type="number"
+									placeholder="porcentaje de mujeres"
+									:class="{ 'required-input-error-textInput': errors.length > 0 }"
+									style="margin-left: 15px"
+								/>
+								<span v-if="errors" class="required-input-error-info-leftSide">{{
+									errors[0]
+								}}</span>
+							</v-field>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
 						Dónde se ubica tu organización?
 						<cp-info-pop-up id="Dónde_se_ubica_info" info="test info Dónde" />
 					</span>
@@ -204,6 +335,33 @@
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Resume lo que hace tu organización
+						<cp-info-pop-up id="org_resume" info="250-500 palabras" />
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.data.orgResume"
+						name="orgResume"
+						rules="required"
+					>
+						<cp-text-area
+							v-model="partnerRegistrationForm.data.orgResume"
+							text-area-id="orgResume"
+							text-area-placeholder="resume lo que hace tu organización"
+						/>
+						<span v-if="errors" class="required-input-error-info-center">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
 						Sube el vídeo de tu empresa o incrusta un enlace desde youtube o
 						vimeo
 						<cp-info-pop-up
@@ -245,6 +403,66 @@
 							</span>
 						</div>
 					</span>
+				</div>
+			</div>
+
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						En que areas de la cultura
+						viva comunitaria se desenvuelve
+						tu organización ? Elección múltiple
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						name="cultureType"
+						rules="require_checkbox"
+						:model-value="partnerRegistrationForm.data.cultureType"
+					>
+						<div>
+							<cp-check-box
+								v-for="item, key in orgSphereChecks"
+								:id="item.id"
+								:key="key"
+								:value="item.value"
+								:title="item.title"
+								@change="checkboxCollect"/>
+						</div>
+						<span v-if="errors && partnerRegistrationForm.data.cultureType.length < 1" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Especificar la labor que realiza
+						en el área seleccionada de cultura viva comunitaria 
+						<cp-info-pop-up id="org_Work_Type" info="orgWorkType info" />
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.data.orgWorkType"
+						name="orgWorkType"
+						rules="required"
+					>
+						<cp-text-area
+							v-model="partnerRegistrationForm.data.orgWorkType"
+							text-area-id="orgWorkType"
+							text-area-placeholder="resume lo que hace tu organización"
+						/>
+						<span v-if="errors" class="required-input-error-info-center">{{
+							errors[0]
+						}}</span>
+					</v-field>
 				</div>
 			</div>
 
@@ -689,6 +907,7 @@ import type { PartnerRegistration } from '@shared/api/types.ts';
 import { registerPartner } from '@shared/api';
 import { Form as VForm, Field as VField } from 'vee-validate';
 import { generateUniqueId } from '@shared/helpers/generateUid';
+import CpTextArea from '@shared/gui/CpTextArea.vue';
 
 const { $objToFormData } = useNuxtApp();
 // test values ----------------------------------------------------------
@@ -700,14 +919,19 @@ const radioOptions1 = [
 ];
 
 const radiooptions2 = [
-	{ id: 'Cusco', value: 'Cusco', label: 'Cusco' },
-	{ id: 'Urubamba', value: 'Urubamba', label: 'Urubamba' },
+	{ id: 'Acomayo', value: 'Acomayo', label: 'Acomayo' },
 	{ id: 'Anta', value: 'Anta', label: 'Anta' },
-	{ id: 'Paucartambo', value: 'Paucartambo', label: 'Paucartambo' },
-	{ id: 'Pisac', value: 'Pisac', label: 'Pisac' },
-	{ id: 'Chinchero', value: 'Chinchero', label: 'Chinchero' },
+	{ id: 'Calca', value: 'Calca', label: 'Calca' },
+	{ id: 'Canas', value: 'Canas', label: 'Canas' },
+	{ id: 'Canchis', value: 'Canchis', label: 'Canchis' },
+	{ id: 'Cusco', value: 'Cusco', label: 'Cusco' },
+	{ id: 'Chumbivilcas', value: 'Chumbivilcas', label: 'Chumbivilcas' },
+	{ id: 'Espinar', value: 'Espinar', label: 'Espinar' },
+	{ id: 'La_Convencion', value: 'La_Convencion', label: 'La Convencion' },
 	{ id: 'Paruro', value: 'Paruro', label: 'Paruro' },
-	{ id: 'Aguas_Calientes', value: 'Aguas_Calientes', label: 'Aguas Calientes' },
+	{ id: 'Paucartambo', value: 'Paucartambo', label: 'Paucartambo' },
+	{ id: 'Quispicanchis', value: 'Quispicanchis', label: 'Quispicanchis' },
+	{ id: 'Urubamba', value: 'Urubamba', label: 'Urubamba' },
 ];
 
 const compVideoSwitcherOptions = [
@@ -721,6 +945,20 @@ const mainProdSwitcherOptions = [
 	{ optionName: 'Type text', optionValue: 'Text', optionKey: 'TextKey' },
 ];
 
+const orgSphereChecks = [
+	{ id: generateUniqueId(), value: 'ecology', title: 'Consciencia ambiental' },
+	{ id: generateUniqueId(), value: 'management', title: 'Gestion cultural' },
+	{ id: generateUniqueId(), value: 'Artesania', title: 'Artesania' },
+	{ id: generateUniqueId(), value: 'Musica', title: 'Musica' },
+	{ id: generateUniqueId(), value: 'dance', title: 'Artes escenicas y danzas' },
+	{ id: generateUniqueId(), value: 'arts', title: 'Artes visuales' },
+	{ id: generateUniqueId(), value: 'books', title: 'Libro y lectura' },
+	{ id: generateUniqueId(), value: 'Visuals', title: 'Fotografia , audiovisual, cinematografico y nuevos medios' },
+	{ id: generateUniqueId(), value: 'languages', title: 'Lenguas indigenas u originarias y tradicion oral' },
+	{ id: generateUniqueId(), value: 'digital_content', title: 'Creador de contenido en plataformas digitales' },
+	{ id: generateUniqueId(), value: 'gastronomy', title: 'Gastronomia tipica' },
+	{ id: generateUniqueId(), value: 'art_gallery', title: 'Galeria y espacios de arte' },
+];
 // ----------------------------------------------------------------------
 
 const partnerRegistrationForm = reactive<PartnerRegistration>({
@@ -729,6 +967,13 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		commercialName: '',
 		compName: '',
 		ruc: '',
+		startDate: '',
+		personCount: null,
+		middleAge: null,
+		womenPercentage: null,
+		orgResume: '',
+		cultureType: [],
+		orgWorkType: '',
 		orgLocation: '',
 		productDescriptionLink: '',
 		productDescriptionText: '',
@@ -793,6 +1038,15 @@ const deleteCategory = (index: number) => {
 		index < partnerRegistrationForm.data.productCategories.length
 	) {
 		partnerRegistrationForm.data.productCategories.splice(index, 1);
+	}
+};
+
+const checkboxCollect = (e: Event) => {
+	const target = e.target as HTMLInputElement;
+	if (target.checked) {
+		partnerRegistrationForm.data.cultureType.push(target.value);
+	} else {
+		partnerRegistrationForm.data.cultureType = partnerRegistrationForm.data.cultureType.filter((e) => e !== target.value);
 	}
 };
 
@@ -900,15 +1154,66 @@ const sendPartnerRegistrationForm = async () => {
 				align-items: center;
 				flex-direction: column;
 				width: 55%;
+
 				input {
 					width: 100%;
 				}
+
 				div {
 					display: flex;
 					flex-wrap: wrap;
 					align-items: center;
 					justify-content: flex-start;
 					width: 100%;
+
+				}
+
+				&-flexBlock {
+					span {
+						width: calc(50% - 7.5px);
+					}
+				}
+
+				&-subInputs {
+					margin-top: 15px;
+
+					&-item {
+						margin-top: 20px;
+					}
+				}
+			}
+
+			&-semiBlock {
+				display: flex !important;
+				flex-direction: column !important;
+				min-width: 100%;
+				min-height: 250px;
+
+				&-social {
+					width: 50%;
+					padding: 10px;
+					margin-top: 15px;
+
+					&-maxWidth {
+						width: 100%;
+						min-height: 250px
+					}
+				}
+
+				&-input {
+					width: 50%;
+					padding: 10px;
+					margin-top: 15px;
+
+					&-maxWidth {
+						width: 100%;
+						min-height: 250px
+					}
+
+					&-subInputs {
+						margin-top: 15px;
+					}
+
 				}
 			}
 		}
@@ -957,6 +1262,10 @@ const sendPartnerRegistrationForm = async () => {
 					justify-content: space-between;
 					width: 100%;
 				}
+
+				&-subInputs {
+					margin-top: 15px;
+				}
 			}
 
 			&-semiBlock {
@@ -973,6 +1282,21 @@ const sendPartnerRegistrationForm = async () => {
 					&-maxWidth {
 						width: 100%;
 						min-height: 250px
+					}
+				}
+
+				&-input {
+					width: 50%;
+					padding: 10px;
+					margin-top: 15px;
+
+					&-maxWidth {
+						width: 100%;
+						min-height: 250px
+					}
+
+					&-subInputs {
+						margin-top: 15px;
 					}
 				}
 			}
