@@ -1,74 +1,89 @@
-<template>
-	<div id="upSide" class="header__wrapper">
-		<cp-up-scroll up-side-id="upSide" />
-		<div class="header__img">
-			<nuxt-img
-				placeholder="/images/header-background_small_blured.jpg"
-				loading="lazy"
-				class="header__img-pic"
-				src="/images/header-background_small.png"
-			/>
-		</div>
-		<div class="header__controls">
-			<nuxt-link to="/home">
-				<nuxt-img
-					loading="lazy"
-					src="/images/logo.svg"
-					class="icon icon-logo header__icon-logo"
-				/>
-			</nuxt-link>
-			<div class="header__menu">
-				<div class="header__buttons header__buttons--oval">
+<template>  
+	<div id="upSide" class="header__wrapper">  
+		<cp-login-modal v-if="loginModalIsOpen" @update:modal-update="handleModalClose"/>  
+		<cp-up-scroll v-model:model-value="loginModalIsOpen" up-side-id="upSide" />  
+		<div class="header__img">  
+			<nuxt-img  
+				placeholder="/images/header-background_small_blured.jpg"  
+				loading="lazy"  
+				class="header__img-pic"  
+				src="/images/header-background_small.png"  
+			/>  
+		</div>  
+		<div class="header__controls">  
+			<nuxt-link to="/home">  
+				<nuxt-img  
+					loading="lazy"  
+					src="/images/logo.svg"  
+					class="icon icon-logo header__icon-logo"  
+				/>  
+			</nuxt-link>  
+			<div class="header__menu">  
+				<div class="header__buttons header__buttons--oval">  
 					<cp-button
 						width="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						:text="$t('sales')"
-					/>
+						:text="$t('sales')" />  
 					<cp-button
 						width="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						:text="$t('news')"
-					/>
+						:text="$t('news')" />  
 					<cp-button
 						width="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						:text="$t('charity')"
+						:text="$t('charity')" />  
+				</div>  
+				<div class="header__buttons header__buttons--circle">  
+					<cp-button
+						color="gray"
+						with-image="/../public/images/search.svg"
+						size="small"
+						shape="circle"
+						text=""
+					/> 
+					<cp-button
+						color="gray"
+						with-image="/../public/images/login.svg"
+						size="small"
+						shape="circle"
+						text=""
+						@click="handleModalOpen"
 					/>
-				</div>
+					<cp-button
+						color="gray"
+						with-image="/../public/images/ticket.svg"
+						size="small"
+						shape="circle"
+						text=""
+					/>
+					<lang-selector />  
+				</div>  
+			</div>  
+			<img src="/images/burger-menu.svg" class="header__icon-burger-menu" />  
+		</div>  
+	</div>  
+</template>  
 
-				<div class="header__buttons header__buttons--circle">
-					<button class="header__button header__button--circle">
-						<i class="icon icon-search header__button-icon" />
-					</button>
+<script setup lang="ts">  
+import CpButton from '@shared/gui/CpButton.vue';  
+import CpUpScroll from '@shared/gui/CpUpScroll.vue';  
 
-					<button class="header__button header__button--circle">
-						<i class="icon icon-login header__button-icon" />
-					</button>
+const loginModalIsOpen = ref<boolean>(false);  
 
-					<button class="header__button header__button--circle">
-						<i
-							class="icon icon-ticket header__button-icon header__button-ticket"
-						/>
-					</button>
-					<lang-selector />
-				</div>
-			</div>
+const handleModalOpen = () => {  
+    loginModalIsOpen.value = true;  
+};  
 
-			<img src="/images/burger-menu.svg" class="header__icon-burger-menu" />
-		</div>
-	</div>
-</template>
-
-<script setup lang="ts">
-import CpButton from '@shared/gui/CpButton.vue';
-import CpUpScroll from '@shared/gui/CpUpScroll.vue';
-</script>
+const handleModalClose = (newState: boolean) => {  
+    loginModalIsOpen.value = newState; 
+};  
+</script>  
 
 <style scoped lang="scss">
 .header {
@@ -165,26 +180,6 @@ import CpUpScroll from '@shared/gui/CpUpScroll.vue';
 			@media #{$screen-desktop} {
 				display: flex;
 			}
-		}
-	}
-
-	&__button {
-		border: none;
-		background-color: $header-button-background-color;
-
-		&--circle {
-			height: $header-button-circle-height;
-			width: $header-button-circle-width;
-			border-radius: $header-button-circle-border-radius;
-		}
-
-		&-icon {
-			font-size: $header-button-icon-font-size;
-		}
-
-		&-ticket {
-			font-size: $header-button-ticket-font-size;
-			line-height: $header-button-ticket-line-height;
 		}
 	}
 }
