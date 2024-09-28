@@ -14,7 +14,7 @@
 			<h2 class="modal-content-title">Iniciar sesión en el perfil</h2>
 			<div class="modal-content-inputs">
 				<div class="modal-content-inputs-email">
-					<cp-text-input placeholder="email" type="text" />
+					<cp-text-input placeholder="email" type="email" />
 					<span class="modal-content-inputs-passRestore">
 						<a href="#">Recuperar contraseña?</a>
 					</span>
@@ -34,6 +34,9 @@
 						<nuxt-img class="modal-content-inputs-sideAccount-buttons-button" src="../public/images/facebook-login.svg"/>
 					</div>
 				</div>
+			</div>
+			<div class="modal-content-registration">
+				<a href="#">Registrarse</a>
 			</div>
 		</div>
 	</div>
@@ -76,14 +79,19 @@ onClickOutside(modalMain, () => hanldeCloseModal());
             flex-direction: column;
             align-items: center;
             border-radius: 35px;
-            padding: 135px 40px 40px 40px;
+            padding: 40px;
             width: 30%;
             min-width: 450px;
             height: 90%;
-            min-height: 550px;
             opacity: 1;
             background: #EEEEEE;
             position: absolute;
+            overflow: auto;
+            scrollbar-width: none;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
 
             &-close {
                 position: absolute;
@@ -93,12 +101,14 @@ onClickOutside(modalMain, () => hanldeCloseModal());
 
             &-title {
                 margin-bottom: 40px;
+                margin-top: 80px;
                 font-size: 30px;
                 width: 80%;
                 line-height: 42px;
                 font-weight: 500;
                 text-align: center;
                 color: #353333;
+                cursor: default
             }
 
             &-inputs {
@@ -143,6 +153,7 @@ onClickOutside(modalMain, () => hanldeCloseModal());
                         font-weight: 400;
                         line-height: 35.2px;
                         color: #888888;
+                        cursor: default;
                     }
 
                     &-buttons {
@@ -153,9 +164,29 @@ onClickOutside(modalMain, () => hanldeCloseModal());
                         &-button {
                             height: 50px;
                             width: 50px;
+                            transition: all 0.3s;
+                            cursor: pointer;
+
+                            &:hover {
+                                transition: all 0.3s;
+                                transform: scale(1.1);
+                            }
                         }
                     }
                 }
+            }
+            &-registration {
+                margin-top: 40px;
+
+                 a {
+                    font-size: 22px;
+                    font-weight: 400;
+                    line-height: 35.2px;
+                    color: #353333;
+                    padding: 5px;
+                    text-decoration: none;
+                    border-bottom: 1px solid #353333;
+                 }
             }
         }
     }

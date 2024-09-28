@@ -1,11 +1,42 @@
 <template>
-	<div class="inputContainer">
+	<div class="textInput">
 		<input
+			v-if="props.type !== 'password'"
 			:id="props.id"
 			:type="props.type"
 			:placeholder="props.placeholder"
 			@input="handleTextValueUpdate"
 		/>
+		<div v-if="props.type === 'password'" class="textInput-password">
+			<input
+				v-show="!passIsVisible"
+				:id="props.id"
+				v-model="passValue"
+				class="textInput-password-invisible"
+				type="password"
+				:placeholder="props.placeholder"
+				@input="handleTextValueUpdate"
+			/>
+			<input
+				v-show="passIsVisible"
+				:id="props.id"
+				v-model="passValue"
+				class="textInput-password-visible"
+				type="text"
+				:placeholder="props.placeholder"
+				@input="handleTextValueUpdate"
+			/>
+			<nuxt-img
+				v-show="passIsVisible"
+				class="textInput-password-open"
+				src="../public/images/eye.svg"
+				@click="passVisibilityToggle"/>
+			<nuxt-img
+				v-show="!passIsVisible"
+				class="textInput-password-closed"
+				src="../public/images/eye-closed.svg"
+				@click="passVisibilityToggle"/>
+		</div>
 	</div>
 </template>
 
@@ -22,15 +53,21 @@ type Events = {
 
 const props = defineProps<textInputProps>();
 const emit = defineEmits<Events>();
+const passValue = ref<string>();
+const passIsVisible = ref<boolean>(false);
 
 const handleTextValueUpdate = (e: Event) => {
 	const target = e.target as HTMLInputElement;
 	emit('update:modelValue', target.value);
 };
+
+const passVisibilityToggle = () => {
+	passIsVisible.value = !passIsVisible.value;
+};
 </script>
 
 <style scoped lang="scss">
-.inputContainer {
+.textInput {
 	width: 100%;
 	input {
 		width: 100%;
@@ -42,6 +79,34 @@ const handleTextValueUpdate = (e: Event) => {
 
 		&:focus {
 			outline: none;
+		}
+	}
+
+	&-password {
+		position: relative;
+
+		&-invisible {
+			padding-right: 40px !important;
+		}
+
+		&-visible {
+			padding-right: 40px !important;
+		}
+
+		&-open {
+			position: absolute;
+			cursor: pointer;
+			width: 30px;
+			top: 13px;
+			right: 5px;
+		}
+
+		&-closed {
+			position: absolute;
+			cursor: pointer;
+			width: 30px;
+			top: 13px;
+			right: 5px;
 		}
 	}
 }
