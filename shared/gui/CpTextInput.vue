@@ -27,11 +27,13 @@
 				@input="handleTextValueUpdate"
 			/>
 			<nuxt-img
+				v-if="withEye"
 				v-show="passIsVisible"
 				class="textInput-password-open"
 				src="../public/images/eye.svg"
 				@click="passVisibilityToggle"/>
 			<nuxt-img
+				v-if="withEye"
 				v-show="!passIsVisible"
 				class="textInput-password-closed"
 				src="../public/images/eye-closed.svg"
@@ -45,6 +47,7 @@ type textInputProps = {
 	type: string;
 	placeholder: string;
 	id?: string;
+	withEye?: boolean;
 };
 
 type Events = {
