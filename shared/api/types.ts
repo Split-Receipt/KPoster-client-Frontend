@@ -12,6 +12,9 @@ export type PartnerRegistration = {
 		cultureType: string[];
 		orgWorkType: string;
 		orgLocation: string;
+		personalFirstName: string;
+		personalSecondName: string;
+		personalIdentifyingDocument: string;
 		productDescriptionLink: string;
 		productDescriptionText: string;
 		compVideoLink: string;
@@ -32,6 +35,7 @@ export type PartnerRegistration = {
 		};
 	};
 	files: {
+		personalDocumentScan: File[] | null;
 		videoBusinessCard: File[] | null;
 		mainBanner: File[] | null;
 		compVideoFile: File[] | null;

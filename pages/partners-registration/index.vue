@@ -15,6 +15,8 @@
 		</div>
 		<v-form ref="partnerRegForm" class="partners__form">
 			<h3>{{ $t('partners_formTitle') }}</h3>
+			
+			<!-- Organization type -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-row-info">
 					<span>
@@ -32,32 +34,139 @@
 						<cp-radio-button
 							v-model="partnerRegistrationForm.data.orgType"
 							:options="radioOptions1"
-							name="radio1"
+							name="orgType"
 							style="margin-left: -30px"
 						/>
 						<span v-if="errors" class="required-input-error-info-leftSide">{{
 							errors[0]
 						}}</span>
 					</v-field>
-
-					<div v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'" class="partners__form-row-input-subInputs">
-						<cp-text-input
-							id="persona_apellidos_id"
-							class="partners__form-row-input-subInputs-item"
-							placeholder="apellidos"
-							type="text"
-							label-text="Apellidos"/>
-						<cp-text-input
-							id="persona_edad_id"
-							class="partners__form-row-input-subInputs-item"
-							placeholder="edad"
-							type="text"
-							label-text="Edad"/>
-					</div>
 				</div>
 			</div>
 
-			<div class="partners__form-row">
+			<!-- personal activity (First name) -->
+			<div v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'" class="partners__form-row">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						nombre de pila
+						<cp-info-pop-up
+							id="Nombre_comercial_info"
+							info="test info Nombre"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.data.personalFirstName"
+						name="commercialName"
+						rules="required"
+					>
+						<cp-text-input
+							v-model="partnerRegistrationForm.data.personalFirstName"
+							type="text"
+							placeholder="nombre de pila"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- personal activity (Second Name) -->
+			<div v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'" class="partners__form-row">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						apellido
+						<cp-info-pop-up
+							id="Nombre_comercial_info"
+							info="test info Nombre"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.data.personalSecondName"
+						name="commercialName"
+						rules="required"
+					>
+						<cp-text-input
+							v-model="partnerRegistrationForm.data.personalSecondName"
+							type="text"
+							placeholder="apellido"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- Persona lIdentifying Document  -->
+			<div v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'" class="partners__form-rowDnD">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Tipo de documento de identidad
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.data.personalIdentifyingDocument"
+						name="orgType"
+						rules="required"
+					>
+						<cp-radio-button
+							v-model="partnerRegistrationForm.data.personalIdentifyingDocument"
+							:options="docTypeOptions"
+							name="PersonalIdentifyingDocument"
+							style="margin-left: -30px"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- Persona lIdentifying Document scan -->
+			<div v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'" class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Escaneo de un documento de identidad
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.files.personalDocumentScan"
+						name="personalDocumentScan"
+						rules="required_file"
+					>
+						<cp-drag-n-drop
+							v-model="partnerRegistrationForm.files.personalDocumentScan"
+							:is-single="true"
+							type="image"
+							:max-size="5"
+							:is-invalid="errors.length > 0"
+						/>
+						<span v-if="errors" class="required-input-error-info-center">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- Organization name -->
+			<div v-if="partnerRegistrationForm.data.orgType !== 'Persona_Natural'" class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
@@ -88,7 +197,8 @@
 				</div>
 			</div>
 
-			<div class="partners__form-row">
+			<!-- Company name -->
+			<div v-if="partnerRegistrationForm.data.orgType !== 'Persona_Natural'" class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
@@ -116,6 +226,7 @@
 				</div>
 			</div>
 
+			<!-- Pay number -->
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
@@ -143,6 +254,7 @@
 				</div>
 			</div>
 
+			<!-- activity start date -->
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
@@ -174,6 +286,7 @@
 				</div>
 			</div>
 
+			<!-- people count in organization -->
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
@@ -205,6 +318,7 @@
 				</div>
 			</div>
 
+			<!-- Age range and woman percentage -->
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
@@ -259,6 +373,7 @@
 				</div>
 			</div>
 
+			<!-- organization location -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-row-info">
 					<span>
@@ -287,6 +402,7 @@
 				</div>
 			</div>
 
+			<!-- video Business Card -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -304,6 +420,7 @@
 				</div>
 			</div>
 
+			<!-- main Banner -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -332,6 +449,7 @@
 				</div>
 			</div>
 
+			<!-- organization Resume -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -359,6 +477,7 @@
 				</div>
 			</div>
 
+			<!-- company Video File -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -406,6 +525,7 @@
 				</div>
 			</div>
 
+			<!-- culture Type -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-row-info">
 					<span>
@@ -438,6 +558,7 @@
 				</div>
 			</div>
 
+			<!-- organization Work Type -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -466,6 +587,7 @@
 				</div>
 			</div>
 
+			<!-- most Popular Product -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -486,6 +608,7 @@
 				</div>
 			</div>
 
+			<!-- social Medias -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -555,6 +678,7 @@
 				</div>
 			</div>
 
+			<!-- digital Catalog -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -584,6 +708,7 @@
 				</div>
 			</div>
 
+			<!-- Product description -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -677,6 +802,7 @@
 				</div>
 			</div>
 
+			<!-- product Categories -->
 			<div class="partners__form-soloInput">
 				<div class="partners__form-soloInput__container">
 					<div class="partners__form-soloInput__title">
@@ -752,6 +878,8 @@
 					/>
 				</div>
 			</div>
+
+			<!-- gallery Images -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -783,6 +911,8 @@
 					</v-field>
 				</div>
 			</div>
+
+			<!-- contacts -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -934,6 +1064,14 @@ const radiooptions2 = [
 	{ id: 'Urubamba', value: 'Urubamba', label: 'Urubamba' },
 ];
 
+const docTypeOptions = [
+{ id: 'Permiso_de_residencia', value: 'Permiso_de_residencia', label: 'Permiso de residencia' },
+{ id: 'Licencia_de_conducir', value: 'Licencia_de_conducir', label: 'Licencia de conducir' },
+{ id: 'Pasaporte_extranjero', value: 'Pasaporte_extranjero', label: 'Pasaporte extranjero' },
+{ id: 'Pasaporte_local', value: 'Pasaporte_local', label: 'Pasaporte local' },
+
+];
+
 const compVideoSwitcherOptions = [
 	{ optionName: 'Upload File', optionValue: 'File', optionKey: 'FileKey' },
 	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },
@@ -975,6 +1113,9 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		cultureType: [],
 		orgWorkType: '',
 		orgLocation: '',
+		personalFirstName: '',
+		personalSecondName: '',
+		personalIdentifyingDocument: '',
 		productDescriptionLink: '',
 		productDescriptionText: '',
 		compVideoLink: '',
@@ -995,6 +1136,7 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		},
 	},
 	files: {
+		personalDocumentScan: null,
 		videoBusinessCard: null,
 		mainBanner: null,
 		compVideoFile: null,
