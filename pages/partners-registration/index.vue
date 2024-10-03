@@ -859,7 +859,7 @@
 				<div class="partners__form-rowDnD-info">
 					<span>
 						Sube el video que explica su servicio y producto o incrusta el
-						enlace desde Yuotube o Vimeo
+						enlace desde Youtube o Vimeo
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
@@ -892,87 +892,6 @@
 					/>
 				</div>
 			</div>
-
-			<!-- cascade categories ------------- -->
-
-			<!-- product Categories -->
-			<!-- <div class="partners__form-soloInput">
-				<div class="partners__form-soloInput__container">
-					<div class="partners__form-soloInput__title">
-						<span class="partners__form-soloInput__title-main">
-							<strong class="partners__form-soloInput__title-main-required">
-								*
-							</strong>
-							Primera categoría de bienes
-						</span>
-						<span class="partners__form-soloInput__title-second">
-							introduzca el texto
-						</span>
-					</div>
-					<div class="partners__form-soloInput__socials">
-						<span class="partners__form-soloInput__socials-item">
-							<v-field
-								v-for="(category, index) in partnerRegistrationForm.data.productCategories"
-								:key="category.categoryId"
-								v-slot="{ errors }"
-								:model-value="partnerRegistrationForm.data.productCategories[index].title"
-								:name="'cat1_product' + (index + 1)"
-								rules="required"
-							>
-								<div class="partners__form-soloInput__socials-item-block">
-									<cp-text-input2
-										:id="'cat1_product' + (index + 1)"
-										v-model="
-											partnerRegistrationForm.data.productCategories[index].title
-										"
-										:circle="true"
-										:label-text="'Mercancía ' + (index + 1)"
-										placeholder="introduzca el enlace"
-										:class="{
-											'required-input-error-socialMedia': errors.length > 0,
-											'required-input-default-socialMedia': errors.length < 1,
-										}"
-									/>
-									<cp-button
-										v-if="
-											partnerRegistrationForm.data.productCategories.length > 1
-										"
-										shape="circle"
-										color="yellowGrey"
-										text=""
-										with-image="../public/images/trash.svg"
-										@click="deleteCategory(index)"
-									/>
-								</div>
-								<span
-									v-if="errors.length"
-									class="cascade-error-leftSide"
-								>
-									{{ errors[0] }}
-								</span>
-							</v-field>
-							<cp-button
-								:disabled="partnerRegistrationForm.data.productCategories.length > 14"
-								shape="circle"
-								color="yellowGrey"
-								text=""
-								with-image="../public/images/plus.svg"
-								@click="addNewCategoryInput"
-							/>
-						</span>
-					</div>
-					<cp-button
-						class="partners__form__button"
-						width="maxWidth"
-						size="small"
-						shape="oval"
-						color="transparent"
-						text="Más información"
-					/>
-				</div>
-			</div> -->
-
-			<!-- cascade categories ------------- -->
 
 			<!-- gallery Images -->
 			<div class="partners__form-rowDnD">
@@ -1136,7 +1055,6 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 			linkedIn: '',
 		},
 		digitalCatalog: '',
-		// productCategories: [],
 		contacts: {
 			place: '',
 			tel: '',
@@ -1170,30 +1088,6 @@ watch(mainProdValue, () => {
 	partnerRegistrationForm.data.productDescriptionLink = '';
 	partnerRegistrationForm.data.productDescriptionText = '';
 });
-
-// cascade categories ---------------------------
-
-// onBeforeMount(() => {
-// 	addNewCategoryInput();
-// });
-
-// const addNewCategoryInput = () => {
-// 	partnerRegistrationForm.data.productCategories.push({
-// 		categoryId: generateUniqueId(),
-// 		title: '',
-// 	});
-// };
-
-// const deleteCategory = (index: number) => {
-// 	if (
-// 		index > -1 &&
-// 		index < partnerRegistrationForm.data.productCategories.length
-// 	) {
-// 		partnerRegistrationForm.data.productCategories.splice(index, 1);
-// 	}
-// };
-
-// ----------------------------------------------
 
 const checkboxCollect = (e: Event) => {
 	const target = e.target as HTMLInputElement;
