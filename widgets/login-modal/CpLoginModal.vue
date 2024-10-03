@@ -11,6 +11,7 @@
 				with-image="/../public/images/close.svg"
 				@click="hanldeCloseModal"
 			/>
+			<span v-if="loginModalState !== 'login'" class="modal-content-backward" @click="goingToLogin">Back</span>
 			<div v-if="loginModalState === 'login'" class="modal-content-login">
 				<h2 class="modal-content-title">Iniciar sesión en el perfil</h2>
 				<div class="modal-content-inputs">
@@ -119,6 +120,10 @@ const goingToPassRestore = () => {
     loginModalState.value = 'passRestore';
 };
 
+const goingToLogin = () => {
+    loginModalState.value = 'login';
+};
+
 const passInputValue = (e: Event) => {
     const target = e.target as HTMLInputElement;
     passInput.value = target.value;
@@ -193,6 +198,17 @@ onClickOutside(modalMain, () => hanldeCloseModal());
                 position: absolute;
                 right: 40px;
                 top: 40px;
+            }
+
+            &-backward {
+                position: absolute;
+                left: 50px;
+                top: 50px; 
+                font-size: 22px;
+                line-height: 35.2px;
+                font-weight: 400;
+                color: #353333;
+                cursor: pointer;
             }
 
             &-title {
