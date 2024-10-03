@@ -12,12 +12,12 @@ export type PartnerRegistration = {
 		cultureType: string[];
 		orgWorkType: string;
 		orgLocation: string;
-		personalFirstName: string;
-		personalSecondName: string;
+		personalName: string;
 		personalIdentifyingDocument: string;
 		productDescriptionLink: string;
 		productDescriptionText: string;
 		compVideoLink: string;
+		affiliations: string[];
 		socialMedias: {
 			telegram: string;
 			twitter: string;
@@ -27,7 +27,7 @@ export type PartnerRegistration = {
 			linkedIn: string;
 		};
 		digitalCatalog: string;
-		productCategories: { categoryId: string, title: string }[];
+		// productCategories: { categoryId: string, title: string }[];
 		contacts: {
 			place: string;
 			tel: string;
