@@ -97,6 +97,7 @@ enum buttonColors {
 	yellowGrey = 'button--yellow-grey',
 	black = 'button--black',
 	white = 'button--white',
+	gray = 'button--gray',
 	transparent = 'button--transparent',
 }
 
@@ -200,6 +201,10 @@ enum buttonWidth {
 
 	&--yellow-grey {
 		background: $button-gradient-background-color;
+	}
+
+	&--gray {
+		background: $button-gray-background-color;
 	}
 
 	&--transparent {
