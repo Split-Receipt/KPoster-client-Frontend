@@ -141,7 +141,7 @@ onClickOutside(modalMain, () => hanldeCloseModal());
     .modal {
         width: 100%;
         height: 100%;
-        z-index: 9999;
+        z-index: 998;
         position: fixed;
         display: flex;
         align-items: center;
@@ -171,23 +171,23 @@ onClickOutside(modalMain, () => hanldeCloseModal());
             scrollbar-width: none;
 
             @media (max-height: 700px) { 
-                margin-top: 2%;  
-            }
-
-            @media (max-height: 665px) { 
                 margin-top: 4%;  
             }
 
-            @media (max-height: 625px) { 
+            @media (max-height: 665px) { 
                 margin-top: 6%;  
             }
 
-            @media (max-height: 590px) { 
+            @media (max-height: 625px) { 
                 margin-top: 8%;  
             }
 
-            @media (max-height: 570px) { 
+            @media (max-height: 590px) { 
                 margin-top: 10%;  
+            }
+
+            @media (max-height: 570px) { 
+                margin-top: 12%;  
             }
 
             &::-webkit-scrollbar {
