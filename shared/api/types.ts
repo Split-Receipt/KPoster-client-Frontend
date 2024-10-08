@@ -9,7 +9,7 @@ export type PartnerRegistration = {
 		middleAge: number | null;
 		womenPercentage: number | null;
 		orgResume: string;
-		cultureType: string[];
+		cultureType: { cultureTypeName: string }[];
 		orgWorkType: string;
 		orgLocation: string;
 		personalName: string;
@@ -17,7 +17,7 @@ export type PartnerRegistration = {
 		productDescriptionLink: string;
 		productDescriptionText: string;
 		compVideoLink: string;
-		affiliations: string[];
+		affiliations: { affiliationId: string, affiliationName: string }[];
 		socialMedias: {
 			telegram: string;
 			twitter: string;
@@ -27,7 +27,6 @@ export type PartnerRegistration = {
 			linkedIn: string;
 		};
 		digitalCatalog: string;
-		// productCategories: { categoryId: string, title: string }[];
 		contacts: {
 			place: string;
 			tel: string;

@@ -1092,9 +1092,9 @@ watch(mainProdValue, () => {
 const checkboxCollect = (e: Event) => {
 	const target = e.target as HTMLInputElement;
 	if (target.checked) {
-		partnerRegistrationForm.data.cultureType.push(target.value);
+		partnerRegistrationForm.data.cultureType.push({ cultureTypeName: target.value });
 	} else {
-		partnerRegistrationForm.data.cultureType = partnerRegistrationForm.data.cultureType.filter((e) => e !== target.value);
+		partnerRegistrationForm.data.cultureType = partnerRegistrationForm.data.cultureType.filter((e) => e.cultureTypeName !== target.value);
 	}
 };
 
