@@ -4,10 +4,20 @@ export type PartnerRegistration = {
 		commercialName: string;
 		compName: string;
 		ruc: string;
+		startDate: string;
+		personCount: number | null;
+		middleAge: number | null;
+		womenPercentage: number | null;
+		orgResume: string;
+		cultureType: { cultureTypeName: string }[];
+		orgWorkType: string;
 		orgLocation: string;
+		personalName: string;
+		personalIdentifyingDocument: string;
 		productDescriptionLink: string;
 		productDescriptionText: string;
 		compVideoLink: string;
+		affiliations: { affiliationId: string, affiliationName: string }[];
 		socialMedias: {
 			telegram: string;
 			twitter: string;
@@ -17,7 +27,6 @@ export type PartnerRegistration = {
 			linkedIn: string;
 		};
 		digitalCatalog: string;
-		productCategories: { categoryId: string, title: string }[];
 		contacts: {
 			place: string;
 			tel: string;
@@ -25,6 +34,7 @@ export type PartnerRegistration = {
 		};
 	};
 	files: {
+		personalDocumentScan: File[] | null;
 		videoBusinessCard: File[] | null;
 		mainBanner: File[] | null;
 		compVideoFile: File[] | null;

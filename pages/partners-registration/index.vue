@@ -2,20 +2,17 @@
 	<div class="partners__main">
 		<cp-spinner :is-spinned="isSpin" />
 		<h1 class="partners__title">
-			{{ $t('partners_title') }}
+			Ingresa tus datos para
+			registrarte en el Portal Cultural del Cusco
 		</h1>
 		<div class="partners__subtitle">
-			<h3>{{ $t('partners_subtitle') }}</h3>
-			<span>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. A diam maecenas sed
-				enim ut sem viverra aliquet eget. Amet venenatis urna cursus eget nunc
-				scelerisque.
-			</span>
+			<h3>Llene el formulario de registro</h3>
 		</div>
 		<v-form ref="partnerRegForm" class="partners__form">
 			<h3>{{ $t('partners_formTitle') }}</h3>
-			<div class="partners__form-row">
+			
+			<!-- Organization type -->
+			<div class="partners__form-rowDnD">
 				<div class="partners__form-row-info">
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
@@ -32,7 +29,7 @@
 						<cp-radio-button
 							v-model="partnerRegistrationForm.data.orgType"
 							:options="radioOptions1"
-							name="radio1"
+							name="orgType"
 							style="margin-left: -30px"
 						/>
 						<span v-if="errors" class="required-input-error-info-leftSide">{{
@@ -42,7 +39,97 @@
 				</div>
 			</div>
 
-			<div class="partners__form-row">
+			<!-- personal activity (First name) -->
+			<div v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'" class="partners__form-row">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Nombre
+						<cp-info-pop-up
+							id="Nombre_comercial_info"
+							info="test info Nombre"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.data.personalName"
+						name="commercialName"
+						rules="required"
+					>
+						<cp-text-input
+							v-model="partnerRegistrationForm.data.personalName"
+							type="text"
+							placeholder="ingrese el nombre"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- Persona lIdentifying Document  -->
+			<div v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'" class="partners__form-rowDnD">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Tipo de documento de identidad
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.data.personalIdentifyingDocument"
+						name="orgType"
+						rules="required"
+					>
+						<cp-radio-button
+							v-model="partnerRegistrationForm.data.personalIdentifyingDocument"
+							:options="docTypeOptions"
+							name="PersonalIdentifyingDocument"
+							style="margin-left: -30px"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- Persona lIdentifying Document scan -->
+			<div v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'" class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Escaneo de un documento de identidad
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.files.personalDocumentScan"
+						name="personalDocumentScan"
+						rules="required_file"
+					>
+						<cp-drag-n-drop
+							v-model="partnerRegistrationForm.files.personalDocumentScan"
+							:is-single="true"
+							type="image"
+							:max-size="5"
+							:is-invalid="errors.length > 0"
+						/>
+						<span v-if="errors" class="required-input-error-info-center">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- Organization name -->
+			<div v-if="partnerRegistrationForm.data.orgType !== 'Persona_Natural'" class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
@@ -73,7 +160,8 @@
 				</div>
 			</div>
 
-			<div class="partners__form-row">
+			<!-- Company name -->
+			<div v-if="partnerRegistrationForm.data.orgType !== 'Persona_Natural'" class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
@@ -101,7 +189,8 @@
 				</div>
 			</div>
 
-			<div class="partners__form-row">
+			<!-- Pay number -->
+			<div v-if="partnerRegistrationForm.data.orgType !== 'Persona_Natural'" class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
@@ -128,26 +217,30 @@
 				</div>
 			</div>
 
+			<!-- activity start date -->
 			<div class="partners__form-row">
 				<div class="partners__form-row-info">
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
-						Dónde se ubica tu organización?
-						<cp-info-pop-up id="Dónde_se_ubica_info" info="test info Dónde" />
+						Fecha de inicio de actividades
+						<cp-info-pop-up
+							id="startDate_info"
+							info="start date info"
+						/>
 					</span>
 				</div>
 				<div class="partners__form-row-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="partnerRegistrationForm.data.orgLocation"
-						name="orgLocation"
+						:model-value="partnerRegistrationForm.data.startDate"
+						name="startDate"
 						rules="required"
 					>
-						<cp-radio-button
-							v-model="partnerRegistrationForm.data.orgLocation"
-							:options="radiooptions2"
-							name="radio2"
-							style="margin-left: -30px"
+						<cp-text-input
+							v-model="partnerRegistrationForm.data.startDate"
+							type="date"
+							placeholder="ingrese la fecha"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
 						<span v-if="errors" class="required-input-error-info-leftSide">{{
 							errors[0]
@@ -156,23 +249,94 @@
 				</div>
 			</div>
 
-			<div class="partners__form-rowDnD">
-				<div class="partners__form-rowDnD-info">
+			<!-- people count in organization -->
+			<div class="partners__form-row">
+				<div class="partners__form-row-info">
 					<span>
-						Sube el video que explica su servicio y producto o incrusta el
-						enlace desde Yuotube o Vimeo
+						<strong class="partners__form-row-info-required">*</strong>
+						Numero de personas de tu organización
+						<cp-info-pop-up
+							id="personCount"
+							info="person count info"
+						/>
 					</span>
 				</div>
-				<div class="partners__form-rowDnD-input">
-					<cp-drag-n-drop
-						v-model="partnerRegistrationForm.files.videoBusinessCard"
-						:is-single="true"
-						type="video"
-						:max-size="50"
-					/>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.data.personCount"
+						name="personCount"
+						rules="require_number"
+					>
+						<cp-text-input
+							v-model="partnerRegistrationForm.data.personCount"
+							type="number"
+							placeholder="Numero de personas"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
 				</div>
 			</div>
 
+			<!-- Age range and woman percentage -->
+			<div class="partners__form-row">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Rango de edad y porcentaje de mujeres, aprox
+						<cp-info-pop-up
+							id="middleAge"
+							info="tmiddle age and woman percentage info"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<div class="partners__form-row-input-flexBlock">
+						<span>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="partnerRegistrationForm.data.middleAge"
+								name="middleAge"
+								rules="require_number"
+							>
+								<cp-text-input
+									v-model="partnerRegistrationForm.data.middleAge"
+									type="number"
+									placeholder="Numero de personas"
+									:class="{ 'required-input-error-textInput': errors.length > 0 }"
+								/>
+								<span v-if="errors" class="required-input-error-info-leftSide">{{
+									errors[0]
+								}}</span>
+							</v-field>
+						</span>
+						<span>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="partnerRegistrationForm.data.womenPercentage"
+								name="womenPercentage"
+								rules="require_number"
+							>
+								<cp-text-input
+									v-model="partnerRegistrationForm.data.womenPercentage"
+									type="number"
+									placeholder="porcentaje de mujeres"
+									:class="{ 'required-input-error-textInput': errors.length > 0 }"
+									style="margin-left: 15px"
+								/>
+								<span v-if="errors" class="required-input-error-info-leftSide">{{
+									errors[0]
+								}}</span>
+							</v-field>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- main Banner -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -201,6 +365,35 @@
 				</div>
 			</div>
 
+			<!-- organization Resume -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Resume lo que hace tu organización
+						<cp-info-pop-up id="org_resume" info="250-500 palabras" />
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.data.orgResume"
+						name="orgResume"
+						rules="required"
+					>
+						<cp-text-area
+							v-model="partnerRegistrationForm.data.orgResume"
+							text-area-id="orgResume"
+							text-area-placeholder="resume lo que hace tu organización"
+						/>
+						<span v-if="errors" class="required-input-error-info-center">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- company Video File -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -248,124 +441,69 @@
 				</div>
 			</div>
 
+			<!-- culture Type -->
 			<div class="partners__form-rowDnD">
-				<div class="partners__form-rowDnD-info">
+				<div class="partners__form-row-info">
 					<span>
-						Descargar el producto más popular
-						<cp-info-pop-up
-							id="Descargar_info"
-							info="El banner debe cargarse a 1100 por 278 píxeles en formato .png"
-						/>
+						<strong class="partners__form-row-info-required">*</strong>
+						En que areas de la cultura
+						viva comunitaria se desenvuelve
+						tu organización ? Elección múltiple
 					</span>
 				</div>
-				<div class="partners__form-rowDnD-input">
-					<cp-drag-n-drop
-						v-model="partnerRegistrationForm.files.mostPopularProduct"
-						:is-single="true"
-						type="image"
-						:max-size="5"
-					/>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						name="cultureType"
+						rules="require_checkbox"
+						:model-value="partnerRegistrationForm.data.cultureType"
+					>
+						<div>
+							<cp-check-box
+								v-for="item, key in orgSphereChecks"
+								:id="item.id"
+								:key="key"
+								:value="item.value"
+								:title="item.title"
+								@change="checkboxCollectCultureType"/>
+						</div>
+						<span v-if="errors && partnerRegistrationForm.data.cultureType.length < 1" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
 				</div>
 			</div>
 
+			<!-- organization Work Type -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
-						Redes sociales
-						<cp-info-pop-up
-							id="Redes_sociales_info"
-							info="No se admitirán redes personales"
-						/>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Especificar la labor que realiza
+						en el área seleccionada de cultura viva comunitaria 
+						<cp-info-pop-up id="org_Work_Type" info="orgWorkType info" />
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<div>
-						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="telegram_id"
-								v-model="partnerRegistrationForm.data.socialMedias.telegram"
-								:circle="true"
-								label-text="Telegram"
-								placeholder="https://www.youtube.com/"
-							/>
-						</span>
-						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="twitter_id"
-								v-model="partnerRegistrationForm.data.socialMedias.twitter"
-								:circle="true"
-								label-text="Twitter"
-								placeholder="https://www.vimeo.com/"
-							/>
-						</span>
-						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="faceBook_id"
-								v-model="partnerRegistrationForm.data.socialMedias.faceBook"
-								:circle="true"
-								label-text="FaceBook"
-								placeholder="https://www.vimeo.com/"
-							/>
-						</span>
-						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="instagram_id"
-								v-model="partnerRegistrationForm.data.socialMedias.instagram"
-								:circle="true"
-								label-text="Instagram"
-								placeholder="https://www.vimeo.com/"
-							/>
-						</span>
-						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="youTube_id"
-								v-model="partnerRegistrationForm.data.socialMedias.youTube"
-								:circle="true"
-								label-text="YouTube"
-								placeholder="https://www.vimeo.com/"
-							/> </span
-						><span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="linkedIn_id"
-								v-model="partnerRegistrationForm.data.socialMedias.linkedIn"
-								:circle="true"
-								label-text="Linkedin"
-								placeholder="https://www.vimeo.com/"
-							/>
-						</span>
-					</div>
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.data.orgWorkType"
+						name="orgWorkType"
+						rules="required"
+					>
+						<cp-text-area
+							v-model="partnerRegistrationForm.data.orgWorkType"
+							text-area-id="orgWorkType"
+							text-area-placeholder="describe los detalles del texto de tu industria"
+						/>
+						<span v-if="errors" class="required-input-error-info-center">{{
+							errors[0]
+						}}</span>
+					</v-field>
 				</div>
 			</div>
 
-			<div class="partners__form-rowDnD">
-				<div class="partners__form-rowDnD-info">
-					<span>
-						Catalogo digital
-						<cp-info-pop-up
-							id="Catalogo_digital_info"
-							info="Catalogo digital info"
-						/>
-					</span>
-				</div>
-				<div class="partners__form-rowDnD-input">
-					<div>
-						<cp-text-input
-							v-model="partnerRegistrationForm.data.digitalCatalog"
-							type="url"
-							placeholder="https://"
-						/>
-						<cp-button
-							class="partners__form__button"
-							width="maxWidth"
-							size="small"
-							shape="oval"
-							color="yellowGrey"
-							text="Crea tu propio catalogo digital"
-						/>
-					</div>
-				</div>
-			</div>
-
+			<!-- Product description -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -459,112 +597,66 @@
 				</div>
 			</div>
 
-			<div class="partners__form-soloInput">
-				<div class="partners__form-soloInput__container">
-					<div class="partners__form-soloInput__title">
-						<span class="partners__form-soloInput__title-main">
-							<strong class="partners__form-soloInput__title-main-required">
-								*
-							</strong>
-							Primera categoría de bienes
-						</span>
-						<span class="partners__form-soloInput__title-second">
-							introduzca el texto
-						</span>
-					</div>
-					<div class="partners__form-soloInput__socials">
-						<span class="partners__form-soloInput__socials-item">
-							<v-field
-								v-for="(category, index) in partnerRegistrationForm.data.productCategories"
-								:key="category.categoryId"
-								v-slot="{ errors }"
-								:model-value="partnerRegistrationForm.data.productCategories[index].title"
-								:name="'cat1_product' + (index + 1)"
-								rules="required"
-							>
-								<div class="partners__form-soloInput__socials-item-block">
-									<cp-text-input2
-										:id="'cat1_product' + (index + 1)"
-										v-model="
-											partnerRegistrationForm.data.productCategories[index].title
-										"
-										:circle="true"
-										:label-text="'Mercancía ' + (index + 1)"
-										placeholder="introduzca el enlace"
-										:class="{
-											'required-input-error-socialMedia': errors.length > 0,
-											'required-input-default-socialMedia': errors.length < 1,
-										}"
-									/>
-									<cp-button
-										v-if="
-											partnerRegistrationForm.data.productCategories.length > 1
-										"
-										shape="circle"
-										color="yellowGrey"
-										text=""
-										with-image="../public/images/trash.svg"
-										@click="deleteCategory(index)"
-									/>
-								</div>
-								<span
-									v-if="errors.length"
-									class="cascade-error-leftSide"
-								>
-									{{ errors[0] }}
-								</span>
-							</v-field>
-							<cp-button
-								:disabled="partnerRegistrationForm.data.productCategories.length > 14"
-								shape="circle"
-								color="yellowGrey"
-								text=""
-								with-image="../public/images/plus.svg"
-								@click="addNewCategoryInput"
-							/>
-						</span>
-					</div>
-					<cp-button
-						class="partners__form__button"
-						width="maxWidth"
-						size="small"
-						shape="oval"
-						color="transparent"
-						text="Más información"
-					/>
-				</div>
-			</div>
+			<!-- digital Catalog -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
-						<strong class="partners__form-rowDnD-info-required">*</strong>
-						Añadir fotos a la galería
+						Catalogo digital
 						<cp-info-pop-up
-							id="galería_info"
-							info="Sube un máximo de 6 fotos que no excedan los 2MB"
+							id="Catalogo_digital_info"
+							info="Catalogo digital info"
 						/>
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
+					<div>
+						<cp-text-input
+							v-model="partnerRegistrationForm.data.digitalCatalog"
+							type="url"
+							placeholder="https://"
+						/>
+						<cp-button
+							class="partners__form__button"
+							width="maxWidth"
+							size="small"
+							shape="oval"
+							color="yellowGrey"
+							text="Crea tu propio catalogo digital"
+						/>
+					</div>
+				</div>
+			</div>
+
+			<!-- organization location -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Dónde se ubica tu organización?
+						<cp-info-pop-up id="Dónde_se_ubica_info" info="test info Dónde" />
+					</span>
+				</div>
+				<div class="partners__form-row-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="partnerRegistrationForm.files.galleryImages"
-						name="gallery_DnD"
-						rules="required_file"
+						:model-value="partnerRegistrationForm.data.orgLocation"
+						name="orgLocation"
+						rules="required"
 					>
-						<cp-drag-n-drop
-							v-model="partnerRegistrationForm.files.galleryImages"
-							:is-multi="true"
-							type="image"
-							:max-size="2"
-							:is-invalid="errors.length > 0"
+						<cp-radio-button
+							v-model="partnerRegistrationForm.data.orgLocation"
+							:options="radiooptions2"
+							name="radio2"
+							style="margin-left: -30px"
 						/>
-						<span v-if="errors" class="required-input-error-info-center">{{
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
 							errors[0]
 						}}</span>
 					</v-field>
 				</div>
 			</div>
+
+			<!-- contacts -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
@@ -660,6 +752,180 @@
 					/>
 				</div>
 			</div>
+
+			<!-- social Medias -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						Redes sociales
+						<cp-info-pop-up
+							id="Redes_sociales_info"
+							info="No se admitirán redes personales"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<div>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-text-input2
+								id="telegram_id"
+								v-model="partnerRegistrationForm.data.socialMedias.telegram"
+								:circle="true"
+								label-text="Telegram"
+								placeholder="https://www.youtube.com/"
+							/>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-text-input2
+								id="twitter_id"
+								v-model="partnerRegistrationForm.data.socialMedias.twitter"
+								:circle="true"
+								label-text="Twitter"
+								placeholder="https://www.vimeo.com/"
+							/>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-text-input2
+								id="faceBook_id"
+								v-model="partnerRegistrationForm.data.socialMedias.faceBook"
+								:circle="true"
+								label-text="FaceBook"
+								placeholder="https://www.vimeo.com/"
+							/>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-text-input2
+								id="instagram_id"
+								v-model="partnerRegistrationForm.data.socialMedias.instagram"
+								:circle="true"
+								label-text="Instagram"
+								placeholder="https://www.vimeo.com/"
+							/>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-text-input2
+								id="youTube_id"
+								v-model="partnerRegistrationForm.data.socialMedias.youTube"
+								:circle="true"
+								label-text="YouTube"
+								placeholder="https://www.vimeo.com/"
+							/> </span
+						><span class="partners__form-rowDnD-semiBlock-social">
+							<cp-text-input2
+								id="linkedIn_id"
+								v-model="partnerRegistrationForm.data.socialMedias.linkedIn"
+								:circle="true"
+								label-text="Linkedin"
+								placeholder="https://www.vimeo.com/"
+							/>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- culture Type -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Afiliaciones o in incitativas
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						name="Affiliations"
+						rules="require_checkbox"
+						:model-value="partnerRegistrationForm.data.affiliations"
+					>
+						<div>
+							<cp-check-box
+								v-for="item, key in affiliations"
+								:id="item.id"
+								:key="key"
+								:value="item.value"
+								:title="item.title"
+								@change="checkboxCollectAffiliations"/>
+						</div>
+						<span v-if="errors && partnerRegistrationForm.data.affiliations.length < 1" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- video Business Card -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						Sube el video que explica su servicio y producto o incrusta el
+						enlace desde Youtube o Vimeo
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<cp-drag-n-drop
+						v-model="partnerRegistrationForm.files.videoBusinessCard"
+						:is-single="true"
+						type="video"
+						:max-size="50"
+					/>
+				</div>
+			</div>
+
+			<!-- most Popular Product -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						Descargar el producto más popular
+						<cp-info-pop-up
+							id="Descargar_info"
+							info="El banner debe cargarse a 1100 por 278 píxeles en formato .png"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<cp-drag-n-drop
+						v-model="partnerRegistrationForm.files.mostPopularProduct"
+						:is-single="true"
+						type="image"
+						:max-size="5"
+					/>
+				</div>
+			</div>
+
+			<!-- gallery Images -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Añadir fotos a la galería
+						<cp-info-pop-up
+							id="galería_info"
+							info="Sube un máximo de 6 fotos que no excedan los 2MB"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerRegistrationForm.files.galleryImages"
+						name="gallery_DnD"
+						rules="required_file"
+					>
+						<cp-drag-n-drop
+							v-model="partnerRegistrationForm.files.galleryImages"
+							:is-multi="true"
+							type="image"
+							:max-size="2"
+							:is-invalid="errors.length > 0"
+						/>
+						<span v-if="errors" class="required-input-error-info-center">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
 			<div class="partners__form-submit">
 				<div class="partners__form-submit-btnContainer">
 					<cp-button
@@ -689,6 +955,7 @@ import type { PartnerRegistration } from '@shared/api/types.ts';
 import { registerPartner } from '@shared/api';
 import { Form as VForm, Field as VField } from 'vee-validate';
 import { generateUniqueId } from '@shared/helpers/generateUid';
+import CpTextArea from '@shared/gui/CpTextArea.vue';
 
 const { $objToFormData } = useNuxtApp();
 // test values ----------------------------------------------------------
@@ -700,14 +967,27 @@ const radioOptions1 = [
 ];
 
 const radiooptions2 = [
-	{ id: 'Cusco', value: 'Cusco', label: 'Cusco' },
-	{ id: 'Urubamba', value: 'Urubamba', label: 'Urubamba' },
+	{ id: 'Acomayo', value: 'Acomayo', label: 'Acomayo' },
 	{ id: 'Anta', value: 'Anta', label: 'Anta' },
-	{ id: 'Paucartambo', value: 'Paucartambo', label: 'Paucartambo' },
-	{ id: 'Pisac', value: 'Pisac', label: 'Pisac' },
-	{ id: 'Chinchero', value: 'Chinchero', label: 'Chinchero' },
+	{ id: 'Calca', value: 'Calca', label: 'Calca' },
+	{ id: 'Canas', value: 'Canas', label: 'Canas' },
+	{ id: 'Canchis', value: 'Canchis', label: 'Canchis' },
+	{ id: 'Cusco', value: 'Cusco', label: 'Cusco' },
+	{ id: 'Chumbivilcas', value: 'Chumbivilcas', label: 'Chumbivilcas' },
+	{ id: 'Espinar', value: 'Espinar', label: 'Espinar' },
+	{ id: 'La_Convencion', value: 'La_Convencion', label: 'La Convencion' },
 	{ id: 'Paruro', value: 'Paruro', label: 'Paruro' },
-	{ id: 'Aguas_Calientes', value: 'Aguas_Calientes', label: 'Aguas Calientes' },
+	{ id: 'Paucartambo', value: 'Paucartambo', label: 'Paucartambo' },
+	{ id: 'Quispicanchis', value: 'Quispicanchis', label: 'Quispicanchis' },
+	{ id: 'Urubamba', value: 'Urubamba', label: 'Urubamba' },
+];
+
+const docTypeOptions = [
+{ id: 'Permiso_de_residencia', value: 'Permiso_de_residencia', label: 'Permiso de residencia' },
+{ id: 'Licencia_de_conducir', value: 'Licencia_de_conducir', label: 'Licencia de conducir' },
+{ id: 'Pasaporte_extranjero', value: 'Pasaporte_extranjero', label: 'Pasaporte extranjero' },
+{ id: 'Pasaporte_local', value: 'Pasaporte_local', label: 'Pasaporte local' },
+
 ];
 
 const compVideoSwitcherOptions = [
@@ -721,6 +1001,29 @@ const mainProdSwitcherOptions = [
 	{ optionName: 'Type text', optionValue: 'Text', optionKey: 'TextKey' },
 ];
 
+const orgSphereChecks = [
+	{ id: generateUniqueId(), value: 'ecology', title: 'Consciencia ambiental' },
+	{ id: generateUniqueId(), value: 'management', title: 'Gestion cultural' },
+	{ id: generateUniqueId(), value: 'Artesania', title: 'Artesania' },
+	{ id: generateUniqueId(), value: 'Musica', title: 'Musica' },
+	{ id: generateUniqueId(), value: 'dance', title: 'Artes escenicas y danzas' },
+	{ id: generateUniqueId(), value: 'arts', title: 'Artes visuales' },
+	{ id: generateUniqueId(), value: 'books', title: 'Libro y lectura' },
+	{ id: generateUniqueId(), value: 'Visuals', title: 'Fotografia , audiovisual, cinematografico y nuevos medios' },
+	{ id: generateUniqueId(), value: 'languages', title: 'Lenguas indigenas u originarias y tradicion oral' },
+	{ id: generateUniqueId(), value: 'digital_content', title: 'Creador de contenido en plataformas digitales' },
+	{ id: generateUniqueId(), value: 'gastronomy', title: 'Gastronomia tipica' },
+	{ id: generateUniqueId(), value: 'art_gallery', title: 'Galeria y espacios de arte' },
+];
+
+const affiliations = [
+{ id: generateUniqueId(), value: 'ACERCA', title: 'ACERCA' },
+{ id: generateUniqueId(), value: ' Defensores_de_Patrimonio', title: ' Defensores de Patrimonio' },
+{ id: generateUniqueId(), value: 'RENTOCA', title: 'RENTOCA' },
+{ id: generateUniqueId(), value: 'Puntos_de_cultura', title: 'Puntos de cultura' },
+{ id: generateUniqueId(), value: 'Ninguna', title: 'Ninguna' },
+];
+
 // ----------------------------------------------------------------------
 
 const partnerRegistrationForm = reactive<PartnerRegistration>({
@@ -729,10 +1032,20 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		commercialName: '',
 		compName: '',
 		ruc: '',
+		startDate: '',
+		personCount: null,
+		middleAge: null,
+		womenPercentage: null,
+		orgResume: '',
+		cultureType: [],
+		orgWorkType: '',
 		orgLocation: '',
+		personalName: '',
+		personalIdentifyingDocument: '',
 		productDescriptionLink: '',
 		productDescriptionText: '',
 		compVideoLink: '',
+		affiliations: [],
 		socialMedias: {
 			telegram: '',
 			twitter: '',
@@ -742,7 +1055,6 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 			linkedIn: '',
 		},
 		digitalCatalog: '',
-		productCategories: [],
 		contacts: {
 			place: '',
 			tel: '',
@@ -750,6 +1062,7 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		},
 	},
 	files: {
+		personalDocumentScan: null,
 		videoBusinessCard: null,
 		mainBanner: null,
 		compVideoFile: null,
@@ -776,23 +1089,21 @@ watch(mainProdValue, () => {
 	partnerRegistrationForm.data.productDescriptionText = '';
 });
 
-onBeforeMount(() => {
-	addNewCategoryInput();
-});
-
-const addNewCategoryInput = () => {
-	partnerRegistrationForm.data.productCategories.push({
-		categoryId: generateUniqueId(),
-		title: '',
-	});
+const checkboxCollectCultureType = (e: Event) => {
+	const target = e.target as HTMLInputElement;
+	if (target.checked) {
+		partnerRegistrationForm.data.cultureType.push({ cultureTypeName: target.value });
+	} else {
+		partnerRegistrationForm.data.cultureType = partnerRegistrationForm.data.cultureType.filter((e) => e.cultureTypeName !== target.value);
+	}
 };
 
-const deleteCategory = (index: number) => {
-	if (
-		index > -1 &&
-		index < partnerRegistrationForm.data.productCategories.length
-	) {
-		partnerRegistrationForm.data.productCategories.splice(index, 1);
+const checkboxCollectAffiliations = (e: Event) => {
+	const target = e.target as HTMLInputElement;
+	if (target.checked) {
+		partnerRegistrationForm.data.affiliations.push({ affiliationId: target.id, affiliationName: target.value });
+	} else {
+		partnerRegistrationForm.data.affiliations = partnerRegistrationForm.data.affiliations.filter((e) => e.affiliationName !== target.value);
 	}
 };
 
@@ -811,7 +1122,7 @@ const sendPartnerRegistrationForm = async () => {
 	try {
 		await registerPartner(partnerRegPayload);
 		isSpin.value = false;
-		toast.success('Success!');
+		toast.success('Nuestro administrador se comunicará conusted por correo electrónico');
 	} catch (error) {
 		toast.error('error');
 		isSpin.value = false;
@@ -900,15 +1211,66 @@ const sendPartnerRegistrationForm = async () => {
 				align-items: center;
 				flex-direction: column;
 				width: 55%;
+
 				input {
 					width: 100%;
 				}
+
 				div {
 					display: flex;
 					flex-wrap: wrap;
 					align-items: center;
 					justify-content: flex-start;
 					width: 100%;
+
+				}
+
+				&-flexBlock {
+					span {
+						width: calc(50% - 7.5px);
+					}
+				}
+
+				&-subInputs {
+					margin-top: 15px;
+
+					&-item {
+						margin-top: 20px;
+					}
+				}
+			}
+
+			&-semiBlock {
+				display: flex !important;
+				flex-direction: column !important;
+				min-width: 100%;
+				min-height: 250px;
+
+				&-social {
+					width: 50%;
+					padding: 10px;
+					margin-top: 15px;
+
+					&-maxWidth {
+						width: 100%;
+						min-height: 250px
+					}
+				}
+
+				&-input {
+					width: 50%;
+					padding: 10px;
+					margin-top: 15px;
+
+					&-maxWidth {
+						width: 100%;
+						min-height: 250px
+					}
+
+					&-subInputs {
+						margin-top: 15px;
+					}
+
 				}
 			}
 		}
@@ -957,6 +1319,10 @@ const sendPartnerRegistrationForm = async () => {
 					justify-content: space-between;
 					width: 100%;
 				}
+
+				&-subInputs {
+					margin-top: 15px;
+				}
 			}
 
 			&-semiBlock {
@@ -973,6 +1339,21 @@ const sendPartnerRegistrationForm = async () => {
 					&-maxWidth {
 						width: 100%;
 						min-height: 250px
+					}
+				}
+
+				&-input {
+					width: 50%;
+					padding: 10px;
+					margin-top: 15px;
+
+					&-maxWidth {
+						width: 100%;
+						min-height: 250px
+					}
+
+					&-subInputs {
+						margin-top: 15px;
 					}
 				}
 			}
