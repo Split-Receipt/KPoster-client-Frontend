@@ -465,7 +465,7 @@
 								:key="key"
 								:value="item.value"
 								:title="item.title"
-								@change="checkboxCollect"/>
+								@change="checkboxCollectCultureType"/>
 						</div>
 						<span v-if="errors && partnerRegistrationForm.data.cultureType.length < 1" class="required-input-error-info-leftSide">{{
 							errors[0]
@@ -836,7 +836,7 @@
 						v-slot="{ errors }"
 						name="Affiliations"
 						rules="require_checkbox"
-						:model-value="partnerRegistrationForm.data.cultureType"
+						:model-value="partnerRegistrationForm.data.affiliations"
 					>
 						<div>
 							<cp-check-box
@@ -845,9 +845,9 @@
 								:key="key"
 								:value="item.value"
 								:title="item.title"
-								@change="checkboxCollect"/>
+								@change="checkboxCollectAffiliations"/>
 						</div>
-						<span v-if="errors && partnerRegistrationForm.data.cultureType.length < 1" class="required-input-error-info-leftSide">{{
+						<span v-if="errors && partnerRegistrationForm.data.affiliations.length < 1" class="required-input-error-info-leftSide">{{
 							errors[0]
 						}}</span>
 					</v-field>
@@ -1089,12 +1089,21 @@ watch(mainProdValue, () => {
 	partnerRegistrationForm.data.productDescriptionText = '';
 });
 
-const checkboxCollect = (e: Event) => {
+const checkboxCollectCultureType = (e: Event) => {
 	const target = e.target as HTMLInputElement;
 	if (target.checked) {
 		partnerRegistrationForm.data.cultureType.push({ cultureTypeName: target.value });
 	} else {
 		partnerRegistrationForm.data.cultureType = partnerRegistrationForm.data.cultureType.filter((e) => e.cultureTypeName !== target.value);
+	}
+};
+
+const checkboxCollectAffiliations = (e: Event) => {
+	const target = e.target as HTMLInputElement;
+	if (target.checked) {
+		partnerRegistrationForm.data.affiliations.push({ affiliationId: target.id, affiliationName: target.value });
+	} else {
+		partnerRegistrationForm.data.affiliations = partnerRegistrationForm.data.affiliations.filter((e) => e.affiliationName !== target.value);
 	}
 };
 
