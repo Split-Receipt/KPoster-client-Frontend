@@ -325,7 +325,6 @@
 									type="number"
 									placeholder="porcentaje de mujeres"
 									:class="{ 'required-input-error-textInput': errors.length > 0 }"
-									style="margin-left: 15px"
 								/>
 								<span v-if="errors" class="required-input-error-info-leftSide">{{
 									errors[0]
@@ -1279,6 +1278,23 @@ const sendPartnerRegistrationForm = async () => {
 				&-flexBlock {
 					span {
 						width: calc(50% - 7.5px);
+						&:last-child {
+							margin-left: 15px;
+						}
+
+						@media (max-width: 610px) {
+							// width: 100%;
+							&:last-child {
+								margin-left: 0;
+								margin-top: 5px;
+							}
+						}
+					}
+					
+					@media (max-width: 610px) {
+						flex-direction: column;
+						align-items: flex-start !important;
+						
 					}
 				}
 

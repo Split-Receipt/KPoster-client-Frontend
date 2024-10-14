@@ -49,7 +49,7 @@ const isChecked = (optionValue: string) => {
 .switcher {
 	&__container {
 		display: flex;
-		flex-wrap: wrap;
+		// flex-wrap: wrap;
 		justify-content: center;
 		width: 100%;
 		height: 100%;
@@ -85,6 +85,21 @@ const isChecked = (optionValue: string) => {
 				color: #888888;
 				text-align: center;
 				transition: background-color 0.5s ease;
+				@media (max-width: 500px) {
+					font-size: 16px;
+				}
+				@media (max-width: 460px) {
+					font-size: 14px;
+				}
+				@media (max-width: 415px) {
+					font-size: 12px;
+				}
+				@media (max-width: 370px) {
+					font-size: 11px;
+				}
+				@media (max-width: 348px) {
+					font-size: 10px;
+				}
 			}
 
 			&:first-child span {
