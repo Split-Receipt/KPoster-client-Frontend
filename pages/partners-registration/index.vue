@@ -765,7 +765,7 @@
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<div>
+					<div class="partners__form-rowDnD-input-socials">
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-text-input2
 								id="telegram_id"
@@ -1135,12 +1135,12 @@ const sendPartnerRegistrationForm = async () => {
 <style scoped lang="scss">
 .partners {
 	&__main {
+		padding: 0 5%;
 		@media #{$screen-tablet} {
 			margin-top: 10px;
 		}
 
 		@media #{$screen-desktop} {
-			padding: 0 5%;
 			margin-top: 33px;
 		}
 	}
@@ -1148,6 +1148,20 @@ const sendPartnerRegistrationForm = async () => {
 	&__title {
 		margin-bottom: 45px;
 		font-size: 70px;
+
+		@media (max-width: 1265px) {
+			line-height: 80px;
+		}
+
+		@media (max-width: 1024px) {
+			font-size: 35px;
+			line-height: 45px;
+		}
+
+		@media (max-width: 645px) {
+			font-size: 25px;
+			line-height: 35px;
+		}
 	}
 
 	&__subtitle {
@@ -1157,6 +1171,20 @@ const sendPartnerRegistrationForm = async () => {
 			font-weight: 500;
 			line-height: 42px;
 			color: #353333;
+
+			@media (max-width: 1265px) {
+				line-height: 80px;
+			}
+
+			@media (max-width: 1024px) {
+				font-size: 30px;
+				line-height: 35px;
+			}
+
+			@media (max-width: 645px) {
+				font-size: 20px;
+				line-height: 30px;
+			}
 		}
 
 		span {
@@ -1177,12 +1205,26 @@ const sendPartnerRegistrationForm = async () => {
 			font-size: 34px;
 			font-weight: 500;
 			line-height: 47.6px;
+
+			@media (max-width: 1265px) {
+				line-height: 80px;
+			}
+
+			@media (max-width: 1024px) {
+				font-size: 25px;
+				line-height: 35px;
+			}
 		}
 
 		&-row {
 			display: flex;
 			align-items: center;
 			margin: 60px 0 60px 0;
+
+			@media (max-width: 955px) {
+				flex-direction: column;
+				align-items: flex-start;
+			}
 
 			&-info {
 				display: flex;
@@ -1193,6 +1235,10 @@ const sendPartnerRegistrationForm = async () => {
 				font-weight: 500;
 				line-height: 33.6px;
 				color: #353333;
+
+				@media (max-width: 955px) {
+					width: 100%;
+				}
 
 				span {
 					padding-top: 5px;
@@ -1211,6 +1257,11 @@ const sendPartnerRegistrationForm = async () => {
 				align-items: center;
 				flex-direction: column;
 				width: 55%;
+
+				@media (max-width: 955px) {
+					width: 100%;
+					margin-top: 20px;
+				}
 
 				input {
 					width: 100%;
@@ -1280,6 +1331,11 @@ const sendPartnerRegistrationForm = async () => {
 			align-items: flex-start;
 			margin: 60px 0 60px 0;
 
+			@media (max-width: 955px) {
+				flex-direction: column;
+				align-items: flex-start;
+			}
+
 			&-info {
 				display: flex;
 				align-items: center;
@@ -1290,6 +1346,11 @@ const sendPartnerRegistrationForm = async () => {
 				font-weight: 500;
 				line-height: 33.6px;
 				color: #353333;
+
+				@media (max-width: 955px) {
+					width: 100%;
+					padding-right: 0;
+				}
 
 				span {
 					padding-top: 5px;
@@ -1308,6 +1369,12 @@ const sendPartnerRegistrationForm = async () => {
 				align-items: center;
 				flex-direction: column;
 				width: 55%;
+
+				@media (max-width: 955px) {
+					margin-top: 20px;
+					width: 100%;
+				}
+
 				input {
 					width: 100%;
 				}
@@ -1318,6 +1385,13 @@ const sendPartnerRegistrationForm = async () => {
 					justify-content: flex-start;
 					justify-content: space-between;
 					width: 100%;
+				}
+
+				&-socials {
+					@media (max-width: 720px) {
+						flex-direction: column;
+						align-items: flex-start !important;
+					}
 				}
 
 				&-subInputs {
