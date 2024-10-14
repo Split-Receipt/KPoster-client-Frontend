@@ -1248,6 +1248,10 @@ const sendPartnerRegistrationForm = async () => {
 					color: red;
 					font-size: 32px;
 					margin-left: -20px;
+					@media (max-width: 430px) {
+						margin-left: -15px !important;
+						padding-left: 5px !important;
+					}
 				}
 			}
 
@@ -1377,6 +1381,10 @@ const sendPartnerRegistrationForm = async () => {
 					color: red;
 					font-size: 32px;
 					margin-left: -20px;
+					@media (max-width: 430px) {
+						margin-left: -15px !important;
+						padding-left: 5px !important;
+					}
 				}
 			}
 
@@ -1404,6 +1412,11 @@ const sendPartnerRegistrationForm = async () => {
 				}
 
 				&-socials {
+					span {
+						@media (max-width: 720px) {
+							width: 100%;
+						}
+					}
 					@media (max-width: 720px) {
 						flex-direction: column;
 						align-items: flex-start !important;
@@ -1499,6 +1512,10 @@ const sendPartnerRegistrationForm = async () => {
 						color: red;
 						font-size: 32px;
 						margin-left: -20px;
+						@media (max-width: 430px) {
+							margin-left: -15px !important;
+							padding-left: 5px !important;
+						}
 					}
 				}
 
