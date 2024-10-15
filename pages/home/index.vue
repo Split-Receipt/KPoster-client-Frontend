@@ -10,15 +10,21 @@
 			<div class="main-page__filters">
 				<cp-drop-down
 					v-model="categoriesToFilter"
-					:options="remoteCategoryOptions"
+					:options="testFilterOptions1"
 					drop-down-label="Filter by category"
 					:value="categoriesToFilter"
 				/>
 				<cp-drop-down
 					v-model="citiesToFilter"
-					:options="remoteCityFilterOptions"
+					:options="testFilterOptions2"
 					drop-down-label="Filter by city"
 					:value="citiesToFilter"
+				/>
+				<cp-drop-down
+					v-model="organizersToFilter"
+					:options="testFilterOptions3"
+					drop-down-label="Filter by event organizer"
+					:value="organizersToFilter"
 				/>
 			</div>
 			<div class="main-page__section-list">
@@ -41,8 +47,8 @@ import type { RequestOption } from '@shared/api/types';
 import { requestCities, requestCategories } from '@shared/api';
 
 const categoriesToFilter: string[] = [];
-
 const citiesToFilter: string[] = [];
+const organizersToFilter: string[] = [];
 const { availableLocales, setLocale } = useI18n();
 
 onMounted(() => {
@@ -269,12 +275,88 @@ const sectionData = [
 
 // category check points
 
-const remoteCategoryOptions = ref<Array<RequestOption['attributes']>>([]);
+const remoteCategoryFilterOptions = ref<Array<RequestOption['attributes']>>([]);
 
 // city filter checkpoint
 
 const remoteCityFilterOptions = ref<Array<RequestOption['attributes']>>([]);
 
+// organizers filter checkpoint
+
+const remoteOrganizersFilterOptions = ref<Array<RequestOption['attributes']>>([]);
+
+// test filter values
+
+// item_title: string;
+// 	item_UID: string;
+// 	item_value: string;
+// 	createdAt: string;
+// 	updatedAt: string;
+// 	publishedAt: string;
+// 	locale: string;
+
+const testFilterOptions1 = [
+	{
+		item_title: 'title1',
+	 	item_UID: 'id1',
+	  	item_value: 'value1',
+		createdAt: 'created1',
+		updatedAt: 'updated1',
+		publishedAt: 'published1',
+		locale: 'locale1',
+	},
+	{
+		item_title: 'title2',
+	 	item_UID: 'id2',
+	  	item_value: 'value2',
+		createdAt: 'created2',
+		updatedAt: 'updated2',
+		publishedAt: 'published2',
+		locale: 'locale2',
+	},
+];
+
+const testFilterOptions2 = [
+	{
+		item_title: 'title3',
+	 	item_UID: 'id3',
+	  	item_value: 'value3',
+		createdAt: 'created3',
+		updatedAt: 'updated3',
+		publishedAt: 'published3',
+		locale: 'locale3',
+	},
+	{
+		item_title: 'title4',
+	 	item_UID: 'id4',
+	  	item_value: 'value4',
+		createdAt: 'created4',
+		updatedAt: 'updated4',
+		publishedAt: 'published4',
+		locale: 'locale4',
+	},
+];
+
+const testFilterOptions3 = [
+	{
+		item_title: 'title5',
+	 	item_UID: 'id5',
+	  	item_value: 'value5',
+		createdAt: 'created5',
+		updatedAt: 'updated5',
+		publishedAt: 'published5',
+		locale: 'locale5',
+	},
+	{
+		item_title: 'title6',
+	 	item_UID: 'id6',
+	  	item_value: 'value6',
+		createdAt: 'created6',
+		updatedAt: 'updated6',
+		publishedAt: 'published6',
+		locale: 'locale6',
+	},
+];
 // function trigger (when component did mount)
 
 const requestForAnFilters = async (
@@ -296,8 +378,9 @@ const requestForAnFilters = async (
 };
 
 onMounted(() => {
-	requestForAnFilters(requestCategories, remoteCategoryOptions);
+	requestForAnFilters(requestCategories, remoteCategoryFilterOptions);
 	requestForAnFilters(requestCities, remoteCityFilterOptions);
+	requestForAnFilters(requestCities, remoteOrganizersFilterOptions);
 });
 </script>
 
@@ -320,12 +403,12 @@ onMounted(() => {
 	&__title {
 		@media #{$screen-tablet} {
 			max-width: 55%;
-			font-family: $font-family-medium-extra-expanded;
+			font-family: $font-family-medium-expanded;
 		}
 
 		@media #{$screen-desktop} {
 			max-width: 100%;
-			font-family: $font-family-medium-ultra-expanded;
+			font-family: $font-family-medium-expanded;
 		}
 	}
 
