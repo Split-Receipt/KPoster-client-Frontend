@@ -56,6 +56,7 @@ const checkBoxAction = (e: Event) => {
 
 	input {
 		position: absolute;
+		z-index: -1;
 		opacity: 0;
 
 		&:checked + label svg path {

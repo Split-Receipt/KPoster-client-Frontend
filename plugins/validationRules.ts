@@ -32,4 +32,20 @@ export default defineNuxtPlugin(() => {
 
 		return true;
 	});
+
+	defineRule('require_number', (value: number | null) => {
+		if (!value || value < 1) {
+			return 'require to type number';
+		}
+
+		return true;
+	});
+
+	defineRule('require_checkbox', (value: string[]) => {
+		if (value.length < 1) {
+			return 'require to choose at least one point';
+		}
+
+		return true;
+	});
 });
