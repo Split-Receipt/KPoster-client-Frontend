@@ -11,17 +11,18 @@ $boulder: #777777;
 $gold: #ffd600;
 $silver-chalice: #aaaaaa;
 $default-background: #eeeeee;
+$sunrise-red: #ff3938e5;
 
 $yellow-gray-gradient: linear-gradient(
 	82.62deg,
 	$gold 0.76%,
-	$silver-chalice 92.06%
+	$sunrise-red 92.06%
 );
 
 // Fonts
-$font-family-medium-ultra-expanded: 'NeuethingSans-MediumUltraExpanded';
-$font-family-medium-extra-expanded: 'NeuethingSans-MediumExtraExpanded';
-$font-family-medium-expanded: 'NeuethingSans-MediumExpanded';
+$font-family-medium-ultra-expanded: 'Poppins-Regular';
+$font-family-medium-expanded: 'Poppins-Medium';
+$font-family-medium-extra-expanded: 'Poppins-Semibold';
 
 $font-size-small: 13px;
 $font-size-normal: 16px;
@@ -33,6 +34,7 @@ $line-heigh-normal: 26px;
 $line-heigh-medium: 29px;
 $line-heigh-large: 35px;
 
+$font-weight-thin: 400;
 $font-weight-medium: 500;
 $font-weight-semi-bold: 600;
 
