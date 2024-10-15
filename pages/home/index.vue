@@ -401,6 +401,7 @@ onMounted(() => {
 	}
 
 	&__title {
+		text-align: center;
 		@media #{$screen-tablet} {
 			max-width: 55%;
 			font-family: $font-family-medium-expanded;

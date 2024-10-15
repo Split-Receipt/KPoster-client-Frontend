@@ -668,7 +668,7 @@
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<div>
+					<div class="partners__form-rowDnD-input-socialsAndContacts">
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<v-field
 								v-slot="{ errors }"
@@ -764,7 +764,7 @@
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<div class="partners__form-rowDnD-input-socials">
+					<div class="partners__form-rowDnD-input-socialsAndContacts">
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-text-input2
 								id="telegram_id"
@@ -1147,6 +1147,7 @@ const sendPartnerRegistrationForm = async () => {
 	&__title {
 		margin-bottom: 45px;
 		font-size: 70px;
+		font-family: $font-family-medium-expanded;
 
 		@media (max-width: 1265px) {
 			line-height: 80px;
@@ -1411,7 +1412,7 @@ const sendPartnerRegistrationForm = async () => {
 					width: 100%;
 				}
 
-				&-socials {
+				&-socialsAndContacts {
 					span {
 						@media (max-width: 720px) {
 							width: 100%;
