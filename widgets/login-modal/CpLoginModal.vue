@@ -1,17 +1,8 @@
 <template>
 	<div class="modal">
 		<div ref="modalMain" class="modal-content">
-			<cp-button
-				class="modal-content-close"
-				shape="circle"
-				text=""
-				size="middle"
-				width="short"
-				color="transparent"
-				with-image="/../public/images/close.svg"
-				@click="hanldeCloseModal"
-			/>
-			<span v-if="loginModalState !== 'login'" class="modal-content-backward" @click="goingToLogin">Back</span>
+			<button class="modal-content-close" @click="hanldeCloseModal"/>
+			<span v-if="loginModalState !== 'login'" class="modal-content-backward" @click="goingToLogin">&lt; Back</span>
 			<div v-if="loginModalState === 'login'" class="modal-content-login">
 				<h2 class="modal-content-title">Iniciar sesión en el perfil</h2>
 				<div class="modal-content-inputs">
@@ -36,38 +27,8 @@
                     
 				</div>
 			</div>
-			<div v-if="loginModalState === 'registration'" class="modal-content-registration">
-				<h2 class="modal-content-title">Registro</h2>
-				<div class="modal-content-inputs">
-					<cp-text-input type="text" placeholder="name" />
-					<cp-text-input style="margin-top: 25px;" type="email" placeholder="email" />
-					<cp-text-input
-						style="margin-top: 25px;"
-						type="password"
-						placeholder="password"
-						:with-eye="true"
-						@input="passInputValue"/>
-					<div class="modal-content-registration-passConfirm">
-						<cp-text-input
-							style="margin-top: 25px;  margin-bottom: 5px;"
-							type="password"
-							placeholder="password"
-							:with-eye="true"
-							@input="passInputValueconfirm"/>
-						<span class="modal-content-registration-passConfirm-info">Repita la contraseña de nuevo</span>
-						<nuxt-img v-if="passInput === passConfirm && passConfirm !== ''" class="modal-content-registration-passConfirm-image"  src="../public/images/success.svg"/>
-					</div>
-					<cp-button 
-						style="margin-top: 25px;"
-						color="yellowGrey"
-						shape="oval"
-						text="Entrar"
-						width="maxWidth"
-						size="small"
-					/>
-				</div>
-			</div>
-			<div v-if="loginModalState !== 'passRestore'" class="modal-content-inputs-sideAccount">
+			<cp-registration v-if="loginModalState === 'registration'"/>
+			<div v-if="loginModalState === 'login'" class="modal-content-inputs-sideAccount">
 				<span class="modal-content-inputs-sideAccount-title">O a través de una cuenta</span>
 				<div class="modal-content-inputs-sideAccount-buttons">
 					<nuxt-img class="modal-content-inputs-sideAccount-buttons-google" src="../public/images/google-login.svg"/>
@@ -77,19 +38,7 @@
 			<div v-if="loginModalState === 'login'" class="modal-content-registrationBtn">
 				<span @click="goingToRegistration">Registrarse</span>
 			</div>
-			<div v-if="loginModalState === 'passRestore'" class="modal-content-passRestore">
-				<h2 class="modal-content-title">Recuperación de contraseña</h2>
-				<span class="modal-content-passRestore-info">Se enviará un correo electrónico con instrucciones para restablecer la contraseña.</span>
-				<cp-text-input class="modal-content-passRestore-email" type="email" placeholder="email"/>
-				<cp-button 
-					class="modal-content-passRestore-btn"
-					color="yellowGrey"
-					shape="oval"
-					text="Recuperar contraseña"
-					width="maxWidth"
-					size="small"
-				/>
-			</div>
+			<cp-restore-pass v-if="loginModalState === 'passRestore'"/>
 		</div>
 	</div>
 </template>
@@ -98,13 +47,12 @@
 import { onClickOutside } from '@vueuse/core';
 import CpButton from '@shared/gui/CpButton.vue';
 import CpTextInput from '@shared/gui/CpTextInput.vue';
+import CpRestorePass from './CpRestorePass.vue';
 
 const emit = defineEmits<modalEvents>();
 
 const loginModalState = ref<string>('login');
 const modalMain = ref<HTMLDivElement | null>(null);
-const passInput = ref<string>('');
-const passConfirm = ref<string>('');
 
 type modalEvents = {
 	(event: 'update:modalUpdate', eventData: boolean): void;
@@ -122,16 +70,6 @@ const goingToPassRestore = () => {
 
 const goingToLogin = () => {
     loginModalState.value = 'login';
-};
-
-const passInputValue = (e: Event) => {
-    const target = e.target as HTMLInputElement;
-    passInput.value = target.value;
-};
-
-const passInputValueconfirm = (e: Event) => {
-    const target = e.target as HTMLInputElement;
-    passConfirm.value = target.value;
 };
 
 onClickOutside(modalMain, () => hanldeCloseModal());
@@ -170,24 +108,28 @@ onClickOutside(modalMain, () => hanldeCloseModal());
             position: absolute;
             scrollbar-width: none;
 
+            // media height
+
             @media (max-height: 700px) { 
-                margin-top: 4%;  
+                max-height: 700px;
             }
 
-            @media (max-height: 665px) { 
-                margin-top: 6%;  
+            @media (max-height: 680px) { 
+                max-height: 680px;
             }
 
-            @media (max-height: 625px) { 
-                margin-top: 8%;  
+            // media wdith
+
+            @media (max-width: 700px) {
+                min-width: 380px;
             }
 
-            @media (max-height: 590px) { 
-                margin-top: 10%;  
+            @media (max-width: 530px) {
+                min-width: 350px;
             }
 
-            @media (max-height: 570px) { 
-                margin-top: 12%;  
+            @media (max-width: 420px) {
+                min-width: 310px;
             }
 
             &::-webkit-scrollbar {
@@ -198,17 +140,51 @@ onClickOutside(modalMain, () => hanldeCloseModal());
                 position: absolute;
                 right: 40px;
                 top: 40px;
+                width: 56px;
+                height: 56px;
+                background-size: 36px;
+                border: 1px solid #000;
+                padding: 5px;
+                border-radius: 50%;
+                background-image: url('/public/images/close.svg');
+                background-position: center;
+                background-repeat: no-repeat;
+                cursor: pointer;
+                @media screen and (max-height: 630px) {
+                    right: 15px;
+                    top: 15px;
+                    width: 40px;
+                    height: 40px;
+                    background-size: 26px;
+                }
+                @media screen and (max-width: 376px) and (max-height: 800px) {
+                    right: 15px;
+                    top: 15px;
+                    width: 40px;
+                    height: 40px;
+                    background-size: 26px;
+                }
             }
 
             &-backward {
                 position: absolute;
-                left: 50px;
+                left: 40px;
                 top: 50px; 
                 font-size: 22px;
                 line-height: 35.2px;
                 font-weight: 400;
                 color: #353333;
                 cursor: pointer;
+                @media screen and (max-height: 630px) {
+                    left: 40px;
+                    top: 20px;
+                    background-size: 26px;
+                }
+                @media screen and (max-width: 376px) and (max-height: 800px) {
+                    left: 40px;
+                    top: 20px;
+                    background-size: 26px;
+                }
             }
 
             &-title {
@@ -220,7 +196,13 @@ onClickOutside(modalMain, () => hanldeCloseModal());
                 font-weight: 500;
                 text-align: center;
                 color: #353333;
-                cursor: default
+                cursor: default;
+                @media (max-width: 530px) and (max-height: 630px) {
+                    margin-top: 0px;
+                }
+                @media (max-height: 670px) {
+                    margin-top: 0px;
+                }
             }
 
             &-login {
@@ -269,18 +251,18 @@ onClickOutside(modalMain, () => hanldeCloseModal());
                    position: relative;
 
                    &-image {
-                    position: absolute;
-                    width: 20px;
-                    right: -25px;
-                    top: 20px;
+                        position: absolute;
+                        width: 20px;
+                        right: -25px;
+                        top: 20px;
                    }
 
                    &-info {
-                    margin-top: 5px;
-                    font-size: 14px;
-                    line-height: 22.4px;
-                    font-weight: 500;
-                    color: #353333;
+                        margin-top: 5px;
+                        font-size: 14px;
+                        line-height: 22.4px;
+                        font-weight: 500;
+                        color: #353333;
                    }
                 }
             }
@@ -289,8 +271,8 @@ onClickOutside(modalMain, () => hanldeCloseModal());
                 width: 100%;
 
                 &-passRestore {
-                    width: 100%;
                     display: flex;
+                    width: 100%;
                     align-items: center;
                     justify-content: flex-end;
 
@@ -328,7 +310,6 @@ onClickOutside(modalMain, () => hanldeCloseModal());
                     }
 
                     &-buttons {
-                        width: 30%;
                         display: flex;
                         justify-content: space-between;
 
@@ -359,12 +340,21 @@ onClickOutside(modalMain, () => hanldeCloseModal());
                     }
                 }
             }
+
             &-registrationBtn {
                 margin-top: 40px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-
+                @media (max-height: 700px) {
+                    margin-top: 25px;
+                }
+                @media (max-height: 680px) {
+                    margin-top: 10px;
+                }
+                @media (max-height: 650px) {
+                    margin-top: 5px;
+                }
                  span {
                     font-size: 22px;
                     font-weight: 400;
