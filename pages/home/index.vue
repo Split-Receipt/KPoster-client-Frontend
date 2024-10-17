@@ -454,6 +454,7 @@ onMounted(() => {
 
 .main-page__filters {
 	display: flex;
+	flex-wrap: wrap;
 	margin-top: 25px;
 }
 </style>

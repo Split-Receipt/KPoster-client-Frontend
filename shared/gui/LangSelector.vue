@@ -191,7 +191,7 @@ onBeforeUnmount(() => {
 .popup {
 	--burger-line-width: 50px;
 	--burger-line-height: 50px;
-	--burger-bg: #e7e7e7;
+	--burger-bg: #eeeeee;
 	--burger-color: #353333;
 	--burger-line-border-radius: 0.1875em;
 	--burger-diameter: 30px;
