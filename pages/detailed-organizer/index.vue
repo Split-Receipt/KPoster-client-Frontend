@@ -44,10 +44,57 @@
 		<div class="organizer-infoImage">
 			<nuxt-img loading="lazy" src="../public/images/partnrerInfoImg.jpg"/>
 		</div>
+		<div class="organizer-contacts">
+			<div class="organizer-contacts-title">
+				<h3>Contactos del organizador</h3>
+				<span>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+					eiusmod tempor incididunt
+					ut labore et dolore magna aliqua. 
+					A diam maecenas sed enim ut sem viverra aliquet eget. 
+				</span>
+			</div>
+			<div class="organizer-contacts-referenses">
+				<div class="organizer-contacts-referenses-mail">
+					<span class="organizer-contacts-referenses-mail-title">E-mail</span>
+					<span class="organizer-contacts-referenses-mail-ref">organizador@cusco.com</span>
+				</div>
+				<div class="organizer-contacts-referenses-tel">
+					<span class="organizer-contacts-referenses-tel-title">Número de teléfono</span>
+					<span class="organizer-contacts-referenses-tel-ref">+ 111 81959 193491</span>
+				</div>
+				<div class="organizer-contacts-referenses-place">
+					<span class="organizer-contacts-referenses-place-title">País y ciudad</span>
+					<span class="organizer-contacts-referenses-place-ref">cusco, peru</span>
+				</div>
+				<div class="organizer-contacts-referenses-socials">
+					<cp-social-link social-link="http://localhost:3000/es/detailed-organizer" social-name="instagram"/>
+					<cp-social-link social-link="http://localhost:3000/es/detailed-organizer" social-name="linkedin"/>
+					<cp-social-link social-link="http://localhost:3000/es/detailed-organizer" social-name="tiktok"/>
+					<cp-social-link social-link="http://localhost:3000/es/detailed-organizer" social-name="facebook"/>
+				</div>
+			</div>
+		</div>
+
+		<div class="organizer-video">
+			<iframe
+				src="https://www.youtube.com/embed/Y3ywicffOj4?si=1lWD8HxFUFOGH6Av"
+				title="YouTube video player"
+				frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+				referrerpolicy="strict-origin-when-cross-origin"
+				allowfullscreen/>
+		</div>
+
+		<div class="organizer-map">
+			<cp-map :map-markers="testMarkers" :center="testMapCenter"/>
+		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
+const testMarkers = [{ coordinates: [-12.046016, -77.030554] }];
+const testMapCenter = [-12.046016, -77.030554];
 const categoriesToFilter: string[] = [];
 const categoriesToFilter2: string[] = [];
 const testFilterOptions1 = [
@@ -459,7 +506,7 @@ const sectionData = [
 
         &-infoImage {
             width: calc(100% + 40px);
-            height: 20vh;
+            height: auto;
             border-radius: 0 0 30px 30px;
             margin: 140px 0 70px -20px;
             @media screen and (max-width: 700px) {
@@ -486,5 +533,291 @@ const sectionData = [
                 }
             }
         }
+
+		&-contacts {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			padding: 0 20px 0 20px;
+			margin-bottom: 70px;
+
+			@media screen and (max-width: 865px) {
+				flex-direction: column;
+				margin-bottom: 0;
+			}
+
+			&-title{
+				width: 50%;
+				padding-right: 20px;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+
+				@media screen and (max-width: 865px) {
+					width: 100%;
+					padding-right: 0;
+				}
+
+				h3 {
+					margin-bottom: 20px;
+					font-size: 70px;
+					font-style: normal;
+					font-weight: 500;
+					line-height: 120%;
+					color: $black;
+
+					@media screen and (max-width: 1350px) {
+						font-size: 62px;
+					}
+					@media screen and (max-width: 1280px) {
+						font-size: 56px;
+					}
+					@media screen and (max-width: 1030px) {
+						font-size: 45px;
+						font-weight: 600;
+					}
+					@media screen and (max-width: 965px) {
+						text-align: center;
+						font-size: 38px;
+					}
+					@media screen and (max-width: 435px) {
+						font-size: 24px;
+					}
+				}
+
+				span {
+					font-size: 22px;
+					font-style: normal;
+					font-weight: 400;
+					line-height: 160%;
+					color: $gray;
+
+					@media screen and (max-width: 1350px) {
+						font-size: 18px;
+					}
+					@media screen and (max-width: 1280px) {
+						font-size: 16px;
+					}
+					@media screen and (max-width: 1030px) {
+						font-size: 14px;
+					}
+					@media screen and (max-width: 435px) {
+						font-size: 13px;
+					}
+				}
+			}
+
+			&-referenses {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-around;
+				padding-left: 20px;
+				width: 50%;
+
+				@media screen and (max-width: 865px) {
+					width: 100%;
+					margin-top: 41px;
+					padding-left: 0;
+				}
+
+				&-mail {
+					display: flex;
+					justify-content: space-between;
+					margin-bottom: 10px;
+
+					&-title {
+						font-size: 30px;
+						font-style: normal;
+						font-weight: 400;
+						line-height: normal;
+						letter-spacing: 0.9px;
+						text-transform: uppercase;
+						color: $gray;
+
+						@media screen and (max-width: 1350px) {
+							font-size: 26px;
+						}
+						@media screen and (max-width: 1280px) {
+							font-size: 22px;
+						}
+						@media screen and (max-width: 1030px) {
+							font-size: 20px;
+						}
+						@media screen and (max-width: 965px) {
+							font-size: 18px;
+						}
+						@media screen and (max-width: 435px) {
+							font-size: 15px;
+						}
+					}
+
+					&-ref {
+						font-size: 30px;
+						font-style: normal;
+						font-weight: 400;
+						line-height: normal;
+						letter-spacing: 0.9px;
+						text-transform: uppercase;
+						color: $gray;
+						@media screen and (max-width: 1350px) {
+							font-size: 26px;
+						}
+						@media screen and (max-width: 1280px) {
+							font-size: 22px;
+						}
+						@media screen and (max-width: 1030px) {
+							font-size: 20px;
+						}
+						@media screen and (max-width: 965px) {
+							font-size: 18px;
+						}
+						@media screen and (max-width: 435px) {
+							font-size: 15px;
+						}
+					}
+				}
+				&-tel {
+					display: flex;
+					justify-content: space-between;
+					margin-bottom: 10px;
+
+					&-title {
+						font-size: 30px;
+						font-style: normal;
+						font-weight: 400;
+						line-height: normal;
+						letter-spacing: 0.9px;
+						text-transform: uppercase;
+						color: $gray;
+						@media screen and (max-width: 1350px) {
+							font-size: 26px;
+						}
+						@media screen and (max-width: 1280px) {
+							font-size: 22px;
+						}
+						@media screen and (max-width: 1030px) {
+							font-size: 20px;
+						}
+						@media screen and (max-width: 965px) {
+							font-size: 18px;
+						}
+						@media screen and (max-width: 435px) {
+							font-size: 15px;
+						}
+					}
+
+					&-ref {
+						font-size: 30px;
+						font-style: normal;
+						font-weight: 400;
+						line-height: normal;
+						letter-spacing: 0.9px;
+						text-transform: uppercase;
+						color: $gray;
+						@media screen and (max-width: 1350px) {
+							font-size: 26px;
+						}
+						@media screen and (max-width: 1280px) {
+							font-size: 22px;
+						}
+						@media screen and (max-width: 1030px) {
+							font-size: 20px;
+						}
+						@media screen and (max-width: 965px) {
+							font-size: 18px;
+						}
+						@media screen and (max-width: 435px) {
+							font-size: 15px;
+						}
+					}
+				}
+
+				&-place {
+					display: flex;
+					justify-content: space-between;
+					margin-bottom: 10px;
+
+					&-title {
+						font-size: 30px;
+						font-style: normal;
+						font-weight: 400;
+						line-height: normal;
+						letter-spacing: 0.9px;
+						text-transform: uppercase;
+						color: $gray;
+						@media screen and (max-width: 1350px) {
+							font-size: 26px;
+						}
+						@media screen and (max-width: 1280px) {
+							font-size: 22px;
+						}
+						@media screen and (max-width: 1030px) {
+							font-size: 20px;
+						}
+						@media screen and (max-width: 965px) {
+							font-size: 18px;
+						}
+						@media screen and (max-width: 435px) {
+							font-size: 15px;
+						}
+					}
+
+					&-ref {
+						font-size: 30px;
+						font-style: normal;
+						font-weight: 400;
+						line-height: normal;
+						letter-spacing: 0.9px;
+						text-transform: uppercase;
+						color: $gray;
+						@media screen and (max-width: 1350px) {
+							font-size: 26px;
+						}
+						@media screen and (max-width: 1280px) {
+							font-size: 22px;
+						}
+						@media screen and (max-width: 1030px) {
+							font-size: 20px;
+						}
+						@media screen and (max-width: 965px) {
+							font-size: 18px;
+						}
+						@media screen and (max-width: 435px) {
+							font-size: 15px;
+						}
+					}
+				}
+
+				&-socials {
+					display: flex;
+					justify-content: flex-start;
+					width: 100%;
+					margin-top: 20px;
+
+					@media screen and (max-width: 865px) {
+						margin: 20px 0 30px 0;
+					}
+
+					div {
+						margin-right: 20px;
+					}
+				}
+			}
+		}
+
+		&-video {
+			width: calc(100% + 40px);
+			margin: 0 0 70px -20px;
+			iframe {
+				width: 100%;
+				height: 100vh;
+			}
+		}
+
+		&-map {
+			width: calc(100% + 40px);
+			margin-left:-20px;
+			height: 400px;
+		}
     }
 </style>
