@@ -37,15 +37,15 @@ onUnmounted(() => {
 .popup {
 	position: relative;
 	display: inline-block;
-	margin-left: 5px;
+	margin: 0 0 -5px 5px;
 	width: 30px;
 	height: 30px;
 
 	.trigger {
+		position: absolute;
 		cursor: pointer;
 		width: 30px;
 		height: 30px;
-		margin-bottom: -6px;
 	}
 
 	&__title {
