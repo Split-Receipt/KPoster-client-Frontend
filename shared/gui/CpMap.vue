@@ -30,7 +30,7 @@ type CoordinatesType = {
 };
 
 type mapProps = {
-    center?: number[];
+    center: number[];
     mapMarkers?: CoordinatesType[];
 };
 
