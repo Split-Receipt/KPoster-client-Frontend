@@ -808,9 +808,12 @@ const sectionData = [
 		&-video {
 			width: calc(100% + 40px);
 			margin: 0 0 70px -20px;
+			display: flex;
+			justify-content: space-around;
 			iframe {
-				width: 100%;
-				height: 100vh;
+				border-radius: 8px;
+				width: 75%;
+				height: 75vh;
 			}
 		}
 
