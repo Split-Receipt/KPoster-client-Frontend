@@ -12,11 +12,23 @@ export const registerPartner = (partnerInfo: PartnerRegistration) => {
 export const requestCities = () => {
 	const { $api } = useNuxtApp();
 
-	return $api.get('api/city-filters');
+	return $api.get('api/cities');
 };
 
 export const requestCategories = () => {
 	const { $api } = useNuxtApp();
 
-	return $api.get('api/categories');
+	return $api.get('api/areas-de-la-culturas');
+};
+
+export const requestEventsColletions = () => {
+	const { $api } = useNuxtApp();
+
+	return $api.get('api/events-collections?populate[events][populate]=eventGallery');
+};
+
+export const requestEventsColletionByCode = (collectionCode: string) => {
+	const { $api } = useNuxtApp();
+
+	return $api.get(`api/events-collections/${collectionCode}`);
 };
