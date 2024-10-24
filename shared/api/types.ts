@@ -56,3 +56,39 @@ export type RequestOption = {
 		locale: string;
 	};
 };
+
+export type EventCreateType = {
+	eventName: string;
+	eventCategory: { categoryName: string }[];
+	eventSocials: {
+		telegram: string;
+		youtube: string;
+		instagram: string;
+		facebook: string;
+		twitter: string;
+		linkedin: string;
+	};
+	eventInfo: {
+		eventPlace: string;
+		eventDate: string;
+		eventDuration: string;
+		eventRules: string;
+		eventAgeRestrictions: string;
+	};
+	eventTickets: string;
+	eventDescription: string;
+	eventCity: { cityName: string }[];
+	eventAdres: string;
+	eventCoordinates: {
+		coordinates: number[]
+	};
+	eventContacts: {
+		eventTel: string;
+		eventEmail: string;
+	};
+	files: {
+		eventBanner: File | null;
+		eventMediaPhoto: File | null;
+		eventMediaVideo: File | null;
+	}
+};

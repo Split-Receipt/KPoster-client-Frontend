@@ -7,12 +7,27 @@
 			<div class="eventForm-row">
 				<div class="eventForm-row-info">
 					<span>
-						<!-- <strong class="eventForm-row-info-required">*</strong> -->
+						<strong class="eventForm-row-info-required">*</strong>
 						Introduce el nombre de tu evento
 					</span>
 				</div>
 				<div class="eventForm-row-input fullWidth-eventName">
-					<cp-text-input v-model="eventName" placeholder="input" type="text"/>
+					<v-field
+						v-slot="{ errors }"
+						:model-value="eventCreateForm.eventName"
+						name="eventName"
+						rules="required"
+					>
+						<cp-text-input
+							v-model="eventCreateForm.eventName"
+							placeholder="input" 
+							type="text"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-center">
+							{{errors[0]}}
+						</span>
+					</v-field>
 				</div>
 			</div>
 
@@ -25,13 +40,24 @@
 					</span>
 				</div>
 				<div class="eventForm-upperPositionRow-input">
-					<cp-check-box 
-						v-for="item in categoryCheckBoxes"
-						:id="item.id"
-						:key="item.id" 
-						:value="item.value"
-						:title="item.title"
-					/>
+					<v-field
+						v-slot="{ errors }"
+						name="eventCategory"
+						rules="require_checkbox"
+						:model-value="eventCreateForm.eventCategory"
+					>
+						<cp-check-box 
+							v-for="item in categoryCheckBoxes"
+							:id="item.id"
+							:key="item.id" 
+							:value="item.value"
+							:title="item.title"
+							@change="checkboxCollectCategories"
+						/>
+						<span v-if="errors && eventCreateForm.eventCategory.length < 1" class="required-input-error-info-leftSide">
+							{{errors[0]}}
+						</span>
+					</v-field>
 				</div>
 			</div>
 
@@ -50,12 +76,12 @@
 				<div class="eventForm-upperPositionRow-input fullWidth-banner">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="testFileBanner"
-						name="productDescription"
+						:model-value="eventCreateForm.files.eventBanner"
+						name="eventBanner"
 						rules="required_file"
 					>
 						<cp-drag-n-drop
-							v-model="testFileBanner"
+							v-model="eventCreateForm.files.eventBanner"
 							:is-single="true"
 							type="image"
 							:max-size="5"
@@ -72,7 +98,6 @@
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
 					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
 						Eventos de redes sociales
 						<cp-info-pop-up
 							id="socials"
@@ -85,7 +110,7 @@
 						<span class="eventForm-upperPositionRow-input-socialsAndContacts-social">
 							<cp-text-input2
 								id="telegram_id"
-								v-model="socials.telegram"
+								v-model="eventCreateForm.eventSocials.telegram"
 								:circle="true"
 								label-text="Telegram"
 								placeholder="https://www.youtube.com/"
@@ -94,7 +119,7 @@
 						<span class="eventForm-upperPositionRow-input-socialsAndContacts-social">
 							<cp-text-input2
 								id="facebook_id"
-								v-model="socials.facebook"
+								v-model="eventCreateForm.eventSocials.facebook"
 								:circle="true"
 								label-text="Facebook"
 								placeholder="https://www.youtube.com/"
@@ -103,7 +128,7 @@
 						<span class="eventForm-upperPositionRow-input-socialsAndContacts-social">
 							<cp-text-input2
 								id="youtube_id"
-								v-model="socials.youtube"
+								v-model="eventCreateForm.eventSocials.youtube"
 								:circle="true"
 								label-text="Youtube"
 								placeholder="https://www.youtube.com/"
@@ -112,7 +137,7 @@
 						<span class="eventForm-upperPositionRow-input-socialsAndContacts-social">
 							<cp-text-input2
 								id="twitter_id"
-								v-model="socials.twitter"
+								v-model="eventCreateForm.eventSocials.twitter"
 								:circle="true"
 								label-text="Twitter"
 								placeholder="https://www.youtube.com/"
@@ -121,7 +146,7 @@
 						<span class="eventForm-upperPositionRow-input-socialsAndContacts-social">
 							<cp-text-input2
 								id="instagram_id"
-								v-model="socials.instagram"
+								v-model="eventCreateForm.eventSocials.instagram"
 								:circle="true"
 								label-text="Instagram"
 								placeholder="https://www.youtube.com/"
@@ -130,7 +155,7 @@
 						<span class="eventForm-upperPositionRow-input-socialsAndContacts-social">
 							<cp-text-input2
 								id="linkedin_id"
-								v-model="socials.linkedin"
+								v-model="eventCreateForm.eventSocials.linkedin"
 								:circle="true"
 								label-text="Linkedin"
 								placeholder="https://www.youtube.com/"
@@ -140,14 +165,13 @@
 				</div>
 			</div>
 
-			<!-- Event details -->
+			<!-- Event details info -->
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
 					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
 						Complete los siguientes detalles del evento
 						<cp-info-pop-up
-							id="socials"
+							id="details"
 							info="Selecciona redes sociales donde podrás compartir el enlace del evento."
 						/>
 					</span>
@@ -156,8 +180,19 @@
 					<div class="eventForm-upperPositionRow-input-details">
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<cp-text-input2
+								id="event_place_id"
+								v-model="eventCreateForm.eventInfo.eventPlace"
+								:circle="false"
+								label-text="Ubicación del evento"
+								placeholder="introduzca el enlace"
+								:tooltip="true"
+								tooltip-text="Ingrese al lugar del evento. Por ejemplo, un club u otro establecimiento."
+							/>
+						</span>
+						<span class="eventForm-upperPositionRow-input-details-input">
+							<cp-text-input2
 								id="event_date_id"
-								v-model="socials.telegram"
+								v-model="eventCreateForm.eventInfo.eventDate"
 								:circle="false"
 								label-text="Fecha y hora"
 								placeholder="introduzca el enlace"
@@ -165,19 +200,28 @@
 						</span>
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<cp-text-input2
-								id="tickets_buy_id"
-								v-model="socials.facebook"
+								id="duration_id"
+								v-model="eventCreateForm.eventInfo.eventDuration"
 								:circle="false"
-								label-text="Enlace para comprar entradas"
+								label-text="Duración en minutos"
 								placeholder="introduzca el enlace"
 							/>
 						</span>
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<cp-text-input2
-								id="event_place_id"
-								v-model="socials.youtube"
+								id="rules_id"
+								v-model="eventCreateForm.eventInfo.eventRules"
 								:circle="false"
-								label-text="Ubicación del evento"
+								label-text="Reglas de visita"
+								placeholder="introduzca el enlace"
+							/>
+						</span>
+						<span class="eventForm-upperPositionRow-input-details-input">
+							<cp-text-input2
+								id="age_restrictions_id"
+								v-model="eventCreateForm.eventInfo.eventAgeRestrictions"
+								:circle="false"
+								label-text="Restricciones de edad"
 								placeholder="introduzca el enlace"
 							/>
 						</span>
@@ -185,20 +229,60 @@
 				</div>
 			</div>
 
+			<!-- Event ticket -->
+			<div class="eventForm-row">
+				<div class="eventForm-row-info">
+					<span>
+						<strong class="eventForm-row-info-required">*</strong>
+						Enlace para comprar entradas
+					</span>
+				</div>
+				<div class="eventForm-row-input fullWidth-tickets">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="eventCreateForm.eventTickets"
+						name="tickets"
+						rules="required"
+					>
+						<cp-text-input
+							v-model="eventCreateForm.eventTickets"
+							placeholder="input"
+							type="text"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-center">
+							{{errors[0]}}
+						</span>
+					</v-field>
+				</div>
+			</div>
+
 			<!-- Event description -->
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
 					<span>
+						<strong class="eventForm-upperPositionRow-info-required">*</strong>
 						Introduce una descripción de tu evento
 					</span>
 				</div>
 				<div class="eventForm-upperPositionRow-input fullWidth-details">
 					<div class="eventForm-upperPositionRow-input-details">
-						<cp-text-area
-							v-model="testDescription"
-							text-area-id="event_description_id"
-							text-area-placeholder="input"
-						/>
+						<v-field
+							v-slot="{ errors }"
+							:model-value="eventCreateForm.eventDescription"
+							name="decription"
+							rules="required"
+						>
+							<cp-text-area
+								v-model="eventCreateForm.eventDescription"
+								text-area-id="event_description_id"
+								text-area-placeholder="input"
+								:class="{ 'required-input-error-textInput': errors.length > 0 }"
+							/>
+							<span v-if="errors" class="required-input-error-info-center">
+								{{errors[0]}}
+							</span>
+						</v-field>
 					</div>
 				</div>
 			</div>
@@ -207,8 +291,7 @@
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
 					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
-						Sube contenido de foto, video o audio sobre tu evento
+						Sube contenido de foto, video o sobre tu evento
 						<cp-info-pop-up
 							id="media_id"
 							info="El banner debe cargarse a 1100 por 278 píxeles en formato .png"
@@ -224,86 +307,20 @@
 					</span>
 				</div>
 				<div class="eventForm-upperPositionRow-input fullWidth-banner">
-					<v-field
+					<cp-drag-n-drop
 						v-if="defaultMediaValue === 'photo'"
-						v-slot="{ errors }"
-						:model-value="testFileMediaPhoto"
-						name="eventMediaPhoto"
-						rules="required_file"
-					>
-						<cp-drag-n-drop
-							
-							v-model="testFileMediaPhoto"
-							:is-single="true"
-							type="image"
-							:max-size="5"
-							:is-invalid="errors.length > 0"
-						/>
-						<span v-if="errors" class="required-input-error-info-center">
-							{{ errors[0]}}
-						</span>
-					</v-field>
-
-					<v-field
+						v-model="eventCreateForm.files.eventMediaPhoto"
+						:is-single="true"
+						type="image"
+						:max-size="5"
+					/>
+					<cp-drag-n-drop
 						v-if="defaultMediaValue === 'video'"
-						v-slot="{ errors }"
-						:model-value="testFileMediaVideo"
-						name="eventMediaVideo"
-						rules="required_file"
-					>
-						<cp-drag-n-drop
-							
-							v-model="testFileMediaVideo"
-							:is-single="true"
-							type="video"
-							:max-size="5"
-							:is-invalid="errors.length > 0"
-						/>
-						<span v-if="errors" class="required-input-error-info-center">
-							{{ errors[0]}}
-						</span>
-					</v-field>
-				</div>
-			</div>
-
-			<!-- Event info -->
-			<div class="eventForm-upperPositionRow">
-				<div class="eventForm-upperPositionRow-info">
-					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
-						Complete los siguientes detalles del evento
-					</span>
-				</div>
-				<div class="eventForm-upperPositionRow-input fullWidth-details">
-					<div class="eventForm-upperPositionRow-input-details">
-						<span class="eventForm-upperPositionRow-input-details-input">
-							<cp-text-input2
-								id="duration_id"
-								v-model="eventInfo.duration"
-								:circle="false"
-								label-text="Duración en minutos"
-								placeholder="introduzca el enlace"
-							/>
-						</span>
-						<span class="eventForm-upperPositionRow-input-details-input">
-							<cp-text-input2
-								id="rules_id"
-								v-model="eventInfo.rules"
-								:circle="false"
-								label-text="Reglas de visita"
-								placeholder="introduzca el enlace"
-							/>
-						</span>
-						<span class="eventForm-upperPositionRow-input-details-input">
-							<cp-text-input2
-								id="age_restrictions_id"
-								v-model="eventInfo.age_restrictions"
-								:circle="false"
-								label-text="Restricciones de edad"
-								placeholder="introduzca el enlace"
-							/>
-						</span>
-					</div>
+						v-model="eventCreateForm.files.eventMediaVideo"
+						:is-single="true"
+						type="video"
+						:max-size="25"
+					/>
 				</div>
 			</div>
 
@@ -316,24 +333,52 @@
 					</span>
 				</div>
 				<div class="eventForm-upperPositionRow-input">
-					<cp-check-box 
-						v-for="item in cityCheckBoxes"
-						:id="item.id"
-						:key="item.id" 
-						:value="item.value"
-						:title="item.title"
-					/>
+					<v-field
+						v-slot="{ errors }"
+						name="eventCity"
+						rules="require_checkbox"
+						:model-value="eventCreateForm.eventCity"
+					>
+						<cp-check-box 
+							v-for="item in cityCheckBoxes"
+							:id="item.id"
+							:key="item.id" 
+							:value="item.value"
+							:title="item.title"
+							@change="checkboxCollectCities"
+						/>
+						<span v-if="errors && eventCreateForm.eventCity.length < 1" class="required-input-error-info-leftSide">
+							{{errors[0]}}
+						</span>
+					</v-field>
 				</div>
 			</div>
 			
+			<!-- Event Adres -->
 			<div class="eventForm-row">
 				<div class="eventForm-row-info">
 					<span>
+						<strong class="eventForm-row-info-required">*</strong>
 						Introduce la dirección del evento
 					</span>
 				</div>
 				<div class="eventForm-row-input fullWidth-eventName">
-					<cp-text-input v-model="eventAdres" placeholder="input" type="text"/>
+					<v-field
+						v-slot="{ errors }"
+						:model-value="eventCreateForm.eventAdres"
+						name="eventAdres"
+						rules="required"
+					>
+						<cp-text-input
+							v-model="eventCreateForm.eventAdres"
+							placeholder="input"
+							type="text"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-center">
+							{{errors[0]}}
+						</span>
+					</v-field>
 				</div>
 			</div>
 
@@ -347,7 +392,21 @@
 				</div>
 				<div class="eventForm-upperPositionRow-input fullWidth-map">
 					<div class="eventForm__map">
-						<cp-map :map-markers="testMarkers" :center="testMapCenter"/>
+						<v-field
+							v-slot="{ errors }"
+							:model-value="eventCreateForm.eventCoordinates"
+							name="eventCoordinates"
+							rules="require_coordinates"
+						>
+							<cp-map 
+								v-model:coordinates-update="eventCreateForm.eventCoordinates" 
+								:coordinates-output="true" 
+								:center="eventCreateForm.eventCoordinates.coordinates"
+							/>
+							<span v-if="errors" class="required-input-error-info-center">
+								{{errors[0]}}
+							</span>
+						</v-field>
 					</div>
 				</div>
 			</div>
@@ -363,25 +422,69 @@
 				<div class="eventForm-upperPositionRow-input fullWidth-details">
 					<div class="eventForm-upperPositionRow-input-details">
 						<span class="eventForm-upperPositionRow-input-details-input">
-							<cp-text-input2
-								id="tel_id"
-								v-model="contacts.tel"
-								:circle="false"
-								label-text="Número de teléfono"
-								placeholder="introduzca el enlace"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="eventCreateForm.eventContacts.eventTel"
+								name="eventTel"
+								rules="required"
+							>
+								<cp-text-input2
+									id="tel_id"
+									v-model="eventCreateForm.eventContacts.eventTel"
+									:circle="false"
+									label-text="Número de teléfono"
+									placeholder="introduzca el enlace"
+									:class="{'required-input-error-socialMedia': errors.length > 0}"
+								/>
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}
+								</span>
+							</v-field>
 						</span>
 						<span class="eventForm-upperPositionRow-input-details-input">
-							<cp-text-input2
-								id="E-mail_id"
-								v-model="contacts.mail"
-								:circle="false"
-								label-text="E-mail"
-								placeholder="introduzca el enlace"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="eventCreateForm.eventContacts.eventEmail"
+								name="eventMail"
+								rules="required"
+							>
+								<cp-text-input2
+									id="E-mail_id"
+									v-model="eventCreateForm.eventContacts.eventEmail"
+									:circle="false"
+									label-text="E-mail"
+									placeholder="introduzca el enlace"
+									:class="{'required-input-error-socialMedia': errors.length > 0}"
+								/>
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}
+								</span>
+							</v-field>
 						</span>
 					</div>
 				</div>
+			</div>
+
+			<!-- Event form buttons -->
+			<div class="eventForm-buttons">
+				<span class="eventForm-buttons-submit">
+					<cp-button 
+						color="yellowGrey"
+						shape="oval"
+						text="Publicar"
+						width="maxWidth"
+						size="middle"
+					/>
+				</span>
+				<span class="eventForm-buttons-clear">
+					<cp-button 
+						color="transparent"
+						shape="oval"
+						text="Borrar"
+						width="maxWidth"
+						size="middle"
+					/>
+				</span>
 			</div>
 		</v-form>
 	</div>
@@ -399,56 +502,53 @@ import CpDragNDrop from '@shared/gui/CpDragNDrop.vue';
 import CpCheckBox from '@shared/gui/CpCheckBox.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpMap from '@shared/gui/CpMap.vue';
+import type { EventCreateType } from '@shared/api/types';
 
-// TEST VARIABLES -------------------------------
+// Form Data ------------------------------------
+
+const eventCreateForm = reactive<EventCreateType>({
+	eventName: '',
+	eventCategory: [],
+	eventSocials: {
+		telegram: '',
+		youtube: '',
+		instagram: '',
+		facebook: '',
+		twitter: '',
+		linkedin: '',
+	},
+	eventInfo: {
+		eventPlace: '',
+		eventDate: '',
+		eventDuration: '',
+		eventRules: '',
+		eventAgeRestrictions: '',
+	},
+	eventTickets: '',
+	eventDescription: '',
+	eventCity: [],
+	eventAdres: '',
+	eventCoordinates: {
+		coordinates: [-12.046016, -77.030554],
+	},
+	eventContacts: {
+		eventTel: '',
+		eventEmail: '',
+	},
+	files: {
+		eventBanner: null,
+		eventMediaPhoto: null,
+		eventMediaVideo: null,
+	},
+});
+
+// Variables ------------------------------------
 
 type CheckboxTypes = {
 	id: string;
 	value: string;
 	title: string;
 }[];
-
-type SocialsType = {
-	telegram: string;
-	facebook: string;
-	youtube: string;
-	twitter: string;
-	instagram: string;
-	linkedin: string;
-};
-
-type EventInfoType = {
-	duration: string;
-	rules: string;
-	age_restrictions: string;
-};
-
-type ContactsType = {
-	mail: string;
-	tel: string;
-};
-
-const socials = ref<SocialsType>({
-	telegram: '',
-	facebook: '',
-	youtube: '',
-	twitter: '',
-	instagram: '',
-	linkedin: '',
-});
-
-const eventInfo = ref<EventInfoType>({
-	duration: '',
-	rules: '',
-	age_restrictions: '',
-});
-
-const eventName = ref<string>('');
-const testFileBanner = ref<File | null>(null);
-const testFileMediaPhoto = ref<File | null>(null);
-const testFileMediaVideo = ref<File | null>(null);
-const testDescription = ref<string>('');
-const eventAdres = ref<string>('');
 
 const categoryCheckBoxes:CheckboxTypes = [
 	{ id: 'environmental_awareness', value: 'environmental_awareness', title: 'Consciencia ambiental' },
@@ -487,33 +587,25 @@ const cityCheckBoxes:CheckboxTypes = [
 	{ id: 'Urubamba', value: 'Urubamba', title: 'Urubamba' },
 ];
 
-const testMarkers = [{ coordinates: [-12.046016, -77.030554] }];
-const testMapCenter = [-12.046016, -77.030554];
+// Functions ------------------------------------
 
-const contacts = ref<ContactsType>({
-	mail: '',
-	tel: '',
-});
+const checkboxCollectCategories = (e: Event) => {
+	const target = e.target as HTMLInputElement;
+	if (target.checked) {
+		eventCreateForm.eventCategory.push({ categoryName: target.value });
+	} else {
+		eventCreateForm.eventCategory = eventCreateForm.eventCategory.filter((e) => e.categoryName !== target.value);
+	}
+};
 
-// ----------------------------------------------
-
-// const checkboxCollectCategories = (e: Event) => {
-// 	const target = e.target as HTMLInputElement;
-// 	if (target.checked) {
-
-// 	} else {
-
-// 	}
-// };
-
-// const checkboxCollectCities = (e: Event) => {
-// 	const target = e.target as HTMLInputElement;
-// 	if (target.checked) {
-
-// 	} else {
-		
-// 	}
-// };
+const checkboxCollectCities = (e: Event) => {
+	const target = e.target as HTMLInputElement;
+	if (target.checked) {
+		eventCreateForm.eventCity.push({ cityName: target.value });
+	} else {
+		eventCreateForm.eventCity = eventCreateForm.eventCity.filter((e) => e.cityName !== target.value);
+	}
+};
 </script>
 
 <style scoped lang="scss">
@@ -557,7 +649,7 @@ const contacts = ref<ContactsType>({
 				}
 
 				span {
-					padding-top: 5px;
+					margin-top: -5px;
 					text-align: start;
 					font-size: 34px;
 					font-style: normal;
@@ -586,6 +678,11 @@ const contacts = ref<ContactsType>({
 				align-items: center;
 				flex-direction: column;
 				width: 55%;
+				position: relative;
+
+				@media screen and (max-width: 955px) {
+					width: 100%;
+				}
 				
 				input {
 					width: 100%;
@@ -680,6 +777,11 @@ const contacts = ref<ContactsType>({
 				align-items: center;
 				flex-direction: column;
 				width: 55%;
+				position: relative;
+
+				@media screen and (max-width: 955px) {
+					width: 100%;
+				}
 
 				input {
 					width: 100%;
@@ -695,10 +797,11 @@ const contacts = ref<ContactsType>({
 				}
 
 				&-socialsAndContacts {
+					margin-top: -10px;
+
 					&-social {
 						width: 50%;
-						padding: 10px;
-						margin-top: 15px;
+						padding: 20px;
 
 						&-maxWidth {
 							width: 100%;
@@ -720,18 +823,41 @@ const contacts = ref<ContactsType>({
 
 				&-details {
 					display: flex;
-					flex-direction: column;
+					flex-direction: flex-start;
 					align-items: flex-start !important;
 					width: 100%;
 
 					@media screen and (max-width: 955px) {
+						flex-direction: column;
 						width: 100%;
 					}
 
 					&-input {
-						display: inline-block;
 						width: 50%;
-						margin-bottom: 35px;
+						min-width: 362px;
+						padding: 10px;
+						margin-top: 15px;
+
+						&-maxWidth {
+							width: 100%;
+							min-height: 250px
+						}
+
+						@media screen and (max-width: 955px) {
+							width: 100%;
+						}
+					}
+
+					&-input:first-child {
+						width: 50%;
+						min-width: 362px;
+						padding: 10px;
+						margin-top: 0;
+
+						&-maxWidth {
+							width: 100%;
+							min-height: 250px
+						}
 
 						@media screen and (max-width: 955px) {
 							width: 100%;
@@ -743,9 +869,17 @@ const contacts = ref<ContactsType>({
 
 		&__map {
             width: 100%;
-            height: 30vw;
+            height: 40vh;
 			border-radius: 30px;
 			overflow: hidden;
+
+			@media screen and (max-width: 600px) {
+				height: 50vh;
+			}
+
+			@media screen and (max-width: 520px) {
+				height: 40vh;
+			}
 
             &-title {
                 margin-top: 20px;
@@ -756,6 +890,48 @@ const contacts = ref<ContactsType>({
                 color: #353333;
             }
         }
+
+		&-buttons {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			margin-bottom: 70px;
+
+			@media screen and (max-width: 780px) {
+				flex-direction: column;
+				align-items: center;
+			}
+
+			&-submit {
+				display: block;
+				width: 30%;
+				margin-right: 15px;
+
+				@media screen and (max-width: 780px) {
+					width: 60%;
+					margin: 0 0 16px 0;
+				}
+
+				@media screen and (max-width: 485px) {
+					width: 100%;
+				}
+			}
+
+			&-clear {
+				display: block;
+				width: 30%;
+				margin-left: 15px;
+
+				@media screen and (max-width: 780px) {
+					width: 60%;
+					margin: 0 0 -20px 0;
+				}
+
+				@media screen and (max-width: 485px) {
+					width: 100%;
+				}
+			}
+		}
     }
 
 	.required-input {
@@ -831,6 +1007,14 @@ const contacts = ref<ContactsType>({
 			}
 		}
 
+		&-tickets {
+			@media screen and (max-width: 955px) {
+				display: flex;
+				justify-content: space-around;
+				width: 100%;
+			}
+		}
+
 		&-map {
 			@media screen and (max-width: 955px) {
 				display: flex;
@@ -839,4 +1023,52 @@ const contacts = ref<ContactsType>({
 			}
 		}
 	}
+
+.required-input {
+	&-default {
+		width: 100%;
+
+		&-socialMedia {
+			width: 100%;
+			margin-right: 25px;
+		}
+	}
+
+	&-error {
+		&-socialMedia {
+			border-bottom: 1px solid crimson;
+			width: 100%;
+			margin-right: 25px;
+		}
+
+		&-textInput {
+			border: 1px solid crimson;
+			border-radius: 12px;
+		}
+
+		&-info {
+			&-leftSide {
+				display: flex;
+				align-items: center;
+				width: 100%;
+				color: crimson;
+				justify-content: flex-start;
+				line-height: 35px;
+				position: absolute;
+				bottom: -35px;
+			}
+
+			&-center {
+				display: flex;
+				align-items: center;
+				width: 100%;
+				color: crimson;
+				justify-content: space-around;
+				line-height: 35px;
+				position: absolute;
+				bottom: -35px;
+			}	
+		}
+	}
+}
 </style>

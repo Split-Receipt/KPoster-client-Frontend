@@ -384,6 +384,7 @@
 							v-model="partnerRegistrationForm.data.orgResume"
 							text-area-id="orgResume"
 							text-area-placeholder="resume lo que hace tu organización"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
 						<span v-if="errors" class="required-input-error-info-center">{{
 							errors[0]
@@ -494,6 +495,7 @@
 							v-model="partnerRegistrationForm.data.orgWorkType"
 							text-area-id="orgWorkType"
 							text-area-placeholder="describe los detalles del texto de tu industria"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
 						<span v-if="errors" class="required-input-error-info-center">{{
 							errors[0]
@@ -682,7 +684,7 @@
 									label-text="País y ciudad"
 									placeholder="introduzca el enlace"
 									:class="{
-										'required-input-error-socialMedia': errors.length > 0,
+										'required-input-error-socialMedia': errors.length > 0
 									}"
 								/>
 								<span v-if="errors" class="required-input-error-info-leftSide">{{

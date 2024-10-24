@@ -3,6 +3,11 @@
 		<label class="socialMedia__label" :for="props.id">
 			<span v-if="props.circle" class="socialMedia__label-circle" />
 			{{ props.labelText }}
+			<cp-info-pop-up
+				v-if="props.tooltip"
+				:id="props.id"
+				info="Selecciona redes sociales donde podrás compartir el enlace del evento."
+			/>
 		</label>
 		<input
 			:id="props.id"
@@ -21,6 +26,8 @@ type socialMediaProps = {
 	placeholder: string;
 	labelText: string;
 	circle?: boolean;
+	tooltip?: boolean;
+	tooltipText?: string;
 };
 
 type Events = {
