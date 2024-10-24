@@ -903,8 +903,11 @@ const sendCreateEventForm = async () => {
 		&__map {
             width: 100%;
             height: 40vh;
-			border-radius: 30px;
-			overflow: hidden;
+
+			main {
+				border-radius: 30px;
+				overflow: hidden;
+			}
 
 			@media screen and (max-width: 600px) {
 				height: 50vh;
@@ -1087,8 +1090,6 @@ const sendCreateEventForm = async () => {
 				color: crimson;
 				justify-content: flex-start;
 				line-height: 35px;
-				position: absolute;
-				bottom: -35px;
 			}
 
 			&-center {
@@ -1098,8 +1099,6 @@ const sendCreateEventForm = async () => {
 				color: crimson;
 				justify-content: space-around;
 				line-height: 35px;
-				position: absolute;
-				bottom: -35px;
 			}	
 		}
 	}
