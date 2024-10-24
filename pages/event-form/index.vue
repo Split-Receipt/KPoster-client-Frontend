@@ -1,7 +1,8 @@
 <template>
 	<div class="eventForm">
+		<cp-spinner :is-spinned="isSpin"/>
 		<h2 class="eventForm-title">Crear un nuevo evento</h2>
-		<v-form>
+		<v-form ref="eventCreateFormTemplate">
 
 			<!-- Event Name -->
 			<div class="eventForm-row">
@@ -394,7 +395,7 @@
 					<div class="eventForm__map">
 						<v-field
 							v-slot="{ errors }"
-							:model-value="eventCreateForm.eventCoordinates"
+							:model-value="eventCreateForm.eventCoordinates.coordinates"
 							name="eventCoordinates"
 							rules="require_coordinates"
 						>
@@ -474,6 +475,7 @@
 						text="Publicar"
 						width="maxWidth"
 						size="middle"
+						@click="sendCreateEventForm"
 					/>
 				</span>
 				<span class="eventForm-buttons-clear">
@@ -503,6 +505,8 @@ import CpCheckBox from '@shared/gui/CpCheckBox.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpMap from '@shared/gui/CpMap.vue';
 import type { EventCreateType } from '@shared/api/types';
+import { eventCreate } from '@shared/api';
+const { $objToFormData } = useNuxtApp();
 
 // Form Data ------------------------------------
 
@@ -543,6 +547,10 @@ const eventCreateForm = reactive<EventCreateType>({
 });
 
 // Variables ------------------------------------
+
+const eventCreateFormTemplate = ref<HTMLFormElement | null>(null);
+
+const isSpin = ref<boolean>(false);
 
 type CheckboxTypes = {
 	id: string;
@@ -604,6 +612,32 @@ const checkboxCollectCities = (e: Event) => {
 		eventCreateForm.eventCity.push({ cityName: target.value });
 	} else {
 		eventCreateForm.eventCity = eventCreateForm.eventCity.filter((e) => e.cityName !== target.value);
+	}
+};
+
+// Request data ---------------------------------
+
+const sendCreateEventForm = async () => {
+	isSpin.value = true;
+	const isValid = await eventCreateFormTemplate.value?.validate();
+
+	if (!isValid.valid) {
+		isSpin.value = false;
+		toast.error('form is invalid');
+
+		return;
+	}
+
+	const eventCreatePayload = $objToFormData(toRaw(eventCreateForm));
+	try {
+		await eventCreate(eventCreatePayload);
+		isSpin.value = false;
+		toast.success('Evento creado exitosamente');
+	} catch (error) {
+		toast.error('error');
+		isSpin.value = false;
+	} finally {
+		isSpin.value = false;
 	}
 };
 </script>
@@ -836,7 +870,6 @@ const checkboxCollectCities = (e: Event) => {
 						width: 50%;
 						min-width: 362px;
 						padding: 10px;
-						margin-top: 15px;
 
 						&-maxWidth {
 							width: 100%;
