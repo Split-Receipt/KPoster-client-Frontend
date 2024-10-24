@@ -79,10 +79,13 @@ type Props = {
 };
 
 type CardData = {
-	image: string;
-	title: string;
-	text: string;
-	dateEvent: string;
+	attributes: {
+		linkToBuyTicket: string;
+		eventGallery: any[];
+		eventName: string;
+		eventDate: string;
+		eventShortDescription: string;
+	};
 };
 
 withDefaults(defineProps<Props>(), {

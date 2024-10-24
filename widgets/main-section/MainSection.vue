@@ -4,20 +4,20 @@
 			<div class="main-section__wrapper">
 				<div class="main-section__info">
 					<h2 v-if="size === 'medium'" class="main-section__header">
-						{{ title }}
+						{{ collectionData.attributes.collectionName }}
 					</h2>
 
 					<h3 v-if="size === 'small'" class="main-section__header">
-						{{ title }}
+						{{ collectionData.attributes.collectionName }}
 					</h3>
 
 					<p class="main-section__text">
-						{{ text }}
+						{{ collectionData.attributes.collectionDescription }}
 					</p>
 				</div>
 
 				<div class="main-section__carousel">
-					<event-carousel :id="id" :event-data="eventData" />
+					<event-carousel :id="id" :event-data="collectionData.attributes.events.data" />
 				</div>
 			</div>
 		</section>
@@ -26,31 +26,26 @@
 
 <script setup lang="ts">
 type Props = {
-	title: string;
-	text?: string;
-	eventData: Array<CardData>;
+	collectionData: {
+		attributes: {
+			collectionName: string;
+			collectionDescription?: string;
+			collectionCode: string;
+		};
+		id: string;
+	};
 	size?: string;
-	id: string | number;
 };
 
-type CardData = {
-	image: string;
-	title: string;
-	text: string;
-	dateEvent: string;
-};
+// type CardData = {
+// 	image: string;
+// 	title: string;
+// 	text: string;
+// 	dateEvent: string;
+// };
 
-withDefaults(defineProps<Props>(), {
-	title: 'List of events',
-	text: '',
-	eventData: () => [
-		{
-			image: 'event-card-1.png',
-			title: 'Event Name',
-			text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-			dateEvent: '01/01/2024',
-		},
-	],
+const props = withDefaults(defineProps<Props>(), {
+	collectionDescription: '',
 	size: 'small',
 });
 </script>

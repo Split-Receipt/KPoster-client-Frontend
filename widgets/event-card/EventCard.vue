@@ -10,16 +10,16 @@
 				/>
 			</div>
 			<h4 class="event-card__title">
-				{{ eventCardData.title }}
+				{{ eventCardData.attributes.eventName }}
 			</h4>
 			<span class="event-card__text" :class="[eventCardTextSize[size]]">
-				{{ eventCardData.text }}
+				{{ eventCardData.attributes.eventShortDescription }}
 			</span>
 			<span
 				class="event-card__date"
 				:class="[eventCardDateSize[size as eventCardDateSizeType]]"
 			>
-				{{ eventCardData.dateEvent }}
+				{{formatedDate}}
 			</span>
 
 			<div class="event-card__controls">
@@ -44,6 +44,17 @@
 </template>
 
 <script setup lang="ts">
+import { format } from 'date-fns';
+const props = withDefaults(defineProps<Props>(), {
+	size: 'small',
+	eventCardData: () => ({
+		image: '',
+		title: 'Event Name',
+		text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		dateEvent: '01/01/2024',
+	}),
+});
+const config = useRuntimeConfig();
 type Props = {
 	size?:
 		| eventCardSizeType
@@ -55,27 +66,30 @@ type Props = {
 };
 
 type CardData = {
-	image: string;
-	title: string;
-	text: string;
-	dateEvent: string | number;
+	attributes: {
+		eventName: string;
+		eventShortDescription: string;
+		eventGallery: {
+			attributes: {
+				url: string;
+			};
+		}[];
+		linkToBuyTicket: string;
+		eventDate: string;
+	};
 };
 
-const props = withDefaults(defineProps<Props>(), {
-	size: 'small',
-	eventCardData: () => ({
-		image: '',
-		title: 'Event Name',
-		text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		dateEvent: '01/01/2024',
-	}),
-});
-
-const photoUrl = `/images/${props.eventCardData.image}`;
+const photoUrl =
+	config.public.apiBaseUrl +
+	props.eventCardData.attributes.eventGallery.data[0].attributes.url;
 
 function buyTicketHandler() {
-	// ...
+	window.open(props.eventCardData.attributes.linkToBuyTicket, '_blank');
 }
+
+const formatedDate = computed(() => {
+	return format(new Date(props.eventCardData.attributes.eventDate),	'dd/MM/yyyy');
+});
 
 function learnMoreHandler() {
 	// ...

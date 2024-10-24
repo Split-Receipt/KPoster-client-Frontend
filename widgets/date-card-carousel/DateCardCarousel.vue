@@ -44,7 +44,7 @@
 							:date="card"
 							:disabled="card.disabled"
 							:active="!!(index === activeItem)"
-							@date-click="$emit('activeItemHandler', card.dateString)"
+							@date-click="$emit('change:filterDate', card.dateString)"
 							@click="activeItem = index"
 						/>
 					</div>
@@ -95,10 +95,10 @@ type AllDaysOfInterval = {
 };
 
 type Events = {
-	(event: 'activeItemHandler', eventData: Date): void;
+	(event: 'change:filterDate', eventData: Date): void;
 };
 
-const activeItem: Ref<number | null> = ref(null);
+const activeItem: Ref<number> = ref(3);
 
 const dateLoaded = ref(false);
 const allDaysOfInterval: Ref<Array<AllDaysOfInterval>> = ref([]);
