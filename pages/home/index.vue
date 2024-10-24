@@ -4,7 +4,9 @@
 			<h1 class="main-page__title">{{ $t('main_title') }}</h1>
 
 			<div class="main-page__date-carousel">
-				<date-card-carousel />
+				<date-card-carousel
+					@change:filter-date="(value) => changeFilters(value, 'date')"
+				/>
 			</div>
 
 			<div class="main-page__filters">
@@ -39,7 +41,13 @@ import CultureCategoryDropDown from '@features/culture-category-filter/CultureCa
 import { requestEventsColletions } from '@shared/api';
 const { availableLocales, setLocale } = useI18n();
 const eventsCollections = ref();
-const filters = { events: {} };
+const filters = {
+	events: {
+		eventDate: {
+			$eq: new Date(),
+		},
+	},
+};
 
 onBeforeMount(() => {
 	getEventsCollection();
@@ -92,6 +100,11 @@ const changeFilters = (data: any, filterPath: string) => {
 			break;
 		}
 
+		case 'date': {
+			filters.events.eventDate = { $eq: data };
+			getEventsCollection();
+			break;
+		}
 		default: {
 			getEventsCollection();
 		}
