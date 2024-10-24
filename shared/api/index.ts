@@ -21,10 +21,33 @@ export const requestCategories = () => {
 	return $api.get('api/areas-de-la-culturas');
 };
 
-export const requestEventsColletions = () => {
+export const requestEventsHost = () => {
 	const { $api } = useNuxtApp();
 
-	return $api.get('api/events-collections?populate[events][populate]=eventGallery');
+	return $api.get('/api/partners');
+};
+
+export const requestEventsColletions = (filters) => {
+	const { $api } = useNuxtApp();
+	const params = {
+		populate: {
+			events: {
+				populate: {
+					eventAddress: {
+						populate: {
+							city: true,
+						},
+					},
+					eventGallery: {
+						populate: '*',
+					},
+				},
+			},
+		},
+		filters: filters,
+	};
+
+	return $api.get('api/events-collections', { params });
 };
 
 export const requestEventsColletionByCode = (collectionCode: string) => {

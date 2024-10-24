@@ -8,25 +8,17 @@
 			</div>
 
 			<div class="main-page__filters">
-				<cp-drop-down
-					v-model="categoriesToFilter"
-					:options="categoryFilterOptions"
-					drop-down-label="Filter by category"
-					:value="categoriesToFilter"
+				<city-drop-down
+					@change:filter-cities="(value) => changeFilters(value, 'city')"
 				/>
-				<cp-drop-down
-					v-model="citiesToFilter"
-					:options="cityFilterOptions"
-					drop-down-label="Filter by city"
-					:value="citiesToFilter"
+
+				<partners-drop-down
+					@change:event-host="(value) => changeFilters(value, 'eventHost')"
 				/>
-				<cp-drop-down
-					v-model="organizersToFilter"
-					:options="
-						formatFiltersOptions(remoteOrganizersFilterOptions, 'organizer')
+				<culture-category-drop-down
+					@change:filter-culture-cats="
+						(value) => changeFilters(value, 'cultureCategory')
 					"
-					drop-down-label="Filter by event organizer"
-					:value="organizersToFilter"
 				/>
 			</div>
 			<div class="main-page__section-list">
@@ -41,20 +33,17 @@
 </template>
 
 <script setup lang="ts">
-import CpDropDown from '@shared/gui/CpDropDown.vue';
-import type { RequestOption } from '@shared/api/types';
-import {
-	requestCities,
-	requestCategories,
-	requestEventsColletions,
-} from '@shared/api';
-import { ca } from 'date-fns/locale/ca';
-
-const categoriesToFilter: string[] = [];
-const citiesToFilter: string[] = [];
-const organizersToFilter: string[] = [];
+import PartnersDropDown from '@features/partners-filter/PartnersDropDown.vue';
+import CityDropDown from '@features/city-filter/CityDropDown.vue';
+import CultureCategoryDropDown from '@features/culture-category-filter/CultureCategoryDropDown.vue';
+import { requestEventsColletions } from '@shared/api';
 const { availableLocales, setLocale } = useI18n();
 const eventsCollections = ref();
+const filters = { events: {} };
+
+onBeforeMount(() => {
+	getEventsCollection();
+});
 
 onMounted(() => {
 	const selected_language = localStorage.getItem('KPoster_selected-language');
@@ -68,81 +57,44 @@ onMounted(() => {
 	}
 });
 
-onMounted(() => {
-	requestForFilters(requestCategories, remoteCategoryFilterOptions);
-	requestForFilters(requestCities, remoteCityFilterOptions);
-	requestForFilters(requestCities, remoteOrganizersFilterOptions);
-});
 const getEventsCollection = async () => {
 	try {
-		const eventsCollectionsRequestData = await requestEventsColletions();
+		const eventsCollectionsRequestData = await requestEventsColletions(filters);
 		eventsCollections.value = eventsCollectionsRequestData.data.data;
 	} catch (e) {
 		console.error(e);
 	}
 };
-getEventsCollection();
 
-// category check points
-
-const remoteCategoryFilterOptions = ref<Array<RequestOption['attributes']>>([]);
-
-// city filter checkpoint
-
-const remoteCityFilterOptions = ref<Array<RequestOption['attributes']>>([]);
-
-// organizers filter checkpoint
-
-const remoteOrganizersFilterOptions = ref<Array<RequestOption['attributes']>>(
-	[]
-);
-
-const cityFilterOptions = computed(() => {
-	return formatFiltersOptions(remoteCityFilterOptions, 'city');
-});
-
-const categoryFilterOptions = computed(() => {
-	return formatFiltersOptions(remoteCategoryFilterOptions, 'cultureType');
-});
-
-const hostFilterOptions = computed(() => {
-	return formatFiltersOptions(remoteCityFilterOptions, 'city');
-});
-
-const formatFiltersOptions = (options: any, prefix: string) => {
-	if (!options.value) {
-		return [];
-	}
-
-	return options.value.map((option: any) => {
-		return {
-			item_title: option[`${prefix}Name`],
-			item_UID: option[`${prefix}Code`],
-			item_value: option[`${prefix}Code`],
-			createdAt: option.createdAt,
-			updatedAt: option.updatedAt,
-			locale: option.locale,
-		};
-	});
-};
-
-// function trigger (when component did mount)
-
-const requestForFilters = async (
-	requestCallback: () => Promise<any>,
-	dataTo: Ref<any>
-) => {
-	try {
-		const response = await requestCallback();
-		const result = response.data;
-
-		if (Array.isArray(result.data)) {
-			result.data.forEach((e: RequestOption) => {
-				dataTo.value.push(e.attributes);
-			});
+const changeFilters = (data: any, filterPath: string) => {
+	switch (filterPath) {
+		case 'city': {
+			filters.events.eventAddress = {
+				city: {
+					cityCode: {
+						$in: data,
+					},
+				},
+			};
+			getEventsCollection();
+			break;
 		}
-	} catch (e) {
-		console.error(e);
+
+		case 'eventHost': {
+			filters.events.eventHost = { eventHostCode: { $in: data } };
+			getEventsCollection();
+			break;
+		}
+
+		case 'cultureCategory': {
+			filters.events.cultureType = { cultureTypeCode: { $in: data } };
+			getEventsCollection();
+			break;
+		}
+
+		default: {
+			getEventsCollection();
+		}
 	}
 };
 </script>
