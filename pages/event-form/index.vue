@@ -24,7 +24,7 @@
 							type="text"
 							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
-						<span v-if="errors" class="required-input-error-info-center">
+						<span v-if="errors.length" class="required-input-error-info-center">
 							{{ errors[0] }}
 						</span>
 					</v-field>
@@ -55,7 +55,7 @@
 							@change="checkboxCollectCategories"
 						/>
 						<span
-							v-if="errors && eventCreateForm.eventCategory.length < 1"
+							v-if="errors.length && eventCreateForm.eventCategory.length < 1"
 							class="required-input-error-info-leftSide"
 						>
 							{{ errors[0] }}
@@ -90,7 +90,7 @@
 							:max-size="5"
 							:is-invalid="errors.length > 0"
 						/>
-						<span v-if="errors" class="required-input-error-info-center">{{
+						<span v-if="errors.length" class="required-input-error-info-center">{{
 							errors[0]
 						}}</span>
 					</v-field>
@@ -265,7 +265,7 @@
 							type="text"
 							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
-						<span v-if="errors" class="required-input-error-info-center">
+						<span v-if="errors.length" class="required-input-error-info-center">
 							{{ errors[0] }}
 						</span>
 					</v-field>
@@ -294,7 +294,7 @@
 								text-area-placeholder="input"
 								:class="{ 'required-input-error-textInput': errors.length > 0 }"
 							/>
-							<span v-if="errors" class="required-input-error-info-center">
+							<span v-if="errors.length" class="required-input-error-info-center">
 								{{ errors[0] }}
 							</span>
 						</v-field>
@@ -363,7 +363,7 @@
 							@change="checkboxCollectCities"
 						/>
 						<span
-							v-if="errors && eventCreateForm.eventAddress.city.length < 1"
+							v-if="errors.length && eventCreateForm.eventAddress.city.length < 1"
 							class="required-input-error-info-leftSide"
 						>
 							{{ errors[0] }}
@@ -393,7 +393,7 @@
 							type="text"
 							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
-						<span v-if="errors" class="required-input-error-info-center">
+						<span v-if="errors.length" class="required-input-error-info-center">
 							{{ errors[0] }}
 						</span>
 					</v-field>
@@ -423,7 +423,7 @@
 								:coordinates-output="true"
 								:center="eventCreateForm.eventAddress.eventCoordinates"
 							/>
-							<span v-if="errors" class="required-input-error-info-center">
+							<span v-if="errors.length" class="required-input-error-info-center">
 								{{ errors[0] }}
 							</span>
 						</v-field>
@@ -459,7 +459,7 @@
 										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span v-if="errors" class="required-input-error-info-leftSide">
+								<span v-if="errors.length" class="required-input-error-info-leftSide">
 									{{ errors[0] }}
 								</span>
 							</v-field>
@@ -481,7 +481,7 @@
 										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span v-if="errors" class="required-input-error-info-leftSide">
+								<span v-if="errors.length" class="required-input-error-info-leftSide">
 									{{ errors[0] }}
 								</span>
 							</v-field>
@@ -648,10 +648,10 @@ const getCities = async () => {
 const checkboxCollectCategories = (e: Event) => {
 	const target = e.target as HTMLInputElement;
 	if (target.checked) {
-		eventCreateForm.eventCategory.push({ categoryName: target.value });
+		eventCreateForm.eventCategory.push({ categoryCode: target.value });
 	} else {
 		eventCreateForm.eventCategory = eventCreateForm.eventCategory.filter(
-			(e) => e.categoryName !== target.value
+			(e) => e.categoryCode !== target.value
 		);
 	}
 };
@@ -659,10 +659,10 @@ const checkboxCollectCategories = (e: Event) => {
 const checkboxCollectCities = (e: Event) => {
 	const target = e.target as HTMLInputElement;
 	if (target.checked) {
-		eventCreateForm.eventCity.push({ cityName: target.value });
+		eventCreateForm.eventAddress.city.push({ cityCode: target.value });
 	} else {
-		eventCreateForm.eventCity = eventCreateForm.eventCity.filter(
-			(e) => e.cityName !== target.value
+		eventCreateForm.eventAddress.city = eventCreateForm.eventAddress.city.filter(
+			(e) => e.cityCode !== target.value
 		);
 	}
 };
