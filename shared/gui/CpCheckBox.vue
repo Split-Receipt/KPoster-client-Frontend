@@ -1,19 +1,23 @@
 <template>
 	<div class="checkbox-wrapper">
-		<input
-			:id="props.id"
-			:value="props.value"
-			type="checkbox"
-			@change="checkBoxAction"
-		/>
-		<label :for="props.id" style="--size: 22px">
-			<svg viewBox="0,0,50,50">
-				<path d="M5 30 L 20 45 L 45 5" />
-			</svg>
-		</label>
-		<label v-if="props.title" class="checkbox-wrapper__label" :for="props.id">{{
-			props.title
-		}}</label>
+		<div class="checkbox-wrapper-input">
+			<input
+				:id="props.id"
+				:value="props.value"
+				type="checkbox"
+				@change="checkBoxAction"
+			/>
+			<label :for="props.id" style="--size: 22px">
+				<svg viewBox="0,0,50,50">
+					<path d="M5 30 L 20 45 L 45 5" />
+				</svg>
+			</label>
+		</div>
+		<div class="checkbox-wrapper-text">
+			<label v-if="props.title" class="checkbox-wrapper__label" :for="props.id">{{
+				props.title
+			}}</label>
+		</div>
 	</div>
 </template>
 
@@ -45,6 +49,8 @@ const checkBoxAction = (e: Event) => {
 .checkbox-wrapper {
 	display: flex;
 	align-items: center;
+	position: relative;
+
 	* {
 		box-sizing: border-box;
 
@@ -52,6 +58,17 @@ const checkBoxAction = (e: Event) => {
 		&:before {
 			box-sizing: border-box;
 		}
+	}
+
+	&-input {
+		left: 0;
+		top: 5px;
+		position: absolute;
+	}
+
+	&-text {
+		display: flex;
+		margin-left: 15px;
 	}
 
 	input {
@@ -101,7 +118,6 @@ const checkBoxAction = (e: Event) => {
 	.checkbox-wrapper__label {
 		margin-left: 15px;
 		font-size: 16px;
-		padding-right: 15px;
 		padding-top: 5px;
 		line-height: 28px;
 		cursor: pointer;

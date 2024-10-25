@@ -20,7 +20,7 @@
 					>
 						<cp-text-input
 							v-model="eventCreateForm.eventName"
-							placeholder="input"
+							placeholder="nombre del evento"
 							type="text"
 							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
@@ -261,7 +261,7 @@
 					>
 						<cp-text-input
 							v-model="eventCreateForm.eventTickets"
-							placeholder="input"
+							placeholder="http://tickets.com"
 							type="text"
 							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
@@ -389,7 +389,7 @@
 					>
 						<cp-text-input
 							v-model="eventCreateForm.eventAdres"
-							placeholder="input"
+							placeholder="dirección del evento"
 							type="text"
 							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
