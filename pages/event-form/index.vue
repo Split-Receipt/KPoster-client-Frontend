@@ -421,7 +421,7 @@
 									eventCreateForm.eventAddress.eventCoordinates
 								"
 								:coordinates-output="true"
-								:center="eventCreateForm.eventAddress.eventCoordinates"
+								:center="[-12.046016, -77.030554]"
 							/>
 							<span v-if="errors.length" class="required-input-error-info-center">
 								{{ errors[0] }}
@@ -553,7 +553,7 @@ const eventCreateForm = reactive<EventCreateType>({
 	},
 	eventDuration: '',
 	eventAddress: {
-		eventCoordinates: '-12.046016, -77.030554',
+		eventCoordinates: '',
 		city: [],
 		address: '',
 	},

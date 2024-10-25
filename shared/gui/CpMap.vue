@@ -58,7 +58,7 @@ type mapProps = {
 };  
 
 type MapEmits = {
-	(event: 'update:coordinatesUpdate', eventData: CoordinatesType): void;
+	(event: 'update:coordinatesUpdate', eventData: string): void;
 };
 
 const props = defineProps<mapProps>();
@@ -71,7 +71,7 @@ const getCoordinates = (event: any) => {
     const { lat, lng } = event.latlng;   
     if (props.coordinatesOutput) {  
         markers.value = { coordinates: [lat, lng] };  
-		emit('update:coordinatesUpdate', { coordinates: [lat, lng] });
+		emit('update:coordinatesUpdate', `${lat} ${lng}`);
     }  
 };  
 </script>  
