@@ -916,7 +916,6 @@ const sendCreateEventForm = async () => {
 
 				&-input {
 					width: 50%;
-					min-width: 362px;
 					padding: 10px;
 
 					&-maxWidth {
@@ -931,7 +930,6 @@ const sendCreateEventForm = async () => {
 
 				&-input:first-child {
 					width: 50%;
-					min-width: 362px;
 					padding: 10px;
 					margin-top: 0;
 
