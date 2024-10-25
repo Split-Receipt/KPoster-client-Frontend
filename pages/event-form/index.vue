@@ -115,7 +115,7 @@
 						>
 							<cp-text-input2
 								id="telegram_id"
-								v-model="eventCreateForm.eventSocials.telegram"
+								v-model="eventCreateForm.eventSocialMedias.telegram"
 								:circle="true"
 								label-text="Telegram"
 								placeholder="https://www.youtube.com/"
@@ -126,7 +126,7 @@
 						>
 							<cp-text-input2
 								id="facebook_id"
-								v-model="eventCreateForm.eventSocials.facebook"
+								v-model="eventCreateForm.eventSocialMedias.facebook"
 								:circle="true"
 								label-text="Facebook"
 								placeholder="https://www.youtube.com/"
@@ -137,7 +137,7 @@
 						>
 							<cp-text-input2
 								id="youtube_id"
-								v-model="eventCreateForm.eventSocials.youtube"
+								v-model="eventCreateForm.eventSocialMedias.youtube"
 								:circle="true"
 								label-text="Youtube"
 								placeholder="https://www.youtube.com/"
@@ -148,7 +148,7 @@
 						>
 							<cp-text-input2
 								id="twitter_id"
-								v-model="eventCreateForm.eventSocials.twitter"
+								v-model="eventCreateForm.eventSocialMedias.twitter"
 								:circle="true"
 								label-text="Twitter"
 								placeholder="https://www.youtube.com/"
@@ -159,7 +159,7 @@
 						>
 							<cp-text-input2
 								id="instagram_id"
-								v-model="eventCreateForm.eventSocials.instagram"
+								v-model="eventCreateForm.eventSocialMedias.instagram"
 								:circle="true"
 								label-text="Instagram"
 								placeholder="https://www.youtube.com/"
@@ -170,7 +170,7 @@
 						>
 							<cp-text-input2
 								id="linkedin_id"
-								v-model="eventCreateForm.eventSocials.linkedin"
+								v-model="eventCreateForm.eventSocialMedias.linkedin"
 								:circle="true"
 								label-text="Linkedin"
 								placeholder="https://www.youtube.com/"
@@ -196,7 +196,7 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<cp-text-input2
 								id="event_place_id"
-								v-model="eventCreateForm.eventInfo.eventPlace"
+								v-model="eventCreateForm.eventContacts.place"
 								:circle="false"
 								label-text="Ubicación del evento"
 								placeholder="introduzca el enlace"
@@ -207,7 +207,7 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<cp-text-input2
 								id="event_date_id"
-								v-model="eventCreateForm.eventInfo.eventDate"
+								v-model="eventCreateForm.eventDate"
 								:circle="false"
 								label-text="Fecha y hora"
 								placeholder="introduzca el enlace"
@@ -216,7 +216,7 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<cp-text-input2
 								id="duration_id"
-								v-model="eventCreateForm.eventInfo.eventDuration"
+								v-model="eventCreateForm.eventDuration"
 								:circle="false"
 								label-text="Duración en minutos"
 								placeholder="introduzca el enlace"
@@ -225,7 +225,7 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<cp-text-input2
 								id="rules_id"
-								v-model="eventCreateForm.eventInfo.eventRules"
+								v-model="eventCreateForm.eventRules"
 								:circle="false"
 								label-text="Reglas de visita"
 								placeholder="introduzca el enlace"
@@ -234,7 +234,7 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<cp-text-input2
 								id="age_restrictions_id"
-								v-model="eventCreateForm.eventInfo.eventAgeRestrictions"
+								v-model="eventCreateForm.eventAgeRestrictions"
 								:circle="false"
 								label-text="Restricciones de edad"
 								placeholder="introduzca el enlace"
@@ -255,12 +255,12 @@
 				<div class="eventForm-row-input fullWidth-tickets">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="eventCreateForm.eventTickets"
+						:model-value="eventCreateForm.linkToBuyTicket"
 						name="tickets"
 						rules="required"
 					>
 						<cp-text-input
-							v-model="eventCreateForm.eventTickets"
+							v-model="eventCreateForm.linkToBuyTicket"
 							placeholder="http://tickets.com"
 							type="text"
 							:class="{ 'required-input-error-textInput': errors.length > 0 }"
@@ -324,7 +324,7 @@
 				<div class="eventForm-upperPositionRow-input fullWidth-banner">
 					<cp-drag-n-drop
 						v-if="defaultMediaValue === 'photo'"
-						v-model="eventCreateForm.files.eventMediaPhoto"
+						v-model="eventCreateForm.files.eventMediaPhotos"
 						:is-single="true"
 						type="image"
 						:max-size="5"
@@ -352,7 +352,7 @@
 						v-slot="{ errors }"
 						name="eventCity"
 						rules="require_checkbox"
-						:model-value="eventCreateForm.eventCity"
+						:model-value="eventCreateForm.eventAddress.city"
 					>
 						<cp-check-box
 							v-for="item in cityCheckBoxes"
@@ -363,7 +363,7 @@
 							@change="checkboxCollectCities"
 						/>
 						<span
-							v-if="errors && eventCreateForm.eventCity.length < 1"
+							v-if="errors && eventCreateForm.eventAddress.city.length < 1"
 							class="required-input-error-info-leftSide"
 						>
 							{{ errors[0] }}
@@ -383,12 +383,12 @@
 				<div class="eventForm-row-input fullWidth-eventName">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="eventCreateForm.eventAdres"
+						:model-value="eventCreateForm.eventAddress.address"
 						name="eventAdres"
 						rules="required"
 					>
 						<cp-text-input
-							v-model="eventCreateForm.eventAdres"
+							v-model="eventCreateForm.eventAddress.address"
 							placeholder="dirección del evento"
 							type="text"
 							:class="{ 'required-input-error-textInput': errors.length > 0 }"
@@ -412,14 +412,16 @@
 					<div class="eventForm__map">
 						<v-field
 							v-slot="{ errors }"
-							:model-value="eventCreateForm.eventCoordinates.coordinates"
+							:model-value="eventCreateForm.eventAddress.eventCoordinates"
 							name="eventCoordinates"
 							rules="require_coordinates"
 						>
 							<cp-map
-								v-model:coordinates-update="eventCreateForm.eventCoordinates"
+								v-model:coordinates-update="
+									eventCreateForm.eventAddress.eventCoordinates
+								"
 								:coordinates-output="true"
-								:center="eventCreateForm.eventCoordinates.coordinates"
+								:center="eventCreateForm.eventAddress.eventCoordinates"
 							/>
 							<span v-if="errors" class="required-input-error-info-center">
 								{{ errors[0] }}
@@ -443,13 +445,13 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<v-field
 								v-slot="{ errors }"
-								:model-value="eventCreateForm.eventContacts.eventTel"
+								:model-value="eventCreateForm.eventContacts.tel"
 								name="eventTel"
 								rules="required"
 							>
 								<cp-text-input2
 									id="tel_id"
-									v-model="eventCreateForm.eventContacts.eventTel"
+									v-model="eventCreateForm.eventContacts.tel"
 									:circle="false"
 									label-text="Número de teléfono"
 									placeholder="introduzca el enlace"
@@ -465,13 +467,13 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<v-field
 								v-slot="{ errors }"
-								:model-value="eventCreateForm.eventContacts.eventEmail"
+								:model-value="eventCreateForm.eventContacts.mail"
 								name="eventMail"
 								rules="required"
 							>
 								<cp-text-input2
 									id="E-mail_id"
-									v-model="eventCreateForm.eventContacts.eventEmail"
+									v-model="eventCreateForm.eventContacts.mail"
 									:circle="false"
 									label-text="E-mail"
 									placeholder="introduzca el enlace"
@@ -537,8 +539,11 @@ const { $objToFormData } = useNuxtApp();
 
 const eventCreateForm = reactive<EventCreateType>({
 	eventName: '',
+	eventDescription: '',
 	eventCategory: [],
-	eventSocials: {
+	eventDate: '',
+	eventHost: '',
+	eventSocialMedias: {
 		telegram: '',
 		youtube: '',
 		instagram: '',
@@ -546,27 +551,24 @@ const eventCreateForm = reactive<EventCreateType>({
 		twitter: '',
 		linkedin: '',
 	},
-	eventInfo: {
-		eventPlace: '',
-		eventDate: '',
-		eventDuration: '',
-		eventRules: '',
-		eventAgeRestrictions: '',
+	eventDuration: '',
+	eventAddress: {
+		eventCoordinates: '-12.046016, -77.030554',
+		city: [],
+		address: '',
 	},
-	eventTickets: '',
-	eventDescription: '',
-	eventCity: [],
-	eventAdres: '',
-	eventCoordinates: {
-		coordinates: [-12.046016, -77.030554],
-	},
+	linkToBuyTicket: '',
+	eventShortDescription: '',
+	eventRules: '',
+	eventAgeRestrictions: '',
 	eventContacts: {
-		eventTel: '',
-		eventEmail: '',
+		place: '',
+		tel: '',
+		mail: '',
 	},
 	files: {
 		eventBanner: null,
-		eventMediaPhoto: null,
+		eventMediaPhotos: null,
 		eventMediaVideo: null,
 	},
 });
@@ -1136,6 +1138,7 @@ const sendCreateEventForm = async () => {
 				color: crimson;
 				justify-content: flex-start;
 				line-height: 35px;
+				margin-bottom: -35px;
 			}
 
 			&-center {
@@ -1145,6 +1148,7 @@ const sendCreateEventForm = async () => {
 				color: crimson;
 				justify-content: space-around;
 				line-height: 35px;
+				margin-bottom: -35px;
 			}
 		}
 	}

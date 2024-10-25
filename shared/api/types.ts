@@ -59,8 +59,12 @@ export type RequestOption = {
 
 export type EventCreateType = {
 	eventName: string;
-	eventCategory: { categoryName: string }[];
-	eventSocials: {
+	eventDescription: string;
+	eventCategory: { categoryCode: string }[];
+	eventDate: string;
+	eventHost: string;
+	eventDuration: string;
+	eventSocialMedias: {
 		telegram: string;
 		youtube: string;
 		instagram: string;
@@ -68,27 +72,23 @@ export type EventCreateType = {
 		twitter: string;
 		linkedin: string;
 	};
-	eventInfo: {
-		eventPlace: string;
-		eventDate: string;
-		eventDuration: string;
-		eventRules: string;
-		eventAgeRestrictions: string;
-	};
-	eventTickets: string;
-	eventDescription: string;
-	eventCity: { cityName: string }[];
-	eventAdres: string;
-	eventCoordinates: {
-		coordinates: number[]
-	};
+	eventAddress: {
+		eventCoordinates: string;
+		city: { cityCode: string }[];
+		address: string;
+	}
+	linkToBuyTicket: string;
+	eventShortDescription: string;
+	eventRules: string;
+	eventAgeRestrictions: string;
 	eventContacts: {
-		eventTel: string;
-		eventEmail: string;
+		place: string;
+		tel: string;
+		mail: string;
 	};
 	files: {
 		eventBanner: File | null;
-		eventMediaPhoto: File | null;
+		eventMediaPhotos: File[] | null;
 		eventMediaVideo: File | null;
 	}
 };
