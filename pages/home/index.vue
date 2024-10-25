@@ -17,9 +17,9 @@
 				<partners-drop-down
 					@change:event-host="(value) => changeFilters(value, 'eventHost')"
 				/>
-				<culture-category-drop-down
+				<event-category-drop-down
 					@change:filter-culture-cats="
-						(value) => changeFilters(value, 'cultureCategory')
+						(value) => changeFilters(value, 'eventCategory')
 					"
 				/>
 			</div>
@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import PartnersDropDown from '@features/partners-filter/PartnersDropDown.vue';
 import CityDropDown from '@features/city-filter/CityDropDown.vue';
-import CultureCategoryDropDown from '@features/culture-category-filter/CultureCategoryDropDown.vue';
+import EventCategoryDropDown from '@features/event-category-filter/EventCategoryDropDown.vue';
 import { requestEventsColletions } from '@shared/api';
 const { availableLocales, setLocale } = useI18n();
 const eventsCollections = ref();
@@ -94,8 +94,8 @@ const changeFilters = (data: any, filterPath: string) => {
 			break;
 		}
 
-		case 'cultureCategory': {
-			filters.events.cultureType = { cultureTypeCode: { $in: data } };
+		case 'eventCategory': {
+			filters.events.eventCategory = { eventCategoryCode: { $in: data } };
 			getEventsCollection();
 			break;
 		}

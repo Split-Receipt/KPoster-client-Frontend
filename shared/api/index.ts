@@ -36,6 +36,12 @@ export const requestEventsHost = () => {
 	return $api.get('/api/partners');
 };
 
+export const requestEventCategories = () => {
+	const { $api } = useNuxtApp();
+
+	return $api.get('/api/event-categories');
+};
+
 export const requestEventsColletions = (filters) => {
 	const { $api } = useNuxtApp();
 	const params = {
