@@ -1,9 +1,8 @@
 <template>
 	<div class="eventForm">
-		<cp-spinner :is-spinned="isSpin"/>
+		<cp-spinner :is-spinned="isSpin" />
 		<h2 class="eventForm-title">Crear un nuevo evento</h2>
 		<v-form ref="eventCreateFormTemplate">
-
 			<!-- Event Name -->
 			<div class="eventForm-row">
 				<div class="eventForm-row-info">
@@ -21,12 +20,12 @@
 					>
 						<cp-text-input
 							v-model="eventCreateForm.eventName"
-							placeholder="input" 
+							placeholder="input"
 							type="text"
 							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
 						<span v-if="errors" class="required-input-error-info-center">
-							{{errors[0]}}
+							{{ errors[0] }}
 						</span>
 					</v-field>
 				</div>
@@ -47,16 +46,19 @@
 						rules="require_checkbox"
 						:model-value="eventCreateForm.eventCategory"
 					>
-						<cp-check-box 
+						<cp-check-box
 							v-for="item in categoryCheckBoxes"
 							:id="item.id"
-							:key="item.id" 
+							:key="item.id"
 							:value="item.value"
 							:title="item.title"
 							@change="checkboxCollectCategories"
 						/>
-						<span v-if="errors && eventCreateForm.eventCategory.length < 1" class="required-input-error-info-leftSide">
-							{{errors[0]}}
+						<span
+							v-if="errors && eventCreateForm.eventCategory.length < 1"
+							class="required-input-error-info-leftSide"
+						>
+							{{ errors[0] }}
 						</span>
 					</v-field>
 				</div>
@@ -108,7 +110,9 @@
 				</div>
 				<div class="eventForm-upperPositionRow-input fullWidth-socials">
 					<div class="eventForm-upperPositionRow-input-socialsAndContacts">
-						<span class="eventForm-upperPositionRow-input-socialsAndContacts-social">
+						<span
+							class="eventForm-upperPositionRow-input-socialsAndContacts-social"
+						>
 							<cp-text-input2
 								id="telegram_id"
 								v-model="eventCreateForm.eventSocials.telegram"
@@ -117,7 +121,9 @@
 								placeholder="https://www.youtube.com/"
 							/>
 						</span>
-						<span class="eventForm-upperPositionRow-input-socialsAndContacts-social">
+						<span
+							class="eventForm-upperPositionRow-input-socialsAndContacts-social"
+						>
 							<cp-text-input2
 								id="facebook_id"
 								v-model="eventCreateForm.eventSocials.facebook"
@@ -126,7 +132,9 @@
 								placeholder="https://www.youtube.com/"
 							/>
 						</span>
-						<span class="eventForm-upperPositionRow-input-socialsAndContacts-social">
+						<span
+							class="eventForm-upperPositionRow-input-socialsAndContacts-social"
+						>
 							<cp-text-input2
 								id="youtube_id"
 								v-model="eventCreateForm.eventSocials.youtube"
@@ -135,7 +143,9 @@
 								placeholder="https://www.youtube.com/"
 							/>
 						</span>
-						<span class="eventForm-upperPositionRow-input-socialsAndContacts-social">
+						<span
+							class="eventForm-upperPositionRow-input-socialsAndContacts-social"
+						>
 							<cp-text-input2
 								id="twitter_id"
 								v-model="eventCreateForm.eventSocials.twitter"
@@ -144,7 +154,9 @@
 								placeholder="https://www.youtube.com/"
 							/>
 						</span>
-						<span class="eventForm-upperPositionRow-input-socialsAndContacts-social">
+						<span
+							class="eventForm-upperPositionRow-input-socialsAndContacts-social"
+						>
 							<cp-text-input2
 								id="instagram_id"
 								v-model="eventCreateForm.eventSocials.instagram"
@@ -153,7 +165,9 @@
 								placeholder="https://www.youtube.com/"
 							/>
 						</span>
-						<span class="eventForm-upperPositionRow-input-socialsAndContacts-social">
+						<span
+							class="eventForm-upperPositionRow-input-socialsAndContacts-social"
+						>
 							<cp-text-input2
 								id="linkedin_id"
 								v-model="eventCreateForm.eventSocials.linkedin"
@@ -252,7 +266,7 @@
 							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
 						<span v-if="errors" class="required-input-error-info-center">
-							{{errors[0]}}
+							{{ errors[0] }}
 						</span>
 					</v-field>
 				</div>
@@ -281,7 +295,7 @@
 								:class="{ 'required-input-error-textInput': errors.length > 0 }"
 							/>
 							<span v-if="errors" class="required-input-error-info-center">
-								{{errors[0]}}
+								{{ errors[0] }}
 							</span>
 						</v-field>
 					</div>
@@ -340,21 +354,24 @@
 						rules="require_checkbox"
 						:model-value="eventCreateForm.eventCity"
 					>
-						<cp-check-box 
+						<cp-check-box
 							v-for="item in cityCheckBoxes"
 							:id="item.id"
-							:key="item.id" 
+							:key="item.id"
 							:value="item.value"
 							:title="item.title"
 							@change="checkboxCollectCities"
 						/>
-						<span v-if="errors && eventCreateForm.eventCity.length < 1" class="required-input-error-info-leftSide">
-							{{errors[0]}}
+						<span
+							v-if="errors && eventCreateForm.eventCity.length < 1"
+							class="required-input-error-info-leftSide"
+						>
+							{{ errors[0] }}
 						</span>
 					</v-field>
 				</div>
 			</div>
-			
+
 			<!-- Event Adres -->
 			<div class="eventForm-row">
 				<div class="eventForm-row-info">
@@ -377,7 +394,7 @@
 							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
 						<span v-if="errors" class="required-input-error-info-center">
-							{{errors[0]}}
+							{{ errors[0] }}
 						</span>
 					</v-field>
 				</div>
@@ -399,13 +416,13 @@
 							name="eventCoordinates"
 							rules="require_coordinates"
 						>
-							<cp-map 
-								v-model:coordinates-update="eventCreateForm.eventCoordinates" 
-								:coordinates-output="true" 
+							<cp-map
+								v-model:coordinates-update="eventCreateForm.eventCoordinates"
+								:coordinates-output="true"
 								:center="eventCreateForm.eventCoordinates.coordinates"
 							/>
 							<span v-if="errors" class="required-input-error-info-center">
-								{{errors[0]}}
+								{{ errors[0] }}
 							</span>
 						</v-field>
 					</div>
@@ -417,7 +434,8 @@
 				<div class="eventForm-upperPositionRow-info">
 					<span>
 						<strong class="eventForm-upperPositionRow-info-required">*</strong>
-						Complete los datos de contacto del organizador y del servicio de soporte.
+						Complete los datos de contacto del organizador y del servicio de
+						soporte.
 					</span>
 				</div>
 				<div class="eventForm-upperPositionRow-input fullWidth-details">
@@ -435,7 +453,9 @@
 									:circle="false"
 									label-text="Número de teléfono"
 									placeholder="introduzca el enlace"
-									:class="{'required-input-error-socialMedia': errors.length > 0}"
+									:class="{
+										'required-input-error-socialMedia': errors.length > 0,
+									}"
 								/>
 								<span v-if="errors" class="required-input-error-info-leftSide">
 									{{ errors[0] }}
@@ -455,7 +475,9 @@
 									:circle="false"
 									label-text="E-mail"
 									placeholder="introduzca el enlace"
-									:class="{'required-input-error-socialMedia': errors.length > 0}"
+									:class="{
+										'required-input-error-socialMedia': errors.length > 0,
+									}"
 								/>
 								<span v-if="errors" class="required-input-error-info-leftSide">
 									{{ errors[0] }}
@@ -469,7 +491,7 @@
 			<!-- Event form buttons -->
 			<div class="eventForm-buttons">
 				<span class="eventForm-buttons-submit">
-					<cp-button 
+					<cp-button
 						color="yellowGrey"
 						shape="oval"
 						text="Publicar"
@@ -479,7 +501,7 @@
 					/>
 				</span>
 				<span class="eventForm-buttons-clear">
-					<cp-button 
+					<cp-button
 						color="transparent"
 						shape="oval"
 						text="Borrar"
@@ -494,7 +516,6 @@
 
 <script setup lang="ts">
 import { Form as VForm, Field as VField } from 'vee-validate';
-import { generateUniqueId } from '@shared/helpers/generateUid';
 import { toast } from 'vue3-toastify';
 import CpButton from '@shared/gui/CpButton.vue';
 import CpTextInput from '@shared/gui/CpTextInput.vue';
@@ -505,7 +526,11 @@ import CpCheckBox from '@shared/gui/CpCheckBox.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpMap from '@shared/gui/CpMap.vue';
 import type { EventCreateType } from '@shared/api/types';
-import { eventCreate } from '@shared/api';
+import {
+	requestEventCategories,
+	eventCreate,
+	requestCities,
+} from '@shared/api';
 const { $objToFormData } = useNuxtApp();
 
 // Form Data ------------------------------------
@@ -547,6 +572,8 @@ const eventCreateForm = reactive<EventCreateType>({
 });
 
 // Variables ------------------------------------
+const eventCategories = ref([]);
+const cities = ref([]);
 
 const eventCreateFormTemplate = ref<HTMLFormElement | null>(null);
 
@@ -558,19 +585,24 @@ type CheckboxTypes = {
 	title: string;
 }[];
 
-const categoryCheckBoxes:CheckboxTypes = [
-	{ id: 'environmental_awareness', value: 'environmental_awareness', title: 'Consciencia ambiental' },
-	{ id: 'cultural_management', value: 'cultural_management', title: 'Gestion cultural' },
-	{ id: 'performing_arts_dance', value: 'performing_arts_dance', title: 'Artes escenicas y danzas' },
-	{ id: 'photography_audiovisual_cinematography_new_media', value: 'photography_audiovisual_cinematography_new_media', title: 'Fotografia, audiovisual, cinematografico y nuevos medios' },
-	{ id: 'craft', value: 'craft', title: 'Artesania' },
-	{ id: 'visual_art', value: 'visual_art', title: 'Artes visuales' },
-	{ id: 'gallery_art_spaces', value: 'gallery_art_spaces', title: 'Galeria y espacios de arte' },
-	{ id: 'indigenous_native_languages_oral_tradition', value: 'indigenous_native_languages_oral_tradition', title: 'Lenguas indigenas u originarias y tradición oral' },
-	{ id: 'books', value: 'books', title: 'Libro y lectura' },
-	{ id: 'gastronomy', value: 'gastronomy', title: 'Gastronomia tipica' },
-	{ id: 'digital_content_create', value: 'digital_content_create', title: 'Creador de contenido en plataformas digitales' },
-];
+onBeforeMount(() => {
+	getEventCategories();
+	getCities();
+});
+
+const categoryCheckBoxes = computed(() => {
+	if (!eventCategories.value?.length) {
+		return [];
+	}
+
+	return eventCategories.value.map((category) => {
+		return {
+			id: category.attributes.eventCategoryCode,
+			value: category.attributes.eventCategoryCode,
+			title: category.attributes.eventCategoryName,
+		};
+	});
+});
 
 const defaultMediaValue = ref<string>('photo');
 
@@ -579,30 +611,46 @@ const compMediaSwitcherOptions = [
 	{ optionName: 'Upload video', optionValue: 'video', optionKey: 'videoKey' },
 ];
 
-const cityCheckBoxes:CheckboxTypes = [
-	{ id: 'Acomayo', value: 'Acomayo', title: 'Acomayo' },
-	{ id: 'Anta', value: 'Anta', title: 'Anta' },
-	{ id: 'Calca', value: 'Calca', title: 'Calca' },
-	{ id: 'Canas', value: 'Canas', title: 'Canas' },
-	{ id: 'Espinar', value: 'Espinar', title: 'Espinar' },
-	{ id: 'Canchis', value: 'Canchis', title: 'Canchis' },
-	{ id: 'Cusco', value: 'Cusco', title: 'Cusco' },
-	{ id: 'Chumbivilcas', value: 'Chumbivilcas', title: 'Chumbivilcas' },
-	{ id: 'La Convención', value: 'La Convención', title: 'La Convención' },
-	{ id: 'Paruro', value: 'Paruro', title: 'Paruro' },
-	{ id: 'Paucartambo', value: 'Paucartambo', title: 'Paucartambo' },
-	{ id: 'Quispicanchis', value: 'Quispicanchis', title: 'Quispicanchis' },
-	{ id: 'Urubamba', value: 'Urubamba', title: 'Urubamba' },
-];
+const cityCheckBoxes = computed(() => {
+	if (!cities.value?.length) {
+		return [];
+	}
+
+	return cities.value.map((city) => {
+		return {
+			id: city.attributes.cityCode,
+			value: city.attributes.cityCode,
+			title: city.attributes.cityName,
+		};
+	});
+});
 
 // Functions ------------------------------------
+
+const getEventCategories = async () => {
+	try {
+		eventCategories.value = (await requestEventCategories()).data.data;
+	} catch (e) {
+		console.error(e);
+	}
+};
+
+const getCities = async () => {
+	try {
+		cities.value = (await requestCities()).data.data;
+	} catch (e) {
+		console.error(e);
+	}
+};
 
 const checkboxCollectCategories = (e: Event) => {
 	const target = e.target as HTMLInputElement;
 	if (target.checked) {
 		eventCreateForm.eventCategory.push({ categoryName: target.value });
 	} else {
-		eventCreateForm.eventCategory = eventCreateForm.eventCategory.filter((e) => e.categoryName !== target.value);
+		eventCreateForm.eventCategory = eventCreateForm.eventCategory.filter(
+			(e) => e.categoryName !== target.value
+		);
 	}
 };
 
@@ -611,7 +659,9 @@ const checkboxCollectCities = (e: Event) => {
 	if (target.checked) {
 		eventCreateForm.eventCity.push({ cityName: target.value });
 	} else {
-		eventCreateForm.eventCity = eventCreateForm.eventCity.filter((e) => e.cityName !== target.value);
+		eventCreateForm.eventCity = eventCreateForm.eventCity.filter(
+			(e) => e.cityName !== target.value
+		);
 	}
 };
 
@@ -643,422 +693,330 @@ const sendCreateEventForm = async () => {
 </script>
 
 <style scoped lang="scss">
-    .eventForm {
-        padding: 0 20px 0 20px;
-        margin-top: 33px;
+.eventForm {
+	padding: 0 20px 0 20px;
+	margin-top: 33px;
 
-        &-title {
-            width: 100%;
-            font-family: "Poppins-Medium";
-            text-align: center;
-            font-size: 70px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: 120%; 
-            margin-bottom: 50px;
-        }
+	&-title {
+		width: 100%;
+		font-family: 'Poppins-Medium';
+		text-align: center;
+		font-size: 70px;
+		font-style: normal;
+		font-weight: 500;
+		line-height: 120%;
+		margin-bottom: 50px;
+	}
 
-        &-row {
+	&-row {
+		display: flex;
+		align-items: center;
+		margin: 70px 0 70px 0;
+
+		@media (max-width: 955px) {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		&-info {
 			display: flex;
 			align-items: center;
-			margin: 70px 0 70px 0;
+			width: 55%;
+			padding-right: 55px;
+			font-size: 24px;
+			font-weight: 500;
+			line-height: 33.6px;
+			color: $soft-black;
 
-			@media (max-width: 955px) {
-				flex-direction: column;
-				align-items: flex-start;
+			@media screen and (max-width: 955px) {
+				width: 100%;
 			}
 
-			&-info {
-				display: flex;
-				align-items: center;
-				width: 55%;
-				padding-right: 55px;
-				font-size: 24px;
+			span {
+				margin-top: -5px;
+				text-align: start;
+				font-size: 34px;
+				font-style: normal;
 				font-weight: 500;
-				line-height: 33.6px;
-				color: $soft-black;
+				line-height: normal;
 
 				@media screen and (max-width: 955px) {
 					width: 100%;
-				}
-
-				span {
-					margin-top: -5px;
-					text-align: start;
-					font-size: 34px;
-					font-style: normal;
-					font-weight: 500;
-					line-height: normal;
-
-					@media screen and (max-width: 955px) {
-						width: 100%;
-					}
-				}
-
-				&-required {
-					color: red;
-					font-size: 32px;
-				}
-
-				&-switcherBlock {
-					display: flex;
-					height: 45px;
-					margin-top: 30px;
 				}
 			}
 
-			&-input {
+			&-required {
+				color: red;
+				font-size: 32px;
+			}
+
+			&-switcherBlock {
 				display: flex;
-				align-items: center;
-				flex-direction: column;
-				width: 55%;
-				position: relative;
-
-				@media screen and (max-width: 955px) {
-					width: 100%;
-				}
-				
-				input {
-					width: 100%;
-				}
-
-				div {
-					display: flex;
-					flex-wrap: wrap;
-					align-items: center;
-					justify-content: flex-start;
-					width: 100%;
-
-				}
-
-				&-socialsAndContacts {
-					&-social {
-						width: 50%;
-						padding: 10px;
-						margin-top: 15px;
-
-						&-maxWidth {
-							width: 100%;
-							min-height: 250px
-						}
-					}
-
-					span {
-						@media (max-width: 720px) {
-							width: 100%;
-						}
-					}
-
-					@media (max-width: 720px) {
-						flex-direction: column;
-						align-items: flex-start !important;
-					}
-				}
+				height: 45px;
+				margin-top: 30px;
 			}
 		}
 
-		&-upperPositionRow {
+		&-input {
 			display: flex;
-			align-items: flex-start;
-			margin: 60px 0 60px 0;
+			align-items: center;
+			flex-direction: column;
+			width: 55%;
+			position: relative;
 
-			@media (max-width: 955px) {
-				flex-direction: column;
-				align-items: flex-start;
+			@media screen and (max-width: 955px) {
+				width: 100%;
 			}
 
-			&-info {
-				display: flex;
-				align-items: center;
-				width: 55%;
-				padding-right: 55px;
-				font-size: 24px;
-				font-weight: 500;
-				line-height: 33.6px;
-				color: $soft-black;
+			input {
+				width: 100%;
+			}
 
-				@media screen and (max-width: 955px) {
-					width: 100%;
+			div {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				justify-content: flex-start;
+				width: 100%;
+			}
+
+			&-socialsAndContacts {
+				&-social {
+					width: 50%;
+					padding: 10px;
+					margin-top: 15px;
+
+					&-maxWidth {
+						width: 100%;
+						min-height: 250px;
+					}
 				}
 
 				span {
-					margin-top: -5px;
-					text-align: start;
-					font-size: 34px;
-					font-style: normal;
-					font-weight: 500;
-					line-height: normal;
-
-					@media screen and (max-width: 955px) {
+					@media (max-width: 720px) {
 						width: 100%;
 					}
 				}
 
-				&-required {
-					color: red;
-					font-size: 32px;
-				}
-
-				&-switcherBlock {
-					display: flex;
-					height: 45px;
-					margin-top: 30px;
-				}
-			}
-
-			&-input {
-				display: flex;
-				align-items: center;
-				flex-direction: column;
-				width: 55%;
-				position: relative;
-
-				@media screen and (max-width: 955px) {
-					width: 100%;
-				}
-
-				input {
-					width: 100%;
-				}
-
-				div {
-					display: flex;
-					flex-wrap: wrap;
-					align-items: center;
-					justify-content: flex-start;
-					width: 100%;
-
-				}
-
-				&-socialsAndContacts {
-					margin-top: -10px;
-
-					&-social {
-						width: 50%;
-						padding: 20px;
-
-						&-maxWidth {
-							width: 100%;
-							min-height: 250px
-						}
-					}
-
-					span {
-						@media (max-width: 720px) {
-							width: 100%;
-						}
-					}
-					
-					@media (max-width: 720px) {
-						flex-direction: column;
-						align-items: flex-start !important;
-					}
-				}
-
-				&-details {
-					display: flex;
-					flex-direction: flex-start;
+				@media (max-width: 720px) {
+					flex-direction: column;
 					align-items: flex-start !important;
-					width: 100%;
+				}
+			}
+		}
+	}
 
-					@media screen and (max-width: 955px) {
-						flex-direction: column;
+	&-upperPositionRow {
+		display: flex;
+		align-items: flex-start;
+		margin: 60px 0 60px 0;
+
+		@media (max-width: 955px) {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		&-info {
+			display: flex;
+			align-items: center;
+			width: 55%;
+			padding-right: 55px;
+			font-size: 24px;
+			font-weight: 500;
+			line-height: 33.6px;
+			color: $soft-black;
+
+			@media screen and (max-width: 955px) {
+				width: 100%;
+			}
+
+			span {
+				margin-top: -5px;
+				text-align: start;
+				font-size: 34px;
+				font-style: normal;
+				font-weight: 500;
+				line-height: normal;
+
+				@media screen and (max-width: 955px) {
+					width: 100%;
+				}
+			}
+
+			&-required {
+				color: red;
+				font-size: 32px;
+			}
+
+			&-switcherBlock {
+				display: flex;
+				height: 45px;
+				margin-top: 30px;
+			}
+		}
+
+		&-input {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			width: 55%;
+			position: relative;
+
+			@media screen and (max-width: 955px) {
+				width: 100%;
+			}
+
+			input {
+				width: 100%;
+			}
+
+			div {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				justify-content: flex-start;
+				width: 100%;
+			}
+
+			&-socialsAndContacts {
+				margin-top: -10px;
+
+				&-social {
+					width: 50%;
+					padding: 20px;
+
+					&-maxWidth {
+						width: 100%;
+						min-height: 250px;
+					}
+				}
+
+				span {
+					@media (max-width: 720px) {
 						width: 100%;
 					}
+				}
 
-					&-input {
-						width: 50%;
-						min-width: 362px;
-						padding: 10px;
+				@media (max-width: 720px) {
+					flex-direction: column;
+					align-items: flex-start !important;
+				}
+			}
 
-						&-maxWidth {
-							width: 100%;
-							min-height: 250px
-						}
+			&-details {
+				display: flex;
+				flex-direction: flex-start;
+				align-items: flex-start !important;
+				width: 100%;
 
-						@media screen and (max-width: 955px) {
-							width: 100%;
-						}
+				@media screen and (max-width: 955px) {
+					flex-direction: column;
+					width: 100%;
+				}
+
+				&-input {
+					width: 50%;
+					min-width: 362px;
+					padding: 10px;
+
+					&-maxWidth {
+						width: 100%;
+						min-height: 250px;
 					}
 
-					&-input:first-child {
-						width: 50%;
-						min-width: 362px;
-						padding: 10px;
-						margin-top: 0;
+					@media screen and (max-width: 955px) {
+						width: 100%;
+					}
+				}
 
-						&-maxWidth {
-							width: 100%;
-							min-height: 250px
-						}
+				&-input:first-child {
+					width: 50%;
+					min-width: 362px;
+					padding: 10px;
+					margin-top: 0;
 
-						@media screen and (max-width: 955px) {
-							width: 100%;
-						}
+					&-maxWidth {
+						width: 100%;
+						min-height: 250px;
+					}
+
+					@media screen and (max-width: 955px) {
+						width: 100%;
 					}
 				}
 			}
 		}
+	}
 
-		&__map {
-            width: 100%;
-            height: 40vh;
+	&__map {
+		width: 100%;
+		height: 40vh;
 
-			main {
-				border-radius: 30px;
-				overflow: hidden;
-			}
+		main {
+			border-radius: 30px;
+			overflow: hidden;
+		}
 
-			@media screen and (max-width: 600px) {
-				height: 50vh;
-			}
+		@media screen and (max-width: 600px) {
+			height: 50vh;
+		}
 
-			@media screen and (max-width: 520px) {
-				height: 40vh;
-			}
+		@media screen and (max-width: 520px) {
+			height: 40vh;
+		}
 
-            &-title {
-                margin-top: 20px;
-                margin-bottom: 40px;
-                font-size: 60px;
-                line-height: 84px;
-                font-weight: 500;
-                color: #353333;
-            }
-        }
+		&-title {
+			margin-top: 20px;
+			margin-bottom: 40px;
+			font-size: 60px;
+			line-height: 84px;
+			font-weight: 500;
+			color: #353333;
+		}
+	}
 
-		&-buttons {
-			width: 100%;
-			display: flex;
-			justify-content: center;
-			margin-bottom: 70px;
+	&-buttons {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		margin-bottom: 70px;
+
+		@media screen and (max-width: 780px) {
+			flex-direction: column;
+			align-items: center;
+		}
+
+		&-submit {
+			display: block;
+			width: 30%;
+			margin-right: 15px;
 
 			@media screen and (max-width: 780px) {
-				flex-direction: column;
-				align-items: center;
+				width: 60%;
+				margin: 0 0 16px 0;
 			}
 
-			&-submit {
-				display: block;
-				width: 30%;
-				margin-right: 15px;
-
-				@media screen and (max-width: 780px) {
-					width: 60%;
-					margin: 0 0 16px 0;
-				}
-
-				@media screen and (max-width: 485px) {
-					width: 100%;
-				}
-			}
-
-			&-clear {
-				display: block;
-				width: 30%;
-				margin-left: 15px;
-
-				@media screen and (max-width: 780px) {
-					width: 60%;
-					margin: 0 0 -20px 0;
-				}
-
-				@media screen and (max-width: 485px) {
-					width: 100%;
-				}
-			}
-		}
-    }
-
-	.required-input {
-		&-default {
-			width: 100%;
-
-			&-socialMedia {
-				width: 100%;
-				margin-right: 25px;
-			}
-		}
-
-		&-error {
-			&-socialMedia {
-				border-bottom: 1px solid crimson;
-				width: 100%;
-				margin-right: 25px;
-			}
-
-			&-textInput {
-				border: 1px solid crimson;
-				border-radius: 12px;
-			}
-
-			&-info {
-				&-leftSide {
-					display: flex;
-					align-items: center;
-					width: 100%;
-					color: crimson;
-					justify-content: flex-start;
-					line-height: 35px;
-				}
-
-				&-center {
-					display: flex;
-					align-items: center;
-					width: 100%;
-					color: crimson;
-					justify-content: space-around;
-					line-height: 35px;
-				}
-			}
-		}
-	}
-
-	.fullWidth {
-		&-details {
-			@media screen and (max-width: 955px) {
+			@media screen and (max-width: 485px) {
 				width: 100%;
 			}
 		}
 
-		&-socials {
-			@media screen and (max-width: 955px) {
-				width: 100%;
-			}
-		}
+		&-clear {
+			display: block;
+			width: 30%;
+			margin-left: 15px;
 
-		&-banner {
-			@media screen and (max-width: 955px) {
-				display: flex;
-				justify-content: space-around;
-				width: 100%;
+			@media screen and (max-width: 780px) {
+				width: 60%;
+				margin: 0 0 -20px 0;
 			}
-		}
 
-		&-eventName {
-			@media screen and (max-width: 955px) {
-				display: flex;
-				justify-content: space-around;
-				width: 100%;
-			}
-		}
-
-		&-tickets {
-			@media screen and (max-width: 955px) {
-				display: flex;
-				justify-content: space-around;
-				width: 100%;
-			}
-		}
-
-		&-map {
-			@media screen and (max-width: 955px) {
-				display: flex;
-				justify-content: space-around;
+			@media screen and (max-width: 485px) {
 				width: 100%;
 			}
 		}
 	}
+}
 
 .required-input {
 	&-default {
@@ -1099,7 +1057,97 @@ const sendCreateEventForm = async () => {
 				color: crimson;
 				justify-content: space-around;
 				line-height: 35px;
-			}	
+			}
+		}
+	}
+}
+
+.fullWidth {
+	&-details {
+		@media screen and (max-width: 955px) {
+			width: 100%;
+		}
+	}
+
+	&-socials {
+		@media screen and (max-width: 955px) {
+			width: 100%;
+		}
+	}
+
+	&-banner {
+		@media screen and (max-width: 955px) {
+			display: flex;
+			justify-content: space-around;
+			width: 100%;
+		}
+	}
+
+	&-eventName {
+		@media screen and (max-width: 955px) {
+			display: flex;
+			justify-content: space-around;
+			width: 100%;
+		}
+	}
+
+	&-tickets {
+		@media screen and (max-width: 955px) {
+			display: flex;
+			justify-content: space-around;
+			width: 100%;
+		}
+	}
+
+	&-map {
+		@media screen and (max-width: 955px) {
+			display: flex;
+			justify-content: space-around;
+			width: 100%;
+		}
+	}
+}
+
+.required-input {
+	&-default {
+		width: 100%;
+
+		&-socialMedia {
+			width: 100%;
+			margin-right: 25px;
+		}
+	}
+
+	&-error {
+		&-socialMedia {
+			border-bottom: 1px solid crimson;
+			width: 100%;
+			margin-right: 25px;
+		}
+
+		&-textInput {
+			border: 1px solid crimson;
+			border-radius: 12px;
+		}
+
+		&-info {
+			&-leftSide {
+				display: flex;
+				align-items: center;
+				width: 100%;
+				color: crimson;
+				justify-content: flex-start;
+				line-height: 35px;
+			}
+
+			&-center {
+				display: flex;
+				align-items: center;
+				width: 100%;
+				color: crimson;
+				justify-content: space-around;
+				line-height: 35px;
+			}
 		}
 	}
 }
