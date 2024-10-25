@@ -35,6 +35,7 @@
     "@eslint/js": "^9.6.0",
     "@nuxt/eslint": "^0.3.13",
     "@types/eslint__js": "^8.42.3",
+    "@types/qs": "^6.9.16",
     "@vueuse/core": "^11.1.0",
     "@vueuse/nuxt": "^11.1.0",
     "@vusion/webfonts-generator": "^0.8.0",

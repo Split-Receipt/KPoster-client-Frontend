@@ -1,11 +1,12 @@
 import axios from 'axios';
 import qs from 'qs';
+import type { AxiosRequestConfig } from 'axios';
 
 export default defineNuxtPlugin((nuxtApp) => {
 	const config = useRuntimeConfig();
-	const requestLibOptions = {
+	const requestLibOptions: AxiosRequestConfig = {
 		baseURL: config.public.apiBaseUrl as string,
-		paramsSerializer: params => {
+		paramsSerializer: (params: Record<string, any>) => {
 			return qs.stringify(params, { encodeValuesOnly: true });
 		},
 		headers: {
