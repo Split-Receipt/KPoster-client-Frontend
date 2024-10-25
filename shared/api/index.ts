@@ -48,11 +48,6 @@ export const requestEventsColletions = (filters) => {
 		populate: {
 			events: {
 				populate: {
-					eventAddress: {
-						populate: {
-							city: true,
-						},
-					},
 					eventGallery: {
 						populate: '*',
 					},

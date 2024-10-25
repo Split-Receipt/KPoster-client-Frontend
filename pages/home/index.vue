@@ -18,7 +18,7 @@
 					@change:event-host="(value) => changeFilters(value, 'eventHost')"
 				/>
 				<event-category-drop-down
-					@change:filter-culture-cats="
+					@change:filter-event-cats="
 						(value) => changeFilters(value, 'eventCategory')
 					"
 				/>

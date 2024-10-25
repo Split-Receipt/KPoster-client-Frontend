@@ -39,9 +39,9 @@ const formatedEventCategoryData = computed(() => {
 
 	return options.map((option: any) => {
 		return {
-			item_title: option.attributes.eventTypeName,
-			item_UID: option.attributes.eventTypeCode,
-			item_value: option.attributes.eventTypeCode,
+			item_title: option.attributes.eventCategoryName,
+			item_UID: option.attributes.eventCategoryCode,
+			item_value: option.attributes.eventCategoryCode,
 			createdAt: option.attributes.createdAt,
 			updatedAt: option.attributes.updatedAt,
 			locale: option.attributes.locale,
