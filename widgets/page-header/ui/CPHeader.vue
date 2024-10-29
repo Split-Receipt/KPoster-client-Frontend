@@ -55,13 +55,6 @@
 						text=""
 						@click="handleModalOpen"
 					/>
-					<cp-button
-						color="gray"
-						with-image="/../public/images/ticket.svg"
-						size="small"
-						shape="circle"
-						text=""
-					/>
 					<lang-selector />  
 				</div>  
 			</div>  
