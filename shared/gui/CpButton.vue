@@ -201,6 +201,12 @@ enum buttonWidth {
 
 	&--yellow-grey {
 		background: $button-gradient-background-color;
+		animation: 0.3s reverseButtonAnimation backwards;
+		transition: all 0.3s ease;
+		&:hover {
+			animation: 0.3s defaultButtonAnimation forwards;
+			transition: all 0.3s ease;
+		}
 	}
 
 	&--gray {
