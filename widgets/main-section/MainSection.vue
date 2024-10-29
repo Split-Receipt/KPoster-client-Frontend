@@ -17,7 +17,10 @@
 				</div>
 
 				<div class="main-section__carousel">
-					<event-carousel :id="id" :event-data="collectionData.attributes.events.data" />
+					<event-carousel
+						:id="collectionData.id"
+						:event-data="collectionData.attributes.events.data"
+					/>
 				</div>
 			</div>
 		</section>
@@ -25,27 +28,13 @@
 </template>
 
 <script setup lang="ts">
+import type { EventColletion } from '@shared/api/types';
 type Props = {
-	collectionData: {
-		attributes: {
-			collectionName: string;
-			collectionDescription?: string;
-			collectionCode: string;
-		};
-		id: string;
-	};
+	collectionData: EventColletion;
 	size?: string;
 };
 
-// type CardData = {
-// 	image: string;
-// 	title: string;
-// 	text: string;
-// 	dateEvent: string;
-// };
-
-const props = withDefaults(defineProps<Props>(), {
-	collectionDescription: '',
+withDefaults(defineProps<Props>(), {
 	size: 'small',
 });
 </script>

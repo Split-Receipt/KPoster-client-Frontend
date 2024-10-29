@@ -56,3 +56,104 @@ export type RequestOption = {
 		locale: string;
 	};
 };
+
+export type Event = {
+	id: number,
+	attributes: {
+			eventName: string,
+			eventDescription: string,
+			eventId: string,
+			eventDate: string,
+			createdAt: string,
+			updatedAt: string,
+			publishedAt: string,
+			locale: string,
+			linkToBuyTicket: string,
+			eventShortDescription: string,
+			eventDuration: string | null,
+			eventRules: string | null,
+			eventAgeRestrictions: string | null,
+			eventAddress: {
+					id: number,
+					address: string,
+					eventCoordinates: string,
+					city: {
+							data: City
+					}
+			}
+			eventBanner: {
+					data: StrapiMediaDefaultType
+			}
+			eventMediaPhotos: {
+				data: StrapiMediaDefaultType[]
+			}
+	}
+};
+
+export type City = {
+	id: 6,
+	attributes: {
+			cityName: string,
+			cityCode: string,
+			createdAt: string,
+			updatedAt: string,
+			publishedAt: string,
+			locale: string,
+	}
+};
+
+export type EventColletion = {
+	id: 1,
+	attributes: {
+			collectionName: string,
+			createdAt: string,
+			updatedAt: string,
+			publishedAt: string,
+			collectionCode: string,
+			collectionDescription: string,
+			events: {
+				data: Event[]
+			}
+	}
+};
+
+export type StrapiMediaDefaultType =	{
+				id: number,
+				attributes: {
+						name: string,
+						alternativeText: string | null,
+						caption: string | null,
+						width: number,
+						height: number,
+						formats: {
+								large: StrapiMediaFormat,
+								small: StrapiMediaFormat,
+								medium: StrapiMediaFormat,
+								thumbnail: StrapiMediaFormat,
+						},
+						hash: string,
+						ext: string,
+						mime: string,
+						size: number,
+						url: string,
+						previewUrl: string | null,
+						provider: string,
+						provider_metadata: string | null,
+						createdAt: string,
+						updatedAt: string,
+						related: any[]
+					}
+};
+
+type StrapiMediaFormat = {
+	ext: string,
+	url: string,
+	hash: string,
+	mime: string,
+	name: string,
+	path: string | null,
+	size: number,
+	width: number,
+	height: number,
+	sizeInBytes: number
+};

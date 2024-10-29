@@ -38,7 +38,10 @@ export const requestEventsColletions = (filters) => {
 							city: true,
 						},
 					},
-					eventGallery: {
+					eventBanner: {
+						populate: '*',
+					},
+					eventMediaPhotos: {
 						populate: '*',
 					},
 				},

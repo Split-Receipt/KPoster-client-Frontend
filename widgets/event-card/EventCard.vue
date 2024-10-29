@@ -19,7 +19,7 @@
 				class="event-card__date"
 				:class="[eventCardDateSize[size as eventCardDateSizeType]]"
 			>
-				{{formatedDate}}
+				{{ formatedDate }}
 			</span>
 
 			<div class="event-card__controls">
@@ -45,13 +45,28 @@
 
 <script setup lang="ts">
 import { format } from 'date-fns';
+import type { EventCard } from '@widgets/event-card/types/types';
 const props = withDefaults(defineProps<Props>(), {
 	size: 'small',
-	eventCardData: () => ({
-		image: '',
-		title: 'Event Name',
-		text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-		dateEvent: '01/01/2024',
+	eventCardData: (): Props['eventCardData'] => ({
+		id: 1,
+		attributes: {
+			linkToBuyTicket: '#',
+			eventMediaPhotos: {
+				data: [
+					{
+						id: 1,
+						attributes: {
+							url: 'event-card-1.png',
+						},
+					},
+				],
+			},
+			eventName: 'Event Name',
+			eventDate: '01/01/2024',
+			eventShortDescription:
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+		},
 	}),
 });
 const config = useRuntimeConfig();
@@ -62,33 +77,22 @@ type Props = {
 		| eventCardButtonSizeType
 		| eventCardDateSizeType
 		| eventCardTextSizeType;
-	eventCardData: CardData;
-};
-
-type CardData = {
-	attributes: {
-		eventName: string;
-		eventShortDescription: string;
-		eventGallery: {
-			attributes: {
-				url: string;
-			};
-		}[];
-		linkToBuyTicket: string;
-		eventDate: string;
-	};
+	eventCardData: EventCard;
 };
 
 const photoUrl =
 	config.public.apiBaseUrl +
-	props.eventCardData.attributes.eventGallery.data[0].attributes.url;
+	props.eventCardData.attributes.eventMediaPhotos.data[0].attributes.url;
 
 function buyTicketHandler() {
 	window.open(props.eventCardData.attributes.linkToBuyTicket, '_blank');
 }
 
 const formatedDate = computed(() => {
-	return format(new Date(props.eventCardData.attributes.eventDate),	'dd/MM/yyyy');
+	return format(
+		new Date(props.eventCardData.attributes.eventDate),
+		'dd/MM/yyyy'
+	);
 });
 
 function learnMoreHandler() {
