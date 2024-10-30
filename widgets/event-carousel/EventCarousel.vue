@@ -127,6 +127,10 @@ withDefaults(defineProps<Props>(), {
 		@media #{$screen-tablet} {
 			display: block;
 		}
+
+		@media screen and (max-width: 960px) {
+			display: none;
+		}
 	}
 }
 
