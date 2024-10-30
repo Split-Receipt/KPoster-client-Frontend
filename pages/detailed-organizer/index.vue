@@ -37,9 +37,9 @@
 			/> 
 		</div>
         
-		<div class="organizer-events">
+		<!-- <div class="organizer-events">
 			<event-carousel id="organizer-events-carousel" :event-data="sectionData[0].eventData" />
-		</div>
+		</div> -->
         
 		<div class="organizer-infoImage">
 			<nuxt-img loading="lazy" src="../public/images/partnrerInfoImg.jpg"/>
@@ -80,10 +80,7 @@
 			<iframe
 				src="https://www.youtube.com/embed/Y3ywicffOj4?si=1lWD8HxFUFOGH6Av"
 				title="YouTube video player"
-				frameborder="0"
-				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-				referrerpolicy="strict-origin-when-cross-origin"
-				allowfullscreen/>
+			/>
 		</div>
 
 		<div class="organizer-map">
@@ -806,14 +803,33 @@ const sectionData = [
 		}
 
 		&-video {
+			position: relative;
 			width: calc(100% + 40px);
+			height: 75vh;
 			margin: 0 0 70px -20px;
 			display: flex;
 			justify-content: space-around;
+		
 			iframe {
 				border-radius: 8px;
-				width: 75%;
-				height: 75vh;
+				height: 100%;
+				width: 95%;
+			}
+
+			@media screen and (max-width: 875px) {
+				height: 60vh;
+			}
+
+			@media screen and (max-width: 600px) {
+				height: 50vh;
+			}
+
+			@media screen and (max-width: 550px) {
+				height: 40vh;
+			}
+
+			@media screen and (max-width: 505px) {
+				height: 30vh;
 			}
 		}
 
