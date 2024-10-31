@@ -5,7 +5,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 	const config = useRuntimeConfig();
 	const requestLibOptions = {
 		baseURL: config.public.apiBaseUrl as string,
-		paramsSerializer: params => {
+		paramsSerializer: (params: Record<string, any>) => {
 			return qs.stringify(params, { encodeValuesOnly: true });
 		},
 		headers: {
