@@ -73,28 +73,33 @@
 </template>
 
 <script setup lang="ts">
+import type { EventCard } from '@widgets/event-card/types/types';
 type Props = {
-	eventData: Array<CardData>;
+	eventData: Array<EventCard>;
 	id: string | number;
 };
 
-type CardData = {
-	attributes: {
-		linkToBuyTicket: string;
-		eventGallery: any[];
-		eventName: string;
-		eventDate: string;
-		eventShortDescription: string;
-	};
-};
-
 withDefaults(defineProps<Props>(), {
-	eventData: () => [
+	eventData: (): Props['eventData'] => [
 		{
-			image: 'event-card-1.png',
-			title: 'Event Name',
-			text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-			dateEvent: '01/01/2024',
+			id: 1,
+			attributes: {
+				linkToBuyTicket: '#',
+				eventDate: '01/01/2024',
+				eventName: 'Event Name',
+				eventShortDescription:
+					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+				eventMediaPhotos: {
+					data: [
+						{
+							id: 1,
+							attributes: {
+								url: 'event-card-1.png',
+							},
+						},
+					],
+				},
+			},
 		},
 	],
 });
@@ -121,6 +126,10 @@ withDefaults(defineProps<Props>(), {
 
 		@media #{$screen-tablet} {
 			display: block;
+		}
+
+		@media screen and (max-width: 960px) {
+			display: none;
 		}
 	}
 }
