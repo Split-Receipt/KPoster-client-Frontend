@@ -1,7 +1,7 @@
 //Colors
 $button-black-background-color: $black;
 $button-white-background-color: $white;
-$button-gradient-background-color: $yellow-gray-gradient;
+$button-gradient-background-color: $yellow-gray-gradient-default;
 $button-gray-background-color: $default-background;
 $button-default-background-color: transparent;
 
@@ -52,3 +52,99 @@ $button-default-padding: 25px 40px 20px 40px;
 
 $button-icon-circle-font-size: 22px;
 $button-icon-square-font-size: 31px;
+
+// Animations
+
+// linear-gradient(82.62deg, #ffd600 0%, #ff3938e5 92%)
+
+@keyframes defaultButtonAnimation {
+	0% {
+		background: $yellow-gray-gradient-default;
+	}
+
+	10% {
+		background: linear-gradient(82.62deg, #ffd450 0%, #ff5338 92%);
+	}
+
+	20% {
+		background: linear-gradient(82.62deg, #ffd350 0%, #ff6b38 92%);
+	}
+
+	30% {
+		background: linear-gradient(82.62deg, #ffd600 0%, #ff8938 92%);
+	}
+
+	40% {
+		background: linear-gradient(82.62deg, #ffb838 0%, #ff9638 92%);
+	}
+
+	50% {
+		background: linear-gradient(82.62deg, #ffa438 0%, #ffa438 92%);
+	}
+
+	60% {
+		background: linear-gradient(82.62deg, #ff9638 0%, #ffb838 92%);
+	}
+
+	70% {
+		background: linear-gradient(82.62deg, #ff8938 0%, #ffc238 92%);
+	}
+
+	80% {
+		background: linear-gradient(82.62deg, #ff6b38 0%, #ffd350 92%);
+	}
+
+	90% {
+		background: linear-gradient(82.62deg, #ff5338 0%, #ffd450 92%);
+	}
+
+	100% {
+		background: $yellow-gray-gradient-reverse;
+	}
+}
+
+@keyframes reverseButtonAnimation {
+	0% {
+		background: $yellow-gray-gradient-reverse;
+	}
+
+	10% {
+		background: linear-gradient(82.62deg, #ff5338 0%, #ffd450 92%);
+	}
+
+	20% {
+		background: linear-gradient(82.62deg, #ff6b38 0%, #ffd350 92%);
+	}
+
+	30% {
+		background: linear-gradient(82.62deg, #ff8938 0%, #ffc238 92%);
+	}
+
+	40% {
+		background: linear-gradient(82.62deg, #ff9638 0%, #ffb838 92%);
+	}
+
+	50% {
+		background: linear-gradient(82.62deg, #ffa438 0%, #ffa438 92%);
+	}
+
+	60% {
+		background: linear-gradient(82.62deg, #ffb838 0%, #ff9638 92%);
+	}
+
+	70% {
+		background: linear-gradient(82.62deg, #ffc238 0%, #ff8938 92%);
+	}
+
+	80% {
+		background: linear-gradient(82.62deg, #ffd350 0%, #ff6b38 92%);
+	}
+
+	90% {
+		background: linear-gradient(82.62deg, #ffd450 0%, #ff5338 92%);
+	}
+
+	100% {
+		background: $yellow-gray-gradient-default;
+	}
+}

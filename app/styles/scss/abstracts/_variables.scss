@@ -12,12 +12,18 @@ $boulder: #777777;
 $gold: #ffd600;
 $silver-chalice: #aaaaaa;
 $default-background: #eeeeee;
-$sunrise-red: #ff3938e5;
+$sunrise-red: #ff3938;
 
-$yellow-gray-gradient: linear-gradient(
+$yellow-gray-gradient-default: linear-gradient(
 	82.62deg,
-	$gold 0.76%,
-	$sunrise-red 92.06%
+	$gold 0%,
+	$sunrise-red 92%
+);
+
+$yellow-gray-gradient-reverse: linear-gradient(
+	82.62deg,
+	$sunrise-red 0%,
+	$gold 92%
 );
 
 // Fonts
