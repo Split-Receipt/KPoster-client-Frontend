@@ -24,6 +24,10 @@ const props = defineProps<HugeLinkProps>();
         background: $button-gradient-background-color;
         position: relative;
 
+        @media screen and (max-width: 999px) {
+            width: 100%;
+        }
+
         &__title {
             width: 80%;
             height: 100%;
