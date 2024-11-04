@@ -108,6 +108,7 @@ export type Event = {
 			eventDuration: string | null,
 			eventRules: string | null,
 			eventAgeRestrictions: string | null,
+			socialMedias: SocialMedia[]
 			eventAddress: {
 					id: number,
 					address: string,
@@ -126,7 +127,7 @@ export type Event = {
 };
 
 export type City = {
-	id: 6,
+	id: number,
 	attributes: {
 			cityName: string,
 			cityCode: string,
@@ -191,4 +192,34 @@ type StrapiMediaFormat = {
 	width: number,
 	height: number,
 	sizeInBytes: number
+};
+
+export type CollectionFilters = {
+	events: {
+		eventDate: {
+			$eq: Date;
+		};
+		eventAddress?: {
+			city: {
+				cityCode: {
+					$in: string[];
+				};
+			};
+		};
+		eventHost?: {
+			eventHostCode: {
+				$in: string[];
+			};
+		};
+		eventCategory?: {
+			eventCategoryCode: {
+				$in: string[];
+			};
+		};
+	};
+};
+
+export type SocialMedia = {
+		socialMediaName: string;
+		socialMediaLink: string;
 };

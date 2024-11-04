@@ -5,21 +5,21 @@
 
 			<div class="main-page__date-carousel">
 				<date-card-carousel
-					@change:filter-date="(value) => changeFilters(value, 'date')"
+					@change:filter-date="(value: Date) => changeFilters(value, 'date')"
 				/>
 			</div>
 
 			<div class="main-page__filters">
 				<city-drop-down
-					@change:filter-cities="(value) => changeFilters(value, 'city')"
+					@change:filter-cities="(value: string[]) => changeFilters(value, 'city')"
 				/>
 
 				<partners-drop-down
-					@change:event-host="(value) => changeFilters(value, 'eventHost')"
+					@change:event-host="(value: string[]) => changeFilters(value, 'eventHost')"
 				/>
 				<event-category-drop-down
 					@change:filter-event-cats="
-						(value) => changeFilters(value, 'eventCategory')
+						(value: string[]) => changeFilters(value, 'eventCategory')
 					"
 				/>
 			</div>
@@ -39,9 +39,11 @@ import PartnersDropDown from '@features/partners-filter/PartnersDropDown.vue';
 import CityDropDown from '@features/city-filter/CityDropDown.vue';
 import EventCategoryDropDown from '@features/event-category-filter/EventCategoryDropDown.vue';
 import { requestEventsColletions } from '@shared/api';
+import type { CollectionFilters } from '@shared/api/types';
+
 const { availableLocales, setLocale } = useI18n();
 const eventsCollections = ref();
-const filters = {
+const filters: CollectionFilters = {
 	events: {
 		eventDate: {
 			$eq: new Date(),
@@ -75,6 +77,7 @@ const getEventsCollection = async () => {
 };
 
 const changeFilters = (data: any, filterPath: string) => {
+	// console.log(data, filterPath);
 	switch (filterPath) {
 		case 'city': {
 			filters.events.eventAddress = {

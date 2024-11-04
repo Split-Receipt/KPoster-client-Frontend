@@ -65,7 +65,10 @@
 				}"
 			>
 				<swiper-slide v-for="(card, index) in eventData" :key="index">
-					<event-card :event-card-data="card" />
+					<event-card
+						:event-card-data="card"
+						@click="toEventDetailPage(card.id)"
+					/>
 				</swiper-slide>
 			</swiper>
 		</div>
@@ -103,6 +106,11 @@ withDefaults(defineProps<Props>(), {
 		},
 	],
 });
+const router = useRouter();
+
+const toEventDetailPage = (cardId: number) => {
+	router.push(`/detailed-event/${cardId}`);
+};
 </script>
 
 <style scoped lang="scss">

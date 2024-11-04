@@ -71,19 +71,22 @@ import {
 	startOfDay,
 	addDays,
 	addMonths,
+	isEqual,
 } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 const props = withDefaults(defineProps<Props>(), {
 	dateStart: () => addDays(new Date(), -3),
 	dateEnd: () => addMonths(new Date(), 3),
+	preSelectedDate: () => startOfDay(new Date()),
 });
 
-defineEmits<Events>();
+const emit = defineEmits<Events>();
 
 type Props = {
 	dateStart?: Date;
 	dateEnd?: Date;
+	preSelectedDate?: Date;
 };
 
 type AllDaysOfInterval = {
@@ -126,8 +129,19 @@ const createAllDaysOfInterval = () => {
 	dateLoaded.value = true;
 };
 
+const selectDateFromDefault = () => {
+	if (props.preSelectedDate) {
+		activeItem.value = allDaysOfInterval.value.findIndex(
+			(item: AllDaysOfInterval) =>
+				isEqual(props.preSelectedDate, item.dateString)
+		);
+		emit('change:filterDate', props.preSelectedDate);
+	}
+};
+
 onMounted(async () => {
 	createAllDaysOfInterval();
+	selectDateFromDefault();
 });
 </script>
 

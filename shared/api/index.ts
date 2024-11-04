@@ -1,5 +1,5 @@
 import { useNuxtApp } from 'nuxt/app';
-import type { PartnerRegistration } from '@shared/api/types.ts';
+import type { CollectionFilters, PartnerRegistration } from '@shared/api/types.ts';
 import type { EventCreateType } from '@shared/api/types';
 
 export const registerPartner = (partnerInfo: PartnerRegistration) => {
@@ -42,7 +42,7 @@ export const requestEventCategories = () => {
 	return $api.get('/api/event-categories');
 };
 
-export const requestEventsColletions = (filters) => {
+export const requestEventsColletions = (filters: CollectionFilters) => {
 	const { $api } = useNuxtApp();
 	const params = {
 		populate: {
@@ -54,6 +54,9 @@ export const requestEventsColletions = (filters) => {
 						},
 					},
 					eventBanner: {
+						populate: '*',
+					},
+					eventSocialMedias: {
 						populate: '*',
 					},
 					eventMediaPhotos: {
@@ -73,3 +76,18 @@ export const requestEventsColletionByCode = (collectionCode: string) => {
 
 	return $api.get(`api/events-collections/${collectionCode}`);
 };
+
+export const requestEventById = (id: string) => {
+	const { $api } = useNuxtApp();
+	const params = {
+		populate: '*',
+		eventAddresses: {
+			populate: {
+				city: true,
+			},
+		},
+	};
+
+	return $api.get(`api/events/${id}`, { params });
+};
+
