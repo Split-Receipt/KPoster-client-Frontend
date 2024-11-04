@@ -98,13 +98,7 @@ export type Event = {
 			eventDigitalCatalog?: string,
 			eventWebSite?: string,
 			eventName: string,
-			eventHost: {
-				data: {
-					attributes: {
-						commercialName: string
-					}
-				}
-			}
+			eventHost: EventHost
 			eventDescription: string,
 			eventCategory:{
 				data: {
@@ -247,3 +241,78 @@ export enum CollectionTypes {
 	forMainPage = 'Para principal',
 	forSinglePages = 'Para páginas individuales'
 }
+
+export type EventHost = {
+	data: {
+		attributes: {
+			commercialName: string
+			compName: string
+			ruc: string
+			videoBusinessCard: {
+				data: StrapiMediaDefaultType[]
+			}
+			mainBanner: {
+				data: StrapiMediaDefaultType
+			}
+			compVideoFile: {
+				data: StrapiMediaDefaultType
+			}
+			mostPopularProduct: {
+				data: StrapiMediaDefaultType
+			}
+			digitalCatalog: string
+			productDescriptionFile: {
+				data: StrapiMediaDefaultType
+			}
+			galleryImages: {
+				data: StrapiMediaDefaultType[]
+			}
+			contacts: {
+						id: number
+						place: string
+						tel: string
+						mail: string
+					}
+			productDescriptionText: string
+			productDescriptionLink: string
+			compVideoLink: string
+			startDate: Date
+			personCount: number
+			middleAge: number
+			womenPercentage: number
+			orgWorkType: string
+			personalName: string
+			personalIdentifyingDocument: string
+			personalDocumentScan: {
+				data: StrapiMediaDefaultType
+			}
+			orgResume: string
+			affiliations: {
+				data: {
+					attributes: {
+						affiliationName: string
+					}
+				}[]
+			}
+			areas_de_la_cultura: {
+				data: {
+					attributes: {
+						cultureTypeName: string
+					}
+				}[]
+			}
+			orgLocation: {
+				data: City[]
+		}
+		events: {
+			data: Event[]
+		}
+		orgType: string
+		eventHostCode: string
+		createdAt: string
+		updatedAt: string
+		publishedAt: string
+		locale: string
+		}
+	}
+};

@@ -80,11 +80,30 @@ export const requestEventsColletionByCode = (collectionCode: string) => {
 export const requestEventById = (id: string) => {
 	const { $api } = useNuxtApp();
 	const params = {
-		populate: '*',
-		eventAddresses: {
+		populate: {
+
+		eventHost: {
+			populate: {
+				contacts: true,
+			},
+		},
+		eventBanner: {
+			populate: '*',
+		},
+
+		eventMediaPhotos: {
+			populate: '*',
+		},
+
+		socialMedias: {
+			populate: '*',
+		},
+
+		eventAddress: {
 			populate: {
 				city: true,
 			},
+		},
 		},
 	};
 
