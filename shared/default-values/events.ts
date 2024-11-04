@@ -3,6 +3,22 @@ import type { Event } from '@shared/api/types';
 export const EventDefaultValue: Event = {
   id: 12,
   attributes: {
+		eventDigitalCatalog: '#',
+		eventWebSite: '#',
+		eventHost: {
+			data: {
+				attributes: {
+					commercialName: 'Event Host',
+				 },
+			},
+		},
+		eventCategory: {
+			data: [{
+				attributes: {
+					eventCategoryName: 'Event Category',
+				},
+			}],
+		},
     eventName: 'Event Name',
     eventDescription: 'Event Description',
     eventId: 'event-1',
@@ -25,7 +41,7 @@ export const EventDefaultValue: Event = {
     eventAddress: {
       id: 12,
       address: 'Event Address',
-      eventCoordinates: 'Event Coordinates',
+      eventCoordinates: '-12.046016, -77.030554',
       city: {
         data: {
           id: 6,

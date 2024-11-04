@@ -15,46 +15,54 @@
 
 		<div class="detailed__relatedList">
 			<cp-huge-link-btn
+				v-if="event.attributes.eventDigitalCatalog"
 				class="detailed__relatedList-item"
 				huge-title="Tu catalogo digital"
-				huge-link="https://www.youtube.com/watch?v=zw79RVnlCb0"
+				:huge-link="formatExternalLink(event.attributes.eventDigitalCatalog)"
 			/>
-			<cp-huge-link-btn
+			<!-- <cp-huge-link-btn
 				class="detailed__relatedList-item"
 				huge-title="Crea tu propio catalogo digital"
 				huge-link="https://www.youtube.com/watch?v=zw79RVnlCb0"
-			/>
+			/> -->
 			<cp-huge-link-btn
+				v-if="event.attributes.eventWebSite"
 				class="detailed__relatedList-item"
 				huge-title="Pagina web"
-				huge-link="https://www.youtube.com/watch?v=zw79RVnlCb0"
+				:huge-link="formatExternalLink(event.attributes.eventWebSite)"
 			/>
 		</div>
 
 		<div class="detailed__EventCard">
-			<h2 class="detailed__EventCard-title">Event card</h2>
+			<h2 class="detailed__EventCard-title">
+				{{ event.attributes.eventName }}
+			</h2>
 			<div class="detailed__EventCard-text">
 				<span>
-					Nombre de la empresa
+					{{ event.attributes.eventHost.data.attributes.commercialName }}
 					<p>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-						eiusmod tempor incididunt ut labore et dolore magna aliqua. A diam
-						maecenas sed enim ut sem viverra aliquet eget. Amet venenatis urna
-						cursus eget nunc scelerisque. Lorem ipsum dolor sit amet,
-						consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-						labore et dolore magna aliqua.
+						<cp-markdown-viewer
+							:markdown-text="event.attributes.eventDescription"
+						/>
 					</p>
 				</span>
 			</div>
 		</div>
 
-		<div class="detailed__mainImage">
+		<div ref="mainImage" class="detailed__mainImage">
 			<div class="detailed__mainImage-info">
-				<span class="detailed__mainImage-info-title">Vajilla de barro</span>
-				<span class="detailed__mainImage-info-text"
-				>Propuesta comercial única</span
+				<span class="detailed__mainImage-info-title">{{
+					event.attributes.eventName
+				}}</span>
+				<span
+					v-for="categoryName in eventCategoriesNames"
+					:key="categoryName"
+					class="detailed__mainImage-info-text"
+				>{{ categoryName }}</span
 				>
-				<span class="detailed__mainImage-info-date">de 22.07 a 5.08</span>
+				<span class="detailed__mainImage-info-date">{{
+					format(event.attributes.eventDate, 'PPPPpppp')
+				}}</span>
 				<span class="detailed__mainImage-info-button">
 					<cp-button
 						color="yellowGrey"
@@ -63,15 +71,18 @@
 						width="maxWidth"
 						size="middle"
 						:islink="true"
-						link-to="#"
+						:link-to="formatExternalLink(event.attributes.linkToBuyTicket)"
 					/>
 				</span>
 			</div>
 		</div>
 
-		<div class="detailed__map">
+		<div v-if="getEventCoordinates.center" class="detailed__map">
 			<h2 class="detailed__map-title">Dirección del evento</h2>
-			<cp-map :map-markers="testMarkers" :center="testMapCenter" />
+			<cp-map
+				:map-markers="getEventCoordinates.marker"
+				:center="getEventCoordinates.center"
+			/>
 		</div>
 
 		<div class="detailed__comment">
@@ -164,24 +175,25 @@
 				</div>
 			</div>
 		</div>
+		<event-detail-rec />
 
-		<div class="detailed__carousel slider-recomended">
+		<!-- <div class="detailed__carousel slider-recomended">
 			<h2 class="detailed__carousel-title-recomended">
 				Recomendaciones para usted
-			</h2>
-			<!-- <event-carousel
+			</h2> -->
+		<!-- <event-carousel
 				id="detailed-carousel"
 				:event-data="sectionData[0].eventData"
 			/> -->
-		</div>
+		<!-- </div> -->
 
-		<div class="detailed__carousel slider-closestPlaces">
-			<h2 class="detailed__carousel-title-closestPlaces">Lugares cercanos</h2>
-			<!-- <event-carousel
+		<!-- <div class="detailed__carousel slider-closestPlaces">
+			<h2 class="detailed__carousel-title-closestPlaces">Lugares cercanos</h2> -->
+		<!-- <event-carousel
 				id="detailed-carousel"
 				:event-data="sectionData[0].eventData"
 			/> -->
-		</div>
+		<!-- </div> -->
 	</div>
 </template>
 
@@ -190,18 +202,44 @@ import CpSocialLink from '@shared/gui/CpSocialLink.vue';
 import CpHugeLinkBtn from '@shared/gui/CpHugeLinkBtn.vue';
 import CpMap from '@shared/gui/CpMap.vue';
 import CpButton from '@shared/gui/CpButton.vue';
+import CpMarkdownViewer from '@shared/gui/CpMarkdownViewer.vue';
 import { requestEventById } from '@shared/api';
 import type { Event } from '@shared/api/types';
 import { EventDefaultValue } from '@shared/default-values/events';
+import { formatExternalLink } from '@shared/helpers/formatText';
+import { format } from 'date-fns';
+import { useRuntimeConfig } from 'nuxt/app';
+import EventDetailRec from '@widgets/recommendations/EventDetailRec.vue';
 
 const route = useRoute();
 const id = route.params.id as string;
 
-const event = ref<Event>(EventDefaultValue);
+const config = useRuntimeConfig();
 
-onBeforeMount(() => {
-	getEventById(id);
+const event = ref<Event>(EventDefaultValue);
+const mainImage = ref<HTMLElement>();
+
+onBeforeMount(async () => {
+	await getEventById(id);
+	changeMainImage();
 });
+
+const changeMainImage = () => {
+	if (
+		!event.value.attributes.eventBanner &&
+		!event.value.attributes.eventMediaPhotos.data.length
+	) {
+		return;
+	}
+	const imageSource =
+		event.value.attributes.eventBanner.data ??
+		event.value.attributes.eventMediaPhotos.data[0].attributes.url;
+	if (mainImage.value) {
+		mainImage.value.style.backgroundImage = `url(${
+			config.public.apiBaseUrl + imageSource
+		})`;
+	}
+};
 
 const getEventById = async (id: string) => {
 	try {
@@ -212,8 +250,18 @@ const getEventById = async (id: string) => {
 	}
 };
 
-const testMarkers = [{ coordinates: [-12.046016, -77.030554] }];
-const testMapCenter = [-12.046016, -77.030554];
+const getEventCoordinates = computed(() => {
+	if (!event.value.attributes.eventAddress.eventCoordinates) {
+		return {};
+	}
+
+	return {
+		marker: [
+			{ coordinates: event.value.attributes.eventAddress.eventCoordinates },
+		],
+		center: event.value.attributes.eventAddress.eventCoordinates,
+	};
+});
 
 const eventSocialMedias = computed(() => {
 	if (!event.value.attributes?.socialMedias?.length) {
@@ -221,6 +269,16 @@ const eventSocialMedias = computed(() => {
 	}
 
 	return event.value.attributes.socialMedias;
+});
+
+const eventCategoriesNames = computed(() => {
+	if (!event.value.attributes.eventCategory.data.length) {
+		return [];
+	}
+
+	return event.value.attributes.eventCategory.data.map((category) => {
+		return category.attributes.eventCategoryName;
+	});
 });
 </script>
 

@@ -95,8 +95,23 @@ export type EventCreateType = {
 export type Event = {
 	id: number,
 	attributes: {
+			eventDigitalCatalog?: string,
+			eventWebSite?: string,
 			eventName: string,
+			eventHost: {
+				data: {
+					attributes: {
+						commercialName: string
+					}
+				}
+			}
 			eventDescription: string,
+			eventCategory:{
+				data: {
+					attributes: {
+						eventCategoryName: string
+					}
+				}[] },
 			eventId: string,
 			eventDate: string,
 			createdAt: string,
@@ -195,9 +210,13 @@ type StrapiMediaFormat = {
 };
 
 export type CollectionFilters = {
+	type: {
+		$eq: typeof CollectionTypes[keyof typeof CollectionTypes]
+	};
 	events: {
 		eventDate: {
-			$eq: Date;
+			$eq?: Date;
+			$gte?: Date;
 		};
 		eventAddress?: {
 			city: {
@@ -223,3 +242,8 @@ export type SocialMedia = {
 		socialMediaName: string;
 		socialMediaLink: string;
 };
+
+export enum CollectionTypes {
+	forMainPage = 'Para principal',
+	forSinglePages = 'Para páginas individuales'
+}

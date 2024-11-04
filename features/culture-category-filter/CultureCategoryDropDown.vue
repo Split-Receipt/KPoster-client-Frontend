@@ -13,7 +13,7 @@ import CpDropDown from '@shared/gui/CpDropDown.vue';
 import { requestCategories } from '@shared/api';
 
 type Events = {
-	(event: 'change:filterCultureCats', value: string): void;
+	(event: 'change:filterCultureCats', value: string[]): void;
 };
 
 const emit = defineEmits<Events>();

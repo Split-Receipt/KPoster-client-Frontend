@@ -18,9 +18,7 @@
 					@change:event-host="(value: string[]) => changeFilters(value, 'eventHost')"
 				/>
 				<event-category-drop-down
-					@change:filter-event-cats="
-						(value: string[]) => changeFilters(value, 'eventCategory')
-					"
+					@change:filter-event-cats="(value: string[]) => changeFilters(value, 'eventCategory')"
 				/>
 			</div>
 			<div class="main-page__section-list">
@@ -39,11 +37,12 @@ import PartnersDropDown from '@features/partners-filter/PartnersDropDown.vue';
 import CityDropDown from '@features/city-filter/CityDropDown.vue';
 import EventCategoryDropDown from '@features/event-category-filter/EventCategoryDropDown.vue';
 import { requestEventsColletions } from '@shared/api';
-import type { CollectionFilters } from '@shared/api/types';
+import { CollectionTypes, type CollectionFilters } from '@shared/api/types';
 
 const { availableLocales, setLocale } = useI18n();
 const eventsCollections = ref();
 const filters: CollectionFilters = {
+	type: { $eq: CollectionTypes.forMainPage },
 	events: {
 		eventDate: {
 			$eq: new Date(),
@@ -77,7 +76,6 @@ const getEventsCollection = async () => {
 };
 
 const changeFilters = (data: any, filterPath: string) => {
-	// console.log(data, filterPath);
 	switch (filterPath) {
 		case 'city': {
 			filters.events.eventAddress = {

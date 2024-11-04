@@ -21,6 +21,7 @@
     "axios": "^1.7.2",
     "date-fns": "^3.6.0",
     "leaflet": "^1.9.4",
+    "markdown-it": "^14.1.0",
     "normalize-scss": "^8.0.0",
     "nuxt": "^3.12.1",
     "nuxt-swiper": "^1.2.2",
