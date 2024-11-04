@@ -316,3 +316,14 @@ export type EventHost = {
 		}
 	}
 };
+
+export type RegisterParams = {
+	username: string;
+	email: string;
+	password: string;
+};
+
+export type LoginParams = {
+	identifier: string;
+	password: string;
+};

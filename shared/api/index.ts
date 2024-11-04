@@ -1,5 +1,5 @@
 import { useNuxtApp } from 'nuxt/app';
-import type { CollectionFilters, PartnerRegistration } from '@shared/api/types.ts';
+import type { CollectionFilters, PartnerRegistration, RegisterParams, LoginParams } from '@shared/api/types.ts';
 import type { EventCreateType } from '@shared/api/types';
 
 export const registerPartner = (partnerInfo: PartnerRegistration) => {
@@ -108,5 +108,17 @@ export const requestEventById = (id: string) => {
 	};
 
 	return $api.get(`api/events/${id}`, { params });
+};
+
+export const registerUser = (params: RegisterParams) => {
+	const { $api } = useNuxtApp();
+
+	return $api.post('/api/auth/local/register', params);
+};
+
+export const loginUser = (params: LoginParams) => {
+	const { $api } = useNuxtApp();
+
+	return $api.post('/api/auth/local', params);
 };
 
