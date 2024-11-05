@@ -2,26 +2,27 @@
 	<div class="registration">
 		<h2 class="registration-title">Registro</h2>
 		<div class="registration-inputs">
-			<cp-text-input type="text" placeholder="name" />
+			<cp-text-input v-model="username" type="text" placeholder="name" />
 			<cp-text-input
+				v-model="email"
 				style="margin-top: 25px"
 				type="email"
 				placeholder="email"
 			/>
 			<cp-text-input
+				v-model="passInput"
 				style="margin-top: 25px"
 				type="password"
 				placeholder="password"
 				:with-eye="true"
-				@input="passInputValue"
 			/>
 			<div class="registration-passConfirm">
 				<cp-text-input
+					v-model="passConfirm"
 					style="margin-top: 25px; margin-bottom: 5px"
 					type="password"
 					placeholder="password"
 					:with-eye="true"
-					@input="passInputValueconfirm"
 				/>
 				<span class="registration-passConfirm-info"
 				>Repita la contraseña de nuevo</span
@@ -40,6 +41,7 @@
 				text="Entrar"
 				width="maxWidth"
 				size="small"
+				@click="register"
 			/>
 		</div>
 	</div>
@@ -53,15 +55,6 @@ const passInput = ref<string>('');
 const passConfirm = ref<string>('');
 const username = ref<string>('');
 const email = ref<string>('');
-const passInputValue = (e: Event) => {
-	const target = e.target as HTMLInputElement;
-	passInput.value = target.value;
-};
-
-const passInputValueconfirm = (e: Event) => {
-	const target = e.target as HTMLInputElement;
-	passConfirm.value = target.value;
-};
 
 const register = async () => {
 	const registerParams: RegisterParams = {
