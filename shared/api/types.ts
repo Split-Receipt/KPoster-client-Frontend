@@ -17,6 +17,7 @@ export type PartnerRegistration = {
 		productDescriptionLink: string;
 		productDescriptionText: string;
 		compVideoLink: string;
+		user: number | null;
 		affiliations: { affiliationId: string, affiliationName: string }[];
 		socialMedias: {
 			telegram: string;
@@ -327,3 +328,18 @@ export type LoginParams = {
 	identifier: string;
 	password: string;
 };
+
+export type userAuthentificatedData = {
+	jwt: string;
+	user: {
+		blocked: boolean
+		confirmed: true
+		createdAt: Date
+		email: string
+		id: number
+		provider: string
+		updatedAt: Date
+		username: string
+	}
+};
+
