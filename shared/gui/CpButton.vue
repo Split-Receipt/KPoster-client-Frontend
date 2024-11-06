@@ -91,6 +91,7 @@ enum buttonSizes {
 	middle = 'button--middle',
 	big = 'button--big',
 	huge = 'button--huge',
+	squareSize = 'button--squareSize'
 }
 
 enum buttonColors {
@@ -107,6 +108,7 @@ enum buttonWidth {
 	large = 'button--large',
 	extraLarge = 'button--extra-large',
 	maxWidth = 'button--maxWidth',
+	squareWidth = 'button--squareWidth'
 }
 </script>
 
@@ -190,6 +192,10 @@ enum buttonWidth {
 		font-size: $button-font-size-huge;
 	}
 
+	&--squareSize {
+		height: $button-square-width;
+	}
+
 	&--white {
 		background: $button-white-background-color;
 	}
@@ -236,6 +242,10 @@ enum buttonWidth {
 
 	&--maxWidth {
 		width: $button-width-maxWidth;
+	}
+
+	&--squareWidth {
+		width: $button-square-width;
 	}
 }
 </style>

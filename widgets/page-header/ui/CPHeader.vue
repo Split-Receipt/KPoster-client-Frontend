@@ -14,7 +14,7 @@
 			<nuxt-link to="/home">  
 				<nuxt-img  
 					loading="lazy"  
-					src="/images/logo.svg"  
+					src="/images/logo.png"  
 					class="icon icon-logo header__icon-logo"  
 				/>  
 			</nuxt-link>  
@@ -130,16 +130,14 @@ const handleModalClose = (newState: boolean) => {
 	&__icon-logo {
 		@media #{$screen-tablet} {
 			background-color: transparent;
-			border-radius: $header-icon-logo-border-radius-screen-tablet;
 			width: $header-icon-logo-width-screen-tablet;
 			height: $header-icon-logo-height-screen-tablet;
-			padding: $header-icon-logo-padding-screen-tablet;
 		}
 
 		@media #{$screen-desktop} {
+			background-color: transparent;
 			width: $header-icon-logo-width-screen-desktop;
 			height: $header-icon-logo-height-screen-desktop;
-			padding: $header-icon-logo-padding-screen-desktop;
 		}
 	}
 
