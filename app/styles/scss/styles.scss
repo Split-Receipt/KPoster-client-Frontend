@@ -10,3 +10,10 @@
 .leaflet-right {
 	display: none;
 }
+
+#__nuxt {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}

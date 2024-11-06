@@ -115,6 +115,7 @@ const changeFilters = (data: any, filterPath: string) => {
 
 <style scoped lang="scss">
 .main-page {
+	height: 100%;
 	&__main {
 		margin-top: 2px;
 		padding-left: 10px;
@@ -163,6 +164,7 @@ const changeFilters = (data: any, filterPath: string) => {
 			gap: 65px;
 			margin-top: 60px;
 			margin-bottom: 40px;
+			height: 100%;
 
 			@media #{$screen-tablet} {
 				margin-top: 45px;

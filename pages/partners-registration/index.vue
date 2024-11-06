@@ -1011,6 +1011,7 @@
 								id="pass_id"
 								v-model="userRegistrationData.password"
 								:circle="true"
+								type="password"
 								label-text="Password"
 								placeholder="Password"
 							/>
@@ -1020,6 +1021,7 @@
 								id="confirmPass_id"
 								v-model="passwordConfirmationValue"
 								:circle="true"
+								type="password"
 								label-text="Confirm Password"
 								placeholder="Password again"
 							/>

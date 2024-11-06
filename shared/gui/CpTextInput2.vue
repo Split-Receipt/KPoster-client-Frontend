@@ -12,7 +12,7 @@
 		<input
 			:id="props.id"
 			class="socialMedia__input"
-			type="text"
+			:type="props.type"
 			:placeholder="props.placeholder"
 			@input="inputValueUpdate"
 		/>
@@ -34,7 +34,10 @@ type Events = {
 	(event: 'update:modelValue', eventData: string): void;
 };
 
-const props = defineProps<socialMediaProps>();
+const props = withDefaults(defineProps<socialMediaProps>(), {
+	type: 'text',
+	tooltipText: '',
+});
 const emit = defineEmits<Events>();
 
 const inputValueUpdate = (e: Event) => {
