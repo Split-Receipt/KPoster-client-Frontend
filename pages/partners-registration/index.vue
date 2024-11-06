@@ -950,11 +950,11 @@ import CpTextInput from '@shared/gui/CpTextInput.vue';
 import CpRadioButton from '@shared/gui/CpRadioButton.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpTextInput2 from '@shared/gui/CpTextInput2.vue';
+import CpTextArea from '@shared/gui/CpTextArea.vue';
 import type { PartnerRegistration } from '@shared/api/types.ts';
 import { registerPartner } from '@shared/api';
 import { Form as VForm, Field as VField } from 'vee-validate';
 import { generateUniqueId } from '@shared/helpers/generateUid';
-import CpTextArea from '@shared/gui/CpTextArea.vue';
 
 const { $objToFormData } = useNuxtApp();
 // test values ----------------------------------------------------------
