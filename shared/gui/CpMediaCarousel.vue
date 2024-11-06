@@ -68,10 +68,20 @@
 					v-for="(source, index) in videoFilesUrls"
 					:key="index"
 				>
-					<video :src="source" :alt="'media' + index" />
+					<video 
+						class="event-carousel-video"
+						:src="source"
+						controls
+						:alt="'media' + index" 
+					/>
 				</swiper-slide>
 				<swiper-slide v-for="(source, index) in mediaFilesUrls" :key="index">
-					<img :src="source" :alt="'media' + index" />
+					<nuxt-img
+						class="event-carousel-image"
+						style="width: 100%; height: 100%; object-fit: cover;"
+						:src="source" 
+						:alt="'media' + index" 
+					/>
 				</swiper-slide>
 			</swiper>
 		</div>
@@ -114,6 +124,18 @@ defineProps<Props>();
 		@media screen and (max-width: 960px) {
 			display: none;
 		}
+	}
+
+	&-image {
+		object-fit: cover;
+		width: 100%;
+		height: 100%;
+	}
+
+	&-video {
+		object-fit: cover;
+		width: 100%;
+		height: 100%;
 	}
 }
 

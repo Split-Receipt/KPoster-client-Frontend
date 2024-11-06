@@ -611,7 +611,8 @@
 							class="partners__form-rowDnD-semiBlock-social-maxWidth"
 							style="padding-top: 12px"
 						>
-							<label class="input-laabel"
+							<label
+								class="input-laabel"
 								for="mainProdTextArea"
 							>Descripción del Producto</label
 							>
