@@ -92,7 +92,7 @@
 		<div class="detailed__carousel slider-gallery">
 			<h2 class="detailed__carousel-title-gallery">Event gallery</h2>
 			<cp-media-carousel
-				:id="event.attributes.eventName"
+				id="qwe123"
 				:media-files-urls="getMediaPhotosUrls"
 				:video-files-urls="getMediaVideosUrls"
 			/>
