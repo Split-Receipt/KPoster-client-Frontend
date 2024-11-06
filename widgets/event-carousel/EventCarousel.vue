@@ -5,6 +5,8 @@
 				<cp-button
 					shape="square"
 					color="transparent"
+					size="squareSize"
+					width="squareWidth"
 					left-icon="arrow-left"
 					:class="[
 						`button-prev__${id}`,
@@ -15,6 +17,8 @@
 				<cp-button
 					shape="square"
 					color="black"
+					size="squareSize"
+					width="squareWidth"
 					left-icon="arrow-right"
 					:class="[
 						`button-next__${id}`,
@@ -119,7 +123,7 @@ const toEventDetailPage = (cardId: number) => {
 		position: relative;
 		display: flex;
 		justify-content: flex-end;
-		gap: 20px;
+		gap: 10px;
 		margin-right: 10px;
 
 		@media #{$screen-desktop} {

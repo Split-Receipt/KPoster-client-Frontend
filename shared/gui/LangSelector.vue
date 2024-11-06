@@ -111,9 +111,7 @@ const closeMenu = () => {
 const availableLanguages = [
 	{ item_title: 'Español', item_UID: 'es_id', item_value: 'es' },
 	{ item_title: 'English', item_UID: 'en_id2', item_value: 'en' },
-	{ item_title: 'Русский', item_UID: 'ru_id3', item_value: 'ru' },
 	{ item_title: 'Quechua', item_UID: 'qu_id4', item_value: 'qu' },
-	{ item_title: '中國人', item_UID: 'zh_id5', item_value: 'zh' },
 ];
 
 watch(currentLang, (newLang) => {
