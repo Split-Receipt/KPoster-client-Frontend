@@ -99,6 +99,10 @@ export const requestEventById = (id: string) => {
 			populate: '*',
 		},
 
+		eventMediaVideos: {
+			populate: '*',
+		},
+
 		eventAddress: {
 			populate: {
 				city: true,
