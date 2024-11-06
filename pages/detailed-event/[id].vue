@@ -13,7 +13,7 @@
 					v-for="categoryName in eventCategoriesNames"
 					:key="categoryName"
 					class="detailed__mainImage-info-text"
-				>{{ categoryName }}</span
+					>{{ categoryName }}</span
 				>
 				<span class="detailed__mainImage-info-date">{{
 					format(event.attributes.eventDate, 'PPPPpppp')
@@ -91,7 +91,11 @@
 
 		<div class="detailed__carousel slider-gallery">
 			<h2 class="detailed__carousel-title-gallery">Event gallery</h2>
-			<cp-media-carousel :id="event.attributes.eventName" :media-files-urls="getMediaPhotosUrls" />
+			<cp-media-carousel
+				:id="event.attributes.eventName"
+				:media-files-urls="getMediaPhotosUrls"
+				:video-files-urls="getMediaVideosUrls"
+			/>
 		</div>
 
 		<div class="detailed__comment">
@@ -207,7 +211,7 @@
 					class="detailed-contacts-referenses-tel"
 				>
 					<span class="detailed-contacts-referenses-tel-title"
-					>Número de teléfono</span
+						>Número de teléfono</span
 					>
 					<span class="detailed-contacts-referenses-tel-ref">{{
 						event.attributes.eventHost.data.attributes.contacts.tel
@@ -218,7 +222,7 @@
 					class="detailed-contacts-referenses-place"
 				>
 					<span class="detailed-contacts-referenses-place-title"
-					>País y ciudad</span
+						>País y ciudad</span
 					>
 					<span class="detailed-contacts-referenses-place-ref">{{
 						event.attributes.eventHost.data.attributes.contacts.place
@@ -304,6 +308,16 @@ const getMediaPhotosUrls = computed(() => {
 
 	return event.value.attributes.eventMediaPhotos.data.map((photo) => {
 		return config.public.apiBaseUrl + photo.attributes.url;
+	});
+});
+
+const getMediaVideosUrls = computed(() => {
+	if (!event.value.attributes.eventMediaVideos.data.length) {
+		return [];
+	}
+
+	return event.value.attributes.eventMediaVideos.data.map((video) => {
+		return config.public.apiBaseUrl + video.attributes.url;
 	});
 });
 

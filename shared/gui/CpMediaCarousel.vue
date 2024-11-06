@@ -64,7 +64,10 @@
 					},
 				}"
 			>
-				<swiper-slide v-for="(source, index) in videoFilesUrls" :key="index">
+				<swiper-slide
+					v-for="(source, index) in videoFilesUrls"
+					:key="index"
+				>
 					<video :src="source" :alt="'media' + index" />
 				</swiper-slide>
 				<swiper-slide v-for="(source, index) in mediaFilesUrls" :key="index">

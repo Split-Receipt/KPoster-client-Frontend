@@ -133,6 +133,9 @@ export type Event = {
 			eventMediaPhotos: {
 				data: StrapiMediaDefaultType[]
 			}
+			eventMediaVideos: {
+					data: StrapiMediaDefaultType[]
+			}
 	}
 };
 
