@@ -302,7 +302,7 @@ const getEventById = async (id: string) => {
 };
 
 const getMediaPhotosUrls = computed(() => {
-	if (!event.value.attributes.eventMediaPhotos.data.length) {
+	if (!event.value.attributes.eventMediaPhotos?.data.length) {
 		return [];
 	}
 
@@ -312,7 +312,7 @@ const getMediaPhotosUrls = computed(() => {
 });
 
 const getMediaVideosUrls = computed(() => {
-	if (!event.value.attributes.eventMediaVideos.data.length) {
+	if (!event.value.attributes.eventMediaVideos?.data.length) {
 		return [];
 	}
 

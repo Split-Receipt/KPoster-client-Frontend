@@ -22,12 +22,10 @@
 			</div>
 			<nav class="popup-window">
 				<ul>
-					<li v-for="option in options" :key="option.item_UID">
+					<li v-for="option in getDataForChekboxes" :key="option.id">
 						<div class="checkbox-container">
 							<cp-check-box
-								:id="option.item_UID"
-								:value="option.item_value"
-								:title="option.item_title"
+								:option="option"
 								@change="dataToFilter"
 							/>
 						</div>
@@ -65,6 +63,16 @@ const props = defineProps<Props>();
 const emit = defineEmits<Events>();
 
 const dataArray = ref<string[]>(props.value || []);
+
+const getDataForChekboxes = computed(() => {
+	return props.options.map((option) => {
+		return {
+			id: option.item_UID,
+			label: option.item_title,
+			value: option.item_value,
+		};
+	});
+});
 
 const dataToFilter = (event: Event) => {
 	const target = event.target as HTMLInputElement;

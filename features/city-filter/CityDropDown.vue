@@ -46,6 +46,7 @@ const formatedCitiesData = computed(() => {
 			item_value: option.attributes.cityCode,
 			createdAt: option.attributes.createdAt,
 			updatedAt: option.attributes.updatedAt,
+			publishedAt: option.attributes.publishedAt,
 			locale: option.attributes.locale,
 		};
 	});

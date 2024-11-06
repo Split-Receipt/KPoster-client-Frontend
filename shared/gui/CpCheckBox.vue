@@ -2,46 +2,58 @@
 	<div class="checkbox-wrapper">
 		<div class="checkbox-wrapper-input">
 			<input
-				:id="props.id"
-				:value="props.value"
+				:id="props.option.id"
+				:value="props.option.value"
 				type="checkbox"
 				@change="checkBoxAction"
 			/>
-			<label :for="props.id" style="--size: 22px">
+			<label :for="props.option.id" style="--size: 22px">
 				<svg viewBox="0,0,50,50">
 					<path d="M5 30 L 20 45 L 45 5" />
 				</svg>
 			</label>
 		</div>
 		<div class="checkbox-wrapper-text">
-			<label v-if="props.title" class="checkbox-wrapper__label" :for="props.id">{{
-				props.title
-			}}</label>
+			<label
+				v-if="props.option.label"
+				class="checkbox-wrapper__label"
+				:for="props.option.id"
+			>{{ props.option.label }}</label
+			>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-type CheckProps = {
+type CheckOption = {
 	id: string;
 	value: string;
-	title?: string;
+	label?: string;
 };
 
 type CheckEmits = {
-	(event: 'update:checkboxUpdate', eventData: string): void;
+	(event: 'update:checkboxUpdate', eventData: string | CheckOption): void;
 };
-
-const props = defineProps<CheckProps>();
+type Props = {
+	option: CheckOption;
+	returnValue?: keyof CheckOption;
+	returnObject?: boolean;
+};
+const props = withDefaults(defineProps<Props>(), {
+	returnValue: 'value',
+	returnObject: false,
+});
 const emit = defineEmits<CheckEmits>();
 
-const checkBoxAction = (e: Event) => {
-	const target = e.target as HTMLInputElement;
-	if (target.checked) {
-		emit('update:checkboxUpdate', target.value);
-	} else {
-		emit('update:checkboxUpdate', '');
-	}
+const checkBoxAction = (event: Event) => {
+	const target = event.target as HTMLInputElement;
+		if (props.returnObject) {
+			emit('update:checkboxUpdate', props.option);
+		} else if (props.returnValue) {
+			emit('update:checkboxUpdate', props.option[props.returnValue] ?? '');
+		} else {
+			emit('update:checkboxUpdate', target.value ?? '');
+		}
 };
 </script>
 
