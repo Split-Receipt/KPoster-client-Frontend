@@ -6,8 +6,8 @@ export const registerPartner = (partnerInfo: PartnerRegistration) => {
 	const { $api } = useNuxtApp();
 
 	return $api.post('/api/partners', partnerInfo, {
-		headers: { 'Content-Type': 'multipart/form-data' },
-	});
+		headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${localStorage.getItem('AuthToken')}` } },
+	);
 };
 
 export const eventCreate = (eventInfo: EventCreateType) => {
@@ -114,7 +114,7 @@ export const requestEventById = (id: string) => {
 	return $api.get(`api/events/${id}`, { params });
 };
 
-export const registerUser = (params: RegisterParams): Promise<userAuthentificatedData> => {
+export const registerUser = (params: RegisterParams): Promise<AxiosResponse<userAuthentificatedData>> => {
 	const { $api } = useNuxtApp();
 
 	return $api.post('/api/auth/local/register', params);
@@ -126,3 +126,8 @@ export const loginUser = (params: LoginParams) => {
 	return $api.post('/api/auth/local', params);
 };
 
+export const requestAffiliations = () => {
+	const { $api } = useNuxtApp();
+
+	return $api.get('/api/affiliations');
+};

@@ -13,7 +13,7 @@
 					v-for="categoryName in eventCategoriesNames"
 					:key="categoryName"
 					class="detailed__mainImage-info-text"
-					>{{ categoryName }}</span
+				>{{ categoryName }}</span
 				>
 				<span class="detailed__mainImage-info-date">{{
 					format(event.attributes.eventDate, 'PPPPpppp')
@@ -211,7 +211,7 @@
 					class="detailed-contacts-referenses-tel"
 				>
 					<span class="detailed-contacts-referenses-tel-title"
-						>Número de teléfono</span
+					>Número de teléfono</span
 					>
 					<span class="detailed-contacts-referenses-tel-ref">{{
 						event.attributes.eventHost.data.attributes.contacts.tel
@@ -222,7 +222,7 @@
 					class="detailed-contacts-referenses-place"
 				>
 					<span class="detailed-contacts-referenses-place-title"
-						>País y ciudad</span
+					>País y ciudad</span
 					>
 					<span class="detailed-contacts-referenses-place-ref">{{
 						event.attributes.eventHost.data.attributes.contacts.place

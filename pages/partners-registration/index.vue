@@ -473,6 +473,7 @@
 				</div>
 				<div class="partners__form-row-input">
 					<v-field
+						v-if="orgSphereChecks.length > 0"
 						v-slot="{ errors }"
 						name="cultureType"
 						rules="require_checkbox"
@@ -480,12 +481,11 @@
 					>
 						<div>
 							<cp-check-box
-								v-for="(item, key) in orgSphereChecks"
-								:id="item.id"
-								:key="key"
-								:value="item.value"
-								:title="item.title"
-								@change="checkboxCollectCultureType"
+								v-for="(item, index) in orgSphereChecks"
+								:key="item.value"
+								:option="item"
+								return-value="id"
+								@update:checkbox-update="(value: number) => checkboxCollectCultureType(value, index)"
 							/>
 						</div>
 						<span
@@ -611,7 +611,8 @@
 							class="partners__form-rowDnD-semiBlock-social-maxWidth"
 							style="padding-top: 12px"
 						>
-							<label class="input-laabel"
+							<label
+								class="input-laabel"
 								for="mainProdTextArea"
 							>Descripción del Producto</label
 							>
@@ -681,8 +682,9 @@
 					>
 						<cp-radio-button
 							v-model="partnerRegistrationForm.data.orgLocation"
-							:options="radiooptions2"
+							:options="cityRadioButtons"
 							name="radio2"
+							return-value="id"
 							style="margin-left: -30px"
 						/>
 						<span v-if="errors" class="required-input-error-info-leftSide">{{
@@ -882,12 +884,11 @@
 					>
 						<div>
 							<cp-check-box
-								v-for="(item, key) in affiliations"
-								:id="item.id"
-								:key="key"
-								:value="item.value"
-								:title="item.title"
-								@change="checkboxCollectAffiliations"
+								v-for="(item, index) in affiliationChecks"
+								:key="item.value"
+								:option="item"
+								return-value="id"
+								@update:checkbox-update="(value: number) => checkboxCollectAffiliations(value, index)"
 							/>
 						</div>
 						<span
@@ -1053,13 +1054,23 @@ import CpRadioButton from '@shared/gui/CpRadioButton.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpTextInput2 from '@shared/gui/CpTextInput2.vue';
 import type { PartnerRegistration } from '@shared/api/types.ts';
-import { registerPartner } from '@shared/api';
+import {
+	registerPartner,
+	requestCities,
+	requestCategories,
+	requestAffiliations,
+} from '@shared/api';
 import registerUserForPartner from '@features/register-user';
 import { Form as VForm, Field as VField } from 'vee-validate';
-import { generateUniqueId } from '@shared/helpers/generateUid';
 import CpTextArea from '@shared/gui/CpTextArea.vue';
 
 const { $objToFormData } = useNuxtApp();
+onBeforeMount(async () => {
+	await getCities();
+	await getCategories();
+	await getAffiliations();
+});
+
 // test values ----------------------------------------------------------
 const radioOptions1 = [
 	{ id: 'emp', value: 'Empresa', label: 'Empresa' },
@@ -1072,21 +1083,7 @@ const radioOptions1 = [
 	{ id: 'Persona Natural', value: 'Persona_Natural', label: 'Persona Natural' },
 ];
 
-const radiooptions2 = [
-	{ id: 'Acomayo', value: 'Acomayo', label: 'Acomayo' },
-	{ id: 'Anta', value: 'Anta', label: 'Anta' },
-	{ id: 'Calca', value: 'Calca', label: 'Calca' },
-	{ id: 'Canas', value: 'Canas', label: 'Canas' },
-	{ id: 'Canchis', value: 'Canchis', label: 'Canchis' },
-	{ id: 'Cusco', value: 'Cusco', label: 'Cusco' },
-	{ id: 'Chumbivilcas', value: 'Chumbivilcas', label: 'Chumbivilcas' },
-	{ id: 'Espinar', value: 'Espinar', label: 'Espinar' },
-	{ id: 'La_Convencion', value: 'La_Convencion', label: 'La Convencion' },
-	{ id: 'Paruro', value: 'Paruro', label: 'Paruro' },
-	{ id: 'Paucartambo', value: 'Paucartambo', label: 'Paucartambo' },
-	{ id: 'Quispicanchis', value: 'Quispicanchis', label: 'Quispicanchis' },
-	{ id: 'Urubamba', value: 'Urubamba', label: 'Urubamba' },
-];
+const cityRadioButtons = ref([]);
 
 const docTypeOptions = [
 	{
@@ -1118,52 +1115,9 @@ const mainProdSwitcherOptions = [
 	{ optionName: 'Type text', optionValue: 'Text', optionKey: 'TextKey' },
 ];
 
-const orgSphereChecks = [
-	{ id: generateUniqueId(), value: 'ecology', title: 'Consciencia ambiental' },
-	{ id: generateUniqueId(), value: 'management', title: 'Gestion cultural' },
-	{ id: generateUniqueId(), value: 'Artesania', title: 'Artesania' },
-	{ id: generateUniqueId(), value: 'Musica', title: 'Musica' },
-	{ id: generateUniqueId(), value: 'dance', title: 'Artes escenicas y danzas' },
-	{ id: generateUniqueId(), value: 'arts', title: 'Artes visuales' },
-	{ id: generateUniqueId(), value: 'books', title: 'Libro y lectura' },
-	{
-		id: generateUniqueId(),
-		value: 'Visuals',
-		title: 'Fotografia , audiovisual, cinematografico y nuevos medios',
-	},
-	{
-		id: generateUniqueId(),
-		value: 'languages',
-		title: 'Lenguas indigenas u originarias y tradicion oral',
-	},
-	{
-		id: generateUniqueId(),
-		value: 'digital_content',
-		title: 'Creador de contenido en plataformas digitales',
-	},
-	{ id: generateUniqueId(), value: 'gastronomy', title: 'Gastronomia tipica' },
-	{
-		id: generateUniqueId(),
-		value: 'art_gallery',
-		title: 'Galeria y espacios de arte',
-	},
-];
+const orgSphereChecks = ref([]);
 
-const affiliations = [
-	{ id: generateUniqueId(), value: 'ACERCA', title: 'ACERCA' },
-	{
-		id: generateUniqueId(),
-		value: ' Defensores_de_Patrimonio',
-		title: ' Defensores de Patrimonio',
-	},
-	{ id: generateUniqueId(), value: 'RENTOCA', title: 'RENTOCA' },
-	{
-		id: generateUniqueId(),
-		value: 'Puntos_de_cultura',
-		title: 'Puntos de cultura',
-	},
-	{ id: generateUniqueId(), value: 'Ninguna', title: 'Ninguna' },
-];
+const affiliationChecks = ref([]);
 
 // ----------------------------------------------------------------------
 
@@ -1239,32 +1193,19 @@ watch(mainProdValue, () => {
 	partnerRegistrationForm.data.productDescriptionText = '';
 });
 
-const checkboxCollectCultureType = (e: Event) => {
-	const target = e.target as HTMLInputElement;
-	if (target.checked) {
-		partnerRegistrationForm.data.cultureType.push({
-			cultureTypeName: target.value,
-		});
+const checkboxCollectCultureType = (value: number, index: number) => {
+	if (value) {
+		partnerRegistrationForm.data.cultureType.push(value);
 	} else {
-		partnerRegistrationForm.data.cultureType =
-			partnerRegistrationForm.data.cultureType.filter(
-				(e) => e.cultureTypeName !== target.value
-			);
+		partnerRegistrationForm.data.cultureType.splice(index, 1);
 	}
 };
 
-const checkboxCollectAffiliations = (e: Event) => {
-	const target = e.target as HTMLInputElement;
-	if (target.checked) {
-		partnerRegistrationForm.data.affiliations.push({
-			affiliationId: target.id,
-			affiliationName: target.value,
-		});
+const checkboxCollectAffiliations = (value: number, index: number) => {
+	if (value) {
+		partnerRegistrationForm.data.affiliations.push(value);
 	} else {
-		partnerRegistrationForm.data.affiliations =
-			partnerRegistrationForm.data.affiliations.filter(
-				(e) => e.affiliationName !== target.value
-			);
+		partnerRegistrationForm.data.affiliations.splice(index, 1);
 	}
 };
 
@@ -1308,6 +1249,53 @@ const createPartner = async () => {
 		isSpin.value = false;
 	} finally {
 		isSpin.value = false;
+	}
+};
+
+const getCities = async () => {
+	try {
+		const cities = await requestCities();
+		cityRadioButtons.value = cities.data.data.map((city: any) => ({
+			id: city.id,
+			value: city.attributes.cityName,
+			label: city.attributes.cityName,
+		}));
+	} catch (error) {
+		toast.error(
+			'Nuestro administrador se comunicará conusted por correo electrónico'
+		);
+	}
+};
+
+const getCategories = async () => {
+	try {
+		const categories = await requestCategories();
+		orgSphereChecks.value = categories.data.data.map((category: any) => ({
+			id: category.id,
+			value: category.attributes.cultureTypeName,
+			label: category.attributes.cultureTypeName,
+		}));
+	} catch (error) {
+		toast.error(
+			'Nuestro administrador se comunicará conusted por correo electrónico'
+		);
+	}
+};
+
+const getAffiliations = async () => {
+	try {
+		const affiliations = await requestAffiliations();
+		affiliationChecks.value = affiliations.data.data.map(
+			(affiliation: any) => ({
+				id: affiliation.id,
+				value: affiliation.attributes.affiliationName,
+				label: affiliation.attributes.affiliationName,
+			})
+		);
+	} catch (error) {
+		toast.error(
+			'Nuestro administrador se comunicará conusted por correo electrónico'
+		);
 	}
 };
 </script>

@@ -2,12 +2,12 @@
 	<div class="checkbox-wrapper">
 		<div class="checkbox-wrapper-input">
 			<input
-				:id="props.option.id"
+				:id="props.option.value + props.option.id"
 				:value="props.option.value"
 				type="checkbox"
 				@change="checkBoxAction"
 			/>
-			<label :for="props.option.id" style="--size: 22px">
+			<label :for="props.option.value + props.option.id" style="--size: 22px">
 				<svg viewBox="0,0,50,50">
 					<path d="M5 30 L 20 45 L 45 5" />
 				</svg>
@@ -17,7 +17,7 @@
 			<label
 				v-if="props.option.label"
 				class="checkbox-wrapper__label"
-				:for="props.option.id"
+				:for="props.option.value + props.option.id"
 			>{{ props.option.label }}</label
 			>
 		</div>
@@ -47,6 +47,7 @@ const emit = defineEmits<CheckEmits>();
 
 const checkBoxAction = (event: Event) => {
 	const target = event.target as HTMLInputElement;
+	if (target.checked) {
 		if (props.returnObject) {
 			emit('update:checkboxUpdate', props.option);
 		} else if (props.returnValue) {
@@ -54,6 +55,9 @@ const checkBoxAction = (event: Event) => {
 		} else {
 			emit('update:checkboxUpdate', target.value ?? '');
 		}
+	} else {
+		emit('update:checkboxUpdate', '');
+	}
 };
 </script>
 

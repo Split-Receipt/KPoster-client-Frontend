@@ -34,7 +34,6 @@
 				<button
 					class="event-card__button event-card__button--transparent"
 					:class="[eventCardButtonSize[size]]"
-					@click.stop="learnMoreHandler"
 				>
 					Learn more
 				</button>

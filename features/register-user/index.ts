@@ -6,9 +6,9 @@ import { registerUser } from '@shared/api';
 	}
 	try {
 		const response = await registerUser(registrationParams);
-		localStorage.setItem('AuthToken', response.jwt);
+		localStorage.setItem('AuthToken', response.data.jwt);
 
-		return response.user.id;
+		return response.data.user.id;
 	} catch (e) {
 		console.error(e);
 	}
