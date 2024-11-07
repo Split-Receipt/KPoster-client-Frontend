@@ -28,6 +28,18 @@
 					:collection-data="eventsCollection"
 				/>
 			</div>
+			<cp-grid-layout v-if="events.length">
+				<template #header>
+					<h3 class="main-page__list-title">Eventos hoy</h3>
+				</template>
+				<event-card
+					v-for="event in events"
+					:key="event.id+event.attributes.eventName"
+					size="medium"
+					:event-card-data="event"
+					@click="$router.push(`/detailed-event/${event.id}`)"
+				/>
+			</cp-grid-layout>
 		</main>
 	</div>
 </template>
@@ -36,22 +48,28 @@
 import PartnersDropDown from '@features/partners-filter/PartnersDropDown.vue';
 import CityDropDown from '@features/city-filter/CityDropDown.vue';
 import EventCategoryDropDown from '@features/event-category-filter/EventCategoryDropDown.vue';
-import { requestEventsColletions } from '@shared/api';
-import { CollectionTypes, type CollectionFilters } from '@shared/api/types';
+import { requestEventsColletions, requestEventsList } from '@shared/api';
+import { CollectionTypes, type CollectionFilters, type EventData } from '@shared/api/types';
+import { startOfDay, endOfDay } from 'date-fns';
+import CpGridLayout from '@shared/gui/CpGridLayout.vue';
+import EventCard from '@widgets/event-card/EventCard.vue';
 
 const { availableLocales, setLocale } = useI18n();
 const eventsCollections = ref();
+const events = ref<EventData[]>([]);
 const filters: CollectionFilters = {
 	type: { $eq: CollectionTypes.forMainPage },
 	events: {
 		eventDate: {
-			$eq: new Date(),
+			$gte: startOfDay(new Date()),
+			$lte: endOfDay(new Date()),
 		},
 	},
 };
 
 onBeforeMount(() => {
 	getEventsCollection();
+	getEvents();
 });
 
 onMounted(() => {
@@ -70,6 +88,15 @@ const getEventsCollection = async () => {
 	try {
 		const eventsCollectionsRequestData = await requestEventsColletions(filters);
 		eventsCollections.value = eventsCollectionsRequestData.data.data;
+	} catch (e) {
+		console.error(e);
+	}
+};
+
+const getEvents = async () => {
+	try {
+		const eventsRequestData = await requestEventsList(filters.events);
+		events.value = eventsRequestData.data.data;
 	} catch (e) {
 		console.error(e);
 	}
@@ -102,7 +129,10 @@ const changeFilters = (data: any, filterPath: string) => {
 		}
 
 		case 'date': {
-			filters.events.eventDate = { $eq: data };
+			filters.events.eventDate = {
+				$gte: startOfDay(data),
+				$lte: endOfDay(data),
+			};
 			getEventsCollection();
 			break;
 		}
@@ -115,10 +145,15 @@ const changeFilters = (data: any, filterPath: string) => {
 
 <style scoped lang="scss">
 .main-page {
-	height: 100%;
 	&__main {
 		margin-top: 2px;
 		padding-left: 10px;
+
+		&__title {
+			@media #{$screen-desktop} {
+				font-family: $font-family-medium-expanded;
+			}
+		}
 
 		@media #{$screen-tablet} {
 			margin-top: 10px;

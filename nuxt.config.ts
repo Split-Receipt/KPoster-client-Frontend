@@ -2,6 +2,13 @@ import { defineNuxtConfig } from "nuxt/config";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+	app: {
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/images/logo.svg' } // Указываем путь к фавикону
+      ]
+    }
+  },
   devtools: { enabled: true },
   modules: ["@nuxt/eslint", "nuxt-swiper", "@nuxtjs/i18n", "@nuxt/image", '@vueuse/nuxt'],
   i18n: {

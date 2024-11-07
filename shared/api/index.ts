@@ -1,5 +1,5 @@
 import { useNuxtApp } from 'nuxt/app';
-import type { EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams } from '@shared/api/types.ts';
+import type { EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData } from '@shared/api/types.ts';
 import type { AxiosResponse } from 'axios';
 
 export const registerPartner = (partnerInfo: PartnerRegistration) => {
@@ -140,4 +140,26 @@ export const requestMyUser = () => {
 	};
 
 	return $api.get('/api/users/me', { params, headers: { Authorization: `Bearer ${localStorage.getItem('AuthToken')}` } });
+};
+
+export const requestEventsList = (filters: CollectionFilters['events']): Promise<AxiosResponse<{ data: EventData[] }>> => {
+	const { $api } = useNuxtApp();
+	const params = {
+		populate: {
+			eventHost: {
+				populate: {
+					contacts: true,
+				},
+			},
+			eventBanner: {
+				populate: '*',
+			},
+			eventMediaPhotos: {
+				populate: '*',
+			},
+		},
+		filters: filters,
+	};
+
+	return $api.get('/api/events', { params });
 };

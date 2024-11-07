@@ -1,6 +1,6 @@
-import type { Event } from '@shared/api/types';
+import type { EventData } from '@shared/api/types';
 
-export const EventDefaultValue: Event = {
+export const EventDefaultValue: EventData = {
   id: 12,
   attributes: {
 		eventDigitalCatalog: '#',

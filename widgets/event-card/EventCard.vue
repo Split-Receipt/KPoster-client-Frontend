@@ -45,6 +45,7 @@
 <script setup lang="ts">
 import { format } from 'date-fns';
 import type { EventCard } from '@widgets/event-card/types/types';
+import { formatExternalLink } from '@shared/helpers/formatText';
 const props = withDefaults(defineProps<Props>(), {
 	size: 'small',
 	eventCardData: (): Props['eventCardData'] => ({
@@ -95,7 +96,7 @@ const photoUrl = computed(() => {
 // 	props.eventCardData.attributes.eventMediaPhotos.data[0].attributes.url;
 
 function buyTicketHandler() {
-	window.open(props.eventCardData.attributes.linkToBuyTicket, '_blank');
+	window.open(formatExternalLink(props.eventCardData.attributes.linkToBuyTicket), '_blank');
 }
 
 const formatedDate = computed(() => {

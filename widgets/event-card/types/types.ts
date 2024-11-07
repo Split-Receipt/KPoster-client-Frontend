@@ -1,8 +1,8 @@
-import type { Event, StrapiMediaDefaultType } from '@shared/api/types';
+import type { EventData, StrapiMediaDefaultType } from '@shared/api/types';
 export type EventCard = {
 	id: number
 	attributes: Pick<
-			Event['attributes'],
+			EventData['attributes'],
 			| 'linkToBuyTicket'
 			| 'eventDate'
 			| 'eventName'

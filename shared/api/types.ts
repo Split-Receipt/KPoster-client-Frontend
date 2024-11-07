@@ -93,7 +93,7 @@ export type EventCreateType = {
 		eventMediaVideo: File | null;
 	}
 };
-export type Event = {
+export type EventData = {
 	id: number,
 	attributes: {
 			eventDigitalCatalog?: string,
@@ -161,7 +161,7 @@ export type EventColletion = {
 			collectionCode: string,
 			collectionDescription: string,
 			events: {
-				data: Event[]
+				data: EventData[]
 			}
 	}
 };
@@ -215,6 +215,7 @@ export type CollectionFilters = {
 		eventDate: {
 			$eq?: Date;
 			$gte?: Date;
+			$lte?: Date;
 		};
 		eventAddress?: {
 			city: {
@@ -309,7 +310,7 @@ export type EventHost = {
 				data: City[]
 		}
 		events: {
-			data: Event[]
+			data: EventData[]
 		}
 		orgType: string
 		eventHostCode: string

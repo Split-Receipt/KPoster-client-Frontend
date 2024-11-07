@@ -263,7 +263,7 @@ const id = route.params.id as string;
 
 const config = useRuntimeConfig();
 
-const event = ref<Event>(EventDefaultValue);
+const event = ref<EventData>(EventDefaultValue);
 const mainImage = ref<HTMLElement>();
 const isSpin = ref<boolean>(true);
 
