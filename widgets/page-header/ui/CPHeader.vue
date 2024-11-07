@@ -1,6 +1,9 @@
 <template>
 	<div id="upSide" class="header__wrapper">
-		<cp-login-modal v-if="loginModalIsOpen" @update:modal-update="handleModalClose"/>
+		<cp-login-modal
+			v-if="loginModalIsOpen"
+			@update:modal-update="handleModalClose"
+		/>
 		<cp-up-scroll v-model:model-value="loginModalIsOpen" up-side-id="upSide" />
 		<div class="header__img">
 			<nuxt-img
@@ -24,19 +27,22 @@
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						:text="$t('sales')" />
+						:text="$t('sales')"
+					/>
 					<cp-button
 						width="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						:text="$t('news')" />
+						:text="$t('news')"
+					/>
 					<cp-button
 						width="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						:text="$t('charity')" />
+						:text="$t('charity')"
+					/>
 				</div>
 				<div class="header__buttons header__buttons--circle">
 					<cp-button
@@ -47,6 +53,7 @@
 						text=""
 					/>
 					<cp-button
+						v-if="!isAuthenticated && userRole !== 'Cliente'"
 						color="gray"
 						with-image="/../public/images/login.svg"
 						size="small"
@@ -68,12 +75,28 @@ import CpUpScroll from '@shared/gui/CpUpScroll.vue';
 
 const loginModalIsOpen = ref<boolean>(false);
 
+const isAuthenticated = ref<boolean>(false);
+const userRole = ref<any>({});
+
 const handleModalOpen = () => {
-    loginModalIsOpen.value = true;
+	loginModalIsOpen.value = true;
 };
 
+onMounted(() => {
+	window.addEventListener('login', handleLogin); //TODO: connect pinia and store such data in pinia
+});
+
+const handleLogin = (event: CustomEvent) => {
+	isAuthenticated.value = true;
+	userRole.value = event.detail.role;
+};
+
+onUnmounted(() => {
+	window.removeEventListener('login', handleLogin);
+});
+
 const handleModalClose = (newState: boolean) => {
-    loginModalIsOpen.value = newState;
+	loginModalIsOpen.value = newState;
 };
 </script>
 

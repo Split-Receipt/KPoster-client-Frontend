@@ -131,3 +131,13 @@ export const requestAffiliations = () => {
 
 	return $api.get('/api/affiliations');
 };
+
+export const requestMyUser = () => {
+	const { $api } = useNuxtApp();
+
+	const params = {
+		populate: { role: { populate: { name: true } } },
+	};
+
+	return $api.get('/api/users/me', { params, headers: { Authorization: `Bearer ${localStorage.getItem('AuthToken')}` } });
+};
