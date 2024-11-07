@@ -1,5 +1,5 @@
 import { useNuxtApp } from 'nuxt/app';
-import type { EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData } from '@shared/api/types.ts';
+import type { EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City } from '@shared/api/types.ts';
 import type { AxiosResponse } from 'axios';
 
 export const registerPartner = (partnerInfo: PartnerRegistration) => {
@@ -14,11 +14,11 @@ export const eventCreate = (eventInfo: EventCreateType) => {
 	const { $api } = useNuxtApp();
 
 	return $api.post('/api/events', eventInfo, {
-		headers: { 'Content-Type': 'multipart/form-data' },
+		headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${localStorage.getItem('AuthToken')}` },
 	});
 };
 
-export const requestCities = () => {
+export const requestCities = (): Promise<AxiosResponse<{ data: City[] }>> => {
 	const { $api } = useNuxtApp();
 
 	return $api.get('api/cities');
@@ -36,7 +36,7 @@ export const requestEventsHost = () => {
 	return $api.get('/api/partners');
 };
 
-export const requestEventCategories = () => {
+export const requestEventCategories = (): Promise<AxiosResponse<{ data: EventCategory[] }>> => {
 	const { $api } = useNuxtApp();
 
 	return $api.get('/api/event-categories');
@@ -163,3 +163,4 @@ export const requestEventsList = (filters: CollectionFilters['events']): Promise
 
 	return $api.get('/api/events', { params });
 };
+

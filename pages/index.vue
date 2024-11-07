@@ -34,7 +34,7 @@
 				</template>
 				<event-card
 					v-for="event in events"
-					:key="event.id+event.attributes.eventName"
+					:key="event.id + event.attributes.eventName"
 					size="medium"
 					:event-card-data="event"
 					@click="$router.push(`/detailed-event/${event.id}`)"
@@ -49,7 +49,11 @@ import PartnersDropDown from '@features/partners-filter/PartnersDropDown.vue';
 import CityDropDown from '@features/city-filter/CityDropDown.vue';
 import EventCategoryDropDown from '@features/event-category-filter/EventCategoryDropDown.vue';
 import { requestEventsColletions, requestEventsList } from '@shared/api';
-import { CollectionTypes, type CollectionFilters, type EventData } from '@shared/api/types';
+import {
+	CollectionTypes,
+	type CollectionFilters,
+	type EventData,
+} from '@shared/api/types';
 import { startOfDay, endOfDay } from 'date-fns';
 import CpGridLayout from '@shared/gui/CpGridLayout.vue';
 import EventCard from '@widgets/event-card/EventCard.vue';
@@ -68,9 +72,13 @@ const filters: CollectionFilters = {
 };
 
 onBeforeMount(() => {
+	requestPageData;
+});
+
+const requestPageData = () => {
 	getEventsCollection();
 	getEvents();
-});
+};
 
 onMounted(() => {
 	const selected_language = localStorage.getItem('KPoster_selected-language');
@@ -112,19 +120,19 @@ const changeFilters = (data: any, filterPath: string) => {
 					},
 				},
 			};
-			getEventsCollection();
+			requestPageData();
 			break;
 		}
 
 		case 'eventHost': {
 			filters.events.eventHost = { eventHostCode: { $in: data } };
-			getEventsCollection();
+			requestPageData();
 			break;
 		}
 
 		case 'eventCategory': {
 			filters.events.eventCategory = { eventCategoryCode: { $in: data } };
-			getEventsCollection();
+			requestPageData();
 			break;
 		}
 
@@ -133,11 +141,12 @@ const changeFilters = (data: any, filterPath: string) => {
 				$gte: startOfDay(data),
 				$lte: endOfDay(data),
 			};
-			getEventsCollection();
+			requestPageData();
 			break;
 		}
 		default: {
-			getEventsCollection();
+			requestPageData();
+			break;
 		}
 	}
 };

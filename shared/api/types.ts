@@ -93,6 +93,18 @@ export type EventCreateType = {
 		eventMediaVideo: File | null;
 	}
 };
+
+export type EventCategory = {
+	id: number,
+	attributes: {
+		eventCategoryName: string
+		eventCategoryCode: string
+		createdAt: string
+		updatedAt: string
+		publishedAt: string
+		locale: string
+	}
+};
 export type EventData = {
 	id: number,
 	attributes: {
@@ -102,11 +114,7 @@ export type EventData = {
 			eventHost: EventHost
 			eventDescription: string,
 			eventCategory:{
-				data: {
-					attributes: {
-						eventCategoryName: string
-					}
-				}[] },
+				data: EventCategory[] },
 			eventId: string,
 			eventDate: string,
 			createdAt: string,
