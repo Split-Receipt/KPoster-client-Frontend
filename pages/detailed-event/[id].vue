@@ -40,11 +40,6 @@
 				:huge-link="formatExternalLink(event.attributes.eventDigitalCatalog)"
 			/>
 			<cp-huge-link-btn
-				class="detailed__relatedList-item"
-				huge-title="Crea tu propio catalogo digital"
-				huge-link="https://www.youtube.com/watch?v=zw79RVnlCb0"
-			/>
-			<cp-huge-link-btn
 				v-if="event.attributes.eventWebSite"
 				class="detailed__relatedList-item"
 				huge-title="Pagina web"
@@ -80,10 +75,9 @@
 			</div>
 		</div>
 
-		<div class="detailed__map">
+		<div v-if="getEventCoordinates.center" class="detailed__map">
 			<h2 class="detailed__map-title">Dirección del evento</h2>
 			<cp-map
-				v-if="getEventCoordinates.center"
 				:map-markers="getEventCoordinates.marker"
 				:center="getEventCoordinates.center"
 			/>
@@ -98,7 +92,7 @@
 			/>
 		</div>
 
-		<div class="detailed__comment">
+		<div v-if="false" class="detailed__comment">
 			<h2 class="detailed__comment-title">¿ Que le pareció nuestro evento?</h2>
 			<div class="detailed__comment-textArea">
 				<cp-text-area
@@ -415,6 +409,7 @@ const eventCategoriesNames = computed(() => {
 			display: flex;
 			justify-content: flex-end;
 			margin-top: 14px;
+			gap: 20px;
 
 			@media screen and (max-width: 900px) {
 				justify-content: flex-start;

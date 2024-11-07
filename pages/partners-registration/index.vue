@@ -979,7 +979,7 @@
 				<div class="partners__form-rowDnD-info">
 					<span>
 						<strong class="partners__form-rowDnD-info-required">*</strong>
-						Redes sociales
+						Detalles de inicio de sesión
 						<cp-info-pop-up
 							id="user_registration_info"
 							info="No se admitirán redes personales"
