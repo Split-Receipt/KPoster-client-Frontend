@@ -26,7 +26,7 @@
 				<button
 					class="event-card__button event-card__button--yellow-grey"
 					:class="[eventCardButtonSize[size]]"
-					@click="buyTicketHandler"
+					@click.stop="buyTicketHandler"
 				>
 					Buy ticket
 				</button>
@@ -34,7 +34,6 @@
 				<button
 					class="event-card__button event-card__button--transparent"
 					:class="[eventCardButtonSize[size]]"
-					@click="learnMoreHandler"
 				>
 					Learn more
 				</button>
@@ -80,9 +79,20 @@ type Props = {
 	eventCardData: EventCard;
 };
 
-const photoUrl =
-	config.public.apiBaseUrl +
-	props.eventCardData.attributes.eventMediaPhotos.data[0].attributes.url;
+const photoUrl = computed(() => {
+	const eventImageUrl =
+		props.eventCardData.attributes?.eventMediaPhotos?.data[0]?.attributes.url;
+
+	if (!eventImageUrl) {
+		return '';
+	}
+
+	return config.public.apiBaseUrl + eventImageUrl;
+});
+
+// const photoUrl =
+// 	config.public.apiBaseUrl +
+// 	props.eventCardData.attributes.eventMediaPhotos.data[0].attributes.url;
 
 function buyTicketHandler() {
 	window.open(props.eventCardData.attributes.linkToBuyTicket, '_blank');
@@ -95,9 +105,7 @@ const formatedDate = computed(() => {
 	);
 });
 
-function learnMoreHandler() {
-	// ...
-}
+// ...
 
 enum eventCardSize {
 	small = 'event-card--small',

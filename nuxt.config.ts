@@ -30,7 +30,7 @@ export default defineNuxtConfig({
   alias: {
     "@pages": "/pages",
     "@shared": "/shared",
-    "@enteties": "/enteties",
+    "@entities": "/entities",
     "@features": "/features",
     "@styles": "/app/styles",
     "@app": "/app",

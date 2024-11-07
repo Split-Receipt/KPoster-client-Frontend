@@ -9,7 +9,7 @@ export type PartnerRegistration = {
 		middleAge: number | null;
 		womenPercentage: number | null;
 		orgResume: string;
-		cultureType: { cultureTypeName: string }[];
+		cultureType: number[];
 		orgWorkType: string;
 		orgLocation: string;
 		personalName: string;
@@ -17,7 +17,8 @@ export type PartnerRegistration = {
 		productDescriptionLink: string;
 		productDescriptionText: string;
 		compVideoLink: string;
-		affiliations: { affiliationId: string, affiliationName: string }[];
+		user: number | null;
+		affiliations: number[];
 		socialMedias: {
 			telegram: string;
 			twitter: string;
@@ -57,11 +58,55 @@ export type RequestOption = {
 	};
 };
 
+export type EventCreateType = {
+	eventName: string;
+	eventDescription: string;
+	eventCategory: { categoryCode: string }[];
+	eventDate: string;
+	eventHost: string;
+	eventDuration: string;
+	eventSocialMedias: {
+		telegram: string;
+		youtube: string;
+		instagram: string;
+		facebook: string;
+		twitter: string;
+		linkedin: string;
+	};
+	eventAddress: {
+		eventCoordinates: string;
+		city: { cityCode: string }[];
+		address: string;
+	}
+	linkToBuyTicket: string;
+	eventShortDescription: string;
+	eventRules: string;
+	eventAgeRestrictions: string;
+	eventContacts: {
+		place: string;
+		tel: string;
+		mail: string;
+	};
+	files: {
+		eventBanner: File | null;
+		eventMediaPhotos: File[] | null;
+		eventMediaVideo: File | null;
+	}
+};
 export type Event = {
 	id: number,
 	attributes: {
+			eventDigitalCatalog?: string,
+			eventWebSite?: string,
 			eventName: string,
+			eventHost: EventHost
 			eventDescription: string,
+			eventCategory:{
+				data: {
+					attributes: {
+						eventCategoryName: string
+					}
+				}[] },
 			eventId: string,
 			eventDate: string,
 			createdAt: string,
@@ -73,6 +118,7 @@ export type Event = {
 			eventDuration: string | null,
 			eventRules: string | null,
 			eventAgeRestrictions: string | null,
+			socialMedias: SocialMedia[]
 			eventAddress: {
 					id: number,
 					address: string,
@@ -87,11 +133,14 @@ export type Event = {
 			eventMediaPhotos: {
 				data: StrapiMediaDefaultType[]
 			}
+			eventMediaVideos: {
+					data: StrapiMediaDefaultType[]
+			}
 	}
 };
 
 export type City = {
-	id: 6,
+	id: number,
 	attributes: {
 			cityName: string,
 			cityCode: string,
@@ -157,3 +206,143 @@ type StrapiMediaFormat = {
 	height: number,
 	sizeInBytes: number
 };
+
+export type CollectionFilters = {
+	type: {
+		$eq: typeof CollectionTypes[keyof typeof CollectionTypes]
+	};
+	events: {
+		eventDate: {
+			$eq?: Date;
+			$gte?: Date;
+		};
+		eventAddress?: {
+			city: {
+				cityCode: {
+					$in: string[];
+				};
+			};
+		};
+		eventHost?: {
+			eventHostCode: {
+				$in: string[];
+			};
+		};
+		eventCategory?: {
+			eventCategoryCode: {
+				$in: string[];
+			};
+		};
+	};
+};
+
+export type SocialMedia = {
+		socialMediaName: string;
+		socialMediaLink: string;
+};
+
+export enum CollectionTypes {
+	forMainPage = 'Para principal',
+	forSinglePages = 'Para páginas individuales'
+}
+
+export type EventHost = {
+	data: {
+		attributes: {
+			commercialName: string
+			compName: string
+			ruc: string
+			videoBusinessCard: {
+				data: StrapiMediaDefaultType[]
+			}
+			mainBanner: {
+				data: StrapiMediaDefaultType
+			}
+			compVideoFile: {
+				data: StrapiMediaDefaultType
+			}
+			mostPopularProduct: {
+				data: StrapiMediaDefaultType
+			}
+			digitalCatalog: string
+			productDescriptionFile: {
+				data: StrapiMediaDefaultType
+			}
+			galleryImages: {
+				data: StrapiMediaDefaultType[]
+			}
+			contacts: {
+						id: number
+						place: string
+						tel: string
+						mail: string
+					}
+			productDescriptionText: string
+			productDescriptionLink: string
+			compVideoLink: string
+			startDate: Date
+			personCount: number
+			middleAge: number
+			womenPercentage: number
+			orgWorkType: string
+			personalName: string
+			personalIdentifyingDocument: string
+			personalDocumentScan: {
+				data: StrapiMediaDefaultType
+			}
+			orgResume: string
+			affiliations: {
+				data: {
+					attributes: {
+						affiliationName: string
+					}
+				}[]
+			}
+			areas_de_la_cultura: {
+				data: {
+					attributes: {
+						cultureTypeName: string
+					}
+				}[]
+			}
+			orgLocation: {
+				data: City[]
+		}
+		events: {
+			data: Event[]
+		}
+		orgType: string
+		eventHostCode: string
+		createdAt: string
+		updatedAt: string
+		publishedAt: string
+		locale: string
+		}
+	}
+};
+
+export type RegisterParams = {
+	username: string;
+	email: string;
+	password: string;
+};
+
+export type LoginParams = {
+	identifier: string;
+	password: string;
+};
+
+export type userAuthentificatedData = {
+	jwt: string;
+	user: {
+		blocked: boolean
+		confirmed: true
+		createdAt: Date
+		email: string
+		id: number
+		provider: string
+		updatedAt: Date
+		username: string
+	}
+};
+

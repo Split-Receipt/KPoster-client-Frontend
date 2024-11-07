@@ -5,8 +5,6 @@
 				<cp-button
 					shape="square"
 					color="transparent"
-					size="squareSize"
-					width="squareWidth"
 					left-icon="arrow-left"
 					:class="[
 						`button-prev__${id}`,
@@ -17,8 +15,6 @@
 				<cp-button
 					shape="square"
 					color="black"
-					size="squareSize"
-					width="squareWidth"
 					left-icon="arrow-right"
 					:class="[
 						`button-next__${id}`,
@@ -68,10 +64,23 @@
 					},
 				}"
 			>
-				<swiper-slide v-for="(card, index) in eventData" :key="index">
-					<event-card
-						:event-card-data="card"
-						@click="toEventDetailPage(card.id)"
+				<swiper-slide
+					v-for="(source, index) in videoFilesUrls"
+					:key="index"
+				>
+					<video 
+						class="event-carousel-video"
+						:src="source"
+						controls
+						:alt="'media' + index" 
+					/>
+				</swiper-slide>
+				<swiper-slide v-for="(source, index) in mediaFilesUrls" :key="index">
+					<nuxt-img
+						class="event-carousel-image"
+						style="width: 100%; height: 100%; object-fit: cover;"
+						:src="source" 
+						:alt="'media' + index" 
 					/>
 				</swiper-slide>
 			</swiper>
@@ -80,41 +89,13 @@
 </template>
 
 <script setup lang="ts">
-import type { EventCard } from '@widgets/event-card/types/types';
 type Props = {
-	eventData: Array<EventCard>;
+	mediaFilesUrls: string[];
+	videoFilesUrls?: string[];
 	id: string | number;
 };
 
-withDefaults(defineProps<Props>(), {
-	eventData: (): Props['eventData'] => [
-		{
-			id: 1,
-			attributes: {
-				linkToBuyTicket: '#',
-				eventDate: '01/01/2024',
-				eventName: 'Event Name',
-				eventShortDescription:
-					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-				eventMediaPhotos: {
-					data: [
-						{
-							id: 1,
-							attributes: {
-								url: 'event-card-1.png',
-							},
-						},
-					],
-				},
-			},
-		},
-	],
-});
-const router = useRouter();
-
-const toEventDetailPage = (cardId: number) => {
-	router.push(`/detailed-event/${cardId}`);
-};
+defineProps<Props>();
 </script>
 
 <style scoped lang="scss">
@@ -123,7 +104,7 @@ const toEventDetailPage = (cardId: number) => {
 		position: relative;
 		display: flex;
 		justify-content: flex-end;
-		gap: 10px;
+		gap: 20px;
 		margin-right: 10px;
 
 		@media #{$screen-desktop} {
@@ -143,6 +124,18 @@ const toEventDetailPage = (cardId: number) => {
 		@media screen and (max-width: 960px) {
 			display: none;
 		}
+	}
+
+	&-image {
+		object-fit: cover;
+		width: 100%;
+		height: 100%;
+	}
+
+	&-video {
+		object-fit: cover;
+		width: 100%;
+		height: 100%;
 	}
 }
 

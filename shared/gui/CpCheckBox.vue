@@ -1,40 +1,60 @@
 <template>
 	<div class="checkbox-wrapper">
-		<input
-			:id="props.id"
-			:value="props.value"
-			type="checkbox"
-			@change="checkBoxAction"
-		/>
-		<label :for="props.id" style="--size: 22px">
-			<svg viewBox="0,0,50,50">
-				<path d="M5 30 L 20 45 L 45 5" />
-			</svg>
-		</label>
-		<label v-if="props.title" class="checkbox-wrapper__label" :for="props.id">{{
-			props.title
-		}}</label>
+		<div class="checkbox-wrapper-input">
+			<input
+				:id="props.option.value + props.option.id"
+				:value="props.option.value"
+				type="checkbox"
+				@change="checkBoxAction"
+			/>
+			<label :for="props.option.value + props.option.id" style="--size: 22px">
+				<svg viewBox="0,0,50,50">
+					<path d="M5 30 L 20 45 L 45 5" />
+				</svg>
+			</label>
+		</div>
+		<div class="checkbox-wrapper-text">
+			<label
+				v-if="props.option.label"
+				class="checkbox-wrapper__label"
+				:for="props.option.value + props.option.id"
+			>{{ props.option.label }}</label
+			>
+		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-type CheckProps = {
+type CheckOption = {
 	id: string;
 	value: string;
-	title?: string;
+	label?: string;
 };
 
 type CheckEmits = {
-	(event: 'update:checkboxUpdate', eventData: string): void;
+	(event: 'update:checkboxUpdate', eventData: string | CheckOption): void;
 };
-
-const props = defineProps<CheckProps>();
+type Props = {
+	option: CheckOption;
+	returnValue?: keyof CheckOption;
+	returnObject?: boolean;
+};
+const props = withDefaults(defineProps<Props>(), {
+	returnValue: 'value',
+	returnObject: false,
+});
 const emit = defineEmits<CheckEmits>();
 
-const checkBoxAction = (e: Event) => {
-	const target = e.target as HTMLInputElement;
+const checkBoxAction = (event: Event) => {
+	const target = event.target as HTMLInputElement;
 	if (target.checked) {
-		emit('update:checkboxUpdate', target.value);
+		if (props.returnObject) {
+			emit('update:checkboxUpdate', props.option);
+		} else if (props.returnValue) {
+			emit('update:checkboxUpdate', props.option[props.returnValue] ?? '');
+		} else {
+			emit('update:checkboxUpdate', target.value ?? '');
+		}
 	} else {
 		emit('update:checkboxUpdate', '');
 	}
@@ -45,6 +65,8 @@ const checkBoxAction = (e: Event) => {
 .checkbox-wrapper {
 	display: flex;
 	align-items: center;
+	position: relative;
+
 	* {
 		box-sizing: border-box;
 
@@ -52,6 +74,17 @@ const checkBoxAction = (e: Event) => {
 		&:before {
 			box-sizing: border-box;
 		}
+	}
+
+	&-input {
+		left: 0;
+		top: 5px;
+		position: absolute;
+	}
+
+	&-text {
+		display: flex;
+		margin-left: 15px;
 	}
 
 	input {
@@ -101,7 +134,6 @@ const checkBoxAction = (e: Event) => {
 	.checkbox-wrapper__label {
 		margin-left: 15px;
 		font-size: 16px;
-		padding-right: 15px;
 		padding-top: 5px;
 		line-height: 28px;
 		cursor: pointer;

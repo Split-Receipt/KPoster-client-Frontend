@@ -13,7 +13,7 @@ import CpDropDown from '@shared/gui/CpDropDown.vue';
 import { requestEventsHost } from '@shared/api';
 
 type Events = {
-	(event: 'change:eventHost', value: string): void;
+	(event: 'change:eventHost', value: string[]): void;
 };
 
 const emit = defineEmits<Events>();

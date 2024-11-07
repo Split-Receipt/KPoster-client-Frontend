@@ -1,23 +1,23 @@
 <template>
 	<div v-bind="$attrs">
 		<div
-			v-for="(option, index) in props.options"
-			:key="index"
+			v-for="option in props.options"
+			:key="option.value + props.name"
 			class="checkbox-wrapper"
 		>
 			<input
-				:id="option.id"
+				:id="option.value"
 				:name="props.name"
 				:value="option.value"
 				type="radio"
 				@change="handleRadioCheck"
 			/>
-			<label :for="option.id" style="--size: 22px">
+			<label :for="option.value" style="--size: 22px">
 				<svg viewBox="0,0,50,50">
 					<path d="M5 30 L 20 45 L 45 5" />
 				</svg>
 			</label>
-			<label v-if="option.label" :for="option.id" class="redioLabel">{{
+			<label v-if="option.label" :for="option.value" class="radioLabel">{{
 				option.label
 			}}</label>
 		</div>
@@ -34,17 +34,33 @@ type RadioVar = {
 type RadioProps = {
 	options: RadioVar[];
 	name: string;
+	returnObject?: boolean;
+	returnValue?: keyof RadioVar;
 };
 
 type Events = {
-	(event: 'update:modelValue', eventData: string): void;
+	(event: 'update:modelValue', eventData: string | RadioVar): void;
 };
-const props = defineProps<RadioProps>();
+const props = withDefaults(defineProps<RadioProps>(), {
+	returnObject: false,
+	returnValue: 'value',
+});
 const emit = defineEmits<Events>();
 
-const handleRadioCheck = (e: Event) => {
-	const target = e.target as HTMLInputElement;
-	emit('update:modelValue', target.value);
+const handleRadioCheck = (event: Event) => {
+	const target = event.target as HTMLInputElement;
+	const pickedOption = props.options.find(
+		(option) => option.value === target.value
+	);
+	if (pickedOption) {
+		if (props.returnObject && pickedOption) {
+			emit('update:modelValue', pickedOption);
+		} else if (props.returnValue) {
+			emit('update:modelValue', pickedOption[props.returnValue] ?? '');
+		} else {
+			emit('update:modelValue', target.value);
+		}
+	}
 };
 </script>
 
@@ -109,7 +125,7 @@ const handleRadioCheck = (e: Event) => {
 			}
 		}
 	}
-	.redioLabel {
+	.radioLabel {
 		margin-left: 15px;
 		padding-top: 5px;
 		cursor: pointer;

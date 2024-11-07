@@ -1,53 +1,59 @@
-<template>  
-	<div id="upSide" class="header__wrapper">  
-		<cp-login-modal v-if="loginModalIsOpen" @update:modal-update="handleModalClose"/>  
-		<cp-up-scroll v-model:model-value="loginModalIsOpen" up-side-id="upSide" />  
-		<div class="header__img">  
-			<nuxt-img  
-				placeholder="/images/header-background_small_blured.jpg"  
-				loading="lazy"  
-				class="header__img-pic"  
-				src="/images/header-background_small.png"  
-			/>  
-		</div>  
-		<div class="header__controls">  
-			<nuxt-link to="/home">  
-				<nuxt-img  
-					loading="lazy"  
-					src="/images/logo.png"  
-					class="icon icon-logo header__icon-logo"  
-				/>  
-			</nuxt-link>  
-			<div class="header__menu">  
-				<div class="header__buttons header__buttons--oval">  
+<template>
+	<div id="upSide" class="header__wrapper">
+		<cp-login-modal
+			v-if="loginModalIsOpen"
+			@update:modal-update="handleModalClose"
+		/>
+		<cp-up-scroll v-model:model-value="loginModalIsOpen" up-side-id="upSide" />
+		<div class="header__img">
+			<nuxt-img
+				placeholder="/images/header-background_small_blured.jpg"
+				loading="lazy"
+				class="header__img-pic"
+				src="/images/header-background_small.png"
+			/>
+		</div>
+		<div class="header__controls">
+			<nuxt-link to="/">
+				<nuxt-img
+					src="/images/logo.png"
+					class="icon icon-logo header__icon-logo"
+				/>
+			</nuxt-link>
+			<div class="header__menu">
+				<div class="header__buttons header__buttons--oval">
 					<cp-button
 						width="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						:text="$t('sales')" />  
+						:text="$t('sales')"
+					/>
 					<cp-button
 						width="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						:text="$t('news')" />  
+						:text="$t('news')"
+					/>
 					<cp-button
 						width="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						:text="$t('charity')" />  
-				</div>  
-				<div class="header__buttons header__buttons--circle">  
+						:text="$t('charity')"
+					/>
+				</div>
+				<div class="header__buttons header__buttons--circle">
 					<cp-button
 						color="gray"
 						with-image="/../public/images/search.svg"
 						size="small"
 						shape="circle"
 						text=""
-					/> 
+					/>
 					<cp-button
+						v-if="!isAuthenticated && userRole !== 'Cliente'"
 						color="gray"
 						with-image="/../public/images/login.svg"
 						size="small"
@@ -55,28 +61,44 @@
 						text=""
 						@click="handleModalOpen"
 					/>
-					<lang-selector />  
-				</div>  
-			</div>  
-			<img src="/images/burger-menu.svg" class="header__icon-burger-menu" />  
-		</div>  
-	</div>  
-</template>  
+					<lang-selector />
+				</div>
+			</div>
+			<img src="/images/burger-menu.svg" class="header__icon-burger-menu" />
+		</div>
+	</div>
+</template>
 
-<script setup lang="ts">  
-import CpButton from '@shared/gui/CpButton.vue';  
-import CpUpScroll from '@shared/gui/CpUpScroll.vue';  
+<script setup lang="ts">
+import CpButton from '@shared/gui/CpButton.vue';
+import CpUpScroll from '@shared/gui/CpUpScroll.vue';
 
-const loginModalIsOpen = ref<boolean>(false);  
+const loginModalIsOpen = ref<boolean>(false);
 
-const handleModalOpen = () => {  
-    loginModalIsOpen.value = true;  
-};  
+const isAuthenticated = ref<boolean>(false);
+const userRole = ref<any>({});
 
-const handleModalClose = (newState: boolean) => {  
-    loginModalIsOpen.value = newState; 
-};  
-</script>  
+const handleModalOpen = () => {
+	loginModalIsOpen.value = true;
+};
+
+onMounted(() => {
+	window.addEventListener('login', handleLogin); //TODO: connect pinia and store such data in pinia
+});
+
+const handleLogin = (event: CustomEvent) => {
+	isAuthenticated.value = true;
+	userRole.value = event.detail.role;
+};
+
+onUnmounted(() => {
+	window.removeEventListener('login', handleLogin);
+});
+
+const handleModalClose = (newState: boolean) => {
+	loginModalIsOpen.value = newState;
+};
+</script>
 
 <style scoped lang="scss">
 .header {

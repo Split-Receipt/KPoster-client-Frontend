@@ -1,49 +1,53 @@
 <template>
 	<div>
-		<a :href="socialLink" target="_blank" class="animatedLink">
+		<nuxt-link
+			:to="socialMediaFormattedValues.socialMediaLink"
+			class="animatedLink"
+			target="_blank"
+			external
+		>
 			<span class="animatedLink__logo">
 				<nuxt-img
-					v-if="socialName === 'instagram'"
-					class="animatedLink__logo-instagram"
-					src="../public/images/instagram.svg"
-				/>
-				<nuxt-img
-					v-if="socialName === 'facebook'"
-					class="animatedLink__logo-facebook"
-					src="../public/images/facebook.svg"
-				/>
-				<nuxt-img
-					v-if="socialName === 'linkedin'"
-					class="animatedLink__logo-linkedin"
-					src="../public/images/linkedin.svg"
-				/>
-				<nuxt-img
-					v-if="socialName === 'tiktok'"
-					class="animatedLink__logo-tiktok"
-					src="../public/images/tiktok.svg"
+					v-if="socialMediaFormattedValues.socialMediaName"
+					:class="
+						'animatedLink__logo-' + socialMediaFormattedValues.socialMediaName
+					"
+					:src="
+						'../public/images/' +
+							socialMediaFormattedValues.socialMediaName +
+							'.svg'
+					"
 				/>
 			</span>
 			<span
-				:class="{
-					'animatedLink__bg-instagram': socialName === 'instagram',
-					'animatedLink__bg-facebook': socialName === 'facebook',
-					'animatedLink__bg-linkedin': socialName === 'linkedin',
-					'animatedLink__bg-tiktok': socialName === 'tiktok',
-				}"
+				:class="
+					'animatedLink__bg-' + socialMediaFormattedValues.socialMediaName
+				"
 			/>
-		</a>
+		</nuxt-link>
 	</div>
 </template>
 
 <script setup lang="ts">
+import type { SocialMedia } from '@shared/api/types';
+import { formatExternalLink, formatNameToBeCode } from '@shared/helpers/formatText';
 // expected social names: instagram \ facebook \ linkedin \ tiktok
 
-type SocialLinkProps = {
-	socialName: string;
-	socialLink: string;
-};
+const props = defineProps<SocialMedia>();
 
-defineProps<SocialLinkProps>();
+const socialMediaFormattedValues = computed(() => {
+	if (!props.socialMediaName) {
+		return {
+			socialMediaName: '',
+			socialMediaLink: '',
+		};
+	}
+
+	return {
+		socialMediaName: formatNameToBeCode(props.socialMediaName),
+		socialMediaLink: formatExternalLink(props.socialMediaLink),
+	};
+});
 </script>
 
 <style scoped lang="scss">

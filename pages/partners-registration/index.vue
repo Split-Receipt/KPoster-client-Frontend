@@ -2,15 +2,14 @@
 	<div class="partners__main">
 		<cp-spinner :is-spinned="isSpin" />
 		<h1 class="partners__title">
-			Ingresa tus datos para
-			registrarte en el Portal Cultural del Cusco
+			Ingresa tus datos para registrarte en el Portal Cultural del Cusco
 		</h1>
 		<div class="partners__subtitle">
 			<h3>Llene el formulario de registro</h3>
 		</div>
 		<v-form ref="partnerRegForm" class="partners__form">
 			<h3>{{ $t('partners_formTitle') }}</h3>
-			
+
 			<!-- Organization type -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-row-info">
@@ -40,7 +39,10 @@
 			</div>
 
 			<!-- personal activity (First name) -->
-			<div v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'" class="partners__form-row">
+			<div
+				v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'"
+				class="partners__form-row"
+			>
 				<div class="partners__form-row-info">
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
@@ -72,7 +74,10 @@
 			</div>
 
 			<!-- Persona lIdentifying Document  -->
-			<div v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'" class="partners__form-rowDnD">
+			<div
+				v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'"
+				class="partners__form-rowDnD"
+			>
 				<div class="partners__form-row-info">
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
@@ -82,7 +87,9 @@
 				<div class="partners__form-row-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="partnerRegistrationForm.data.personalIdentifyingDocument"
+						:model-value="
+							partnerRegistrationForm.data.personalIdentifyingDocument
+						"
 						name="orgType"
 						rules="required"
 					>
@@ -100,7 +107,10 @@
 			</div>
 
 			<!-- Persona lIdentifying Document scan -->
-			<div v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'" class="partners__form-rowDnD">
+			<div
+				v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'"
+				class="partners__form-rowDnD"
+			>
 				<div class="partners__form-rowDnD-info">
 					<span>
 						<strong class="partners__form-rowDnD-info-required">*</strong>
@@ -129,7 +139,10 @@
 			</div>
 
 			<!-- Organization name -->
-			<div v-if="partnerRegistrationForm.data.orgType !== 'Persona_Natural'" class="partners__form-row">
+			<div
+				v-if="partnerRegistrationForm.data.orgType !== 'Persona_Natural'"
+				class="partners__form-row"
+			>
 				<div class="partners__form-row-info">
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
@@ -161,7 +174,10 @@
 			</div>
 
 			<!-- Company name -->
-			<div v-if="partnerRegistrationForm.data.orgType !== 'Persona_Natural'" class="partners__form-row">
+			<div
+				v-if="partnerRegistrationForm.data.orgType !== 'Persona_Natural'"
+				class="partners__form-row"
+			>
 				<div class="partners__form-row-info">
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
@@ -190,7 +206,10 @@
 			</div>
 
 			<!-- Pay number -->
-			<div v-if="partnerRegistrationForm.data.orgType !== 'Persona_Natural'" class="partners__form-row">
+			<div
+				v-if="partnerRegistrationForm.data.orgType !== 'Persona_Natural'"
+				class="partners__form-row"
+			>
 				<div class="partners__form-row-info">
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
@@ -223,10 +242,7 @@
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
 						Fecha de inicio de actividades
-						<cp-info-pop-up
-							id="startDate_info"
-							info="start date info"
-						/>
+						<cp-info-pop-up id="startDate_info" info="start date info" />
 					</span>
 				</div>
 				<div class="partners__form-row-input">
@@ -255,10 +271,7 @@
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
 						Numero de personas de tu organización
-						<cp-info-pop-up
-							id="personCount"
-							info="person count info"
-						/>
+						<cp-info-pop-up id="personCount" info="person count info" />
 					</span>
 				</div>
 				<div class="partners__form-row-input">
@@ -306,11 +319,15 @@
 									v-model="partnerRegistrationForm.data.middleAge"
 									type="number"
 									placeholder="Numero de personas"
-									:class="{ 'required-input-error-textInput': errors.length > 0 }"
+									:class="{
+										'required-input-error-textInput': errors.length > 0,
+									}"
 								/>
-								<span v-if="errors" class="required-input-error-info-leftSide">{{
-									errors[0]
-								}}</span>
+								<span
+									v-if="errors"
+									class="required-input-error-info-leftSide"
+								>{{ errors[0] }}</span
+								>
 							</v-field>
 						</span>
 						<span>
@@ -324,11 +341,15 @@
 									v-model="partnerRegistrationForm.data.womenPercentage"
 									type="number"
 									placeholder="porcentaje de mujeres"
-									:class="{ 'required-input-error-textInput': errors.length > 0 }"
+									:class="{
+										'required-input-error-textInput': errors.length > 0,
+									}"
 								/>
-								<span v-if="errors" class="required-input-error-info-leftSide">{{
-									errors[0]
-								}}</span>
+								<span
+									v-if="errors"
+									class="required-input-error-info-leftSide"
+								>{{ errors[0] }}</span
+								>
 							</v-field>
 						</span>
 					</div>
@@ -384,6 +405,7 @@
 							v-model="partnerRegistrationForm.data.orgResume"
 							text-area-id="orgResume"
 							text-area-placeholder="resume lo que hace tu organización"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
 						<span v-if="errors" class="required-input-error-info-center">{{
 							errors[0]
@@ -425,7 +447,7 @@
 							<span
 								v-else
 								class="partners__form-rowDnD-semiBlock-social-maxWidth"
-								style="padding-top: 12px;"
+								style="padding-top: 12px"
 							>
 								<cp-text-input2
 									id="compVideo_id"
@@ -445,13 +467,13 @@
 				<div class="partners__form-row-info">
 					<span>
 						<strong class="partners__form-row-info-required">*</strong>
-						En que areas de la cultura
-						viva comunitaria se desenvuelve
-						tu organización ? Elección múltiple
+						En que areas de la cultura viva comunitaria se desenvuelve tu
+						organización ? Elección múltiple
 					</span>
 				</div>
 				<div class="partners__form-row-input">
 					<v-field
+						v-if="orgSphereChecks.length > 0"
 						v-slot="{ errors }"
 						name="cultureType"
 						rules="require_checkbox"
@@ -459,16 +481,20 @@
 					>
 						<div>
 							<cp-check-box
-								v-for="item, key in orgSphereChecks"
-								:id="item.id"
-								:key="key"
-								:value="item.value"
-								:title="item.title"
-								@change="checkboxCollectCultureType"/>
+								v-for="(item, index) in orgSphereChecks"
+								:key="item.value"
+								:option="item"
+								return-value="id"
+								@update:checkbox-update="(value: number) => checkboxCollectCultureType(value, index)"
+							/>
 						</div>
-						<span v-if="errors && partnerRegistrationForm.data.cultureType.length < 1" class="required-input-error-info-leftSide">{{
-							errors[0]
-						}}</span>
+						<span
+							v-if="
+								errors && partnerRegistrationForm.data.cultureType.length < 1
+							"
+							class="required-input-error-info-leftSide"
+						>{{ errors[0] }}</span
+						>
 					</v-field>
 				</div>
 			</div>
@@ -478,8 +504,8 @@
 				<div class="partners__form-rowDnD-info">
 					<span>
 						<strong class="partners__form-rowDnD-info-required">*</strong>
-						Especificar la labor que realiza
-						en el área seleccionada de cultura viva comunitaria 
+						Especificar la labor que realiza en el área seleccionada de cultura
+						viva comunitaria
 						<cp-info-pop-up id="org_Work_Type" info="orgWorkType info" />
 					</span>
 				</div>
@@ -494,6 +520,7 @@
 							v-model="partnerRegistrationForm.data.orgWorkType"
 							text-area-id="orgWorkType"
 							text-area-placeholder="describe los detalles del texto de tu industria"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
 						/>
 						<span v-if="errors" class="required-input-error-info-center">{{
 							errors[0]
@@ -537,9 +564,11 @@
 							:max-size="5"
 							:is-invalid="errors.length > 0"
 						/>
-						<span v-if="errors && mainProdValue === 'File'" class="required-input-error-info-center">{{
-							errors[0]
-						}}</span>
+						<span
+							v-if="errors && mainProdValue === 'File'"
+							class="required-input-error-info-center"
+						>{{ errors[0] }}</span
+						>
 					</v-field>
 					<v-field
 						v-if="mainProdValue === 'Link'"
@@ -550,7 +579,7 @@
 					>
 						<span
 							class="partners__form-rowDnD-semiBlock-social-maxWidth"
-							style="padding-top: 12px;"
+							style="padding-top: 12px"
 						>
 							<cp-text-input2
 								id="compVideo_id"
@@ -558,13 +587,15 @@
 								:circle="true"
 								label-text="Descripción del Producto"
 								placeholder="Descripción del Producto"
-								:class="
-									{
-										'required-input-error-socialMedia': errors.length > 0,
-										'required-input-default-socialMedia': errors.length < 1,
-									}"
+								:class="{
+									'required-input-error-socialMedia': errors.length > 0,
+									'required-input-default-socialMedia': errors.length < 1,
+								}"
 							/>
-							<span v-if="errors && mainProdValue === 'Link'" class="required-input-error-info-leftSide">
+							<span
+								v-if="errors && mainProdValue === 'Link'"
+								class="required-input-error-info-leftSide"
+							>
 								{{ errors[0] }}
 							</span>
 						</span>
@@ -578,9 +609,13 @@
 					>
 						<span
 							class="partners__form-rowDnD-semiBlock-social-maxWidth"
-							style="padding-top: 12px;"
+							style="padding-top: 12px"
 						>
-							<label class="input-laabel" for="mainProdTextArea">Descripción del Producto</label>
+							<label
+								class="input-laabel"
+								for="mainProdTextArea"
+							>Descripción del Producto</label
+							>
 							<cp-text-area
 								v-model="partnerRegistrationForm.data.productDescriptionText"
 								:class="{ 'required-input-error-textInput': errors.length > 0 }"
@@ -588,7 +623,10 @@
 								text-area-label="Descripción del Producto"
 								text-area-placeholder="por favor escriba una descripción del producto"
 							/>
-							<span v-if="errors && mainProdValue === 'Text'" class="required-input-error-info-center">
+							<span
+								v-if="errors && mainProdValue === 'Text'"
+								class="required-input-error-info-center"
+							>
 								{{ errors[0] }}
 							</span>
 						</span>
@@ -644,8 +682,9 @@
 					>
 						<cp-radio-button
 							v-model="partnerRegistrationForm.data.orgLocation"
-							:options="radiooptions2"
+							:options="cityRadioButtons"
 							name="radio2"
+							return-value="id"
 							style="margin-left: -30px"
 						/>
 						<span v-if="errors" class="required-input-error-info-leftSide">{{
@@ -685,9 +724,11 @@
 										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span v-if="errors" class="required-input-error-info-leftSide">{{
-									errors[0]
-								}}</span>
+								<span
+									v-if="errors"
+									class="required-input-error-info-leftSide"
+								>{{ errors[0] }}</span
+								>
 							</v-field>
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
@@ -706,9 +747,11 @@
 										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span v-if="errors" class="required-input-error-info-leftSide">{{
-									errors[0]
-								}}</span>
+								<span
+									v-if="errors"
+									class="required-input-error-info-leftSide"
+								>{{ errors[0] }}</span
+								>
 							</v-field>
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
@@ -727,9 +770,11 @@
 										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span v-if="errors" class="required-input-error-info-leftSide">{{
-									errors[0]
-								}}</span>
+								<span
+									v-if="errors"
+									class="required-input-error-info-leftSide"
+								>{{ errors[0] }}</span
+								>
 							</v-field>
 						</span>
 					</div>
@@ -839,16 +884,20 @@
 					>
 						<div>
 							<cp-check-box
-								v-for="item, key in affiliations"
-								:id="item.id"
-								:key="key"
-								:value="item.value"
-								:title="item.title"
-								@change="checkboxCollectAffiliations"/>
+								v-for="(item, index) in affiliationChecks"
+								:key="item.value"
+								:option="item"
+								return-value="id"
+								@update:checkbox-update="(value: number) => checkboxCollectAffiliations(value, index)"
+							/>
 						</div>
-						<span v-if="errors && partnerRegistrationForm.data.affiliations.length < 1" class="required-input-error-info-leftSide">{{
-							errors[0]
-						}}</span>
+						<span
+							v-if="
+								errors && partnerRegistrationForm.data.affiliations.length < 1
+							"
+							class="required-input-error-info-leftSide"
+						>{{ errors[0] }}</span
+						>
 					</v-field>
 				</div>
 			</div>
@@ -925,6 +974,62 @@
 				</div>
 			</div>
 
+			<!-- Registration Data -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Redes sociales
+						<cp-info-pop-up
+							id="user_registration_info"
+							info="No se admitirán redes personales"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<div class="partners__form-rowDnD-input-socialsAndContacts">
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-text-input2
+								id="username_id"
+								v-model="userRegistrationData.username"
+								:circle="true"
+								label-text="Nombre de usuario"
+								placeholder="Nombre"
+							/>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-text-input2
+								id="email_id"
+								v-model="userRegistrationData.email"
+								:circle="true"
+								label-text="Email"
+								placeholder="example@example.com"
+							/>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-text-input2
+								id="pass_id"
+								v-model="userRegistrationData.password"
+								:circle="true"
+								type="password"
+								label-text="Password"
+								placeholder="Password"
+							/>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<cp-text-input2
+								id="confirmPass_id"
+								v-model="passwordConfirmationValue"
+								:circle="true"
+								type="password"
+								label-text="Confirm Password"
+								placeholder="Password again"
+							/>
+						</span>
+					</div>
+				</div>
+			</div>
+
 			<div class="partners__form-submit">
 				<div class="partners__form-submit-btnContainer">
 					<cp-button
@@ -951,42 +1056,54 @@ import CpRadioButton from '@shared/gui/CpRadioButton.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpTextInput2 from '@shared/gui/CpTextInput2.vue';
 import type { PartnerRegistration } from '@shared/api/types.ts';
-import { registerPartner } from '@shared/api';
+import {
+	registerPartner,
+	requestCities,
+	requestCategories,
+	requestAffiliations,
+} from '@shared/api';
+import registerUserForPartner from '@features/register-user';
 import { Form as VForm, Field as VField } from 'vee-validate';
-import { generateUniqueId } from '@shared/helpers/generateUid';
 import CpTextArea from '@shared/gui/CpTextArea.vue';
 
 const { $objToFormData } = useNuxtApp();
+onBeforeMount(async () => {
+	await getCities();
+	await getCategories();
+	await getAffiliations();
+});
+
 // test values ----------------------------------------------------------
 const radioOptions1 = [
 	{ id: 'emp', value: 'Empresa', label: 'Empresa' },
 	{ id: 'ong', value: 'ONG', label: 'ONG' },
-	{ id: 'Organizacion Cultural', value: 'Organizacion_Cultural', label: 'Organizacion Cultural' },
+	{
+		id: 'Organizacion Cultural',
+		value: 'Organizacion_Cultural',
+		label: 'Organizacion Cultural',
+	},
 	{ id: 'Persona Natural', value: 'Persona_Natural', label: 'Persona Natural' },
 ];
 
-const radiooptions2 = [
-	{ id: 'Acomayo', value: 'Acomayo', label: 'Acomayo' },
-	{ id: 'Anta', value: 'Anta', label: 'Anta' },
-	{ id: 'Calca', value: 'Calca', label: 'Calca' },
-	{ id: 'Canas', value: 'Canas', label: 'Canas' },
-	{ id: 'Canchis', value: 'Canchis', label: 'Canchis' },
-	{ id: 'Cusco', value: 'Cusco', label: 'Cusco' },
-	{ id: 'Chumbivilcas', value: 'Chumbivilcas', label: 'Chumbivilcas' },
-	{ id: 'Espinar', value: 'Espinar', label: 'Espinar' },
-	{ id: 'La_Convencion', value: 'La_Convencion', label: 'La Convencion' },
-	{ id: 'Paruro', value: 'Paruro', label: 'Paruro' },
-	{ id: 'Paucartambo', value: 'Paucartambo', label: 'Paucartambo' },
-	{ id: 'Quispicanchis', value: 'Quispicanchis', label: 'Quispicanchis' },
-	{ id: 'Urubamba', value: 'Urubamba', label: 'Urubamba' },
-];
+const cityRadioButtons = ref([]);
 
 const docTypeOptions = [
-{ id: 'Permiso_de_residencia', value: 'Permiso_de_residencia', label: 'Permiso de residencia' },
-{ id: 'Licencia_de_conducir', value: 'Licencia_de_conducir', label: 'Licencia de conducir' },
-{ id: 'Pasaporte_extranjero', value: 'Pasaporte_extranjero', label: 'Pasaporte extranjero' },
-{ id: 'Pasaporte_local', value: 'Pasaporte_local', label: 'Pasaporte local' },
-
+	{
+		id: 'Permiso_de_residencia',
+		value: 'Permiso_de_residencia',
+		label: 'Permiso de residencia',
+	},
+	{
+		id: 'Licencia_de_conducir',
+		value: 'Licencia_de_conducir',
+		label: 'Licencia de conducir',
+	},
+	{
+		id: 'Pasaporte_extranjero',
+		value: 'Pasaporte_extranjero',
+		label: 'Pasaporte extranjero',
+	},
+	{ id: 'Pasaporte_local', value: 'Pasaporte_local', label: 'Pasaporte local' },
 ];
 
 const compVideoSwitcherOptions = [
@@ -1000,28 +1117,9 @@ const mainProdSwitcherOptions = [
 	{ optionName: 'Type text', optionValue: 'Text', optionKey: 'TextKey' },
 ];
 
-const orgSphereChecks = [
-	{ id: generateUniqueId(), value: 'ecology', title: 'Consciencia ambiental' },
-	{ id: generateUniqueId(), value: 'management', title: 'Gestion cultural' },
-	{ id: generateUniqueId(), value: 'Artesania', title: 'Artesania' },
-	{ id: generateUniqueId(), value: 'Musica', title: 'Musica' },
-	{ id: generateUniqueId(), value: 'dance', title: 'Artes escenicas y danzas' },
-	{ id: generateUniqueId(), value: 'arts', title: 'Artes visuales' },
-	{ id: generateUniqueId(), value: 'books', title: 'Libro y lectura' },
-	{ id: generateUniqueId(), value: 'Visuals', title: 'Fotografia , audiovisual, cinematografico y nuevos medios' },
-	{ id: generateUniqueId(), value: 'languages', title: 'Lenguas indigenas u originarias y tradicion oral' },
-	{ id: generateUniqueId(), value: 'digital_content', title: 'Creador de contenido en plataformas digitales' },
-	{ id: generateUniqueId(), value: 'gastronomy', title: 'Gastronomia tipica' },
-	{ id: generateUniqueId(), value: 'art_gallery', title: 'Galeria y espacios de arte' },
-];
+const orgSphereChecks = ref([]);
 
-const affiliations = [
-{ id: generateUniqueId(), value: 'ACERCA', title: 'ACERCA' },
-{ id: generateUniqueId(), value: ' Defensores_de_Patrimonio', title: ' Defensores de Patrimonio' },
-{ id: generateUniqueId(), value: 'RENTOCA', title: 'RENTOCA' },
-{ id: generateUniqueId(), value: 'Puntos_de_cultura', title: 'Puntos de cultura' },
-{ id: generateUniqueId(), value: 'Ninguna', title: 'Ninguna' },
-];
+const affiliationChecks = ref([]);
 
 // ----------------------------------------------------------------------
 
@@ -1032,6 +1130,7 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		compName: '',
 		ruc: '',
 		startDate: '',
+		user: null,
 		personCount: null,
 		middleAge: null,
 		womenPercentage: null,
@@ -1071,6 +1170,14 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 	},
 });
 
+const userRegistrationData = reactive({
+	username: '',
+	email: '',
+	password: '',
+});
+
+const passwordConfirmationValue = ref<string>('');
+
 const compVideoValue = ref<string | null>('File');
 const mainProdValue = ref<string | null>('File');
 
@@ -1088,21 +1195,19 @@ watch(mainProdValue, () => {
 	partnerRegistrationForm.data.productDescriptionText = '';
 });
 
-const checkboxCollectCultureType = (e: Event) => {
-	const target = e.target as HTMLInputElement;
-	if (target.checked) {
-		partnerRegistrationForm.data.cultureType.push({ cultureTypeName: target.value });
+const checkboxCollectCultureType = (value: number, index: number) => {
+	if (value) {
+		partnerRegistrationForm.data.cultureType.push(value);
 	} else {
-		partnerRegistrationForm.data.cultureType = partnerRegistrationForm.data.cultureType.filter((e) => e.cultureTypeName !== target.value);
+		partnerRegistrationForm.data.cultureType.splice(index, 1);
 	}
 };
 
-const checkboxCollectAffiliations = (e: Event) => {
-	const target = e.target as HTMLInputElement;
-	if (target.checked) {
-		partnerRegistrationForm.data.affiliations.push({ affiliationId: target.id, affiliationName: target.value });
+const checkboxCollectAffiliations = (value: number, index: number) => {
+	if (value) {
+		partnerRegistrationForm.data.affiliations.push(value);
 	} else {
-		partnerRegistrationForm.data.affiliations = partnerRegistrationForm.data.affiliations.filter((e) => e.affiliationName !== target.value);
+		partnerRegistrationForm.data.affiliations.splice(index, 1);
 	}
 };
 
@@ -1112,21 +1217,87 @@ const sendPartnerRegistrationForm = async () => {
 
 	if (!isValid.valid) {
 		isSpin.value = false;
-		toast.error('form is invalid');
+		toast.error('Form is invalid');
 
 		return;
 	}
 
+	try {
+		const newUserId = await registerUserForPartner(userRegistrationData);
+		if (!newUserId) {
+			throw new Error(
+				'Nuestro administrador se comunicará conusted por correo electrónico'
+			);
+		}
+		partnerRegistrationForm.data.user = newUserId;
+		await createPartner();
+	} catch (error) {
+		toast.error(
+			'Nuestro administrador se comunicará conusted por correo electrónico'
+		);
+	}
+};
+
+const createPartner = async () => {
 	const partnerRegPayload = $objToFormData(toRaw(partnerRegistrationForm));
 	try {
 		await registerPartner(partnerRegPayload);
 		isSpin.value = false;
-		toast.success('Nuestro administrador se comunicará conusted por correo electrónico');
+		toast.success(
+			'Nuestro administrador se comunicará conusted por correo electrónico'
+		);
 	} catch (error) {
 		toast.error('error');
 		isSpin.value = false;
 	} finally {
 		isSpin.value = false;
+	}
+};
+
+const getCities = async () => {
+	try {
+		const cities = await requestCities();
+		cityRadioButtons.value = cities.data.data.map((city: any) => ({
+			id: city.id,
+			value: city.attributes.cityName,
+			label: city.attributes.cityName,
+		}));
+	} catch (error) {
+		toast.error(
+			'Nuestro administrador se comunicará conusted por correo electrónico'
+		);
+	}
+};
+
+const getCategories = async () => {
+	try {
+		const categories = await requestCategories();
+		orgSphereChecks.value = categories.data.data.map((category: any) => ({
+			id: category.id,
+			value: category.attributes.cultureTypeName,
+			label: category.attributes.cultureTypeName,
+		}));
+	} catch (error) {
+		toast.error(
+			'Nuestro administrador se comunicará conusted por correo electrónico'
+		);
+	}
+};
+
+const getAffiliations = async () => {
+	try {
+		const affiliations = await requestAffiliations();
+		affiliationChecks.value = affiliations.data.data.map(
+			(affiliation: any) => ({
+				id: affiliation.id,
+				value: affiliation.attributes.affiliationName,
+				label: affiliation.attributes.affiliationName,
+			})
+		);
+	} catch (error) {
+		toast.error(
+			'Nuestro administrador se comunicará conusted por correo electrónico'
+		);
 	}
 };
 </script>
@@ -1277,7 +1448,6 @@ const sendPartnerRegistrationForm = async () => {
 					align-items: center;
 					justify-content: flex-start;
 					width: 100%;
-
 				}
 
 				&-flexBlock {
@@ -1295,11 +1465,10 @@ const sendPartnerRegistrationForm = async () => {
 							}
 						}
 					}
-					
+
 					@media (max-width: 610px) {
 						flex-direction: column;
 						align-items: flex-start !important;
-						
 					}
 				}
 
@@ -1325,7 +1494,7 @@ const sendPartnerRegistrationForm = async () => {
 
 					&-maxWidth {
 						width: 100%;
-						min-height: 250px
+						min-height: 250px;
 					}
 				}
 
@@ -1336,13 +1505,12 @@ const sendPartnerRegistrationForm = async () => {
 
 					&-maxWidth {
 						width: 100%;
-						min-height: 250px
+						min-height: 250px;
 					}
 
 					&-subInputs {
 						margin-top: 15px;
 					}
-
 				}
 			}
 		}
@@ -1442,7 +1610,7 @@ const sendPartnerRegistrationForm = async () => {
 
 					&-maxWidth {
 						width: 100%;
-						min-height: 250px
+						min-height: 250px;
 					}
 				}
 
@@ -1453,7 +1621,7 @@ const sendPartnerRegistrationForm = async () => {
 
 					&-maxWidth {
 						width: 100%;
-						min-height: 250px
+						min-height: 250px;
 					}
 
 					&-subInputs {
@@ -1616,8 +1784,8 @@ const sendPartnerRegistrationForm = async () => {
 
 .input-laabel {
 	margin-bottom: 15px;
-    font-size: 22px;
-    line-height: 35.2px;
-    color: #353333;
+	font-size: 22px;
+	line-height: 35.2px;
+	color: #353333;
 }
 </style>

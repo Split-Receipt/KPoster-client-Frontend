@@ -1,10 +1,19 @@
 import { useNuxtApp } from 'nuxt/app';
-import type { PartnerRegistration } from '@shared/api/types.ts';
+import type { EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams } from '@shared/api/types.ts';
+import type { AxiosResponse } from 'axios';
 
 export const registerPartner = (partnerInfo: PartnerRegistration) => {
 	const { $api } = useNuxtApp();
 
 	return $api.post('/api/partners', partnerInfo, {
+		headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${localStorage.getItem('AuthToken')}` } },
+	);
+};
+
+export const eventCreate = (eventInfo: EventCreateType) => {
+	const { $api } = useNuxtApp();
+
+	return $api.post('/api/events', eventInfo, {
 		headers: { 'Content-Type': 'multipart/form-data' },
 	});
 };
@@ -27,7 +36,13 @@ export const requestEventsHost = () => {
 	return $api.get('/api/partners');
 };
 
-export const requestEventsColletions = (filters) => {
+export const requestEventCategories = () => {
+	const { $api } = useNuxtApp();
+
+	return $api.get('/api/event-categories');
+};
+
+export const requestEventsColletions = (filters: CollectionFilters) => {
 	const { $api } = useNuxtApp();
 	const params = {
 		populate: {
@@ -39,6 +54,9 @@ export const requestEventsColletions = (filters) => {
 						},
 					},
 					eventBanner: {
+						populate: '*',
+					},
+					eventSocialMedias: {
 						populate: '*',
 					},
 					eventMediaPhotos: {
@@ -57,4 +75,69 @@ export const requestEventsColletionByCode = (collectionCode: string) => {
 	const { $api } = useNuxtApp();
 
 	return $api.get(`api/events-collections/${collectionCode}`);
+};
+
+export const requestEventById = (id: string) => {
+	const { $api } = useNuxtApp();
+	const params = {
+		populate: {
+
+		eventHost: {
+			populate: {
+				contacts: true,
+			},
+		},
+		eventBanner: {
+			populate: '*',
+		},
+
+		eventMediaPhotos: {
+			populate: '*',
+		},
+
+		socialMedias: {
+			populate: '*',
+		},
+
+		eventMediaVideos: {
+			populate: '*',
+		},
+
+		eventAddress: {
+			populate: {
+				city: true,
+			},
+		},
+		},
+	};
+
+	return $api.get(`api/events/${id}`, { params });
+};
+
+export const registerUser = (params: RegisterParams): Promise<AxiosResponse<userAuthentificatedData>> => {
+	const { $api } = useNuxtApp();
+
+	return $api.post('/api/auth/local/register', params);
+};
+
+export const loginUser = (params: LoginParams) => {
+	const { $api } = useNuxtApp();
+
+	return $api.post('/api/auth/local', params);
+};
+
+export const requestAffiliations = () => {
+	const { $api } = useNuxtApp();
+
+	return $api.get('/api/affiliations');
+};
+
+export const requestMyUser = () => {
+	const { $api } = useNuxtApp();
+
+	const params = {
+		populate: { role: { populate: { name: true } } },
+	};
+
+	return $api.get('/api/users/me', { params, headers: { Authorization: `Bearer ${localStorage.getItem('AuthToken')}` } });
 };

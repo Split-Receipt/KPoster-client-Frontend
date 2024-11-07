@@ -48,4 +48,12 @@ export default defineNuxtPlugin(() => {
 
 		return true;
 	});
+
+	defineRule('require_coordinates', (value: number[]) => {
+		if (value[0] === -12.046016 && value[1] === -77.030554) {
+			return 'require to choose location at map';
+		}
+
+		return true;
+	});
 });

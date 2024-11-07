@@ -5,3 +5,15 @@
 @import "/app/styles/scss/base/generic";
 @import "/app/styles/scss/base/fonts.scss";
 @import "/app/styles/fonts/iconFont/iconfont.css";
+
+
+.leaflet-right {
+	display: none;
+}
+
+#__nuxt {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}

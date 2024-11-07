@@ -3,11 +3,16 @@
 		<label class="socialMedia__label" :for="props.id">
 			<span v-if="props.circle" class="socialMedia__label-circle" />
 			{{ props.labelText }}
+			<cp-info-pop-up
+				v-if="props.tooltip"
+				:id="props.id"
+				info="Selecciona redes sociales donde podrás compartir el enlace del evento."
+			/>
 		</label>
 		<input
 			:id="props.id"
 			class="socialMedia__input"
-			type="text"
+			:type="props.type"
 			:placeholder="props.placeholder"
 			@input="inputValueUpdate"
 		/>
@@ -21,13 +26,18 @@ type socialMediaProps = {
 	placeholder: string;
 	labelText: string;
 	circle?: boolean;
+	tooltip?: boolean;
+	tooltipText?: string;
 };
 
 type Events = {
 	(event: 'update:modelValue', eventData: string): void;
 };
 
-const props = defineProps<socialMediaProps>();
+const props = withDefaults(defineProps<socialMediaProps>(), {
+	type: 'text',
+	tooltipText: '',
+});
 const emit = defineEmits<Events>();
 
 const inputValueUpdate = (e: Event) => {

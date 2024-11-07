@@ -5,22 +5,20 @@
 
 			<div class="main-page__date-carousel">
 				<date-card-carousel
-					@change:filter-date="(value) => changeFilters(value, 'date')"
+					@change:filter-date="(value: Date) => changeFilters(value, 'date')"
 				/>
 			</div>
 
 			<div class="main-page__filters">
 				<city-drop-down
-					@change:filter-cities="(value) => changeFilters(value, 'city')"
+					@change:filter-cities="(value: string[]) => changeFilters(value, 'city')"
 				/>
 
 				<partners-drop-down
-					@change:event-host="(value) => changeFilters(value, 'eventHost')"
+					@change:event-host="(value: string[]) => changeFilters(value, 'eventHost')"
 				/>
-				<culture-category-drop-down
-					@change:filter-culture-cats="
-						(value) => changeFilters(value, 'cultureCategory')
-					"
+				<event-category-drop-down
+					@change:filter-event-cats="(value: string[]) => changeFilters(value, 'eventCategory')"
 				/>
 			</div>
 			<div class="main-page__section-list">
@@ -37,11 +35,14 @@
 <script setup lang="ts">
 import PartnersDropDown from '@features/partners-filter/PartnersDropDown.vue';
 import CityDropDown from '@features/city-filter/CityDropDown.vue';
-import CultureCategoryDropDown from '@features/culture-category-filter/CultureCategoryDropDown.vue';
+import EventCategoryDropDown from '@features/event-category-filter/EventCategoryDropDown.vue';
 import { requestEventsColletions } from '@shared/api';
+import { CollectionTypes, type CollectionFilters } from '@shared/api/types';
+
 const { availableLocales, setLocale } = useI18n();
 const eventsCollections = ref();
-const filters = {
+const filters: CollectionFilters = {
+	type: { $eq: CollectionTypes.forMainPage },
 	events: {
 		eventDate: {
 			$eq: new Date(),
@@ -94,8 +95,8 @@ const changeFilters = (data: any, filterPath: string) => {
 			break;
 		}
 
-		case 'cultureCategory': {
-			filters.events.cultureType = { cultureTypeCode: { $in: data } };
+		case 'eventCategory': {
+			filters.events.eventCategory = { eventCategoryCode: { $in: data } };
 			getEventsCollection();
 			break;
 		}
@@ -114,6 +115,7 @@ const changeFilters = (data: any, filterPath: string) => {
 
 <style scoped lang="scss">
 .main-page {
+	height: 100%;
 	&__main {
 		margin-top: 2px;
 		padding-left: 10px;
@@ -162,6 +164,7 @@ const changeFilters = (data: any, filterPath: string) => {
 			gap: 65px;
 			margin-top: 60px;
 			margin-bottom: 40px;
+			height: 100%;
 
 			@media #{$screen-tablet} {
 				margin-top: 45px;
