@@ -9,7 +9,7 @@
 			:use-global-leaflet="false"
 		>
 			<l-tile-layer
-				url="https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}@2x.png"
+				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				layer-type="base"
 				name="Stadia Maps Basemap"
 			/>
@@ -30,7 +30,7 @@
 			@click="getCoordinates"
 		>
 			<l-tile-layer
-				url="https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}@2x.png"
+				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				layer-type="base"
 				name="Stadia Maps Basemap"
 			/>
