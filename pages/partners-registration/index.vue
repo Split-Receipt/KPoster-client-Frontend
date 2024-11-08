@@ -778,22 +778,6 @@
 							</v-field>
 						</span>
 					</div>
-					<cp-button
-						class="partners__form__button"
-						width="maxWidth"
-						size="small"
-						shape="oval"
-						color="transparent"
-						text="Más información"
-					/>
-					<cp-button
-						class="partners__form__button"
-						width="maxWidth"
-						size="small"
-						shape="oval"
-						color="yellowGrey"
-						text="Añadir más categorías"
-					/>
 				</div>
 			</div>
 

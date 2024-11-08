@@ -34,10 +34,9 @@
 		<input
 			v-if="props.type === 'date'"
 			:id="props.id"
-			type="text"
+			type="date"
 			placeholder="ingrese la fecha"
 			@focus="dateInputFocus"
-			@blur="dateInputBlur"
 			@input="handleInputValueUpdate"
 		/>
 		<input
@@ -76,10 +75,10 @@ const dateInputFocus = (e: Event) => {
 	target.type = 'date';
 };
 
-const  dateInputBlur = (e: Event) => {
-	const target = e.target as HTMLInputElement;
-	target.type = 'text';
-};
+// const  dateInputBlur = (e: Event) => {
+// 	const target = e.target as HTMLInputElement;
+// 	target.type = 'text';
+// };
 
 const handleInputValueUpdate = (e: Event) => {
 	const target = e.target as HTMLInputElement;
