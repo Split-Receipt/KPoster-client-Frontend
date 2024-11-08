@@ -1051,6 +1051,7 @@ import { Form as VForm, Field as VField } from 'vee-validate';
 import CpTextArea from '@shared/gui/CpTextArea.vue';
 
 const { $objToFormData } = useNuxtApp();
+const router = useRouter();
 onBeforeMount(async () => {
 	await getCities();
 	await getCategories();
@@ -1207,18 +1208,25 @@ const sendPartnerRegistrationForm = async () => {
 	}
 
 	try {
+		isSpin.value = true;
 		const newUserId = await registerUserForPartner(userRegistrationData);
 		if (!newUserId) {
 			throw new Error(
-				'Nuestro administrador se comunicará conusted por correo electrónico'
+				'No se pudo encontrar el usuario'
 			);
 		}
 		partnerRegistrationForm.data.user = newUserId;
 		await createPartner();
+		toast.success(
+			'El registro fue exitoso'
+		);
+		router.push('/');
 	} catch (error) {
 		toast.error(
 			'Nuestro administrador se comunicará conusted por correo electrónico'
 		);
+	} finally {
+		isSpin.value = false;
 	}
 };
 
@@ -1226,15 +1234,11 @@ const createPartner = async () => {
 	const partnerRegPayload = $objToFormData(toRaw(partnerRegistrationForm));
 	try {
 		await registerPartner(partnerRegPayload);
-		isSpin.value = false;
 		toast.success(
 			'Nuestro administrador se comunicará conusted por correo electrónico'
 		);
 	} catch (error) {
 		toast.error('error');
-		isSpin.value = false;
-	} finally {
-		isSpin.value = false;
 	}
 };
 
