@@ -62,13 +62,12 @@
 						text=""
 					/>
 					<cp-button
-						v-if="!isAuthenticated && userRole !== 'Cliente'"
 						color="gray"
 						with-image="/../public/images/login.svg"
 						size="small"
 						shape="circle"
 						text=""
-						@click="handleModalOpen"
+						@click="handleLoginButton"
 					/>
 					<lang-selector />
 				</div>
@@ -83,6 +82,7 @@ import CpButton from '@shared/gui/CpButton.vue';
 import CpUpScroll from '@shared/gui/CpUpScroll.vue';
 
 const loginModalIsOpen = ref<boolean>(false);
+const router = useRouter();
 
 const isAuthenticated = ref<boolean>(false);
 const userRole = ref<any>({});
@@ -113,12 +113,24 @@ onUnmounted(() => {
 	window.removeEventListener('login', handleLogin);
 });
 
+const handleLoginButton = () => {
+	if (isAuthenticated.value) {
+		localStorage.removeItem('myUser');
+		localStorage.removeItem('AuthToken');
+		isAuthenticated.value = false;
+		userRole.value = '';
+		router.push('/');
+	} else {
+		handleModalOpen();
+	}
+};
+
 const handleModalClose = (newState: boolean) => {
 	loginModalIsOpen.value = newState;
 };
 
 const isAllowedToCreateEvent = computed(() => {
-	return isAuthenticated.value && userRole.value === 'Organizador de eventos';
+	return isAuthenticated.value && userRole.value.name === 'Organizador de eventos';
 });
 </script>
 

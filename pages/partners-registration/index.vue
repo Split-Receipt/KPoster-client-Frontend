@@ -794,57 +794,21 @@
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<div class="partners__form-rowDnD-input-socialsAndContacts">
-						<span class="partners__form-rowDnD-semiBlock-social">
+						<span
+							v-for="(socialMedia, index) in partnerRegistrationForm.data
+								.socialMedias"
+							:key="socialMedia.socialMediaName"
+							class="partners__form-rowDnD-semiBlock-social"
+						>
 							<cp-text-input2
-								id="telegram_id"
-								v-model="partnerRegistrationForm.data.socialMedias.telegram"
+								:id="socialMedia.socialMediaName + '_id'"
+								v-model="
+									partnerRegistrationForm.data.socialMedias[index]
+										.socialMediaLink
+								"
 								:circle="true"
-								label-text="Telegram"
-								placeholder="https://www.youtube.com/"
-							/>
-						</span>
-						<!-- <span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="twitter_id"
-								v-model="partnerRegistrationForm.data.socialMedias.twitter"
-								:circle="true"
-								label-text="Twitter"
-								placeholder="https://www.vimeo.com/"
-							/>
-						</span> -->
-						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="faceBook_id"
-								v-model="partnerRegistrationForm.data.socialMedias.faceBook"
-								:circle="true"
-								label-text="FaceBook"
-								placeholder="https://www.vimeo.com/"
-							/>
-						</span>
-						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="instagram_id"
-								v-model="partnerRegistrationForm.data.socialMedias.instagram"
-								:circle="true"
-								label-text="Instagram"
-								placeholder="https://www.vimeo.com/"
-							/>
-						</span>
-						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="youTube_id"
-								v-model="partnerRegistrationForm.data.socialMedias.youTube"
-								:circle="true"
-								label-text="YouTube"
-								placeholder="https://www.vimeo.com/"
-							/> </span
-						><span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="linkedIn_id"
-								v-model="partnerRegistrationForm.data.socialMedias.linkedIn"
-								:circle="true"
-								label-text="Linkedin"
-								placeholder="https://www.vimeo.com/"
+								:label-text="socialMedia.socialMediaName"
+								:placeholder="`https://www.${socialMedia.socialMediaName}.com/`"
 							/>
 						</span>
 					</div>
@@ -1017,12 +981,14 @@
 			<div class="partners__form-submit">
 				<div class="partners__form-submit-btnContainer">
 					<cp-button
+						ref="submitBtn"
 						class="partners__form__button"
 						width="maxWidth"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
 						text="submit"
+						:disabled="formSended"
 						@click="sendPartnerRegistrationForm"
 					/>
 				</div>
@@ -1050,6 +1016,7 @@ import registerUserForPartner from '@features/register-user';
 import { Form as VForm, Field as VField } from 'vee-validate';
 import CpTextArea from '@shared/gui/CpTextArea.vue';
 
+const formSended = ref(false);
 const { $objToFormData } = useNuxtApp();
 const router = useRouter();
 onBeforeMount(async () => {
@@ -1129,14 +1096,13 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		productDescriptionText: '',
 		compVideoLink: '',
 		affiliations: [],
-		socialMedias: {
-			telegram: '',
-			twitter: '',
-			faceBook: '',
-			instagram: '',
-			youTube: '',
-			linkedIn: '',
-		},
+		socialMedias: [
+			{ socialMediaName: 'TikTok', socialMediaLink: '' },
+			{ socialMediaName: 'Facebook', socialMediaLink: '' },
+			{ socialMediaName: 'Instagram', socialMediaLink: '' },
+			{ socialMediaName: 'LinkedIn', socialMediaLink: '' },
+			{ socialMediaName: 'YouTube', socialMediaLink: '' },
+		],
 		digitalCatalog: '',
 		contacts: {
 			place: '',
@@ -1209,22 +1175,23 @@ const sendPartnerRegistrationForm = async () => {
 
 	try {
 		isSpin.value = true;
+		formSended.value = true;
 		const newUserId = await registerUserForPartner(userRegistrationData);
 		if (!newUserId) {
-			throw new Error(
-				'No se pudo encontrar el usuario'
-			);
+			throw new Error('No se pudo encontrar el usuario');
 		}
 		partnerRegistrationForm.data.user = newUserId;
 		await createPartner();
-		toast.success(
-			'El registro fue exitoso'
-		);
-		router.push('/');
+		toast.success('El registro fue exitoso');
+		setTimeout(() => {
+			router.push('/');
+		}, 1000);
 	} catch (error) {
 		toast.error(
 			'Nuestro administrador se comunicará conusted por correo electrónico'
 		);
+
+		formSended.value = false;
 	} finally {
 		isSpin.value = false;
 	}
@@ -1234,9 +1201,6 @@ const createPartner = async () => {
 	const partnerRegPayload = $objToFormData(toRaw(partnerRegistrationForm));
 	try {
 		await registerPartner(partnerRegPayload);
-		toast.success(
-			'Nuestro administrador se comunicará conusted por correo electrónico'
-		);
 	} catch (error) {
 		toast.error('error');
 	}

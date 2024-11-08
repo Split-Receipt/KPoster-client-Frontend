@@ -670,13 +670,6 @@ const categoryCheckBoxes = computed(() => {
 	});
 });
 
-const defaultMediaValue = ref<string>('photo');
-
-const compMediaSwitcherOptions = [
-	{ optionName: 'Upload photo', optionValue: 'photo', optionKey: 'photoKey' },
-	{ optionName: 'Upload video', optionValue: 'video', optionKey: 'videoKey' },
-];
-
 const cityRadioButtons = computed(() => {
 	if (!cities.value?.length) {
 		return [];

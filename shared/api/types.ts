@@ -19,14 +19,7 @@ export type PartnerRegistration = {
 		compVideoLink: string;
 		user: number | null;
 		affiliations: number[];
-		socialMedias: {
-			telegram: string;
-			// twitter: string;
-			faceBook: string;
-			instagram: string;
-			youTube: string;
-			linkedIn: string;
-		};
+		socialMedias: SocialMedia[];
 		digitalCatalog: string;
 		contacts: {
 			place: string;
