@@ -13,6 +13,7 @@
 			:id="props.id"
 			class="socialMedia__input"
 			:type="props.type"
+			v-bind="$attrs"
 			:placeholder="props.placeholder"
 			@input="inputValueUpdate"
 		/>

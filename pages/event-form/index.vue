@@ -114,69 +114,72 @@
 				<div class="eventForm-upperPositionRow-input fullWidth-socials">
 					<div class="eventForm-upperPositionRow-input-socialsAndContacts">
 						<span
+							v-for="(item, index) in eventCreateForm.data.eventSocialMedias"
+							:key="item.socialMediaName"
 							class="eventForm-upperPositionRow-input-socialsAndContacts-social"
 						>
 							<cp-text-input2
-								id="telegram_id"
-								v-model="eventCreateForm.data.eventSocialMedias.telegram"
+								:id="item.socialMediaName"
+								v-model="
+									eventCreateForm.data.eventSocialMedias[index].socialMediaLink
+								"
 								:circle="true"
-								label-text="Telegram"
-								placeholder="https://www.youtube.com/"
+								:label-text="item.socialMediaName"
+								placeholder="https://www.example.com/"
 							/>
 						</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="eventForm-upperPositionRow">
+				<div class="eventForm-upperPositionRow-info">
+					<span>
+						Pagina web del evento
+						<cp-info-pop-up
+							id="webPage"
+							info="Indique la dirección de la página web dedicada a su evento"
+						/>
+					</span>
+				</div>
+				<div class="eventForm-upperPositionRow-input fullWidth-socials">
+					<div class="eventForm-upperPositionRow-input-socialsAndContacts">
 						<span
 							class="eventForm-upperPositionRow-input-socialsAndContacts-social"
 						>
 							<cp-text-input2
-								id="facebook_id"
-								v-model="eventCreateForm.data.eventSocialMedias.facebook"
+								id="eventWebsite"
+								v-model="eventCreateForm.data.eventWebSite"
 								:circle="true"
-								label-text="Facebook"
-								placeholder="https://www.youtube.com/"
+								label-text="Pagina web"
+								placeholder="https://www.example.com/"
 							/>
 						</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="eventForm-upperPositionRow">
+				<div class="eventForm-upperPositionRow-info">
+					<span>
+						Catalogo digital
+						<cp-info-pop-up
+							id="digitalCatalog"
+							info="Indique el enlace al catálogo digital de su evento"
+						/>
+					</span>
+				</div>
+				<div class="eventForm-upperPositionRow-input fullWidth-socials">
+					<div class="eventForm-upperPositionRow-input-socialsAndContacts">
 						<span
 							class="eventForm-upperPositionRow-input-socialsAndContacts-social"
 						>
 							<cp-text-input2
-								id="youtube_id"
-								v-model="eventCreateForm.data.eventSocialMedias.youtube"
+								id="eventWebsite"
+								v-model="eventCreateForm.data.eventDigitalCatalog"
 								:circle="true"
-								label-text="Youtube"
-								placeholder="https://www.youtube.com/"
-							/>
-						</span>
-						<span
-							class="eventForm-upperPositionRow-input-socialsAndContacts-social"
-						>
-							<cp-text-input2
-								id="twitter_id"
-								v-model="eventCreateForm.data.eventSocialMedias.twitter"
-								:circle="true"
-								label-text="Twitter"
-								placeholder="https://www.youtube.com/"
-							/>
-						</span>
-						<span
-							class="eventForm-upperPositionRow-input-socialsAndContacts-social"
-						>
-							<cp-text-input2
-								id="instagram_id"
-								v-model="eventCreateForm.data.eventSocialMedias.instagram"
-								:circle="true"
-								label-text="Instagram"
-								placeholder="https://www.youtube.com/"
-							/>
-						</span>
-						<span
-							class="eventForm-upperPositionRow-input-socialsAndContacts-social"
-						>
-							<cp-text-input2
-								id="linkedin_id"
-								v-model="eventCreateForm.data.eventSocialMedias.linkedin"
-								:circle="true"
-								label-text="Linkedin"
-								placeholder="https://www.youtube.com/"
+								label-text="Pagina web"
+								placeholder="https://www.example.com/"
 							/>
 						</span>
 					</div>
@@ -213,6 +216,7 @@
 								v-model="eventCreateForm.data.eventDate"
 								type="date"
 								:circle="false"
+								:min="new Date().toISOString().split('T')[0]"
 								label-text="Fecha y hora"
 								placeholder="introduzca el enlace"
 							/>
@@ -292,12 +296,45 @@
 							name="decription"
 							rules="required"
 						>
-							<cp-text-area
+							<v-md-editor
 								v-model="eventCreateForm.data.eventDescription"
 								text-area-id="event_description_id"
-								text-area-placeholder="input"
+								height="500px"
 								:class="{ 'required-input-error-textInput': errors.length > 0 }"
 							/>
+							<span
+								v-if="errors.length"
+								class="required-input-error-info-center"
+							>
+								{{ errors[0] }}
+							</span>
+						</v-field>
+					</div>
+				</div>
+			</div>
+
+			<div class="eventForm-upperPositionRow">
+				<div class="eventForm-upperPositionRow-info">
+					<span>
+						<strong class="eventForm-upperPositionRow-info-required">*</strong>
+						Descripción breve del evento
+					</span>
+				</div>
+				<div class="eventForm-upperPositionRow-input fullWidth-details">
+					<div class="eventForm-upperPositionRow-input-details">
+						<v-field
+							v-slot="{ errors }"
+							:model-value="eventCreateForm.data.eventShortDescription"
+							name="decription"
+							rules="required"
+						>
+							<cp-text-area
+								v-model="eventCreateForm.data.eventShortDescription"
+								text-area-id="event_description_id"
+								text-area-placeholder="Descripción breve del evento"
+								:class="{ 'required-input-error-textInput': errors.length > 0 }"
+							/>
+
 							<span
 								v-if="errors.length"
 								class="required-input-error-info-center"
@@ -313,33 +350,37 @@
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
 					<span>
-						Sube contenido de foto, video o sobre tu evento
+						Sube contenido de foto o sobre tu evento
 						<cp-info-pop-up
 							id="media_id"
 							info="El banner debe cargarse a 1100 por 278 píxeles en formato .png"
 						/>
-						<div class="eventForm-upperPositionRow-info-switcherBlock">
-							<cp-switcher
-								v-model="defaultMediaValue"
-								:default-option="defaultMediaValue"
-								switcher-name="compVideo"
-								:switcher-options="compMediaSwitcherOptions"
-							/>
-						</div>
 					</span>
 				</div>
 				<div class="eventForm-upperPositionRow-input fullWidth-banner">
 					<cp-drag-n-drop
-						v-if="defaultMediaValue === 'photo'"
 						v-model="eventCreateForm.files.eventMediaPhotos"
-						:is-single="true"
+						:is-multi="true"
 						type="image"
 						:max-size="5"
 					/>
+				</div>
+			</div>
+
+			<div class="eventForm-upperPositionRow">
+				<div class="eventForm-upperPositionRow-info">
+					<span>
+						Sube contenido de video o sobre tu evento
+						<cp-info-pop-up
+							id="media_id"
+							info="Vídeo no mayor a 25 megas en formato .mp4"
+						/>
+					</span>
+				</div>
+				<div class="eventForm-upperPositionRow-input fullWidth-banner">
 					<cp-drag-n-drop
-						v-if="defaultMediaValue === 'video'"
-						v-model="eventCreateForm.files.eventMediaVideo"
-						:is-single="true"
+						v-model="eventCreateForm.files.eventMediaVideos"
+						:is-multi="true"
 						type="video"
 						:max-size="25"
 					/>
@@ -557,14 +598,13 @@ const eventCreateForm = reactive<EventCreateType>({
 		eventCategory: [],
 		eventDate: '',
 		eventHost: '',
-		eventSocialMedias: {
-			telegram: '',
-			youtube: '',
-			instagram: '',
-			facebook: '',
-			twitter: '',
-			linkedin: '',
-		},
+		eventSocialMedias: [
+			{ socialMediaName: 'TikTok', socialMediaLink: '' },
+			{ socialMediaName: 'Facebook', socialMediaLink: '' },
+			{ socialMediaName: 'Instagram', socialMediaLink: '' },
+			{ socialMediaName: 'LinkedIn', socialMediaLink: '' },
+			{ socialMediaName: 'YouTube', socialMediaLink: '' },
+		],
 		eventDuration: '',
 		eventAddress: {
 			eventCoordinates: '-12.046016, -77.030554',
@@ -572,6 +612,8 @@ const eventCreateForm = reactive<EventCreateType>({
 			address: '',
 		},
 		linkToBuyTicket: '',
+		eventDigitalCatalog: '',
+		eventWebSite: '',
 		eventShortDescription: '',
 		eventRules: '',
 		eventAgeRestrictions: '',
@@ -584,7 +626,7 @@ const eventCreateForm = reactive<EventCreateType>({
 	files: {
 		eventBanner: null,
 		eventMediaPhotos: null,
-		eventMediaVideo: null,
+		eventMediaVideos: null,
 	},
 });
 
@@ -595,12 +637,6 @@ const cities = ref<City[]>([]);
 const eventCreateFormTemplate = ref<HTMLFormElement | null>(null);
 
 const isSpin = ref<boolean>(false);
-
-type CheckboxTypes = {
-	id: string;
-	value: string;
-	title: string;
-}[];
 
 onBeforeMount(() => {
 	myUser.value = JSON.parse(localStorage.getItem('myUser') ?? '{}');
@@ -678,14 +714,6 @@ const checkboxCollectCategories = (value: number, index: number) => {
 		eventCreateForm.data.eventCategory.push(value);
 	} else {
 		eventCreateForm.data.eventCategory.splice(index, 1);
-	}
-};
-
-const checkboxCollectCities = (value: number) => {
-	if (value) {
-		eventCreateForm.data.eventAddress.city = value;
-	} else {
-		eventCreateForm.data.eventAddress.city = null;
 	}
 };
 

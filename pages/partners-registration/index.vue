@@ -803,7 +803,7 @@
 								placeholder="https://www.youtube.com/"
 							/>
 						</span>
-						<span class="partners__form-rowDnD-semiBlock-social">
+						<!-- <span class="partners__form-rowDnD-semiBlock-social">
 							<cp-text-input2
 								id="twitter_id"
 								v-model="partnerRegistrationForm.data.socialMedias.twitter"
@@ -811,7 +811,7 @@
 								label-text="Twitter"
 								placeholder="https://www.vimeo.com/"
 							/>
-						</span>
+						</span> -->
 						<span class="partners__form-rowDnD-semiBlock-social">
 							<cp-text-input2
 								id="faceBook_id"

@@ -34,8 +34,8 @@ export const EventDefaultValue: EventData = {
     eventAgeRestrictions: 'Event Age Restrictions',
 		socialMedias: [
 			{
-				socialMediaName: 'twitter',
-				socialMediaLink: 'http://twitter.com',
+				socialMediaName: 'TikTok',
+				socialMediaLink: 'http://tikTok.com',
 			},
 		],
     eventAddress: {

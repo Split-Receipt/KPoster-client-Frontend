@@ -261,7 +261,7 @@ const event = ref<EventData>(EventDefaultValue);
 const mainImage = ref<HTMLElement>();
 const isSpin = ref<boolean>(true);
 
-onBeforeMount(async () => {
+onMounted(async () => {
 	await getEventById(id);
 	changeMainImage();
 });
@@ -273,10 +273,13 @@ const changeMainImage = () => {
 	) {
 		return;
 	}
+
 	const imageSource =
-		event.value.attributes.eventBanner.data ??
+		event.value.attributes.eventBanner.data?.attributes.url ??
 		event.value.attributes.eventMediaPhotos.data[0].attributes.url;
+
 	if (mainImage.value) {
+
 		mainImage.value.style.backgroundImage = `url(${
 			config.public.apiBaseUrl + imageSource
 		})`;
@@ -329,11 +332,11 @@ const getEventCoordinates = computed(() => {
 });
 
 const eventSocialMedias = computed(() => {
-	if (!event.value.attributes?.socialMedias?.length) {
+	if (!event.value.attributes?.eventSocialMedias?.length) {
 		return [];
 	}
 
-	return event.value.attributes.socialMedias;
+	return event.value.attributes.eventSocialMedias;
 });
 
 const eventCategoriesNames = computed(() => {

@@ -86,6 +86,11 @@ const socialMediaFormattedValues = computed(() => {
 		transform-origin: bottom;
 	}
 
+	&:hover .animatedLink__bg-youtube {
+		transform: rotate(35deg);
+		transform-origin: bottom;
+	}
+
 	&:hover .animatedLink__logo {
 		background-color: rgba(156, 156, 156, 0.466);
 		backdrop-filter: blur(4px);
@@ -125,6 +130,10 @@ const socialMediaFormattedValues = computed(() => {
 		&-tiktok {
 			height: 25px;
 			width: 25px;
+		}
+		&-youtube {
+			height: 100%;
+			width: 100%;
 		}
 	}
 
@@ -195,6 +204,17 @@ const socialMediaFormattedValues = computed(() => {
 			width: 100%;
 			height: 100%;
 			background: #000000;
+			z-index: -1;
+			border-radius: 10px;
+			pointer-events: none;
+			transition: all 0.3s;
+		}
+
+		&-youtube {
+			position: absolute;
+			content: '';
+			width: 100%;
+			height: 100%;
 			z-index: -1;
 			border-radius: 10px;
 			pointer-events: none;

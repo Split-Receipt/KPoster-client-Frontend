@@ -47,7 +47,7 @@ export const footerLists = {
 			},
 			{
 				id: 2,
-				text: 'Twitter',
+				text: 'TikTok',
 				href: '#',
 			},
 			{

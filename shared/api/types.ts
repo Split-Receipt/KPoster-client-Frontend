@@ -21,7 +21,7 @@ export type PartnerRegistration = {
 		affiliations: number[];
 		socialMedias: {
 			telegram: string;
-			twitter: string;
+			// twitter: string;
 			faceBook: string;
 			instagram: string;
 			youTube: string;
@@ -66,14 +66,9 @@ export type EventCreateType = {
 	eventDate: string;
 	eventHost: string;
 	eventDuration: string;
-	eventSocialMedias: {
-		telegram: string;
-		youtube: string;
-		instagram: string;
-		facebook: string;
-		twitter: string;
-		linkedin: string;
-	};
+	eventDigitalCatalog: string,
+	eventWebSite: string,
+	eventSocialMedias: { socialMediaName: string, socialMediaLink: string }[];
 	eventAddress: {
 		eventCoordinates: string;
 		city: number | null;
@@ -92,7 +87,7 @@ export type EventCreateType = {
 	files: {
 		eventBanner: File | null;
 		eventMediaPhotos: File[] | null;
-		eventMediaVideo: File | null;
+		eventMediaVideos: File[] | null;
 	}
 };
 
@@ -128,7 +123,7 @@ export type EventData = {
 			eventDuration: string | null,
 			eventRules: string | null,
 			eventAgeRestrictions: string | null,
-			socialMedias: SocialMedia[]
+			eventSocialMedias: SocialMedia[]
 			eventAddress: {
 					id: number,
 					address: string,

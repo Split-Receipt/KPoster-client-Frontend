@@ -95,7 +95,7 @@ export const requestEventById = (id: string) => {
 			populate: '*',
 		},
 
-		socialMedias: {
+		eventSocialMedias: {
 			populate: '*',
 		},
 
