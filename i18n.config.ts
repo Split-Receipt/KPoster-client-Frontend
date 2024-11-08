@@ -8,6 +8,7 @@ export default defineI18nConfig(() => ({
 			main_title: 'Culture events of Peru',
 			sales: 'Sales',
 			news: 'News',
+			create_event: 'Create event',
 			charity: 'Charity',
 			// drag n drop component features
 			clear: 'Clear',
@@ -68,6 +69,7 @@ export default defineI18nConfig(() => ({
 			welcome: 'Welcome',
 			main_title: 'Cultural Events in Peru',
 			sales: 'Sales',
+			create_event: 'Create event',
 			news: 'News',
 			charity: 'Charity',
 			// drag n drop component features
@@ -129,6 +131,7 @@ export default defineI18nConfig(() => ({
 			welcome: 'Bienvenido',
 			main_title: 'Eventos culturales de Perú',
 			sales: 'Ventas',
+			create_event: 'Crear evento',
 			news: 'Noticias',
 			charity: 'Caridad',
 			// drag n drop component features

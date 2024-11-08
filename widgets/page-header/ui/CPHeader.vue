@@ -23,19 +23,28 @@
 			<div class="header__menu">
 				<div class="header__buttons header__buttons--oval">
 					<cp-button
+						v-if="isAllowedToCreateEvent"
 						width="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						:text="$t('sales')"
+						:text="$t('create_event')"
+						@click="$router.push('/event-form')"
 					/>
 					<cp-button
 						width="large"
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						:text="$t('news')"
+						:text="$t('sales')"
 					/>
+					<!-- <cp-button
+						width="large"
+						size="small"
+						shape="oval"
+						color="yellowGrey"
+						:text="$t('news')"
+					/> -->
 					<cp-button
 						width="large"
 						size="small"
@@ -83,8 +92,17 @@ const handleModalOpen = () => {
 };
 
 onMounted(() => {
-	window.addEventListener('login', handleLogin); //TODO: connect pinia and store such data in pinia
+	getUserDataFromLocalStorage();
+	window.addEventListener('login', handleLogin); //TODO: connect pinia and store such data in pinia, rewrite compinent when pinia is integrated
 });
+
+const getUserDataFromLocalStorage = () => {
+	if (localStorage.getItem('myUser')) {
+		const myUser = JSON.parse(localStorage.getItem('myUser') as string);
+		isAuthenticated.value = true;
+		userRole.value = myUser.role.name;
+	}
+};
 
 const handleLogin = (event: CustomEvent) => {
 	isAuthenticated.value = true;
@@ -98,6 +116,10 @@ onUnmounted(() => {
 const handleModalClose = (newState: boolean) => {
 	loginModalIsOpen.value = newState;
 };
+
+const isAllowedToCreateEvent = computed(() => {
+	return isAuthenticated.value && userRole.value === 'Organizador de eventos';
+});
 </script>
 
 <style scoped lang="scss">
