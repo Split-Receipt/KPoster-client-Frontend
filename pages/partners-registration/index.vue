@@ -1173,6 +1173,12 @@ const sendPartnerRegistrationForm = async () => {
 		return;
 	}
 
+	if (JSON.stringify(localStorage.getItem('AuthToken'))) {
+		toast.error('Primero debe cerrar sesión en su cuenta actual');
+
+		return;
+	}
+
 	try {
 		isSpin.value = true;
 		formSended.value = true;
