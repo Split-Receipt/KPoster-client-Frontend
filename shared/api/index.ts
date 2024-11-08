@@ -136,7 +136,12 @@ export const requestMyUser = () => {
 	const { $api } = useNuxtApp();
 
 	const params = {
-		populate: { role: { populate: { name: true } } },
+		populate: {
+			role: { populate: { name: true } },
+			eventHostData: {
+				populate: '*',
+			},
+		 },
 	};
 
 	return $api.get('/api/users/me', { params, headers: { Authorization: `Bearer ${localStorage.getItem('AuthToken')}` } });

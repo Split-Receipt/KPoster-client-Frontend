@@ -64,6 +64,7 @@ const handleCoords = (coords: number[] | string) => {
 	} else if (Array.isArray(coords)) {
 		return coords;
 	} else {
+
 		return coords.split(',').map((coord) => {
 			return parseFloat(coord);
 		});

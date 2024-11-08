@@ -59,9 +59,10 @@ export type RequestOption = {
 };
 
 export type EventCreateType = {
+	data:{
 	eventName: string;
 	eventDescription: string;
-	eventCategory: { categoryCode: string }[];
+	eventCategory: number[];
 	eventDate: string;
 	eventHost: string;
 	eventDuration: string;
@@ -75,7 +76,7 @@ export type EventCreateType = {
 	};
 	eventAddress: {
 		eventCoordinates: string;
-		city: { cityCode: string }[];
+		city: number | null;
 		address: string;
 	}
 	linkToBuyTicket: string;
@@ -87,6 +88,7 @@ export type EventCreateType = {
 		tel: string;
 		mail: string;
 	};
+}
 	files: {
 		eventBanner: File | null;
 		eventMediaPhotos: File[] | null;

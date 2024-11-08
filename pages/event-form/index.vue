@@ -14,12 +14,12 @@
 				<div class="eventForm-row-input fullWidth-eventName">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="eventCreateForm.eventName"
+						:model-value="eventCreateForm.data.eventName"
 						name="eventName"
 						rules="required"
 					>
 						<cp-text-input
-							v-model="eventCreateForm.eventName"
+							v-model="eventCreateForm.data.eventName"
 							placeholder="nombre del evento"
 							type="text"
 							:class="{ 'required-input-error-textInput': errors.length > 0 }"
@@ -44,18 +44,19 @@
 						v-slot="{ errors }"
 						name="eventCategory"
 						rules="require_checkbox"
-						:model-value="eventCreateForm.eventCategory"
+						:model-value="eventCreateForm.data.eventCategory"
 					>
 						<cp-check-box
-							v-for="item in categoryCheckBoxes"
-							:id="item.id"
-							:key="item.id"
-							:value="item.value"
-							:title="item.title"
-							@change="checkboxCollectCategories"
+							v-for="(item, index) in categoryCheckBoxes"
+							:key="item.id + item.value"
+							:option="item"
+							return-value="id"
+							@update:checkbox-update="(value: number) => checkboxCollectCategories(value, index)"
 						/>
 						<span
-							v-if="errors.length && eventCreateForm.eventCategory.length < 1"
+							v-if="
+								errors.length && eventCreateForm.data.eventCategory.length < 1
+							"
 							class="required-input-error-info-leftSide"
 						>
 							{{ errors[0] }}
@@ -90,9 +91,11 @@
 							:max-size="5"
 							:is-invalid="errors.length > 0"
 						/>
-						<span v-if="errors.length" class="required-input-error-info-center">{{
-							errors[0]
-						}}</span>
+						<span
+							v-if="errors.length"
+							class="required-input-error-info-center"
+						>{{ errors[0] }}</span
+						>
 					</v-field>
 				</div>
 			</div>
@@ -115,7 +118,7 @@
 						>
 							<cp-text-input2
 								id="telegram_id"
-								v-model="eventCreateForm.eventSocialMedias.telegram"
+								v-model="eventCreateForm.data.eventSocialMedias.telegram"
 								:circle="true"
 								label-text="Telegram"
 								placeholder="https://www.youtube.com/"
@@ -126,7 +129,7 @@
 						>
 							<cp-text-input2
 								id="facebook_id"
-								v-model="eventCreateForm.eventSocialMedias.facebook"
+								v-model="eventCreateForm.data.eventSocialMedias.facebook"
 								:circle="true"
 								label-text="Facebook"
 								placeholder="https://www.youtube.com/"
@@ -137,7 +140,7 @@
 						>
 							<cp-text-input2
 								id="youtube_id"
-								v-model="eventCreateForm.eventSocialMedias.youtube"
+								v-model="eventCreateForm.data.eventSocialMedias.youtube"
 								:circle="true"
 								label-text="Youtube"
 								placeholder="https://www.youtube.com/"
@@ -148,7 +151,7 @@
 						>
 							<cp-text-input2
 								id="twitter_id"
-								v-model="eventCreateForm.eventSocialMedias.twitter"
+								v-model="eventCreateForm.data.eventSocialMedias.twitter"
 								:circle="true"
 								label-text="Twitter"
 								placeholder="https://www.youtube.com/"
@@ -159,7 +162,7 @@
 						>
 							<cp-text-input2
 								id="instagram_id"
-								v-model="eventCreateForm.eventSocialMedias.instagram"
+								v-model="eventCreateForm.data.eventSocialMedias.instagram"
 								:circle="true"
 								label-text="Instagram"
 								placeholder="https://www.youtube.com/"
@@ -170,7 +173,7 @@
 						>
 							<cp-text-input2
 								id="linkedin_id"
-								v-model="eventCreateForm.eventSocialMedias.linkedin"
+								v-model="eventCreateForm.data.eventSocialMedias.linkedin"
 								:circle="true"
 								label-text="Linkedin"
 								placeholder="https://www.youtube.com/"
@@ -196,7 +199,7 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<cp-text-input2
 								id="event_place_id"
-								v-model="eventCreateForm.eventContacts.place"
+								v-model="eventCreateForm.data.eventContacts.place"
 								:circle="false"
 								label-text="Ubicación del evento"
 								placeholder="introduzca el enlace"
@@ -207,7 +210,8 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<cp-text-input2
 								id="event_date_id"
-								v-model="eventCreateForm.eventDate"
+								v-model="eventCreateForm.data.eventDate"
+								type="date"
 								:circle="false"
 								label-text="Fecha y hora"
 								placeholder="introduzca el enlace"
@@ -216,7 +220,7 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<cp-text-input2
 								id="duration_id"
-								v-model="eventCreateForm.eventDuration"
+								v-model="eventCreateForm.data.eventDuration"
 								:circle="false"
 								label-text="Duración en minutos"
 								placeholder="introduzca el enlace"
@@ -225,7 +229,7 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<cp-text-input2
 								id="rules_id"
-								v-model="eventCreateForm.eventRules"
+								v-model="eventCreateForm.data.eventRules"
 								:circle="false"
 								label-text="Reglas de visita"
 								placeholder="introduzca el enlace"
@@ -234,7 +238,7 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<cp-text-input2
 								id="age_restrictions_id"
-								v-model="eventCreateForm.eventAgeRestrictions"
+								v-model="eventCreateForm.data.eventAgeRestrictions"
 								:circle="false"
 								label-text="Restricciones de edad"
 								placeholder="introduzca el enlace"
@@ -255,12 +259,12 @@
 				<div class="eventForm-row-input fullWidth-tickets">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="eventCreateForm.linkToBuyTicket"
+						:model-value="eventCreateForm.data.linkToBuyTicket"
 						name="tickets"
 						rules="required"
 					>
 						<cp-text-input
-							v-model="eventCreateForm.linkToBuyTicket"
+							v-model="eventCreateForm.data.linkToBuyTicket"
 							placeholder="http://tickets.com"
 							type="text"
 							:class="{ 'required-input-error-textInput': errors.length > 0 }"
@@ -284,17 +288,20 @@
 					<div class="eventForm-upperPositionRow-input-details">
 						<v-field
 							v-slot="{ errors }"
-							:model-value="eventCreateForm.eventDescription"
+							:model-value="eventCreateForm.data.eventDescription"
 							name="decription"
 							rules="required"
 						>
 							<cp-text-area
-								v-model="eventCreateForm.eventDescription"
+								v-model="eventCreateForm.data.eventDescription"
 								text-area-id="event_description_id"
 								text-area-placeholder="input"
 								:class="{ 'required-input-error-textInput': errors.length > 0 }"
 							/>
-							<span v-if="errors.length" class="required-input-error-info-center">
+							<span
+								v-if="errors.length"
+								class="required-input-error-info-center"
+							>
 								{{ errors[0] }}
 							</span>
 						</v-field>
@@ -350,20 +357,18 @@
 				<div class="eventForm-upperPositionRow-input">
 					<v-field
 						v-slot="{ errors }"
-						name="eventCity"
-						rules="require_checkbox"
-						:model-value="eventCreateForm.eventAddress.city"
+						name="cityRadio"
+						rules="required"
+						:model-value="eventCreateForm.data.eventAddress.city"
 					>
-						<cp-check-box
-							v-for="item in cityCheckBoxes"
-							:id="item.id"
-							:key="item.id"
-							:value="item.value"
-							:title="item.title"
-							@change="checkboxCollectCities"
+						<cp-radio-button
+							v-model="eventCreateForm.data.eventAddress.city"
+							:options="cityRadioButtons"
+							name="cityRadio"
+							return-value="id"
 						/>
 						<span
-							v-if="errors.length && eventCreateForm.eventAddress.city.length < 1"
+							v-if="errors.length && !eventCreateForm.data.eventAddress.city"
 							class="required-input-error-info-leftSide"
 						>
 							{{ errors[0] }}
@@ -383,12 +388,12 @@
 				<div class="eventForm-row-input fullWidth-eventName">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="eventCreateForm.eventAddress.address"
+						:model-value="eventCreateForm.data.eventAddress.address"
 						name="eventAdres"
 						rules="required"
 					>
 						<cp-text-input
-							v-model="eventCreateForm.eventAddress.address"
+							v-model="eventCreateForm.data.eventAddress.address"
 							placeholder="dirección del evento"
 							type="text"
 							:class="{ 'required-input-error-textInput': errors.length > 0 }"
@@ -412,18 +417,19 @@
 					<div class="eventForm__map">
 						<v-field
 							v-slot="{ errors }"
-							:model-value="eventCreateForm.eventAddress.eventCoordinates"
+							:model-value="eventCreateForm.data.eventAddress.eventCoordinates"
 							name="eventCoordinates"
 							rules="require_coordinates"
 						>
 							<cp-map
-								v-model:coordinates-update="
-									eventCreateForm.eventAddress.eventCoordinates
-								"
 								:coordinates-output="true"
-								:center="eventCreateForm.eventAddress.eventCoordinates"
+								:center="getCoordinates"
+								@update:coordinates-update="setCoordinates"
 							/>
-							<span v-if="errors.length" class="required-input-error-info-center">
+							<span
+								v-if="errors.length"
+								class="required-input-error-info-center"
+							>
 								{{ errors[0] }}
 							</span>
 						</v-field>
@@ -445,13 +451,13 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<v-field
 								v-slot="{ errors }"
-								:model-value="eventCreateForm.eventContacts.tel"
+								:model-value="eventCreateForm.data.eventContacts.tel"
 								name="eventTel"
 								rules="required"
 							>
 								<cp-text-input2
 									id="tel_id"
-									v-model="eventCreateForm.eventContacts.tel"
+									v-model="eventCreateForm.data.eventContacts.tel"
 									:circle="false"
 									label-text="Número de teléfono"
 									placeholder="introduzca el enlace"
@@ -459,7 +465,10 @@
 										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span v-if="errors.length" class="required-input-error-info-leftSide">
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-leftSide"
+								>
 									{{ errors[0] }}
 								</span>
 							</v-field>
@@ -467,13 +476,13 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<v-field
 								v-slot="{ errors }"
-								:model-value="eventCreateForm.eventContacts.mail"
+								:model-value="eventCreateForm.data.eventContacts.mail"
 								name="eventMail"
 								rules="required"
 							>
 								<cp-text-input2
 									id="E-mail_id"
-									v-model="eventCreateForm.eventContacts.mail"
+									v-model="eventCreateForm.data.eventContacts.mail"
 									:circle="false"
 									label-text="E-mail"
 									placeholder="introduzca el enlace"
@@ -481,7 +490,10 @@
 										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span v-if="errors.length" class="required-input-error-info-leftSide">
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-leftSide"
+								>
 									{{ errors[0] }}
 								</span>
 							</v-field>
@@ -527,44 +539,47 @@ import CpDragNDrop from '@shared/gui/CpDragNDrop.vue';
 import CpCheckBox from '@shared/gui/CpCheckBox.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpMap from '@shared/gui/CpMap.vue';
-import type { EventCreateType } from '@shared/api/types';
+import type { City, EventCategory, EventCreateType } from '@shared/api/types';
 import {
 	requestEventCategories,
 	eventCreate,
 	requestCities,
 } from '@shared/api';
 const { $objToFormData } = useNuxtApp();
-
+const myUser = ref({});
+const router = useRouter();
 // Form Data ------------------------------------
 
 const eventCreateForm = reactive<EventCreateType>({
-	eventName: '',
-	eventDescription: '',
-	eventCategory: [],
-	eventDate: '',
-	eventHost: '',
-	eventSocialMedias: {
-		telegram: '',
-		youtube: '',
-		instagram: '',
-		facebook: '',
-		twitter: '',
-		linkedin: '',
-	},
-	eventDuration: '',
-	eventAddress: {
-		eventCoordinates: '-12.046016, -77.030554',
-		city: [],
-		address: '',
-	},
-	linkToBuyTicket: '',
-	eventShortDescription: '',
-	eventRules: '',
-	eventAgeRestrictions: '',
-	eventContacts: {
-		place: '',
-		tel: '',
-		mail: '',
+	data: {
+		eventName: '',
+		eventDescription: '',
+		eventCategory: [],
+		eventDate: '',
+		eventHost: '',
+		eventSocialMedias: {
+			telegram: '',
+			youtube: '',
+			instagram: '',
+			facebook: '',
+			twitter: '',
+			linkedin: '',
+		},
+		eventDuration: '',
+		eventAddress: {
+			eventCoordinates: '-12.046016, -77.030554',
+			city: null,
+			address: '',
+		},
+		linkToBuyTicket: '',
+		eventShortDescription: '',
+		eventRules: '',
+		eventAgeRestrictions: '',
+		eventContacts: {
+			place: '',
+			tel: '',
+			mail: '',
+		},
 	},
 	files: {
 		eventBanner: null,
@@ -574,8 +589,8 @@ const eventCreateForm = reactive<EventCreateType>({
 });
 
 // Variables ------------------------------------
-const eventCategories = ref([]);
-const cities = ref([]);
+const eventCategories = ref<EventCategory[]>([]);
+const cities = ref<City[]>([]);
 
 const eventCreateFormTemplate = ref<HTMLFormElement | null>(null);
 
@@ -588,20 +603,33 @@ type CheckboxTypes = {
 }[];
 
 onBeforeMount(() => {
+	myUser.value = JSON.parse(localStorage.getItem('myUser') ?? '{}');
 	getEventCategories();
 	getCities();
 });
 
+const getCoordinates = computed(() => {
+	return eventCreateForm.data.eventAddress.eventCoordinates
+		.split(',')
+		.map((coordinate) => {
+			return Number(coordinate);
+		});
+});
+
+const setCoordinates = (coordinatesFromMap: { coordinates: number[] }) => {
+	eventCreateForm.data.eventAddress.eventCoordinates = `${coordinatesFromMap.coordinates[0]},${coordinatesFromMap.coordinates[1]}`;
+};
+
 const categoryCheckBoxes = computed(() => {
-	if (!eventCategories.value?.length) {
+	if (!eventCategories.value.length) {
 		return [];
 	}
 
 	return eventCategories.value.map((category) => {
 		return {
-			id: category.attributes.eventCategoryCode,
+			id: category.id,
 			value: category.attributes.eventCategoryCode,
-			title: category.attributes.eventCategoryName,
+			label: category.attributes.eventCategoryName,
 		};
 	});
 });
@@ -613,16 +641,16 @@ const compMediaSwitcherOptions = [
 	{ optionName: 'Upload video', optionValue: 'video', optionKey: 'videoKey' },
 ];
 
-const cityCheckBoxes = computed(() => {
+const cityRadioButtons = computed(() => {
 	if (!cities.value?.length) {
 		return [];
 	}
 
 	return cities.value.map((city) => {
 		return {
-			id: city.attributes.cityCode,
+			id: city.id,
 			value: city.attributes.cityCode,
-			title: city.attributes.cityName,
+			label: city.attributes.cityName,
 		};
 	});
 });
@@ -645,49 +673,50 @@ const getCities = async () => {
 	}
 };
 
-const checkboxCollectCategories = (e: Event) => {
-	const target = e.target as HTMLInputElement;
-	if (target.checked) {
-		eventCreateForm.eventCategory.push({ categoryCode: target.value });
+const checkboxCollectCategories = (value: number, index: number) => {
+	if (value) {
+		eventCreateForm.data.eventCategory.push(value);
 	} else {
-		eventCreateForm.eventCategory = eventCreateForm.eventCategory.filter(
-			(e) => e.categoryCode !== target.value
-		);
+		eventCreateForm.data.eventCategory.splice(index, 1);
 	}
 };
 
-const checkboxCollectCities = (e: Event) => {
-	const target = e.target as HTMLInputElement;
-	if (target.checked) {
-		eventCreateForm.eventAddress.city.push({ cityCode: target.value });
+const checkboxCollectCities = (value: number) => {
+	if (value) {
+		eventCreateForm.data.eventAddress.city = value;
 	} else {
-		eventCreateForm.eventAddress.city = eventCreateForm.eventAddress.city.filter(
-			(e) => e.cityCode !== target.value
-		);
+		eventCreateForm.data.eventAddress.city = null;
 	}
 };
 
 // Request data ---------------------------------
 
 const sendCreateEventForm = async () => {
-	isSpin.value = true;
 	const isValid = await eventCreateFormTemplate.value?.validate();
+	const currentUser = JSON.parse(localStorage.getItem('myUser') ?? '{}');
 
 	if (!isValid.valid) {
 		isSpin.value = false;
-		toast.error('form is invalid');
+		toast.error('El formulario no es válido');
 
 		return;
 	}
 
+	if (!(currentUser?.role.name === 'Organizador de eventos')) {
+		toast.error('Sólo los organizadores pueden crear eventos');
+		router.push('/');
+
+		return;
+	}
+	eventCreateForm.data.eventHost = currentUser.eventHostData.id;
 	const eventCreatePayload = $objToFormData(toRaw(eventCreateForm));
 	try {
+		isSpin.value = true;
 		await eventCreate(eventCreatePayload);
 		isSpin.value = false;
 		toast.success('Evento creado exitosamente');
 	} catch (error) {
-		toast.error('error');
-		isSpin.value = false;
+		toast.error('Error al crear el evento');
 	} finally {
 		isSpin.value = false;
 	}
