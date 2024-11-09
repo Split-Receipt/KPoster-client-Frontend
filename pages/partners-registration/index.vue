@@ -1192,10 +1192,13 @@ const sendPartnerRegistrationForm = async () => {
 			router.push('/');
 		}, 1000);
 	} catch (error) {
-		toast.error(
-			'Nuestro administrador se comunicará conusted por correo electrónico'
-		);
-
+		if (error.error) {
+			toast.error(error.error.message);
+		} else {
+			toast.error(
+				'Nuestro administrador se comunicará conusted por correo electrónico'
+			);
+		}
 		formSended.value = false;
 	} finally {
 		isSpin.value = false;
