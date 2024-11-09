@@ -1163,18 +1163,17 @@ const checkboxCollectAffiliations = (value: number, index: number) => {
 };
 
 const sendPartnerRegistrationForm = async () => {
-	isSpin.value = true;
 	const isValid = await partnerRegForm.value?.validate();
 
-	if (!isValid.valid) {
-		isSpin.value = false;
-		toast.error('Form is invalid');
+	if (localStorage.getItem('AuthToken')) {
+		toast.error('Primero debe cerrar sesión en su cuenta actual');
 
 		return;
 	}
 
-	if (JSON.stringify(localStorage.getItem('AuthToken'))) {
-		toast.error('Primero debe cerrar sesión en su cuenta actual');
+	if (!isValid.valid) {
+		isSpin.value = false;
+		toast.error('Form is invalid');
 
 		return;
 	}
