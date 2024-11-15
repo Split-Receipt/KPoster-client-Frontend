@@ -46,6 +46,7 @@
 			min="0"
 			:placeholder="props.placeholder"
 			@input="handleInputValueUpdate"
+			@keypress="numberInputValidate"
 		/>
 	</div>
 </template>
@@ -94,6 +95,12 @@ const passVisibilityToggle = () => {
 		passArea.type = 'password';
 	}
 };
+
+const numberInputValidate = (event: any) => {
+        if (!/[0-9]/.test(event.key)) {
+            event.preventDefault();
+        }
+    };
 </script>
 
 <style scoped lang="scss">

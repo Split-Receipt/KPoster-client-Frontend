@@ -10,7 +10,7 @@
 						Rango de edad y porcentaje de mujeres , aprox
 					</span>
 				</div>
-				<div class="personal__form-row-input">
+				<div class="personal__form-row-input-horizontal">
 					<cp-text-input type="number" placeholder="Numero de personans"/>
 					<cp-text-input type="number" placeholder="Porcenaje de mujeres"/>
 				</div>
@@ -21,7 +21,7 @@
 					<span>
 						Subir el logo o imagen principal
 						<cp-info-pop-up
-							id="Nombre_comercial_info"
+							id="logo_update"
 							info="test info Nombre"
 						/>
 					</span>
@@ -44,6 +44,21 @@
 							errors[0]
 						}}</span>
 					</v-field>
+				</div>
+			</div>
+
+			<div class="personal__form-rowTop">
+				<div class="personal__form-rowTop-info">
+					<span>
+						Resume lo que hace tu organizacion
+						<cp-info-pop-up
+							id="resume"
+							info="250-500 palabras"
+						/>
+					</span>
+				</div>
+				<div class="personal__form-rowTop-input">
+					<cp-text-area text-area-id="qwe" text-area-placeholder="Resume lo que hace tu organizacion"/>
 				</div>
 			</div>
 			<cp-button
@@ -206,6 +221,16 @@ const sendPartnerRegistrationForm = async () => {
 				flex-direction: column;
 				width: 55%;
 
+                &-horizontal {
+                    width: 55%;
+                    display: flex;
+
+                    div {
+                        margin-right: 21px;
+                        width: 45%;
+                    }
+                }
+
 				@media (max-width: 955px) {
 					width: 100%;
 					margin-top: 20px;
@@ -272,6 +297,16 @@ const sendPartnerRegistrationForm = async () => {
 				align-items: center;
 				flex-direction: column;
 				width: 55%;
+
+                &-horizontal {
+                    width: 55%;
+                    display: flex;
+
+                    div {
+                        margin-right: 21px;
+                        width: 45%;
+                    }
+                }
 
 				@media (max-width: 955px) {
 					margin-top: 20px;
