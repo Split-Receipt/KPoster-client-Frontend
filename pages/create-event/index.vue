@@ -457,7 +457,7 @@
 						<v-field
 							v-slot="{ errors }"
 							:model-value="eventCreateForm.data.eventAddress.coordinates"
-							name="eventCoordinates"
+							name="eventHostCoordinates"
 							rules="require_coordinates"
 						>
 							<cp-map

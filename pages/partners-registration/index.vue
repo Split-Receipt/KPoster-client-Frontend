@@ -323,10 +323,8 @@
 										'required-input-error-textInput': errors.length > 0,
 									}"
 								/>
-								<span
-									v-if="errors"
-									class="required-input-error-info-leftSide"
-								>{{ errors[0] }}</span
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}</span
 								>
 							</v-field>
 						</span>
@@ -345,10 +343,8 @@
 										'required-input-error-textInput': errors.length > 0,
 									}"
 								/>
-								<span
-									v-if="errors"
-									class="required-input-error-info-leftSide"
-								>{{ errors[0] }}</span
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}</span
 								>
 							</v-field>
 						</span>
@@ -493,7 +489,8 @@
 								errors && partnerRegistrationForm.data.cultureType.length < 1
 							"
 							class="required-input-error-info-leftSide"
-						>{{ errors[0] }}</span
+						>
+							{{ errors[0] }}</span
 						>
 					</v-field>
 				</div>
@@ -567,7 +564,8 @@
 						<span
 							v-if="errors && mainProdValue === 'File'"
 							class="required-input-error-info-center"
-						>{{ errors[0] }}</span
+						>
+							{{ errors[0] }}</span
 						>
 					</v-field>
 					<v-field
@@ -611,10 +609,8 @@
 							class="partners__form-rowDnD-semiBlock-social-maxWidth"
 							style="padding-top: 12px"
 						>
-							<label
-								class="input-laabel"
-								for="mainProdTextArea"
-							>Descripción del Producto</label
+							<label class="input-laabel" for="mainProdTextArea">
+								Descripción del Producto</label
 							>
 							<cp-text-area
 								v-model="partnerRegistrationForm.data.productDescriptionText"
@@ -676,12 +672,12 @@
 				<div class="partners__form-row-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="partnerRegistrationForm.data.orgLocation"
-						name="orgLocation"
+						:model-value="partnerRegistrationForm.data.eventHostAddress.city"
+						name="eventHostCity"
 						rules="required"
 					>
 						<cp-radio-button
-							v-model="partnerRegistrationForm.data.orgLocation"
+							v-model="partnerRegistrationForm.data.eventHostAddress.city"
 							:options="cityRadioButtons"
 							name="radio2"
 							return-value="id"
@@ -724,10 +720,8 @@
 										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span
-									v-if="errors"
-									class="required-input-error-info-leftSide"
-								>{{ errors[0] }}</span
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}</span
 								>
 							</v-field>
 						</span>
@@ -747,10 +741,8 @@
 										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span
-									v-if="errors"
-									class="required-input-error-info-leftSide"
-								>{{ errors[0] }}</span
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}</span
 								>
 							</v-field>
 						</span>
@@ -770,13 +762,44 @@
 										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span
-									v-if="errors"
-									class="required-input-error-info-leftSide"
-								>{{ errors[0] }}</span
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}</span
 								>
 							</v-field>
 						</span>
+					</div>
+				</div>
+			</div>
+			<!-- location on map -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Marcar la ubicación del evento
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input fullWidth-map">
+					<div class="partnerRegistration__map">
+						<v-field
+							v-slot="{ errors }"
+							:model-value="
+								partnerRegistrationForm.data.eventHostAddress.coordinates
+							"
+							name="eventCoordinates"
+							rules="require_coordinates"
+						>
+							<cp-map
+								:coordinates-output="true"
+								:center="getCoordinates"
+								@update:coordinates-update="setCoordinates"
+							/>
+							<span
+								v-if="errors.length"
+								class="required-input-error-info-center"
+							>
+								{{ errors[0] }}
+							</span>
+						</v-field>
 					</div>
 				</div>
 			</div>
@@ -844,7 +867,8 @@
 								errors && partnerRegistrationForm.data.affiliations.length < 1
 							"
 							class="required-input-error-info-leftSide"
-						>{{ errors[0] }}</span
+						>
+							{{ errors[0] }}</span
 						>
 					</v-field>
 				</div>
@@ -1005,6 +1029,7 @@ import CpTextInput from '@shared/gui/CpTextInput.vue';
 import CpRadioButton from '@shared/gui/CpRadioButton.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpTextInput2 from '@shared/gui/CpTextInput2.vue';
+import CpMap from '@shared/gui/CpMap.vue';
 import type { CurrentUser, PartnerRegistration } from '@shared/api/types.ts';
 import {
 	registerPartner,
@@ -1018,7 +1043,7 @@ import CpTextArea from '@shared/gui/CpTextArea.vue';
 
 const formSended = ref(false);
 const { $objToFormData } = useNuxtApp();
-const router = useRouter();
+
 const userData = ref<CurrentUser>();
 onBeforeMount(async () => {
 	const storedUserData = localStorage.getItem('myUser');
@@ -1094,7 +1119,11 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		orgResume: '',
 		cultureType: [],
 		orgWorkType: '',
-		orgLocation: '',
+		eventHostAddress: {
+			city: null,
+			address: '',
+			coordinates: '-13.534793, -71.979812',
+		},
 		personalName: '',
 		personalIdentifyingDocument: '',
 		productDescriptionLink: '',
@@ -1158,6 +1187,18 @@ const checkboxCollectCultureType = (value: number, index: number) => {
 		partnerRegistrationForm.data.cultureType.splice(index, 1);
 	}
 };
+
+const setCoordinates = (coordinatesFromMap: { coordinates: number[] }) => {
+	partnerRegistrationForm.data.eventHostAddress.coordinates = `${coordinatesFromMap.coordinates[0]},${coordinatesFromMap.coordinates[1]}`;
+};
+
+const getCoordinates = computed(() => {
+	return partnerRegistrationForm.data.eventHostAddress.coordinates
+		.split(',')
+		.map((coordinate) => {
+			return Number(coordinate);
+		});
+});
 
 const checkboxCollectAffiliations = (value: number, index: number) => {
 	if (value) {
@@ -1773,5 +1814,31 @@ const getAffiliations = async () => {
 	font-size: 22px;
 	line-height: 35.2px;
 	color: #353333;
+}
+.partnerRegistration__map {
+	width: 100%;
+		height: 40vh;
+		main {
+			border-radius: 30px;
+			overflow: hidden;
+		}
+
+		@media screen and (max-width: 600px) {
+			height: 50vh;
+		}
+
+		@media screen and (max-width: 520px) {
+			height: 40vh;
+		}
+}
+.full-width {
+	&-map {
+
+		@media screen and (max-width: 955px) {
+			display: flex;
+			justify-content: space-around;
+			width: 100%;
+		}
+	}
 }
 </style>

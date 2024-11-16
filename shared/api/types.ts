@@ -1,6 +1,7 @@
 export type PartnerRegistration = {
 	data: {
 		orgType: string;
+		eventHostAddress: Address;
 		commercialName: string;
 		compName: string;
 		ruc: string;
@@ -11,7 +12,6 @@ export type PartnerRegistration = {
 		orgResume: string;
 		cultureType: number[];
 		orgWorkType: string;
-		orgLocation: string;
 		personalName: string;
 		personalIdentifyingDocument: string;
 		productDescriptionLink: string;
@@ -62,11 +62,7 @@ export type EventCreateType = {
 	eventDigitalCatalog: string,
 	eventWebSite: string,
 	eventSocialMedias: { socialMediaName: string, socialMediaLink: string }[];
-	eventAddress: {
-		coordinates: string;
-		city: number | null;
-		address: string;
-	}
+	eventAddress: Address;
 	linkToBuyTicket: string;
 	eventShortDescription: string;
 	eventRules: string;
@@ -308,9 +304,7 @@ export type EventHost = {
 					}
 				}[]
 			}
-			orgLocation: {
-				data: City[]
-		}
+		eventHostAddress: Address;
 		events: {
 			data: EventData[]
 		}
@@ -369,4 +363,10 @@ export type CurrentUser =	{
 		},
 		eventHostData: null
 	};
+
+	type Address = {
+			coordinates: string;
+			city: number | null;
+			address: string;
+		};
 
