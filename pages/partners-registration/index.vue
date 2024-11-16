@@ -959,8 +959,8 @@
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<div class="partners__form-rowDnD-input-socialsAndContacts">
-						<span class="partners__form-rowDnD-semiBlock-social">
+					<div class="partners__form-rowDnD-input-authInfo">
+						<span class="partners__form-rowDnD-semiBlock-authInfo">
 							<v-field
 								v-slot="{ errors }"
 								:model-value="userRegistrationData.username"
@@ -982,7 +982,7 @@
 								</span>
 							</v-field>
 						</span>
-						<span class="partners__form-rowDnD-semiBlock-social">
+						<span class="partners__form-rowDnD-semiBlock-authInfo">
 							<v-field
 								v-slot="{ errors }"
 								:model-value="userRegistrationData.username"
@@ -1005,12 +1005,12 @@
 							</v-field>
 						</span>
 
-						<span class="partners__form-rowDnD-semiBlock-social">
+						<span class="partners__form-rowDnD-semiBlock-authInfo">
 							<v-field
 								v-slot="{ errors }"
 								:model-value="userRegistrationData.password"
 								name="eventHostRegistrationPassword"
-								rules="required|min:8"
+								rules="required|minLength:8"
 							>
 								<cp-text-input2
 									id="pass_id"
@@ -1028,7 +1028,7 @@
 								</span>
 							</v-field>
 						</span>
-						<span class="partners__form-rowDnD-semiBlock-social">
+						<span class="partners__form-rowDnD-semiBlock-authInfo">
 							<v-field
 								v-slot="{ errors }"
 								v-model="passwordConfirmationValue"
@@ -1660,6 +1660,13 @@ const getAffiliations = async () => {
 					width: 100%;
 				}
 
+				&-authInfo {
+					display: flex;
+					flex-direction: column;
+					justify-content: space-between;
+					align-items: flex-start !important;
+				}
+
 				&-socialsAndContacts {
 					span {
 						@media (max-width: 720px) {
@@ -1682,6 +1689,16 @@ const getAffiliations = async () => {
 				flex-direction: column !important;
 				min-width: 100%;
 				min-height: 250px;
+
+				&-authInfo {
+					width: 70%;
+					margin-top: 15px;
+					padding: 10px;
+
+					@media (max-width: 720px) {
+						width: 100%;
+					}
+				}
 
 				&-social {
 					width: 50%;

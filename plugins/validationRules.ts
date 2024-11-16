@@ -25,13 +25,25 @@ export default defineNuxtPlugin(() => {
 		return true;
 	});
 
-	defineRule('confirmed', (value, [target], ctx) => {
+	defineRule('confirmed', (value, [target]: [string], ctx) => {
 		if (value === ctx.form[target]) {
 			return true;
 		}
 
 		return 'Passwords must match';
 	});
+
+defineRule('minLength', (value: string, [limit]: [number]) => {
+  // The field is empty so it should pass
+  if (!value || !value.length) {
+    return true;
+  }
+  if (value.length < limit) {
+    return `This field must be at least ${limit} characters`;
+  }
+
+  return true;
+});
 	defineRule('required_file', (value: FileList | null) => {
 		if (!value || value.length === 0) {
 			return 'A file is required';
