@@ -728,6 +728,10 @@ const sendCreateEventForm = async () => {
 		return;
 	}
 	eventCreateForm.data.eventHost = currentUser.eventHostData.id;
+	eventCreateForm.data.eventSocialMedias =
+		eventCreateForm.data.eventSocialMedias.filter(
+			(socialMedia) => socialMedia.socialMediaLink !== ''
+		);
 	const eventCreatePayload = $objToFormData(toRaw(eventCreateForm));
 	try {
 		isSpin.value = true;
