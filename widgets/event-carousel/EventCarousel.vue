@@ -110,10 +110,9 @@ withDefaults(defineProps<Props>(), {
 		},
 	],
 });
-const router = useRouter();
 
 const toEventDetailPage = (cardId: number) => {
-	router.push(`event/${cardId}`);
+	navigateTo(`/event/${cardId}`);
 };
 </script>
 

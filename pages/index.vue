@@ -37,7 +37,7 @@
 					:key="event.id + event.attributes.eventName"
 					size="medium"
 					:event-card-data="event"
-					@click="$router.push(`event/${event.id}`)"
+					@click="navigateTo(`event/${event.id}`)"
 				/>
 			</cp-grid-layout>
 		</main>

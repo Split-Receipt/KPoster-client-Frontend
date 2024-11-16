@@ -85,6 +85,7 @@ export const requestEventById = (id: string) => {
 		eventHost: {
 			populate: {
 				contacts: true,
+				socialMedias: true,
 			},
 		},
 		eventBanner: {

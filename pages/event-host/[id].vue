@@ -8,7 +8,7 @@
 				</span>
 				<div class="organizer-greet-text-desctop">
 					<h3 class="organizer-greet-text-middle">
-						{{ eventHost?.data.attributes.compName }}
+						{{ eventHost?.data.attributes.commercialName }}
 					</h3>
 					<span class="organizer-greet-text-bottom">
 						{{ eventHost?.data.attributes.orgResume }}
@@ -18,7 +18,7 @@
 			<div ref="eventHostMainImage" class="organizer-greet-image" />
 			<div class="organizer-greet-text-mobile">
 				<h3 class="organizer-greet-text-middle">
-					{{ eventHost?.data.attributes.compName }}
+					{{ eventHost?.data.attributes.commercialName }}
 				</h3>
 				<span class="organizer-greet-text-bottom">
 					{{ eventHost?.data.attributes.orgResume }}
@@ -153,7 +153,7 @@ const getEventHostById = async () => {
 const getEvents = async () => {
 	try {
 		filters.events.eventHost = {
-			eventHostCode: { $eq: eventHost.value?.data.attributes.commercialName },
+			commercialName: { $eq: eventHost.value?.data.attributes.commercialName },
 		};
 		const eventsRequestData = await requestEventsList(filters.events);
 		events.value = eventsRequestData.data.data;

@@ -91,10 +91,8 @@
 							:max-size="5"
 							:is-invalid="errors.length > 0"
 						/>
-						<span
-							v-if="errors.length"
-							class="required-input-error-info-center"
-						>{{ errors[0] }}</span
+						<span v-if="errors.length" class="required-input-error-info-center">
+							{{ errors[0] }}</span
 						>
 					</v-field>
 				</div>
@@ -458,7 +456,7 @@
 					<div class="eventForm__map">
 						<v-field
 							v-slot="{ errors }"
-							:model-value="eventCreateForm.data.eventAddress.eventCoordinates"
+							:model-value="eventCreateForm.data.eventAddress.coordinates"
 							name="eventCoordinates"
 							rules="require_coordinates"
 						>
@@ -607,7 +605,7 @@ const eventCreateForm = reactive<EventCreateType>({
 		],
 		eventDuration: '',
 		eventAddress: {
-			eventCoordinates: '-12.046016, -77.030554',
+			coordinates: '-12.046016, -77.030554',
 			city: null,
 			address: '',
 		},
@@ -645,7 +643,7 @@ onBeforeMount(() => {
 });
 
 const getCoordinates = computed(() => {
-	return eventCreateForm.data.eventAddress.eventCoordinates
+	return eventCreateForm.data.eventAddress.coordinates
 		.split(',')
 		.map((coordinate) => {
 			return Number(coordinate);
@@ -653,7 +651,7 @@ const getCoordinates = computed(() => {
 });
 
 const setCoordinates = (coordinatesFromMap: { coordinates: number[] }) => {
-	eventCreateForm.data.eventAddress.eventCoordinates = `${coordinatesFromMap.coordinates[0]},${coordinatesFromMap.coordinates[1]}`;
+	eventCreateForm.data.eventAddress.coordinates = `${coordinatesFromMap.coordinates[0]},${coordinatesFromMap.coordinates[1]}`;
 };
 
 const categoryCheckBoxes = computed(() => {
@@ -725,7 +723,7 @@ const sendCreateEventForm = async () => {
 
 	if (!(currentUser?.role.name === 'Organizador de eventos')) {
 		toast.error('Sólo los organizadores pueden crear eventos');
-		router.push('/');
+		navigateTo('/');
 
 		return;
 	}

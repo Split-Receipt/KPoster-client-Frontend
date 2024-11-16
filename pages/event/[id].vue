@@ -13,7 +13,8 @@
 					v-for="categoryName in eventCategoriesNames"
 					:key="categoryName"
 					class="detailed__mainImage-info-text"
-				>{{ categoryName }}</span
+				>
+					{{ categoryName }}</span
 				>
 				<span class="detailed__mainImage-info-date">{{
 					format(event.attributes.eventDate, 'PPPPpppp')
@@ -186,6 +187,14 @@
 		<div class="detailed-contacts">
 			<div class="detailed-contacts-title">
 				<h3>Contactos del organizador</h3>
+				<span
+					v-if="event.attributes.eventHost.data.attributes.commercialName"
+					style="text-decoration: underline"
+				>
+					<nuxt-link :to="`/event-host/${event.attributes.eventHost.data.id}`">
+						{{ event.attributes.eventHost.data.attributes.commercialName }}
+					</nuxt-link>
+				</span>
 				<span v-if="event.attributes.eventHost.data.attributes.orgResume">
 					{{ event.attributes.eventHost.data.attributes.orgResume }}
 				</span>
@@ -204,8 +213,8 @@
 					v-if="event.attributes.eventHost.data.attributes.contacts?.tel"
 					class="detailed-contacts-referenses-tel"
 				>
-					<span class="detailed-contacts-referenses-tel-title"
-					>Número de teléfono</span
+					<span class="detailed-contacts-referenses-tel-title">
+						Número de teléfono</span
 					>
 					<span class="detailed-contacts-referenses-tel-ref">{{
 						event.attributes.eventHost.data.attributes.contacts.tel
@@ -215,16 +224,20 @@
 					v-if="event.attributes.eventHost.data.attributes.contacts?.place"
 					class="detailed-contacts-referenses-place"
 				>
-					<span class="detailed-contacts-referenses-place-title"
-					>País y ciudad</span
+					<span class="detailed-contacts-referenses-place-title">
+						País y ciudad</span
 					>
 					<span class="detailed-contacts-referenses-place-ref">{{
 						event.attributes.eventHost.data.attributes.contacts.place
 					}}</span>
 				</div>
-				<div class="detailed-contacts-referenses-socials">
+				<div
+					v-if="event.attributes.eventHost.data.attributes.socialMedias"
+					class="detailed-contacts-referenses-socials"
+				>
 					<cp-social-link
-						v-for="value in eventSocialMedias"
+						v-for="value in event.attributes.eventHost.data.attributes
+							.socialMedias"
 						:key="value.socialMediaName"
 						:social-media-link="value.socialMediaLink"
 						:social-media-name="value.socialMediaName"
@@ -278,7 +291,6 @@ const changeMainImage = () => {
 		event.value.attributes.eventMediaPhotos.data[0].attributes.url;
 
 	if (mainImage.value) {
-
 		mainImage.value.style.backgroundImage = `url(${
 			config.public.apiBaseUrl + imageSource
 		})`;
@@ -318,15 +330,13 @@ const getMediaVideosUrls = computed(() => {
 });
 
 const getEventCoordinates = computed(() => {
-	if (!event.value.attributes.eventAddress.eventCoordinates) {
+	if (!event.value.attributes.eventAddress.coordinates) {
 		return {};
 	}
 
 	return {
-		marker: [
-			{ coordinates: event.value.attributes.eventAddress.eventCoordinates },
-		],
-		center: event.value.attributes.eventAddress.eventCoordinates,
+		marker: [{ coordinates: event.value.attributes.eventAddress.coordinates }],
+		center: event.value.attributes.eventAddress.coordinates,
 	};
 });
 

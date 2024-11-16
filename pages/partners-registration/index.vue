@@ -1201,7 +1201,7 @@ const sendPartnerRegistrationForm = async () => {
 		await createPartner();
 		toast.success('El registro fue exitoso');
 		setTimeout(() => {
-			router.push('/');
+			navigateTo('/');
 		}, 1000);
 	} catch (error) {
 		if (error.error) {

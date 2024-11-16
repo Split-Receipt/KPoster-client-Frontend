@@ -38,7 +38,7 @@
 						shape="oval"
 						color="yellowGrey"
 						:text="$t('create_event')"
-						@click="$router.push('/event-form')"
+						@click="navigateTo('/event-form')"
 					/>
 					<cp-button
 						width="large"
@@ -87,7 +87,7 @@
 						shape="oval"
 						color="yellowGrey"
 						:text="$t('create_event')"
-						@click="$router.push('/event-form')"
+						@click="navigateTo('/event-form')"
 					/>
 					<cp-button
 						width="large"
@@ -190,7 +190,7 @@ const handleLoginButton = () => {
 		localStorage.removeItem('AuthToken');
 		isAuthenticated.value = false;
 		userRole.value = '';
-		router.push('/');
+		navigateTo('/');
 	} else {
 		handleModalOpen();
 	}

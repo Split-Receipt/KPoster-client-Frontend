@@ -63,7 +63,7 @@ export type EventCreateType = {
 	eventWebSite: string,
 	eventSocialMedias: { socialMediaName: string, socialMediaLink: string }[];
 	eventAddress: {
-		eventCoordinates: string;
+		coordinates: string;
 		city: number | null;
 		address: string;
 	}
@@ -120,7 +120,7 @@ export type EventData = {
 			eventAddress: {
 					id: number,
 					address: string,
-					eventCoordinates: string,
+					coordinates: string,
 					city: {
 							data: City
 					}
@@ -223,10 +223,12 @@ export type CollectionFilters = {
 			};
 		};
 		eventHost?: {
-			eventHostCode: {
+			eventHostCode?: {
 				$in?: string[];
+			},
+			commercialName?: {
 				$eq?: string;
-			};
+			}
 		};
 		eventCategory?: {
 			eventCategoryCode: {
@@ -318,8 +320,9 @@ export type EventHost = {
 		updatedAt: string
 		publishedAt: string
 		locale: string
-		}
-	}
+		},
+		id: number
+	},
 };
 
 export type RegisterParams = {
