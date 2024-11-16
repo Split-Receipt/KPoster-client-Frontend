@@ -1,4 +1,4 @@
-import { defineRule, configure } from 'vee-validate';
+import { defineRule, configure, extend } from 'vee-validate';
 import { required } from '@vee-validate/rules';
 
 export default defineNuxtPlugin(() => {
@@ -25,6 +25,13 @@ export default defineNuxtPlugin(() => {
 		return true;
 	});
 
+	defineRule('confirmed', (value, [target], ctx) => {
+		if (value === ctx.form[target]) {
+			return true;
+		}
+
+		return 'Passwords must match';
+	});
 	defineRule('required_file', (value: FileList | null) => {
 		if (!value || value.length === 0) {
 			return 'A file is required';

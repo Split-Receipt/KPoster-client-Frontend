@@ -645,7 +645,7 @@
 					<div>
 						<cp-text-input
 							v-model="partnerRegistrationForm.data.digitalCatalog"
-							type="url"
+							type="text"
 							placeholder="https://"
 						/>
 						<cp-button
@@ -714,7 +714,7 @@
 								<cp-text-input2
 									id="place"
 									v-model="partnerRegistrationForm.data.contacts.place"
-									label-text="País y ciudad"
+									label-text="País y dirección"
 									placeholder="introduzca el enlace"
 									:class="{
 										'required-input-error-socialMedia': errors.length > 0,
@@ -961,42 +961,95 @@
 				<div class="partners__form-rowDnD-input">
 					<div class="partners__form-rowDnD-input-socialsAndContacts">
 						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="username_id"
-								v-model="userRegistrationData.username"
-								:circle="true"
-								label-text="Nombre de usuario"
-								placeholder="Nombre"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="userRegistrationData.username"
+								name="username"
+								rules="required"
+							>
+								<cp-text-input2
+									id="username_id"
+									v-model="userRegistrationData.username"
+									:circle="true"
+									label-text="Nombre de usuario"
+									placeholder="Nombre"
+								/>
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}
+								</span>
+							</v-field>
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="email_id"
-								v-model="userRegistrationData.email"
-								:circle="true"
-								label-text="Email"
-								placeholder="example@example.com"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="userRegistrationData.username"
+								name="eventHostRegistrationEmail"
+								rules="required"
+							>
+								<cp-text-input2
+									id="email_id"
+									v-model="userRegistrationData.email"
+									:circle="true"
+									label-text="Email"
+									placeholder="example@example.com"
+								/>
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}
+								</span>
+							</v-field>
+						</span>
+
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<v-field
+								v-slot="{ errors }"
+								:model-value="userRegistrationData.password"
+								name="eventHostRegistrationPassword"
+								rules="required|min:8"
+							>
+								<cp-text-input2
+									id="pass_id"
+									v-model="userRegistrationData.password"
+									:circle="true"
+									type="password"
+									label-text="Password"
+									placeholder="Password"
+								/>
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}
+								</span>
+							</v-field>
 						</span>
 						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="pass_id"
-								v-model="userRegistrationData.password"
-								:circle="true"
-								type="password"
-								label-text="Password"
-								placeholder="Password"
-							/>
-						</span>
-						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="confirmPass_id"
+							<v-field
+								v-slot="{ errors }"
 								v-model="passwordConfirmationValue"
-								:circle="true"
-								type="password"
-								label-text="Confirm Password"
-								placeholder="Password again"
-							/>
+								name="eventHostPasswordConfirmation"
+								rules="required|confirmed:eventHostRegistrationPassword"
+							>
+								<cp-text-input2
+									id="confirmPass_id"
+									v-model="passwordConfirmationValue"
+									:circle="true"
+									type="password"
+									label-text="Confirm Password"
+									placeholder="Password again"
+								/>
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}
+								</span>
+							</v-field>
 						</span>
 					</div>
 				</div>
@@ -1817,23 +1870,22 @@ const getAffiliations = async () => {
 }
 .partnerRegistration__map {
 	width: 100%;
+	height: 40vh;
+	main {
+		border-radius: 30px;
+		overflow: hidden;
+	}
+
+	@media screen and (max-width: 600px) {
+		height: 50vh;
+	}
+
+	@media screen and (max-width: 520px) {
 		height: 40vh;
-		main {
-			border-radius: 30px;
-			overflow: hidden;
-		}
-
-		@media screen and (max-width: 600px) {
-			height: 50vh;
-		}
-
-		@media screen and (max-width: 520px) {
-			height: 40vh;
-		}
+	}
 }
 .full-width {
 	&-map {
-
 		@media screen and (max-width: 955px) {
 			display: flex;
 			justify-content: space-around;
