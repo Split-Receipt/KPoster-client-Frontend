@@ -19,7 +19,7 @@ export type PartnerRegistration = {
 		compVideoLink: string;
 		user: number | null;
 		affiliations: number[];
-		socialMedias: SocialMedia[];
+		socialMedias?: SocialMedia[];
 		digitalCatalog: string;
 		contacts: {
 			place: string;
@@ -344,4 +344,24 @@ export type userAuthentificatedData = {
 		username: string
 	}
 };
+
+export type CurrentUser =	{
+		id: 64,
+		username: string,
+		email: string,
+		provider: string,
+		confirmed: string,
+		blocked: string,
+		createdAt: Date,
+		updatedAt: Date,
+		role: {
+			id: number,
+			name: string,
+			description: string,
+			type: string,
+			createdAt: Date,
+			updatedAt: Date,
+		},
+		eventHostData: null
+	};
 

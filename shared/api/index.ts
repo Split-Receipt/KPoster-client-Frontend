@@ -1,5 +1,5 @@
 import { useNuxtApp } from 'nuxt/app';
-import type { EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City } from '@shared/api/types.ts';
+import type { EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, CurrentUser } from '@shared/api/types.ts';
 import type { AxiosResponse } from 'axios';
 
 export const registerPartner = (partnerInfo: PartnerRegistration) => {
@@ -132,7 +132,7 @@ export const requestAffiliations = () => {
 	return $api.get('/api/affiliations');
 };
 
-export const requestMyUser = () => {
+export const requestMyUser  = (): Promise<AxiosResponse<{ data: CurrentUser }>> => {
 	const { $api } = useNuxtApp();
 
 	const params = {

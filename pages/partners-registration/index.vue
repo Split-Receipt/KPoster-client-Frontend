@@ -923,7 +923,7 @@
 			</div>
 
 			<!-- Registration Data -->
-			<div class="partners__form-rowDnD">
+			<div v-if="!userData" class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
 						<strong class="partners__form-rowDnD-info-required">*</strong>
@@ -1005,7 +1005,7 @@ import CpTextInput from '@shared/gui/CpTextInput.vue';
 import CpRadioButton from '@shared/gui/CpRadioButton.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpTextInput2 from '@shared/gui/CpTextInput2.vue';
-import type { PartnerRegistration } from '@shared/api/types.ts';
+import type { CurrentUser, PartnerRegistration } from '@shared/api/types.ts';
 import {
 	registerPartner,
 	requestCities,
@@ -1019,7 +1019,12 @@ import CpTextArea from '@shared/gui/CpTextArea.vue';
 const formSended = ref(false);
 const { $objToFormData } = useNuxtApp();
 const router = useRouter();
+const userData = ref<CurrentUser>();
 onBeforeMount(async () => {
+	const storedUserData = localStorage.getItem('myUser');
+	if (storedUserData) {
+		userData.value = JSON.parse(storedUserData);
+	}
 	await getCities();
 	await getCategories();
 	await getAffiliations();
@@ -1181,11 +1186,18 @@ const sendPartnerRegistrationForm = async () => {
 	try {
 		isSpin.value = true;
 		formSended.value = true;
-		const newUserId = await registerUserForPartner(userRegistrationData);
-		if (!newUserId) {
-			throw new Error('No se pudo encontrar el usuario');
+		if (!localStorage.getItem('AuthToken')) {
+			const newUserId = await registerUserForPartner(userRegistrationData);
+
+			if (!newUserId) {
+				throw new Error('No se pudo encontrar el usuario');
+			}
+			partnerRegistrationForm.data.user = newUserId;
+		} else if (localStorage.getItem('myUser')) {
+			partnerRegistrationForm.data.user = JSON.parse(
+				localStorage.getItem('myUser')
+			).id;
 		}
-		partnerRegistrationForm.data.user = newUserId;
 		await createPartner();
 		toast.success('El registro fue exitoso');
 		setTimeout(() => {
@@ -1206,11 +1218,25 @@ const sendPartnerRegistrationForm = async () => {
 };
 
 const createPartner = async () => {
+	const partnerSocialMedias = toRaw(partnerRegistrationForm.data.socialMedias);
+	if (partnerSocialMedias) {
+		if (!partnerSocialMedias.length) {
+			delete partnerRegistrationForm.data.socialMedias;
+		} else {
+			partnerRegistrationForm.data.socialMedias = partnerSocialMedias.filter(
+				(socialMedia) => socialMedia.socialMediaLink
+			);
+		}
+	}
+
 	const partnerRegPayload = $objToFormData(toRaw(partnerRegistrationForm));
 	try {
 		await registerPartner(partnerRegPayload);
 	} catch (error) {
-		toast.error('error');
+		if (error.error) {
+			toast.error(error.error.message);
+		}
+		toast.error('Error al intentar crear un organizador');
 	}
 };
 
