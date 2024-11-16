@@ -113,7 +113,7 @@ withDefaults(defineProps<Props>(), {
 const router = useRouter();
 
 const toEventDetailPage = (cardId: number) => {
-	router.push(`/detailed-event/${cardId}`);
+	router.push(`event/${cardId}`);
 };
 </script>
 

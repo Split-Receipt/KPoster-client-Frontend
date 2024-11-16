@@ -224,7 +224,8 @@ export type CollectionFilters = {
 		};
 		eventHost?: {
 			eventHostCode: {
-				$in: string[];
+				$in?: string[];
+				$eq?: string;
 			};
 		};
 		eventCategory?: {
@@ -255,17 +256,17 @@ export type EventHost = {
 				data: StrapiMediaDefaultType[]
 			}
 			mainBanner: {
-				data: StrapiMediaDefaultType
+				data: StrapiMediaDefaultType[]
 			}
 			compVideoFile: {
-				data: StrapiMediaDefaultType
+				data: StrapiMediaDefaultType[]
 			}
 			mostPopularProduct: {
-				data: StrapiMediaDefaultType
+				data: StrapiMediaDefaultType[]
 			}
 			digitalCatalog: string
 			productDescriptionFile: {
-				data: StrapiMediaDefaultType
+				data: StrapiMediaDefaultType[]
 			}
 			galleryImages: {
 				data: StrapiMediaDefaultType[]
@@ -284,6 +285,7 @@ export type EventHost = {
 			middleAge: number
 			womenPercentage: number
 			orgWorkType: string
+			socialMedias?: SocialMedia[]
 			personalName: string
 			personalIdentifyingDocument: string
 			personalDocumentScan: {

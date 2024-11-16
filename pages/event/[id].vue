@@ -244,7 +244,6 @@ import CpMap from '@shared/gui/CpMap.vue';
 import CpButton from '@shared/gui/CpButton.vue';
 import CpMarkdownViewer from '@shared/gui/CpMarkdownViewer.vue';
 import { requestEventById } from '@shared/api';
-import type { Event } from '@shared/api/types';
 import { EventDefaultValue } from '@shared/default-values/events';
 import { formatExternalLink } from '@shared/helpers/formatText';
 import { format } from 'date-fns';

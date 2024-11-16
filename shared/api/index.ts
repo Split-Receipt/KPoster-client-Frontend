@@ -1,6 +1,6 @@
 import { useNuxtApp } from 'nuxt/app';
 import type { EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, CurrentUser } from '@shared/api/types.ts';
-import type { AxiosResponse } from 'axios';
+import type { Axios, AxiosResponse } from 'axios';
 
 export const registerPartner = (partnerInfo: PartnerRegistration) => {
 	const { $api } = useNuxtApp();
@@ -30,7 +30,7 @@ export const requestCategories = () => {
 	return $api.get('api/areas-de-la-culturas');
 };
 
-export const requestEventsHost = () => {
+export const requestEventsHostList = () => {
 	const { $api } = useNuxtApp();
 
 	return $api.get('/api/partners');
@@ -167,5 +167,14 @@ export const requestEventsList = (filters: CollectionFilters['events']): Promise
 	};
 
 	return $api.get('/api/events', { params });
+};
+
+export const requestEventsHost = (id: number | string): Promise<AxiosResponse<EventHost>> => {
+	const { $api } = useNuxtApp();
+	const params = {
+		populate: '*',
+	};
+
+	return $api.get(`/api/partners/${id}`, { params });
 };
 
