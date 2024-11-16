@@ -630,6 +630,25 @@
 				</div>
 			</div>
 
+			<!-- webPage -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						Pagina web
+						<cp-info-pop-up id="WebPage_info" info="Pagina web info" />
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<div>
+						<cp-text-input
+							v-model="partnerRegistrationForm.data.webpage"
+							type="text"
+							placeholder="https://"
+						/>
+					</div>
+				</div>
+			</div>
+
 			<!-- digital Catalog -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">

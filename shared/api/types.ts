@@ -1,6 +1,7 @@
 export type PartnerRegistration = {
 	data: {
 		orgType: string;
+		webpage: string;
 		eventHostAddress: Address;
 		commercialName: string;
 		compName: string;
@@ -249,6 +250,7 @@ export type EventHost = {
 		attributes: {
 			commercialName: string
 			compName: string
+			webpage: string
 			ruc: string
 			videoBusinessCard: {
 				data: StrapiMediaDefaultType[]
