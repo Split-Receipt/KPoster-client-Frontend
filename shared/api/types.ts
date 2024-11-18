@@ -52,31 +52,31 @@ export type RequestOption = {
 };
 
 export type EventCreateType = {
-	data:{
-	eventName: string;
-	eventDescription: string;
-	eventCategory: number[];
-	eventDate: string;
-	eventHost: string;
-	eventDuration: string;
-	eventDigitalCatalog: string,
-	eventWebSite: string,
-	eventSocialMedias: { socialMediaName: string, socialMediaLink: string }[];
-	eventAddress: {
-		eventCoordinates: string;
-		city: number | null;
-		address: string;
+	data: {
+		eventName: string;
+		eventDescription: string;
+		eventCategory: number[];
+		eventDate: string;
+		eventHost: string;
+		eventDuration: string;
+		eventDigitalCatalog: string,
+		eventWebSite: string,
+		eventSocialMedias: { socialMediaName: string, socialMediaLink: string }[];
+		eventAddress: {
+			eventCoordinates: string;
+			city: number | null;
+			address: string;
+		}
+		linkToBuyTicket: string;
+		eventShortDescription: string;
+		eventRules: string;
+		eventAgeRestrictions: string;
+		eventContacts: {
+			place: string;
+			tel: string;
+			mail: string;
+		};
 	}
-	linkToBuyTicket: string;
-	eventShortDescription: string;
-	eventRules: string;
-	eventAgeRestrictions: string;
-	eventContacts: {
-		place: string;
-		tel: string;
-		mail: string;
-	};
-}
 	files: {
 		eventBanner: File | null;
 		eventMediaPhotos: File[] | null;
@@ -98,98 +98,99 @@ export type EventCategory = {
 export type EventData = {
 	id: number,
 	attributes: {
-			eventDigitalCatalog?: string,
-			eventWebSite?: string,
-			eventName: string,
-			eventHost: EventHost
-			eventDescription: string,
-			eventCategory:{
-				data: EventCategory[] },
-			eventId: string,
-			eventDate: string,
-			createdAt: string,
-			updatedAt: string,
-			publishedAt: string,
-			locale: string,
-			linkToBuyTicket: string,
-			eventShortDescription: string,
-			eventDuration: string | null,
-			eventRules: string | null,
-			eventAgeRestrictions: string | null,
-			eventSocialMedias: SocialMedia[]
-			eventAddress: {
-					id: number,
-					address: string,
-					eventCoordinates: string,
-					city: {
-							data: City
-					}
+		eventDigitalCatalog?: string,
+		eventWebSite?: string,
+		eventName: string,
+		eventHost: EventHost
+		eventDescription: string,
+		eventCategory: {
+			data: EventCategory[]
+		},
+		eventId: string,
+		eventDate: string,
+		createdAt: string,
+		updatedAt: string,
+		publishedAt: string,
+		locale: string,
+		linkToBuyTicket: string,
+		eventShortDescription: string,
+		eventDuration: string | null,
+		eventRules: string | null,
+		eventAgeRestrictions: string | null,
+		eventSocialMedias: SocialMedia[]
+		eventAddress: {
+			id: number,
+			address: string,
+			eventCoordinates: string,
+			city: {
+				data: City
 			}
-			eventBanner: {
-					data: StrapiMediaDefaultType
-			}
-			eventMediaPhotos: {
-				data: StrapiMediaDefaultType[]
-			}
-			eventMediaVideos: {
-					data: StrapiMediaDefaultType[]
-			}
+		}
+		eventBanner: {
+			data: StrapiMediaDefaultType
+		}
+		eventMediaPhotos: {
+			data: StrapiMediaDefaultType[]
+		}
+		eventMediaVideos: {
+			data: StrapiMediaDefaultType[]
+		}
 	}
 };
 
 export type City = {
 	id: number,
 	attributes: {
-			cityName: string,
-			cityCode: string,
-			createdAt: string,
-			updatedAt: string,
-			publishedAt: string,
-			locale: string,
+		cityName: string,
+		cityCode: string,
+		createdAt: string,
+		updatedAt: string,
+		publishedAt: string,
+		locale: string,
 	}
 };
 
 export type EventColletion = {
 	id: 1,
 	attributes: {
-			collectionName: string,
-			createdAt: string,
-			updatedAt: string,
-			publishedAt: string,
-			collectionCode: string,
-			collectionDescription: string,
-			events: {
-				data: EventData[]
-			}
+		collectionName: string,
+		createdAt: string,
+		updatedAt: string,
+		publishedAt: string,
+		collectionCode: string,
+		collectionDescription: string,
+		events: {
+			data: EventData[]
+		}
 	}
 };
 
-export type StrapiMediaDefaultType =	{
-				id: number,
-				attributes: {
-						name: string,
-						alternativeText: string | null,
-						caption: string | null,
-						width: number,
-						height: number,
-						formats: {
-								large: StrapiMediaFormat,
-								small: StrapiMediaFormat,
-								medium: StrapiMediaFormat,
-								thumbnail: StrapiMediaFormat,
-						},
-						hash: string,
-						ext: string,
-						mime: string,
-						size: number,
-						url: string,
-						previewUrl: string | null,
-						provider: string,
-						provider_metadata: string | null,
-						createdAt: string,
-						updatedAt: string,
-						related: any[]
-					}
+export type StrapiMediaDefaultType = {
+	id: number,
+	attributes: {
+		name: string,
+		alternativeText: string | null,
+		caption: string | null,
+		width: number,
+		height: number,
+		formats: {
+			large: StrapiMediaFormat,
+			small: StrapiMediaFormat,
+			medium: StrapiMediaFormat,
+			thumbnail: StrapiMediaFormat,
+		},
+		hash: string,
+		ext: string,
+		mime: string,
+		size: number,
+		url: string,
+		previewUrl: string | null,
+		provider: string,
+		provider_metadata: string | null,
+		createdAt: string,
+		updatedAt: string,
+		related: any[]
+	}
 };
 
 type StrapiMediaFormat = {
@@ -236,8 +237,8 @@ export type CollectionFilters = {
 };
 
 export type SocialMedia = {
-		socialMediaName: string;
-		socialMediaLink: string;
+	socialMediaName: string;
+	socialMediaLink: string;
 };
 
 export enum CollectionTypes {
@@ -271,11 +272,11 @@ export type EventHost = {
 				data: StrapiMediaDefaultType[]
 			}
 			contacts: {
-						id: number
-						place: string
-						tel: string
-						mail: string
-					}
+				id: number
+				place: string
+				tel: string
+				mail: string
+			}
 			productDescriptionText: string
 			productDescriptionLink: string
 			compVideoLink: string
@@ -306,16 +307,16 @@ export type EventHost = {
 			}
 			orgLocation: {
 				data: City[]
-		}
-		events: {
-			data: EventData[]
-		}
-		orgType: string
-		eventHostCode: string
-		createdAt: string
-		updatedAt: string
-		publishedAt: string
-		locale: string
+			}
+			events: {
+				data: EventData[]
+			}
+			orgType: string
+			eventHostCode: string
+			createdAt: string
+			updatedAt: string
+			publishedAt: string
+			locale: string
 		}
 	}
 };
@@ -345,3 +346,30 @@ export type userAuthentificatedData = {
 	}
 };
 
+export type partnerPersonalFormDataType = {
+	cultureType: number[];
+	resume: string;
+	videoLink: string;
+	selfInfo: string;
+	socials: {
+		telegram: string;
+		facebook: string;
+		youtube: string;
+		twitter: string;
+		instagram: string;
+		linkedin: string;
+	};
+	contacts: {
+		place: string;
+		tel: string;
+		email: string;
+	};
+	files: {
+		image: File | null;
+		video: File | null;
+		mediaContent: {
+			picture: File | null;
+			video: File | null;
+		}
+	};
+};

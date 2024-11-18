@@ -37,7 +37,7 @@ onUnmounted(() => {
 .popup {
 	position: relative;
 	display: inline-block;
-	margin: 0 0 -5px 5px;
+	margin: 0 0 -7px 5px;
 	width: 30px;
 	height: 30px;
 
