@@ -198,26 +198,55 @@
 				<div class="eventForm-upperPositionRow-input fullWidth-details">
 					<div class="eventForm-upperPositionRow-input-details">
 						<span class="eventForm-upperPositionRow-input-details-input">
-							<cp-text-input2
-								id="event_place_id"
+							<v-field
+								v-slot="{ errors }"
 								v-model="eventCreateForm.data.eventContacts.place"
-								:circle="false"
-								label-text="Ubicación del evento"
-								placeholder="introduzca el enlace"
-								:tooltip="true"
-								tooltip-text="Ingrese al lugar del evento. Por ejemplo, un club u otro establecimiento."
-							/>
+								name="place"
+								rules="required"
+							>
+								<cp-text-input2
+									id="event_place_id"
+									v-model="eventCreateForm.data.eventContacts.place"
+									:circle="false"
+									label-text="Ubicación del evento"
+									placeholder="introduzca el enlace"
+									:tooltip="true"
+									required-field
+									tooltip-text="Ingrese al lugar del evento. Por ejemplo, un club u otro establecimiento."
+								/>
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}</span
+								>
+							</v-field>
 						</span>
 						<span class="eventForm-upperPositionRow-input-details-input">
-							<cp-text-input2
-								id="event_date_id"
+							<v-field
+								v-slot="{ errors }"
 								v-model="eventCreateForm.data.eventDate"
-								type="date"
-								:circle="false"
-								:min="new Date().toISOString().split('T')[0]"
-								label-text="Fecha y hora"
-								placeholder="introduzca el enlace"
-							/>
+								name="eventDate"
+								rules="required"
+							>
+								<cp-text-input2
+									id="event_date_id"
+									v-model="eventCreateForm.data.eventDate"
+									type="date"
+									:circle="false"
+									required-field
+									:min="new Date().toISOString().split('T')[0]"
+									label-text="Fecha y hora"
+									placeholder="introduzca el enlace"
+								/>
+
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}</span
+								>
+							</v-field>
 						</span>
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<cp-text-input2

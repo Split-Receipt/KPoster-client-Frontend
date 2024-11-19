@@ -8,6 +8,12 @@
 				:id="props.id"
 				info="Selecciona redes sociales donde podrás compartir el enlace del evento."
 			/>
+			<strong
+				v-if="props.requiredField"
+				class="socialMedia__label-info-required"
+			>
+				*</strong
+			>
 		</label>
 		<input
 			:id="props.id"
@@ -29,6 +35,7 @@ type socialMediaProps = {
 	circle?: boolean;
 	tooltip?: boolean;
 	tooltipText?: string;
+	requiredField?: boolean;
 };
 
 type Events = {
@@ -38,6 +45,7 @@ type Events = {
 const props = withDefaults(defineProps<socialMediaProps>(), {
 	type: 'text',
 	tooltipText: '',
+	requiredField: false,
 });
 const emit = defineEmits<Events>();
 
@@ -59,6 +67,16 @@ const inputValueUpdate = (e: Event) => {
 		color: #353333;
 		display: flex;
 		align-items: center;
+
+		&-info-required {
+			margin-top: -5px;
+			text-align: start;
+			font-size: 32px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: normal;
+			color: red;
+		}
 
 		&-circle {
 			height: 20px;
