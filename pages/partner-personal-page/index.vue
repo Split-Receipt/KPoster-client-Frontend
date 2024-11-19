@@ -285,6 +285,9 @@
 				/>
 			</div>
 		</v-form>
+
+		<cp-media-carousel id="galery" :media-files-urls="testImages"/>
+
 	</div>
 </template>
 
@@ -321,6 +324,15 @@ const cultureTypeVars = [
     { id: '9', value: '9', label: 'Libro y lectura' },
     { id: '10', value: '10', label: 'Gastronomia tipica' },
     { id: '11', value: '11', label: 'Creador de contenido en plataformas digitales' },
+];
+
+const testImages = [
+	'https://images.pexels.com/lib/api/pexels.png',
+	'https://images.pexels.com/lib/api/pexels.png',
+	'https://images.pexels.com/lib/api/pexels.png',
+	'https://images.pexels.com/lib/api/pexels.png',
+	'https://images.pexels.com/lib/api/pexels.png',
+	'https://images.pexels.com/lib/api/pexels.png',
 ];
 
 // ----------------------------------------------
