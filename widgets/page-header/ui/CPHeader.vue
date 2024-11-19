@@ -38,7 +38,7 @@
 						shape="oval"
 						color="yellowGrey"
 						:text="$t('create_event')"
-						@click="navigateTo('/event-form')"
+						@click="navigateTo('/create-event')"
 					/>
 					<cp-button
 						width="large"
@@ -87,7 +87,7 @@
 						shape="oval"
 						color="yellowGrey"
 						:text="$t('create_event')"
-						@click="navigateTo('/event-form')"
+						@click="navigateTo('/create-event')"
 					/>
 					<cp-button
 						width="large"
