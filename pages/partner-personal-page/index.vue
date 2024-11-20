@@ -12,7 +12,7 @@
 				</div>
 				<div class="personal__form-rowTop-input-checks">
 					<cp-check-box
-						v-for="(item, index) in cultureTypeVars"
+						v-for="(item, index) in testCultureTypeVars"
 						:key="index"
 						:option="item" 
 						return-value="id"
@@ -82,7 +82,7 @@
 								v-model="videoFiileValue"
 								:default-option="videoFiileValue"
 								switcher-name="compVideo"
-								:switcher-options="compVideoSwitcherOptions"
+								:switcher-options="formVideoSwitcherOptions"
 							/>
 						</div>
 					</span>
@@ -285,9 +285,28 @@
 				/>
 			</div>
 		</v-form>
-
-		<cp-media-carousel id="galery" :media-files-urls="testImages"/>
-
+		
+		<div class="personal__gallery">
+			<h3>Tu contenido fotográfico</h3>
+			<span>Aquí puedes gestionar el contenido de tus fotos.</span>
+		</div>
+		<cp-media-carousel id="gallery_pictures" :is-deletable="true" :media-files-urls="testImages"/>
+		
+		<div class="personal__gallery">
+			<h3>Tu contenido de vídeo</h3>
+			<span>Aquí puedes gestionar el contenido de tus vídeos </span>
+		</div>
+		<cp-media-carousel id="gallery_videos" :is-deletable="true" :media-files-urls="testImages"/>
+	
+		<div class="personal__event-title">
+			<h3>Tu contenido de vídeo</h3>
+			<span>Aquí puedes gestionar el contenido de tus vídeos </span>
+		</div>
+		<event-carousel
+			id="organizer-events-carousel"
+			:with-edit-controls="true"
+			class="personal__event-carousel"
+			:event-data="sectionData" />
 	</div>
 </template>
 
@@ -298,21 +317,91 @@ import CpDragNDrop from '@shared/gui/CpDragNDrop.vue';
 import { Form as VForm, Field as VField } from 'vee-validate';
 import type { partnerPersonalFormDataType } from '@shared/api/types';
 
-// test variables -------------------------------
-
-const compVideoSwitcherOptions = [
-	{ optionName: 'Upload File', optionValue: 'File', optionKey: 'FileKey' },
-	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },
-];
-
-const videoFiileValue = ref<string | null>('File');
-
-watch(videoFiileValue, () => {
-	partnerPersonalForm.videoLink = '';
-	partnerPersonalForm.files.video = null;
+onMounted(() => {
+	isSpin.value = false;
 });
 
-const cultureTypeVars = [
+// test variables -------------------------------
+
+const sectionData: EventCard[] = [  
+  {  
+    id: 1,  
+    attributes: {  
+      linkToBuyTicket: 'https://example.com/ticket1',  
+      eventDate: '2023-10-01T19:00:00Z',  
+      eventName: 'Concert of the Year',  
+      eventShortDescription: 'Join us for a night of amazing music.',  
+      eventMediaPhotos: {  
+        data: [  
+          {  
+            id: 1,  
+            attributes: {  
+              url: '',  
+            },  
+          },  
+          {  
+            id: 2,  
+            attributes: {  
+              url: 'event-card-2.png',  
+            },  
+          },  
+        ],  
+      },  
+    },  
+  },  
+  {  
+    id: 2,  
+    attributes: {  
+      linkToBuyTicket: 'https://example.com/ticket2',  
+      eventDate: '2023-11-05T20:00:00Z',  
+      eventName: 'Art Showcase',  
+      eventShortDescription: 'An exhibition of contemporary art.',  
+      eventMediaPhotos: {  
+        data: [  
+          {  
+            id: 3,  
+            attributes: {  
+              url: 'event-card-4.png',  
+            },  
+          },  
+        ],  
+      },  
+    },  
+  },  
+  {  
+    id: 3,  
+    attributes: {  
+      linkToBuyTicket: 'https://example.com/ticket3',  
+      eventDate: '2023-12-15T18:00:00Z',  
+      eventName: 'Food Festival',  
+      eventShortDescription: 'Taste the best dishes from local chefs.',  
+      eventMediaPhotos: {  
+        data: [  
+          {  
+            id: 4,  
+            attributes: {  
+              url: 'event-card-13.png',  
+            },  
+          },  
+          {  
+            id: 5,  
+            attributes: {  
+              url: 'event-card-14.png',  
+            },  
+          },  
+          {  
+            id: 6,  
+            attributes: {  
+              url: 'event-card-15.png',  
+            },  
+          },  
+        ],  
+      },  
+    },  
+  },  
+];
+
+const testCultureTypeVars = [
     { id: '1', value: '1', label: 'Consciencia ambiental' },
     { id: '2', value: '2', label: 'Gestion cultural' },
     { id: '3', value: '3', label: 'Artes escénicas y danzas' },
@@ -337,7 +426,19 @@ const testImages = [
 
 // ----------------------------------------------
 
-const isSpin = ref<boolean>(false);
+const formVideoSwitcherOptions = [
+	{ optionName: 'Upload File', optionValue: 'File', optionKey: 'FileKey' },
+	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },
+];
+
+const videoFiileValue = ref<string | null>('File');
+
+watch(videoFiileValue, () => {
+	partnerPersonalForm.videoLink = '';
+	partnerPersonalForm.files.video = null;
+});
+
+const isSpin = ref<boolean>(true);
 const formSending = ref<boolean>(false);
 const personalPartnerForm = ref<HTMLFormElement | null>(null);
 
@@ -731,7 +832,7 @@ const sendPartnerRegistrationForm = async () => {
 		}
 
 		&-submit {
-			margin-bottom: 60px;
+			box-sizing: border-box;
 			padding: 0 15%;
 			display: flex;
 			justify-content: space-around;
@@ -740,6 +841,51 @@ const sendPartnerRegistrationForm = async () => {
 			&-btnContainer {
 				width: 45%;
 			}
+		}
+	}
+
+	&__gallery {
+		box-sizing: border-box;
+
+		h3 {
+			color: $soft-black;
+			font-size: 34px;
+			line-height: 51px;
+			margin-top: 70px;
+		}
+
+		span {
+			color: $gray;
+			font-size: 16px;
+			line-height: 29px;
+		}
+
+		@media screen and (max-width: 768px) {
+				margin-bottom: 35px;
+		}
+	}
+
+	&__event {
+		&-title {
+			h3 {
+				color: $soft-black;
+				font-size: 34px;
+				line-height: 51px;
+				margin-top: 70px;
+			}
+
+			span {
+				color: $gray;
+				font-size: 16px;
+				line-height: 29px;
+
+				@media screen and (max-width: 768px) {
+						margin-bottom: 35px;
+				}
+			}
+		}
+		&-carousel {
+			margin-bottom: 70px
 		}
 	}
 }

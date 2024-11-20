@@ -1,7 +1,7 @@
 <template>
 	<div class="event-carousel__wrapper">
-		<div v-if="isVisible" class="modal">
-			<div class="modal-window">
+		<div v-if="isVisible && isDeletable" class="modal">
+			<div ref="permitModal" class="modal-window">
 				<button type="button" class="modal-window-close" @click="modaHandleClose">╳</button>
 				<div class="modal-window-content">
 					<h4>¿Eliminar datos?</h4>
@@ -33,6 +33,8 @@
 				<cp-button
 					shape="square"
 					color="transparent"
+					size="squareSize"
+					width="squareWidth"
 					left-icon="arrow-left"
 					:class="[
 						`button-prev__${id}`,
@@ -43,6 +45,8 @@
 				<cp-button
 					shape="square"
 					color="black"
+					size="squareSize"
+					width="squareWidth"
 					left-icon="arrow-right"
 					:class="[
 						`button-next__${id}`,
@@ -104,10 +108,10 @@
 					/>
 				</swiper-slide>
 				<swiper-slide v-for="(source, index) in mediaFilesUrls" :key="index">
-					<button class="deleteButton" @click="modaHandleOpen">╳</button>
+					<button v-if="isDeletable" class="deleteButton" @click="modaHandleOpen">╳</button>
 					<nuxt-img
 						class="event-carousel-image"
-						style="width: 100%; height: 100%; object-fit: cover;"
+						style="width: 100%; height: auto; object-fit: cover;"
 						:src="source" 
 						:alt="'media' + index" 
 					/>
@@ -118,15 +122,19 @@
 </template>
 
 <script setup lang="ts">
+import { onClickOutside } from '@vueuse/core';
 type Props = {
-	mediaFilesUrls: string[];
+	mediaFilesUrls?: string[];
 	videoFilesUrls?: string[];
 	id: string | number;
+	isDeletable?: boolean;
 };
 
 defineProps<Props>();
 
-const isVisible = ref<boolean>(true);
+const permitModal = ref<HTMLDivElement | null>(null);
+
+const isVisible = ref<boolean>(false);
 
 const modaHandleOpen = () => {
 	isVisible.value = true;
@@ -135,6 +143,8 @@ const modaHandleOpen = () => {
 const modaHandleClose = () => {
 	isVisible.value = false;
 };
+
+onClickOutside(permitModal, () => modaHandleClose());
 </script>
 
 <style scoped lang="scss">
@@ -156,6 +166,7 @@ const modaHandleClose = () => {
 		position: relative;
 		width: 50%;
 		height: 35%;
+		min-height: 275px;
 		padding: 30px;
 		border-radius: 40px;
 		background: #fff;

@@ -23,20 +23,43 @@
 			</span>
 
 			<div class="event-card__controls">
-				<button
-					class="event-card__button event-card__button--yellow-grey"
-					:class="[eventCardButtonSize[size]]"
+				<cp-button
+					v-if="!widthEditControls"
+					color="yellowGrey"
+					shape="oval"
+					text="Buy ticket"
+					width="maxWidth"
+					size="middle"
 					@click.stop="buyTicketHandler"
-				>
-					Buy ticket
-				</button>
+				/>
 
-				<button
-					class="event-card__button event-card__button--transparent"
-					:class="[eventCardButtonSize[size]]"
-				>
-					Learn more
-				</button>
+				<cp-button
+					v-if="!widthEditControls"
+					color="transparent"
+					shape="oval"
+					text="Learn more"
+					width="maxWidth"
+					size="middle"
+				/>
+
+				<cp-button
+					v-if="widthEditControls"
+					color="yellowGrey"
+					shape="oval"
+					text="Editar evento"
+					width="maxWidth"
+					size="middle"
+					@click.stop="buyTicketHandler"
+				/>
+
+				<cp-button
+					v-if="widthEditControls"
+					color="transparent"
+					shape="oval"
+					text="Borrar"
+					width="maxWidth"
+					size="middle"
+				/>
 			</div>
 		</div>
 	</div>
@@ -69,6 +92,7 @@ const props = withDefaults(defineProps<Props>(), {
 		},
 	}),
 });
+
 const config = useRuntimeConfig();
 type Props = {
 	size?:
@@ -78,6 +102,7 @@ type Props = {
 		| eventCardDateSizeType
 		| eventCardTextSizeType;
 	eventCardData: EventCard;
+	widthEditControls?: boolean;
 };
 
 const photoUrl = computed(() => {
