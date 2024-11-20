@@ -1,6 +1,7 @@
 <template>
 	<div class="event-carousel__wrapper">
 		<div v-if="isVisible && isDeletable" class="modal">
+			<!-- ToDo separate modal window -->
 			<div ref="permitModal" class="modal-window">
 				<button type="button" class="modal-window-close" @click="modaHandleClose">╳</button>
 				<div class="modal-window-content">
