@@ -81,22 +81,20 @@ type Props = {
 };
 
 const photoUrl = computed(() => {
-	const eventImageUrl =
-		props.eventCardData.attributes?.eventMediaPhotos?.data[0]?.attributes.url;
+	const eventImageUrl = props.eventCardData.attributes?.eventMediaPhotos?.data;
 
-	if (!eventImageUrl) {
+	if (!eventImageUrl || !eventImageUrl.length) {
 		return '';
 	}
 
-	return config.public.apiBaseUrl + eventImageUrl;
+	return config.public.apiBaseUrl + eventImageUrl[0]?.attributes?.url;
 });
 
-// const photoUrl =
-// 	config.public.apiBaseUrl +
-// 	props.eventCardData.attributes.eventMediaPhotos.data[0].attributes.url;
-
 function buyTicketHandler() {
-	window.open(formatExternalLink(props.eventCardData.attributes.linkToBuyTicket), '_blank');
+	window.open(
+		formatExternalLink(props.eventCardData.attributes.linkToBuyTicket),
+		'_blank'
+	);
 }
 
 const formatedDate = computed(() => {
