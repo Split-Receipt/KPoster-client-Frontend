@@ -7,8 +7,8 @@
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="icon icon-tabler icon-tabler-chevron-down"
-					width="50"
-					height="50"
+					width="35"
+					height="35"
 					viewBox="0 0 24 24"
 					stroke-width="1.5"
 					stroke="#353333"
@@ -164,9 +164,9 @@ const dataToFilter = (event: Event) => {
 	justify-content: space-between;
 	align-items: center;
 	border-radius: 30px;
-	background-color: #f6f6f6;
 	height: 50px;
 	padding: $button-small-padding;
+	box-shadow: $card-shadow;
 }
 
 .burger {
@@ -174,7 +174,6 @@ const dataToFilter = (event: Event) => {
 	position: relative;
 	align-items: center;
 	justify-content: center;
-	background: #f6f6f6;
 	width: var(--burger-diameter);
 	height: var(--burger-diameter);
 	border-radius: var(--burger-btn-border-radius);
@@ -182,6 +181,7 @@ const dataToFilter = (event: Event) => {
 	overflow: hidden;
 	transition: var(--burger-transition);
 	outline-offset: 0;
+	box-shadow: $card-shadow;
 }
 
 .popup input:checked + .burger svg {

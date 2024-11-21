@@ -52,7 +52,7 @@ export const footerLists = {
 			},
 			{
 				id: 3,
-				text: 'Linked In',
+				text: 'LinkedIn',
 				href: '#',
 			},
 		],

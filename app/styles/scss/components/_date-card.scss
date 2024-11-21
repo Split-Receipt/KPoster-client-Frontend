@@ -1,7 +1,7 @@
 // Colors
 $date-card-default-border-color: $dusty-gray;
 
-$date-card-default-background-color: $wild-sand;
+$date-card-default-background-color: $white;
 $date-card-active-background-color: $yellow-gray-gradient-default;
 $date-card-disabled-background-color: transparent;
 
@@ -9,7 +9,7 @@ $date-card-day-color: $mine-shaft;
 $date-card-day-week-color: $boulder;
 
 // Fonts
-$date-card-day-font-size: $font-size-large;
+$date-card-day-font-size: 30px;
 $date-card-day-font-size-medium: 32px;
 $date-card-day-week-font-size: $font-size-medium;
 
@@ -18,7 +18,7 @@ $date-card-day-line-height-medium: 45px;
 $date-card-day-week-line-height: $line-heigh-medium;
 
 // Sizes
-$date-card-default-width: 55px;
+$date-card-default-width: 65px;
 $date-card-height-mini: 39px;
 $date-card-height-small: 74px;
 $date-card-height-medium: 84px;

@@ -27,7 +27,7 @@
 					<path d="M11.5 3a17 17 0 0 0 0 18" />
 					<path d="M12.5 3a17 17 0 0 1 0 18" />
 				</svg>
-				<span>{{ locale }}</span>
+				<span>{{ locale.toUpperCase() }}</span>
 			</div>
 			<nav ref="isOpenMenu" class="popup-window isClosed">
 				<ul>
@@ -130,6 +130,7 @@ onBeforeUnmount(() => {
 .checkbox-wrapper {
 	display: flex;
 	align-items: center;
+	padding-bottom: 10px;
 	* {
 		box-sizing: border-box;
 
@@ -189,7 +190,6 @@ onBeforeUnmount(() => {
 .popup {
 	--burger-line-width: 50px;
 	--burger-line-height: 50px;
-	--burger-bg: #eeeeee;
 	--burger-color: #353333;
 	--burger-line-border-radius: 0.1875em;
 	--burger-diameter: 30px;
@@ -207,7 +207,7 @@ onBeforeUnmount(() => {
 	--nav-border-radius: 20px;
 	--nav-border-color: #9b9494;
 	--nav-border-width: 1px;
-	--nav-bg: #f6f6f6;
+	--nav-bg: #fff;
 	--nav-font-family: 'Poppins', sans-serif;
 	--nav-default-scale: 0.8;
 	--nav-active-scale: 1;
@@ -259,7 +259,6 @@ onBeforeUnmount(() => {
 	justify-content: space-between;
 	align-items: center;
 	border-radius: 30px;
-	background-color: #f6f6f6;
 	height: 50px;
 	padding: 5px 20px 5px 20px;
 }
@@ -269,7 +268,6 @@ onBeforeUnmount(() => {
 	position: relative;
 	align-items: center;
 	justify-content: space-around;
-	background: var(--burger-bg);
 	width: 100%;
 	height: 100%;
 	padding: 0 13px 0 13px;
@@ -278,9 +276,10 @@ onBeforeUnmount(() => {
 	overflow: hidden;
 	transition: var(--burger-transition);
 	outline-offset: 0;
+	border: 1px solid $dusty-gray;
 
 	span {
-		padding-top: 5px;
+		font-size: 20px;
 	}
 }
 
@@ -353,7 +352,6 @@ onBeforeUnmount(() => {
 			font-weight: 400;
 			cursor: pointer;
 			padding-right: 15px;
-			padding-top: 6px;
 			line-height: 28px;
 			color: var(--nav-button-text-color);
 

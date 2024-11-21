@@ -10,6 +10,8 @@
 				buttonShapes[shape],
 				buttonSizes[size],
 				buttonWidth[width],
+				outlined ? 'button--outlined' : '',
+				shadowed ? 'button--shadowed' : '',
 			]"
 			@click="(event) => handleClick(event)"
 		>
@@ -59,6 +61,8 @@ type Props = {
 	text?: string;
 	islink?: boolean;
 	linkTo?: string;
+	outlined?: boolean;
+	shadowed?: boolean;
 };
 
 type Emits = {
@@ -68,7 +72,6 @@ type Emits = {
 withDefaults(defineProps<Props>(), {
 	type: 'button',
 	disabled: false,
-	text: 'button',
 	leftIcon: '',
 	size: 'middle',
 	width: 'medium',
@@ -123,10 +126,19 @@ enum buttonWidth {
 	text-decoration: none;
 	color: #000000;
 	cursor: pointer;
+	box-shadow: $button-shadow;
 
 	&:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
+	}
+
+	&--outlined {
+		border: 1px solid $dusty-gray;
+	}
+
+	&--shadowed {
+		box-shadow: $button-shadow;
 	}
 
 	&--circle {
@@ -167,10 +179,6 @@ enum buttonWidth {
 		line-height: $button-line-height-small;
 		font-size: $button-font-size-small;
 		padding: $button-small-padding;
-
-		span {
-			padding-top: 5px;
-		}
 	}
 
 	&--middle {
@@ -233,7 +241,7 @@ enum buttonWidth {
 	}
 
 	&--large {
-		width: $button-width-large;
+		min-width: $button-width-large;
 	}
 
 	&--extra-large {

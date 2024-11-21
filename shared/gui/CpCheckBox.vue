@@ -134,7 +134,6 @@ const checkBoxAction = (event: Event) => {
 	.checkbox-wrapper__label {
 		margin-left: 15px;
 		font-size: 16px;
-		padding-top: 5px;
 		line-height: 28px;
 		cursor: pointer;
 		font-family: 'NeuethingSans-MediumSemiExpanded';

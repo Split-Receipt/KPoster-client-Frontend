@@ -152,6 +152,7 @@ type eventCardTextSizeType = keyof typeof eventCardTextSize;
 	border-radius: $event-card-default-border-radius;
 
 	background-color: $event-card-text-background-color;
+	box-shadow: $card-shadow;
 
 	&--small {
 		gap: 15px;

@@ -23,7 +23,7 @@
 		<div class="header__controls">
 			<nuxt-link to="/">
 				<nuxt-img
-					src="/images/logo.png"
+					src="/images/logo-full.svg"
 					class="icon icon-logo header__icon-logo"
 				/>
 			</nuxt-link>
@@ -37,6 +37,7 @@
 						size="small"
 						shape="oval"
 						color="yellowGrey"
+						shadowed="true"
 						:text="$t('create_event')"
 						@click="navigateTo('/create-event')"
 					/>
@@ -45,12 +46,14 @@
 						size="small"
 						shape="oval"
 						color="yellowGrey"
+						shadowed="true"
 						:text="$t('sales')"
 					/>
 					<cp-button
 						width="large"
 						size="small"
 						shape="oval"
+						shadowed="true"
 						color="yellowGrey"
 						:text="$t('charity')"
 					/>
@@ -61,15 +64,15 @@
 						color="gray"
 						with-image="/../public/images/search.svg"
 						size="small"
+						outlined="true"
 						shape="circle"
-						text=""
 					/>
 					<cp-button
 						color="gray"
 						with-image="/../public/images/login.svg"
 						size="small"
 						shape="circle"
-						text=""
+						outlined="true"
 						@click="handleLoginButton"
 					/>
 					<lang-selector />
@@ -225,7 +228,7 @@ const isAllowedToCreateEvent = computed(() => {
 	right: 0;
 	width: 80%;
 	height: 100%;
-	background-color: #ffffff;
+	background-color: $white;
 	z-index: 20;
 	padding: 20px;
 	display: flex;
@@ -307,7 +310,6 @@ const isAllowedToCreateEvent = computed(() => {
 			align-items: center;
 			padding: $header-menu-padding-screen-desktop;
 			gap: $header-menu-gap-screen-desktop;
-			background-color: $header-menu-background-color-screen-desktop;
 			border-radius: $header-menu-border-radius-screen-desktop;
 		}
 	}

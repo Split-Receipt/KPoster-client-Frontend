@@ -49,7 +49,6 @@ defineProps<Props>();
 .footer-list {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
 	gap: 20px;
 	height: 100%;
 

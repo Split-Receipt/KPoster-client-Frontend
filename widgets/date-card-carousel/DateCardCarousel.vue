@@ -36,7 +36,7 @@
 					class="date-card-carousel__item"
 				>
 					<div v-if="card.day == '1'" class="date-card-carousel__month">
-						{{ card.mounth }}
+						{{ card.mounth.toUpperCase() }}
 					</div>
 					<div>
 						<date-card

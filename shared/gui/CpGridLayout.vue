@@ -10,6 +10,6 @@
 	display: grid;
 	gap: 16px;
 	grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-	padding: 55px 16px 16px 16px;
+	padding: 55px 16px 55px 16px;
 }
 </style>

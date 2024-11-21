@@ -43,7 +43,9 @@ withDefaults(defineProps<Props>(), {
 .main-section {
 	&__item {
 		position: relative;
-		border-bottom: 1px solid $main-section-border-color;
+		border-bottom: 3px solid transparent;
+    	border-image: $yellow-gray-gradient-default;
+    	border-image-slice: 1;
 		padding-bottom: 60px;
 
 		@media #{$screen-tablet} {

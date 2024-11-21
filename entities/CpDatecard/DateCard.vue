@@ -68,7 +68,8 @@ type cardSizeDayType = keyof typeof cardSizeDay;
 	padding: $date-card-default-padding;
 	background-color: $date-card-default-background-color;
 	border-radius: $date-card-default-border-radius;
-	border: 1px solid $date-card-default-border-color;
+	border: 1px solid $date-card-default-background-color;
+	box-shadow: $card-shadow;
 	cursor: pointer;
 
 	&__wrapper {
@@ -95,8 +96,11 @@ type cardSizeDayType = keyof typeof cardSizeDay;
 	&--active {
 		background: $date-card-active-background-color;
 		border: none;
+		.date-card__day-week {
+			color: $white;
+		}
 	}
-
+	
 	&__day {
 		font-size: $date-card-day-font-size;
 		line-height: $date-card-day-line-height;
@@ -115,9 +119,11 @@ type cardSizeDayType = keyof typeof cardSizeDay;
 	}
 
 	&:disabled {
+		border: 1px solid $date-card-default-border-color;
 		opacity: 0.7;
 		cursor: not-allowed;
 		background-color: $date-card-disabled-background-color;
+		box-shadow: none;
 	}
 }
 </style>

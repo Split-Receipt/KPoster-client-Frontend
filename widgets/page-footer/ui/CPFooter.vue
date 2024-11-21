@@ -1,11 +1,13 @@
 <template>
 	<div class="footer">
-		<footer-list
-			v-for="(list, index) in footerLists"
-			:key="index"
-			class="footer__list"
-			:list="list"
-		/>
+		<div class="footer__list-wrapper">
+			<footer-list
+				v-for="(list, index) in footerLists"
+				:key="index"
+				class="footer__list"
+				:list="list"
+			/>
+		</div>
 		<cp-button
 			class="footer__button"
 			color="yellowGrey"
@@ -35,7 +37,6 @@ import { footerLists } from '../model';
 
 	@media #{$screen-tablet} {
 		flex-wrap: wrap;
-		flex-direction: row;
 		column-gap: $footer-media-tablet-column-gap;
 		row-gap: $footer-media-tablet-row-gap;
 		padding: $footer-media-tablet-padding;
@@ -45,6 +46,12 @@ import { footerLists } from '../model';
 		column-gap: $footer-media-desktop-column-gap;
 		padding: $footer-media-desktop-padding;
 		justify-content: space-around;
+	}
+
+	&__list-wrapper {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
 	}
 
 	&__list {
@@ -67,8 +74,11 @@ import { footerLists } from '../model';
 	}
 
 	&__button {
+		width: 300px;
+		align-self: center;
+
 		@media #{$screen-desktop} {
-			align-self: end;
+			width: 400px;
 		}
 	}
 }
