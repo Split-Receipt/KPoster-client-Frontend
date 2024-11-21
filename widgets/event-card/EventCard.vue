@@ -23,13 +23,10 @@
 			</span>
 
 			<div class="event-card__controls">
-				<cp-button
-					v-if="!widthEditControls"
-					color="yellowGrey"
-					shape="oval"
-					text="Buy ticket"
-					width="maxWidth"
-					size="middle"
+				<button
+					v-if="eventCardData.attributes.linkToBuyTicket"
+					class="event-card__button event-card__button--yellow-grey"
+					:class="[eventCardButtonSize[size]]"
 					@click.stop="buyTicketHandler"
 				/>
 
@@ -75,6 +72,14 @@ const props = withDefaults(defineProps<Props>(), {
 		id: 1,
 		attributes: {
 			linkToBuyTicket: '#',
+			eventBanner: {
+				data: {
+					id: 1,
+					attributes: {
+						url: 'event-card-1.png',
+					},
+				},
+			},
 			eventMediaPhotos: {
 				data: [
 					{
@@ -106,22 +111,23 @@ type Props = {
 };
 
 const photoUrl = computed(() => {
-	const eventImageUrl =
-		props.eventCardData.attributes?.eventMediaPhotos?.data[0]?.attributes.url;
+	const eventBannerImageUrl = props.eventCardData.attributes?.eventBanner?.data;
+	const eventImageUrl = props.eventCardData.attributes?.eventMediaPhotos?.data;
 
-	if (!eventImageUrl) {
-		return '';
+	if (eventBannerImageUrl) {
+		return config.public.apiBaseUrl + eventBannerImageUrl?.attributes?.url;
+	} else if (eventImageUrl && eventImageUrl.length) {
+		return config.public.apiBaseUrl + eventImageUrl[0]?.attributes?.url;
 	}
 
-	return config.public.apiBaseUrl + eventImageUrl;
+	return '';
 });
 
-// const photoUrl =
-// 	config.public.apiBaseUrl +
-// 	props.eventCardData.attributes.eventMediaPhotos.data[0].attributes.url;
-
 function buyTicketHandler() {
-	window.open(formatExternalLink(props.eventCardData.attributes.linkToBuyTicket), '_blank');
+	window.open(
+		formatExternalLink(props.eventCardData.attributes.linkToBuyTicket),
+		'_blank'
+	);
 }
 
 const formatedDate = computed(() => {

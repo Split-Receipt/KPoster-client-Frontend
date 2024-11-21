@@ -323,10 +323,8 @@
 										'required-input-error-textInput': errors.length > 0,
 									}"
 								/>
-								<span
-									v-if="errors"
-									class="required-input-error-info-leftSide"
-								>{{ errors[0] }}</span
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}</span
 								>
 							</v-field>
 						</span>
@@ -345,10 +343,8 @@
 										'required-input-error-textInput': errors.length > 0,
 									}"
 								/>
-								<span
-									v-if="errors"
-									class="required-input-error-info-leftSide"
-								>{{ errors[0] }}</span
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}</span
 								>
 							</v-field>
 						</span>
@@ -493,7 +489,8 @@
 								errors && partnerRegistrationForm.data.cultureType.length < 1
 							"
 							class="required-input-error-info-leftSide"
-						>{{ errors[0] }}</span
+						>
+							{{ errors[0] }}</span
 						>
 					</v-field>
 				</div>
@@ -567,7 +564,8 @@
 						<span
 							v-if="errors && mainProdValue === 'File'"
 							class="required-input-error-info-center"
-						>{{ errors[0] }}</span
+						>
+							{{ errors[0] }}</span
 						>
 					</v-field>
 					<v-field
@@ -611,10 +609,8 @@
 							class="partners__form-rowDnD-semiBlock-social-maxWidth"
 							style="padding-top: 12px"
 						>
-							<label
-								class="input-laabel"
-								for="mainProdTextArea"
-							>Descripción del Producto</label
+							<label class="input-laabel" for="mainProdTextArea">
+								Descripción del Producto</label
 							>
 							<cp-text-area
 								v-model="partnerRegistrationForm.data.productDescriptionText"
@@ -634,6 +630,25 @@
 				</div>
 			</div>
 
+			<!-- webPage -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						Pagina web
+						<cp-info-pop-up id="WebPage_info" info="Pagina web info" />
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<div>
+						<cp-text-input
+							v-model="partnerRegistrationForm.data.webpage"
+							type="text"
+							placeholder="https://"
+						/>
+					</div>
+				</div>
+			</div>
+
 			<!-- digital Catalog -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
@@ -649,7 +664,7 @@
 					<div>
 						<cp-text-input
 							v-model="partnerRegistrationForm.data.digitalCatalog"
-							type="url"
+							type="text"
 							placeholder="https://"
 						/>
 						<cp-button
@@ -676,12 +691,12 @@
 				<div class="partners__form-row-input">
 					<v-field
 						v-slot="{ errors }"
-						:model-value="partnerRegistrationForm.data.orgLocation"
-						name="orgLocation"
+						:model-value="partnerRegistrationForm.data.eventHostAddress.city"
+						name="eventHostCity"
 						rules="required"
 					>
 						<cp-radio-button
-							v-model="partnerRegistrationForm.data.orgLocation"
+							v-model="partnerRegistrationForm.data.eventHostAddress.city"
 							:options="cityRadioButtons"
 							name="radio2"
 							return-value="id"
@@ -718,16 +733,14 @@
 								<cp-text-input2
 									id="place"
 									v-model="partnerRegistrationForm.data.contacts.place"
-									label-text="País y ciudad"
+									label-text="País y dirección"
 									placeholder="introduzca el enlace"
 									:class="{
 										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span
-									v-if="errors"
-									class="required-input-error-info-leftSide"
-								>{{ errors[0] }}</span
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}</span
 								>
 							</v-field>
 						</span>
@@ -747,10 +760,8 @@
 										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span
-									v-if="errors"
-									class="required-input-error-info-leftSide"
-								>{{ errors[0] }}</span
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}</span
 								>
 							</v-field>
 						</span>
@@ -770,13 +781,44 @@
 										'required-input-error-socialMedia': errors.length > 0,
 									}"
 								/>
-								<span
-									v-if="errors"
-									class="required-input-error-info-leftSide"
-								>{{ errors[0] }}</span
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}</span
 								>
 							</v-field>
 						</span>
+					</div>
+				</div>
+			</div>
+			<!-- location on map -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Marcar la ubicación del evento
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input fullWidth-map">
+					<div class="partnerRegistration__map">
+						<v-field
+							v-slot="{ errors }"
+							:model-value="
+								partnerRegistrationForm.data.eventHostAddress.coordinates
+							"
+							name="eventCoordinates"
+							rules="require_coordinates"
+						>
+							<cp-map
+								:coordinates-output="true"
+								:center="getCoordinates"
+								@update:coordinates-update="setCoordinates"
+							/>
+							<span
+								v-if="errors.length"
+								class="required-input-error-info-center"
+							>
+								{{ errors[0] }}
+							</span>
+						</v-field>
 					</div>
 				</div>
 			</div>
@@ -844,7 +886,8 @@
 								errors && partnerRegistrationForm.data.affiliations.length < 1
 							"
 							class="required-input-error-info-leftSide"
-						>{{ errors[0] }}</span
+						>
+							{{ errors[0] }}</span
 						>
 					</v-field>
 				</div>
@@ -923,7 +966,7 @@
 			</div>
 
 			<!-- Registration Data -->
-			<div class="partners__form-rowDnD">
+			<div v-if="!userData" class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
 						<strong class="partners__form-rowDnD-info-required">*</strong>
@@ -935,44 +978,97 @@
 					</span>
 				</div>
 				<div class="partners__form-rowDnD-input">
-					<div class="partners__form-rowDnD-input-socialsAndContacts">
-						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="username_id"
-								v-model="userRegistrationData.username"
-								:circle="true"
-								label-text="Nombre de usuario"
-								placeholder="Nombre"
-							/>
+					<div class="partners__form-rowDnD-input-authInfo">
+						<span class="partners__form-rowDnD-semiBlock-authInfo">
+							<v-field
+								v-slot="{ errors }"
+								:model-value="userRegistrationData.username"
+								name="username"
+								rules="required"
+							>
+								<cp-text-input2
+									id="username_id"
+									v-model="userRegistrationData.username"
+									:circle="true"
+									label-text="Nombre de usuario"
+									placeholder="Nombre"
+								/>
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}
+								</span>
+							</v-field>
 						</span>
-						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="email_id"
-								v-model="userRegistrationData.email"
-								:circle="true"
-								label-text="Email"
-								placeholder="example@example.com"
-							/>
+						<span class="partners__form-rowDnD-semiBlock-authInfo">
+							<v-field
+								v-slot="{ errors }"
+								:model-value="userRegistrationData.username"
+								name="eventHostRegistrationEmail"
+								rules="required"
+							>
+								<cp-text-input2
+									id="email_id"
+									v-model="userRegistrationData.email"
+									:circle="true"
+									label-text="Email"
+									placeholder="example@example.com"
+								/>
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}
+								</span>
+							</v-field>
 						</span>
-						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="pass_id"
-								v-model="userRegistrationData.password"
-								:circle="true"
-								type="password"
-								label-text="Password"
-								placeholder="Password"
-							/>
+
+						<span class="partners__form-rowDnD-semiBlock-authInfo">
+							<v-field
+								v-slot="{ errors }"
+								:model-value="userRegistrationData.password"
+								name="eventHostRegistrationPassword"
+								rules="required|minLength:8"
+							>
+								<cp-text-input2
+									id="pass_id"
+									v-model="userRegistrationData.password"
+									:circle="true"
+									type="password"
+									label-text="Password"
+									placeholder="Password"
+								/>
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}
+								</span>
+							</v-field>
 						</span>
-						<span class="partners__form-rowDnD-semiBlock-social">
-							<cp-text-input2
-								id="confirmPass_id"
+						<span class="partners__form-rowDnD-semiBlock-authInfo">
+							<v-field
+								v-slot="{ errors }"
 								v-model="passwordConfirmationValue"
-								:circle="true"
-								type="password"
-								label-text="Confirm Password"
-								placeholder="Password again"
-							/>
+								name="eventHostPasswordConfirmation"
+								rules="required|confirmed:eventHostRegistrationPassword"
+							>
+								<cp-text-input2
+									id="confirmPass_id"
+									v-model="passwordConfirmationValue"
+									:circle="true"
+									type="password"
+									label-text="Confirm Password"
+									placeholder="Password again"
+								/>
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}
+								</span>
+							</v-field>
 						</span>
 					</div>
 				</div>
@@ -1005,7 +1101,8 @@ import CpTextInput from '@shared/gui/CpTextInput.vue';
 import CpRadioButton from '@shared/gui/CpRadioButton.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpTextInput2 from '@shared/gui/CpTextInput2.vue';
-import type { PartnerRegistration } from '@shared/api/types.ts';
+import CpMap from '@shared/gui/CpMap.vue';
+import type { CurrentUser, PartnerRegistration } from '@shared/api/types.ts';
 import {
 	registerPartner,
 	requestCities,
@@ -1018,8 +1115,13 @@ import CpTextArea from '@shared/gui/CpTextArea.vue';
 
 const formSended = ref(false);
 const { $objToFormData } = useNuxtApp();
-const router = useRouter();
+
+const userData = ref<CurrentUser>();
 onBeforeMount(async () => {
+	const storedUserData = localStorage.getItem('myUser');
+	if (storedUserData) {
+		userData.value = JSON.parse(storedUserData);
+	}
 	await getCities();
 	await getCategories();
 	await getAffiliations();
@@ -1089,7 +1191,11 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		orgResume: '',
 		cultureType: [],
 		orgWorkType: '',
-		orgLocation: '',
+		eventHostAddress: {
+			city: null,
+			address: '',
+			coordinates: '-13.534793, -71.979812',
+		},
 		personalName: '',
 		personalIdentifyingDocument: '',
 		productDescriptionLink: '',
@@ -1154,6 +1260,18 @@ const checkboxCollectCultureType = (value: number, index: number) => {
 	}
 };
 
+const setCoordinates = (coordinatesFromMap: { coordinates: number[] }) => {
+	partnerRegistrationForm.data.eventHostAddress.coordinates = `${coordinatesFromMap.coordinates[0]},${coordinatesFromMap.coordinates[1]}`;
+};
+
+const getCoordinates = computed(() => {
+	return partnerRegistrationForm.data.eventHostAddress.coordinates
+		.split(',')
+		.map((coordinate) => {
+			return Number(coordinate);
+		});
+});
+
 const checkboxCollectAffiliations = (value: number, index: number) => {
 	if (value) {
 		partnerRegistrationForm.data.affiliations.push(value);
@@ -1181,16 +1299,23 @@ const sendPartnerRegistrationForm = async () => {
 	try {
 		isSpin.value = true;
 		formSended.value = true;
-		const newUserId = await registerUserForPartner(userRegistrationData);
-		if (!newUserId) {
-			throw new Error('No se pudo encontrar el usuario');
+		if (!localStorage.getItem('AuthToken')) {
+			const newUserId = await registerUserForPartner(userRegistrationData);
+
+			if (!newUserId) {
+				throw new Error('No se pudo encontrar el usuario');
+			}
+			partnerRegistrationForm.data.user = newUserId;
+		} else if (localStorage.getItem('myUser')) {
+			partnerRegistrationForm.data.user = JSON.parse(
+				localStorage.getItem('myUser')
+			).id;
 		}
-		partnerRegistrationForm.data.user = newUserId;
 		await createPartner();
 		toast.success('El registro fue exitoso');
 		setTimeout(() => {
-			router.push('/');
-		}, 1000);
+			navigateTo('/');
+		}, 2000);
 	} catch (error) {
 		if (error.error) {
 			toast.error(error.error.message);
@@ -1206,11 +1331,25 @@ const sendPartnerRegistrationForm = async () => {
 };
 
 const createPartner = async () => {
+	const partnerSocialMedias = toRaw(partnerRegistrationForm.data.socialMedias);
+	if (partnerSocialMedias) {
+		if (!partnerSocialMedias.length) {
+			delete partnerRegistrationForm.data.socialMedias;
+		} else {
+			partnerRegistrationForm.data.socialMedias = partnerSocialMedias.filter(
+				(socialMedia) => socialMedia.socialMediaLink
+			);
+		}
+	}
+
 	const partnerRegPayload = $objToFormData(toRaw(partnerRegistrationForm));
 	try {
 		await registerPartner(partnerRegPayload);
 	} catch (error) {
-		toast.error('error');
+		if (error.error) {
+			toast.error(error.error.message);
+		}
+		toast.error('Error al intentar crear un organizador');
 	}
 };
 
@@ -1540,6 +1679,13 @@ const getAffiliations = async () => {
 					width: 100%;
 				}
 
+				&-authInfo {
+					display: flex;
+					flex-direction: column;
+					justify-content: space-between;
+					align-items: flex-start !important;
+				}
+
 				&-socialsAndContacts {
 					span {
 						@media (max-width: 720px) {
@@ -1562,6 +1708,16 @@ const getAffiliations = async () => {
 				flex-direction: column !important;
 				min-width: 100%;
 				min-height: 250px;
+
+				&-authInfo {
+					width: 70%;
+					margin-top: 15px;
+					padding: 10px;
+
+					@media (max-width: 720px) {
+						width: 100%;
+					}
+				}
 
 				&-social {
 					width: 50%;
@@ -1747,5 +1903,30 @@ const getAffiliations = async () => {
 	font-size: 22px;
 	line-height: 35.2px;
 	color: #353333;
+}
+.partnerRegistration__map {
+	width: 100%;
+	height: 40vh;
+	main {
+		border-radius: 30px;
+		overflow: hidden;
+	}
+
+	@media screen and (max-width: 600px) {
+		height: 50vh;
+	}
+
+	@media screen and (max-width: 520px) {
+		height: 40vh;
+	}
+}
+.full-width {
+	&-map {
+		@media screen and (max-width: 955px) {
+			display: flex;
+			justify-content: space-around;
+			width: 100%;
+		}
+	}
 }
 </style>

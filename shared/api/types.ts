@@ -1,6 +1,8 @@
 export type PartnerRegistration = {
 	data: {
 		orgType: string;
+		webpage: string;
+		eventHostAddress: Address;
 		commercialName: string;
 		compName: string;
 		ruc: string;
@@ -11,7 +13,6 @@ export type PartnerRegistration = {
 		orgResume: string;
 		cultureType: number[];
 		orgWorkType: string;
-		orgLocation: string;
 		personalName: string;
 		personalIdentifyingDocument: string;
 		productDescriptionLink: string;
@@ -19,7 +20,7 @@ export type PartnerRegistration = {
 		compVideoLink: string;
 		user: number | null;
 		affiliations: number[];
-		socialMedias: SocialMedia[];
+		socialMedias?: SocialMedia[];
 		digitalCatalog: string;
 		contacts: {
 			place: string;
@@ -98,32 +99,41 @@ export type EventCategory = {
 export type EventData = {
 	id: number,
 	attributes: {
-		eventDigitalCatalog?: string,
-		eventWebSite?: string,
-		eventName: string,
-		eventHost: EventHost
-		eventDescription: string,
-		eventCategory: {
-			data: EventCategory[]
-		},
-		eventId: string,
-		eventDate: string,
-		createdAt: string,
-		updatedAt: string,
-		publishedAt: string,
-		locale: string,
-		linkToBuyTicket: string,
-		eventShortDescription: string,
-		eventDuration: string | null,
-		eventRules: string | null,
-		eventAgeRestrictions: string | null,
-		eventSocialMedias: SocialMedia[]
-		eventAddress: {
-			id: number,
-			address: string,
-			eventCoordinates: string,
-			city: {
-				data: City
+			eventDigitalCatalog?: string,
+			eventWebSite?: string,
+			eventName: string,
+			eventHost: EventHost
+			eventDescription: string,
+			eventCategory:{
+				data: EventCategory[] },
+			eventId: string,
+			eventDate: string,
+			createdAt: string,
+			updatedAt: string,
+			publishedAt: string,
+			locale: string,
+			linkToBuyTicket: string,
+			eventShortDescription: string,
+			eventDuration: string | null,
+			eventRules: string | null,
+			eventAgeRestrictions: string | null,
+			eventSocialMedias: SocialMedia[]
+			eventAddress: {
+					id: number,
+					address: string,
+					coordinates: string,
+					city: {
+							data: City
+					}
+			}
+			eventBanner: {
+					data: StrapiMediaDefaultType
+			}
+			eventMediaPhotos: {
+				data: StrapiMediaDefaultType[]
+			}
+			eventMediaVideos: {
+					data: StrapiMediaDefaultType[]
 			}
 		}
 		eventBanner: {
@@ -136,7 +146,6 @@ export type EventData = {
 			data: StrapiMediaDefaultType[]
 		}
 	}
-};
 
 export type City = {
 	id: number,
@@ -224,9 +233,12 @@ export type CollectionFilters = {
 			};
 		};
 		eventHost?: {
-			eventHostCode: {
-				$in: string[];
-			};
+			eventHostCode?: {
+				$in?: string[];
+			},
+			commercialName?: {
+				$eq?: string;
+			}
 		};
 		eventCategory?: {
 			eventCategoryCode: {
@@ -251,22 +263,23 @@ export type EventHost = {
 		attributes: {
 			commercialName: string
 			compName: string
+			webpage: string
 			ruc: string
 			videoBusinessCard: {
 				data: StrapiMediaDefaultType[]
 			}
 			mainBanner: {
-				data: StrapiMediaDefaultType
+				data: StrapiMediaDefaultType[]
 			}
 			compVideoFile: {
-				data: StrapiMediaDefaultType
+				data: StrapiMediaDefaultType[]
 			}
 			mostPopularProduct: {
-				data: StrapiMediaDefaultType
+				data: StrapiMediaDefaultType[]
 			}
 			digitalCatalog: string
 			productDescriptionFile: {
-				data: StrapiMediaDefaultType
+				data: StrapiMediaDefaultType[]
 			}
 			galleryImages: {
 				data: StrapiMediaDefaultType[]
@@ -285,6 +298,7 @@ export type EventHost = {
 			middleAge: number
 			womenPercentage: number
 			orgWorkType: string
+			socialMedias?: SocialMedia[]
 			personalName: string
 			personalIdentifyingDocument: string
 			personalDocumentScan: {
@@ -305,20 +319,19 @@ export type EventHost = {
 					}
 				}[]
 			}
-			orgLocation: {
-				data: City[]
-			}
-			events: {
-				data: EventData[]
-			}
-			orgType: string
-			eventHostCode: string
-			createdAt: string
-			updatedAt: string
-			publishedAt: string
-			locale: string
+		eventHostAddress: Address;
+		events: {
+			data: EventData[]
 		}
-	}
+		orgType: string
+		eventHostCode: string
+		createdAt: string
+		updatedAt: string
+		publishedAt: string
+		locale: string
+		},
+		id: number
+	},
 };
 
 export type RegisterParams = {
@@ -373,3 +386,29 @@ export type partnerPersonalFormDataType = {
 		}
 	};
 };
+export type CurrentUser =	{
+		id: 64,
+		username: string,
+		email: string,
+		provider: string,
+		confirmed: string,
+		blocked: string,
+		createdAt: Date,
+		updatedAt: Date,
+		role: {
+			id: number,
+			name: string,
+			description: string,
+			type: string,
+			createdAt: Date,
+			updatedAt: Date,
+		},
+		eventHostData: null
+	};
+
+	type Address = {
+			coordinates: string;
+			city: number | null;
+			address: string;
+		};
+

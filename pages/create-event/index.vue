@@ -91,10 +91,8 @@
 							:max-size="5"
 							:is-invalid="errors.length > 0"
 						/>
-						<span
-							v-if="errors.length"
-							class="required-input-error-info-center"
-						>{{ errors[0] }}</span
+						<span v-if="errors.length" class="required-input-error-info-center">
+							{{ errors[0] }}</span
 						>
 					</v-field>
 				</div>
@@ -200,26 +198,81 @@
 				<div class="eventForm-upperPositionRow-input fullWidth-details">
 					<div class="eventForm-upperPositionRow-input-details">
 						<span class="eventForm-upperPositionRow-input-details-input">
-							<cp-text-input2
-								id="event_place_id"
+							<v-field
+								v-slot="{ errors }"
 								v-model="eventCreateForm.data.eventContacts.place"
-								:circle="false"
-								label-text="Ubicación del evento"
-								placeholder="introduzca el enlace"
-								:tooltip="true"
-								tooltip-text="Ingrese al lugar del evento. Por ejemplo, un club u otro establecimiento."
-							/>
+								name="place"
+								rules="required"
+							>
+								<cp-text-input2
+									id="event_place_id"
+									v-model="eventCreateForm.data.eventContacts.place"
+									:circle="false"
+									label-text="Ubicación del evento"
+									placeholder="introduzca el enlace"
+									:tooltip="true"
+									required-field
+									tooltip-text="Ingrese al lugar del evento. Por ejemplo, un club u otro establecimiento."
+								/>
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}</span
+								>
+							</v-field>
 						</span>
 						<span class="eventForm-upperPositionRow-input-details-input">
-							<cp-text-input2
-								id="event_date_id"
-								v-model="eventCreateForm.data.eventDate"
-								type="date"
-								:circle="false"
-								:min="new Date().toISOString().split('T')[0]"
-								label-text="Fecha y hora"
-								placeholder="introduzca el enlace"
-							/>
+							<v-field
+								v-slot="{ errors }"
+								v-model="eventDate.date"
+								name="eventDate"
+								rules="required"
+							>
+								<cp-text-input2
+									id="event_date_id"
+									v-model="eventDate.date"
+									type="date"
+									:circle="false"
+									required-field
+									:min="new Date().toISOString().split('T')[0]"
+									label-text="Fecha"
+									placeholder="introduzca el enlace"
+								/>
+
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}</span
+								>
+							</v-field>
+						</span>
+						<span class="eventForm-upperPositionRow-input-details-input">
+							<v-field
+								v-slot="{ errors }"
+								v-model="eventDate.time"
+								name="eventTime"
+								rules="required"
+							>
+								<cp-text-input2
+									id="event_date_id"
+									v-model="eventDate.time"
+									type="time"
+									:circle="false"
+									required-field
+									:min="new Date().toISOString().split('T')[0]"
+									label-text="Hora de inicio del evento"
+									placeholder="introduzca el enlace"
+								/>
+
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}</span
+								>
+							</v-field>
 						</span>
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<cp-text-input2
@@ -382,7 +435,7 @@
 						v-model="eventCreateForm.files.eventMediaVideos"
 						:is-multi="true"
 						type="video"
-						:max-size="25"
+						:max-size="50"
 					/>
 				</div>
 			</div>
@@ -458,8 +511,8 @@
 					<div class="eventForm__map">
 						<v-field
 							v-slot="{ errors }"
-							:model-value="eventCreateForm.data.eventAddress.eventCoordinates"
-							name="eventCoordinates"
+							:model-value="eventCreateForm.data.eventAddress.coordinates"
+							name="eventHostCoordinates"
 							rules="require_coordinates"
 						>
 							<cp-map
@@ -552,6 +605,8 @@
 						text="Publicar"
 						width="maxWidth"
 						size="middle"
+						type="submit"
+						:disabled="disableSubmit"
 						@click="sendCreateEventForm"
 					/>
 				</span>
@@ -581,14 +636,15 @@ import CpCheckBox from '@shared/gui/CpCheckBox.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpMap from '@shared/gui/CpMap.vue';
 import type { City, EventCategory, EventCreateType } from '@shared/api/types';
+import { fromZonedTime, toDate } from 'date-fns-tz';
 import {
 	requestEventCategories,
 	eventCreate,
 	requestCities,
 } from '@shared/api';
+import { set } from 'date-fns';
 const { $objToFormData } = useNuxtApp();
 const myUser = ref({});
-const router = useRouter();
 // Form Data ------------------------------------
 
 const eventCreateForm = reactive<EventCreateType>({
@@ -607,7 +663,7 @@ const eventCreateForm = reactive<EventCreateType>({
 		],
 		eventDuration: '',
 		eventAddress: {
-			eventCoordinates: '-12.046016, -77.030554',
+			coordinates: '-12.046016, -77.030554',
 			city: null,
 			address: '',
 		},
@@ -630,6 +686,7 @@ const eventCreateForm = reactive<EventCreateType>({
 	},
 });
 
+const disableSubmit = ref<boolean>(false);
 // Variables ------------------------------------
 const eventCategories = ref<EventCategory[]>([]);
 const cities = ref<City[]>([]);
@@ -638,6 +695,19 @@ const eventCreateFormTemplate = ref<HTMLFormElement | null>(null);
 
 const isSpin = ref<boolean>(false);
 
+const eventDate = reactive({
+	date: '',
+	time: '',
+});
+
+watch(eventDate, () => {
+	if (eventDate.date && eventDate.time) {
+		eventCreateForm.data.eventDate = new Date(
+			`${eventDate.date}T${eventDate.time}`
+		);
+	}
+});
+
 onBeforeMount(() => {
 	myUser.value = JSON.parse(localStorage.getItem('myUser') ?? '{}');
 	getEventCategories();
@@ -645,7 +715,7 @@ onBeforeMount(() => {
 });
 
 const getCoordinates = computed(() => {
-	return eventCreateForm.data.eventAddress.eventCoordinates
+	return eventCreateForm.data.eventAddress.coordinates
 		.split(',')
 		.map((coordinate) => {
 			return Number(coordinate);
@@ -653,7 +723,7 @@ const getCoordinates = computed(() => {
 });
 
 const setCoordinates = (coordinatesFromMap: { coordinates: number[] }) => {
-	eventCreateForm.data.eventAddress.eventCoordinates = `${coordinatesFromMap.coordinates[0]},${coordinatesFromMap.coordinates[1]}`;
+	eventCreateForm.data.eventAddress.coordinates = `${coordinatesFromMap.coordinates[0]},${coordinatesFromMap.coordinates[1]}`;
 };
 
 const categoryCheckBoxes = computed(() => {
@@ -725,22 +795,47 @@ const sendCreateEventForm = async () => {
 
 	if (!(currentUser?.role.name === 'Organizador de eventos')) {
 		toast.error('Sólo los organizadores pueden crear eventos');
-		router.push('/');
+		navigateTo('/');
 
 		return;
 	}
-	eventCreateForm.data.eventHost = currentUser.eventHostData.id;
-	const eventCreatePayload = $objToFormData(toRaw(eventCreateForm));
+
 	try {
+		prepareEventCreationData();
+		const eventCreatePayload = $objToFormData(toRaw(eventCreateForm));
+		disableSubmit.value = true;
 		isSpin.value = true;
 		await eventCreate(eventCreatePayload);
 		isSpin.value = false;
 		toast.success('Evento creado exitosamente');
+		eventCreateFormTemplate.value?.resetForm();
+		setTimeout(() => {
+			navigateTo('/');
+		}, 2000);
 	} catch (error) {
+		disableSubmit.value = false;
+		console.error(error);
 		toast.error('Error al crear el evento');
 	} finally {
 		isSpin.value = false;
 	}
+};
+
+const prepareEventCreationData = () => {
+	const currentUser = JSON.parse(localStorage.getItem('myUser') ?? 'null');
+	if (!currentUser) {
+		throw new Error('Tu usuario no pudo ser identificado');
+	}
+	const timezone = localStorage.getItem('timezone');
+	eventCreateForm.data.eventHost = currentUser.eventHostData.id;
+	eventCreateForm.data.eventDate = fromZonedTime(
+		toDate(eventCreateForm.data.eventDate),
+		timezone ?? 'America/Lima'
+	);
+	eventCreateForm.data.eventSocialMedias =
+		eventCreateForm.data.eventSocialMedias.filter(
+			(socialMedia) => socialMedia.socialMediaLink !== ''
+		);
 };
 </script>
 

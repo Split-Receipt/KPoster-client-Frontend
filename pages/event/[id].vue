@@ -13,14 +13,16 @@
 					v-for="categoryName in eventCategoriesNames"
 					:key="categoryName"
 					class="detailed__mainImage-info-text"
-				>{{ categoryName }}</span
+				>
+					{{ categoryName }}</span
 				>
 				<span class="detailed__mainImage-info-date">{{
-					format(event.attributes.eventDate, 'PPPPpppp')
+					formatDateByTZ(new Date(event.attributes.eventDate))
 				}}</span>
 			</div>
 			<span class="detailed__mainImage-info-button">
 				<cp-button
+					v-if="event.attributes.linkToBuyTicket"
 					color="yellowGrey"
 					shape="oval"
 					text="Horarios y entradas"
@@ -186,6 +188,14 @@
 		<div class="detailed-contacts">
 			<div class="detailed-contacts-title">
 				<h3>Contactos del organizador</h3>
+				<span
+					v-if="event.attributes.eventHost.data.attributes.commercialName"
+					style="text-decoration: underline"
+				>
+					<nuxt-link :to="`/event-host/${event.attributes.eventHost.data.id}`">
+						{{ event.attributes.eventHost.data.attributes.commercialName }}
+					</nuxt-link>
+				</span>
 				<span v-if="event.attributes.eventHost.data.attributes.orgResume">
 					{{ event.attributes.eventHost.data.attributes.orgResume }}
 				</span>
@@ -204,8 +214,8 @@
 					v-if="event.attributes.eventHost.data.attributes.contacts?.tel"
 					class="detailed-contacts-referenses-tel"
 				>
-					<span class="detailed-contacts-referenses-tel-title"
-					>Número de teléfono</span
+					<span class="detailed-contacts-referenses-tel-title">
+						Número de teléfono</span
 					>
 					<span class="detailed-contacts-referenses-tel-ref">{{
 						event.attributes.eventHost.data.attributes.contacts.tel
@@ -215,16 +225,20 @@
 					v-if="event.attributes.eventHost.data.attributes.contacts?.place"
 					class="detailed-contacts-referenses-place"
 				>
-					<span class="detailed-contacts-referenses-place-title"
-					>País y ciudad</span
+					<span class="detailed-contacts-referenses-place-title">
+						País y ciudad</span
 					>
 					<span class="detailed-contacts-referenses-place-ref">{{
 						event.attributes.eventHost.data.attributes.contacts.place
 					}}</span>
 				</div>
-				<div class="detailed-contacts-referenses-socials">
+				<div
+					v-if="event.attributes.eventHost.data.attributes.socialMedias"
+					class="detailed-contacts-referenses-socials"
+				>
 					<cp-social-link
-						v-for="value in eventSocialMedias"
+						v-for="value in event.attributes.eventHost.data.attributes
+							.socialMedias"
 						:key="value.socialMediaName"
 						:social-media-link="value.socialMediaLink"
 						:social-media-name="value.socialMediaName"
@@ -244,10 +258,10 @@ import CpMap from '@shared/gui/CpMap.vue';
 import CpButton from '@shared/gui/CpButton.vue';
 import CpMarkdownViewer from '@shared/gui/CpMarkdownViewer.vue';
 import { requestEventById } from '@shared/api';
-import type { Event } from '@shared/api/types';
 import { EventDefaultValue } from '@shared/default-values/events';
 import { formatExternalLink } from '@shared/helpers/formatText';
 import { format } from 'date-fns';
+import { toZonedTime } from 'date-fns-tz';
 import { useRuntimeConfig } from 'nuxt/app';
 import EventDetailRec from '@widgets/recommendations/EventDetailRec.vue';
 import CpMediaCarousel from '@shared/gui/CpMediaCarousel.vue';
@@ -279,7 +293,6 @@ const changeMainImage = () => {
 		event.value.attributes.eventMediaPhotos.data[0].attributes.url;
 
 	if (mainImage.value) {
-
 		mainImage.value.style.backgroundImage = `url(${
 			config.public.apiBaseUrl + imageSource
 		})`;
@@ -298,8 +311,15 @@ const getEventById = async (id: string) => {
 	}
 };
 
+const formatDateByTZ = (eventDate: Date) => {
+	return format(
+		toZonedTime(eventDate, localStorage.getItem('timezone') ?? 'America/Lima'),
+		'PPPPpppp'
+	);
+};
+
 const getMediaPhotosUrls = computed(() => {
-	if (!event.value.attributes.eventMediaPhotos?.data.length) {
+	if (!event.value.attributes.eventMediaPhotos?.data?.length) {
 		return [];
 	}
 
@@ -309,7 +329,7 @@ const getMediaPhotosUrls = computed(() => {
 });
 
 const getMediaVideosUrls = computed(() => {
-	if (!event.value.attributes.eventMediaVideos?.data.length) {
+	if (!event.value.attributes.eventMediaVideos?.data?.length) {
 		return [];
 	}
 
@@ -319,15 +339,13 @@ const getMediaVideosUrls = computed(() => {
 });
 
 const getEventCoordinates = computed(() => {
-	if (!event.value.attributes.eventAddress.eventCoordinates) {
+	if (!event.value.attributes.eventAddress.coordinates) {
 		return {};
 	}
 
 	return {
-		marker: [
-			{ coordinates: event.value.attributes.eventAddress.eventCoordinates },
-		],
-		center: event.value.attributes.eventAddress.eventCoordinates,
+		marker: [{ coordinates: event.value.attributes.eventAddress.coordinates }],
+		center: event.value.attributes.eventAddress.coordinates,
 	};
 });
 

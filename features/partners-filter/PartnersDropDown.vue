@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import CpDropDown from '@shared/gui/CpDropDown.vue';
-import { requestEventsHost } from '@shared/api';
+import { requestEventsHostList } from '@shared/api';
 
 type Events = {
 	(event: 'change:eventHost', value: string[]): void;
@@ -22,7 +22,7 @@ const pickedEventHost = ref();
 
 const requestFilterData = async () => {
 	try {
-		const eventsHostRaw = await requestEventsHost();
+		const eventsHostRaw = await requestEventsHostList();
 		eventsHostData.value = eventsHostRaw.data;
 	} catch (e) {
 		console.error(e);
