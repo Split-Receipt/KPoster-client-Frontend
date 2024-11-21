@@ -57,7 +57,7 @@ export type EventCreateType = {
 	eventName: string;
 	eventDescription: string;
 	eventCategory: number[];
-	eventDate: string;
+	eventDate: string | Date;
 	eventHost: string;
 	eventDuration: string;
 	eventDigitalCatalog: string,
