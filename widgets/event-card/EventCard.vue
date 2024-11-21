@@ -24,6 +24,7 @@
 
 			<div class="event-card__controls">
 				<button
+					v-if="eventCardData.attributes.linkToBuyTicket"
 					class="event-card__button event-card__button--yellow-grey"
 					:class="[eventCardButtonSize[size]]"
 					@click.stop="buyTicketHandler"
@@ -81,13 +82,16 @@ type Props = {
 };
 
 const photoUrl = computed(() => {
+	const eventBannerImageUrl = props.eventCardData.attributes?.eventBanner?.data;
 	const eventImageUrl = props.eventCardData.attributes?.eventMediaPhotos?.data;
 
-	if (!eventImageUrl || !eventImageUrl.length) {
-		return '';
+	if (eventBannerImageUrl) {
+		return config.public.apiBaseUrl + eventBannerImageUrl?.attributes?.url;
+	} else if (eventImageUrl && eventImageUrl.length) {
+		return config.public.apiBaseUrl + eventImageUrl[0]?.attributes?.url;
 	}
 
-	return config.public.apiBaseUrl + eventImageUrl[0]?.attributes?.url;
+	return '';
 });
 
 function buyTicketHandler() {

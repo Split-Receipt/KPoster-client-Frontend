@@ -17,11 +17,12 @@
 					{{ categoryName }}</span
 				>
 				<span class="detailed__mainImage-info-date">{{
-					format(event.attributes.eventDate, 'PPPPpppp')
+					formatDateByTZ(new Date(event.attributes.eventDate))
 				}}</span>
 			</div>
 			<span class="detailed__mainImage-info-button">
 				<cp-button
+					v-if="event.attributes.linkToBuyTicket"
 					color="yellowGrey"
 					shape="oval"
 					text="Horarios y entradas"
@@ -260,6 +261,7 @@ import { requestEventById } from '@shared/api';
 import { EventDefaultValue } from '@shared/default-values/events';
 import { formatExternalLink } from '@shared/helpers/formatText';
 import { format } from 'date-fns';
+import { toZonedTime } from 'date-fns-tz';
 import { useRuntimeConfig } from 'nuxt/app';
 import EventDetailRec from '@widgets/recommendations/EventDetailRec.vue';
 import CpMediaCarousel from '@shared/gui/CpMediaCarousel.vue';
@@ -309,8 +311,15 @@ const getEventById = async (id: string) => {
 	}
 };
 
+const formatDateByTZ = (eventDate: Date) => {
+	return format(
+		toZonedTime(eventDate, localStorage.getItem('timezone') ?? 'America/Lima'),
+		'PPPPpppp'
+	);
+};
+
 const getMediaPhotosUrls = computed(() => {
-	if (!event.value.attributes.eventMediaPhotos?.data.length) {
+	if (!event.value.attributes.eventMediaPhotos?.data?.length) {
 		return [];
 	}
 
@@ -320,7 +329,7 @@ const getMediaPhotosUrls = computed(() => {
 });
 
 const getMediaVideosUrls = computed(() => {
-	if (!event.value.attributes.eventMediaVideos?.data.length) {
+	if (!event.value.attributes.eventMediaVideos?.data?.length) {
 		return [];
 	}
 

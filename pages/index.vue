@@ -57,6 +57,7 @@ import {
 import { startOfDay, endOfDay } from 'date-fns';
 import CpGridLayout from '@shared/gui/CpGridLayout.vue';
 import EventCard from '@widgets/event-card/EventCard.vue';
+import { fromZonedTime } from 'date-fns-tz';
 
 const { availableLocales, setLocale } = useI18n();
 const eventsCollections = ref();
@@ -137,9 +138,10 @@ const changeFilters = (data: any, filterPath: string) => {
 		}
 
 		case 'date': {
+			const timezone = localStorage.getItem('timezone');
 			filters.events.eventDate = {
-				$gte: startOfDay(data),
-				$lte: endOfDay(data),
+				$gte: fromZonedTime(startOfDay(data), timezone ?? 'America/Lima'),
+				$lte: fromZonedTime(endOfDay(data), timezone ?? 'America/Lima'),
 			};
 			requestPageData();
 			break;

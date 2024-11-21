@@ -1315,7 +1315,7 @@ const sendPartnerRegistrationForm = async () => {
 		toast.success('El registro fue exitoso');
 		setTimeout(() => {
 			navigateTo('/');
-		}, 1000);
+		}, 2000);
 	} catch (error) {
 		if (error.error) {
 			toast.error(error.error.message);

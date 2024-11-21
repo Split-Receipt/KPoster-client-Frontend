@@ -225,18 +225,44 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<v-field
 								v-slot="{ errors }"
-								v-model="eventCreateForm.data.eventDate"
+								v-model="eventDate.date"
 								name="eventDate"
 								rules="required"
 							>
 								<cp-text-input2
 									id="event_date_id"
-									v-model="eventCreateForm.data.eventDate"
+									v-model="eventDate.date"
 									type="date"
 									:circle="false"
 									required-field
 									:min="new Date().toISOString().split('T')[0]"
-									label-text="Fecha y hora"
+									label-text="Fecha"
+									placeholder="introduzca el enlace"
+								/>
+
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}</span
+								>
+							</v-field>
+						</span>
+						<span class="eventForm-upperPositionRow-input-details-input">
+							<v-field
+								v-slot="{ errors }"
+								v-model="eventDate.time"
+								name="eventTime"
+								rules="required"
+							>
+								<cp-text-input2
+									id="event_date_id"
+									v-model="eventDate.time"
+									type="time"
+									:circle="false"
+									required-field
+									:min="new Date().toISOString().split('T')[0]"
+									label-text="Hora de inicio del evento"
 									placeholder="introduzca el enlace"
 								/>
 
@@ -409,7 +435,7 @@
 						v-model="eventCreateForm.files.eventMediaVideos"
 						:is-multi="true"
 						type="video"
-						:max-size="25"
+						:max-size="50"
 					/>
 				</div>
 			</div>
@@ -579,6 +605,8 @@
 						text="Publicar"
 						width="maxWidth"
 						size="middle"
+						type="submit"
+						:disabled="disableSubmit"
 						@click="sendCreateEventForm"
 					/>
 				</span>
@@ -608,14 +636,15 @@ import CpCheckBox from '@shared/gui/CpCheckBox.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpMap from '@shared/gui/CpMap.vue';
 import type { City, EventCategory, EventCreateType } from '@shared/api/types';
+import { fromZonedTime, toDate } from 'date-fns-tz';
 import {
 	requestEventCategories,
 	eventCreate,
 	requestCities,
 } from '@shared/api';
+import { set } from 'date-fns';
 const { $objToFormData } = useNuxtApp();
 const myUser = ref({});
-const router = useRouter();
 // Form Data ------------------------------------
 
 const eventCreateForm = reactive<EventCreateType>({
@@ -657,6 +686,7 @@ const eventCreateForm = reactive<EventCreateType>({
 	},
 });
 
+const disableSubmit = ref<boolean>(false);
 // Variables ------------------------------------
 const eventCategories = ref<EventCategory[]>([]);
 const cities = ref<City[]>([]);
@@ -664,6 +694,19 @@ const cities = ref<City[]>([]);
 const eventCreateFormTemplate = ref<HTMLFormElement | null>(null);
 
 const isSpin = ref<boolean>(false);
+
+const eventDate = reactive({
+	date: '',
+	time: '',
+});
+
+watch(eventDate, () => {
+	if (eventDate.date && eventDate.time) {
+		eventCreateForm.data.eventDate = new Date(
+			`${eventDate.date}T${eventDate.time}`
+		);
+	}
+});
 
 onBeforeMount(() => {
 	myUser.value = JSON.parse(localStorage.getItem('myUser') ?? '{}');
@@ -756,22 +799,43 @@ const sendCreateEventForm = async () => {
 
 		return;
 	}
-	eventCreateForm.data.eventHost = currentUser.eventHostData.id;
-	eventCreateForm.data.eventSocialMedias =
-		eventCreateForm.data.eventSocialMedias.filter(
-			(socialMedia) => socialMedia.socialMediaLink !== ''
-		);
-	const eventCreatePayload = $objToFormData(toRaw(eventCreateForm));
+
 	try {
+		prepareEventCreationData();
+		const eventCreatePayload = $objToFormData(toRaw(eventCreateForm));
+		disableSubmit.value = true;
 		isSpin.value = true;
 		await eventCreate(eventCreatePayload);
 		isSpin.value = false;
 		toast.success('Evento creado exitosamente');
+		eventCreateFormTemplate.value?.resetForm();
+		setTimeout(() => {
+			navigateTo('/');
+		}, 2000);
 	} catch (error) {
+		disableSubmit.value = false;
+		console.error(error);
 		toast.error('Error al crear el evento');
 	} finally {
 		isSpin.value = false;
 	}
+};
+
+const prepareEventCreationData = () => {
+	const currentUser = JSON.parse(localStorage.getItem('myUser') ?? 'null');
+	if (!currentUser) {
+		throw new Error('Tu usuario no pudo ser identificado');
+	}
+	const timezone = localStorage.getItem('timezone');
+	eventCreateForm.data.eventHost = currentUser.eventHostData.id;
+	eventCreateForm.data.eventDate = fromZonedTime(
+		toDate(eventCreateForm.data.eventDate),
+		timezone ?? 'America/Lima'
+	);
+	eventCreateForm.data.eventSocialMedias =
+		eventCreateForm.data.eventSocialMedias.filter(
+			(socialMedia) => socialMedia.socialMediaLink !== ''
+		);
 };
 </script>
 

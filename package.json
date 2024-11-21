@@ -2,7 +2,7 @@
   "name": "nuxt-app",
   "private": true,
   "type": "module",
-  "version": "2.2.3",
+  "version": "2.3.0",
   "scripts": {
     "build": "node ./svgFontGenerator.js app/styles/icons app/styles/fonts/iconFont && nuxt build",
     "dev": "nuxt dev",
@@ -21,6 +21,7 @@
     "@vue-leaflet/vue-leaflet": "^0.10.1",
     "axios": "^1.7.2",
     "date-fns": "^3.6.0",
+    "date-fns-tz": "^3.2.0",
     "leaflet": "^1.9.4",
     "markdown-it": "^14.1.0",
     "normalize-scss": "^8.0.0",
