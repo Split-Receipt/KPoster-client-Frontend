@@ -145,7 +145,7 @@ export type EventData = {
 		eventMediaVideos: {
 			data: StrapiMediaDefaultType[]
 		}
-	}
+	};
 
 export type City = {
 	id: number,

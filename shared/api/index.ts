@@ -127,7 +127,7 @@ export const loginUser = (params: LoginParams) => {
 	return $api.post('/api/auth/local', params);
 };
 
-export const requestAffiliations = () => {
+export const requestAffiliations = (): Promise<AxiosResponse<{ data: { name: string }[] }>> => {
 	const { $api } = useNuxtApp();
 
 	return $api.get('/api/affiliations');

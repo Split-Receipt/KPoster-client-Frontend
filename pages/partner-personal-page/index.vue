@@ -3,22 +3,47 @@
 		<cp-spinner :is-spinned="isSpin" />
 		<h2>Culture events of Peru</h2>
 		<v-form ref="personalPartnerForm" class="personal___form">
-			
 			<div class="personal__form-rowTop">
 				<div class="personal__form-rowTop-info">
 					<span>
-						En que areas de la cultura viva comunitaria se desenvuelve tu organización ? Elección múltiple
+						En que areas de la cultura viva comunitaria se desenvuelve tu
+						organización ? Elección múltiple
 					</span>
 				</div>
 				<div class="personal__form-rowTop-input-checks">
 					<cp-check-box
-						v-for="(item, index) in testCultureTypeVars"
+						v-for="(item, index) in orgSphereChecks"
 						:key="index"
-						:option="item" 
+						:option="item"
+						:checked="partnerPersonalForm.data.cultureType.includes(item.id)"
 						return-value="id"
 						@update:checkbox-update="(value: number) => checkboxCollectCultureType(value, index)"
 					/>
 				</div>
+			</div>
+
+			<div class="personal__form-rowTop">
+				<div class="personal__form-rowTop-info">
+					<span> Dónde se ubica tu organización? </span>
+				</div>
+				<v-field
+					v-slot="{ errors }"
+					v-model="partnerPersonalForm.data.eventHostAddress.city"
+					name="eventHostCity"
+					rules="required"
+				>
+					<cp-radio-button
+						v-model="partnerPersonalForm.data.eventHostAddress.city"
+						:options="cityRadioButtons"
+						class="personal__form-rowTop-input-checks"
+						name="radio2"
+						return-value="id"
+						style="margin-left: -30px"
+					/>
+					<span v-if="errors" class="required-input-error-info-leftSide">{{
+						errors[0]
+					}}</span>
+				</v-field>
 			</div>
 
 			<div class="personal__form-row">
@@ -29,8 +54,16 @@
 					</span>
 				</div>
 				<div class="personal__form-row-input-horizontal">
-					<cp-text-input type="number" placeholder="Numero de personans"/>
-					<cp-text-input type="number" placeholder="Porcenaje de mujeres"/>
+					<cp-text-input
+						v-model="partnerPersonalForm.data.personCount"
+						type="number"
+						placeholder="Numero de personans"
+					/>
+					<cp-text-input
+						v-model="partnerPersonalForm.data.womenPercentage"
+						type="number"
+						placeholder="Porcenaje de mujeres"
+					/>
 				</div>
 			</div>
 
@@ -38,15 +71,12 @@
 				<div class="personal__form-rowTop-info">
 					<span>
 						Subir el logo o imagen principal
-						<cp-info-pop-up
-							id="logo_update"
-							info="test info Nombre"
-						/>
+						<cp-info-pop-up id="logo_update" info="test info Nombre" />
 					</span>
 				</div>
 				<div class="personal__form-rowTop-input">
 					<cp-drag-n-drop
-						v-model="partnerPersonalForm.files.image"
+						v-model="partnerPersonalForm.files.mainBanner"
 						:is-single="true"
 						type="image"
 						:max-size="5"
@@ -58,29 +88,28 @@
 				<div class="personal__form-rowTop-info">
 					<span>
 						Resume lo que hace tu organizacion
-						<cp-info-pop-up
-							id="resume"
-							info="250-500 palabras"
-						/>
+						<cp-info-pop-up id="resume" info="250-500 palabras" />
 					</span>
 				</div>
 				<div class="personal__form-rowTop-input">
-					<cp-text-area v-model="partnerPersonalForm.resume" text-area-id="resume_id" text-area-placeholder="Resume lo que hace tu organizacion"/>
+					<cp-text-area
+						v-model="partnerPersonalForm.data.orgResume"
+						text-area-id="resume_id"
+						text-area-placeholder="Resume lo que hace tu organizacion"
+					/>
 				</div>
 			</div>
 
 			<div class="personal__form-rowTop">
 				<div class="personal__form-rowTop-info">
 					<span>
-						Sube el vídeo de tu empresa o incrusta un enlace desde youtube o vimeo
-						<cp-info-pop-up
-							id="video_id"
-							info="250-500 palabras"
-						/>
+						Sube el vídeo de tu empresa o incrusta un enlace desde youtube o
+						vimeo
+						<cp-info-pop-up id="video_id" info="250-500 palabras" />
 						<div class="personal__form-switcherBlock">
 							<cp-switcher
-								v-model="videoFiileValue"
-								:default-option="videoFiileValue"
+								v-model="videoFileValue"
+								:default-option="videoFileValue"
 								switcher-name="compVideo"
 								:switcher-options="formVideoSwitcherOptions"
 							/>
@@ -89,16 +118,16 @@
 				</div>
 				<div class="personal__form-rowTop-input">
 					<cp-drag-n-drop
-						v-if="videoFiileValue === 'File'"
-						v-model="partnerPersonalForm.files.video"
+						v-if="videoFileValue === 'File'"
+						v-model="partnerPersonalForm.files.compVideoFile"
 						:is-single="true"
 						type="video"
 						:max-size="50"
 					/>
 					<cp-text-input2
-						v-else	
+						v-else
 						id="linkVideo_id"
-						v-model="partnerPersonalForm.videoLink"
+						v-model="partnerPersonalForm.data.compVideoLink"
 						:circle="true"
 						label-text="YouTube / Vimeo"
 						placeholder="https://www.youtube.com/"
@@ -106,7 +135,10 @@
 				</div>
 			</div>
 
-			<div class="personal__form-rowTop">
+			<div
+				v-if="partnerPersonalForm.data.socialMedias?.length"
+				class="personal__form-rowTop"
+			>
 				<div class="personal__form-rowTop-info">
 					<span>
 						Redes sociales
@@ -118,58 +150,20 @@
 				</div>
 				<div class="personal__form-rowTop-input">
 					<div class="partners__form-rowTop-input-socialsAndContacts">
-						<span class="personal__form-rowTop-semiBlock-social">
+						<span
+							v-for="(socialMedia, index) in partnerPersonalForm.data
+								.socialMedias"
+							:key="socialMedia.socialMediaName"
+							class="personal__form-rowTop-semiBlock-social"
+						>
 							<cp-text-input2
-								id="telegram_id"
-								v-model="partnerPersonalForm.socials.telegram"
+								:id="socialMedia.socialMediaName + '_id'"
+								v-model="
+									partnerPersonalForm.data.socialMedias[index].socialMediaLink
+								"
 								:circle="true"
-								label-text="Telegram"
-								placeholder="https://www.youtube.com/"
-							/>
-						</span>
-						<span class="personal__form-rowTop-semiBlock-social">
-							<cp-text-input2
-								id="twitter_id"
-								v-model="partnerPersonalForm.socials.twitter"
-								:circle="true"
-								label-text="Twitter"
-								placeholder="https://www.youtube.com/"
-							/>
-						</span>
-						<span class="personal__form-rowTop-semiBlock-social">
-							<cp-text-input2
-								id="facebook_id"
-								v-model="partnerPersonalForm.socials.facebook"
-								:circle="true"
-								label-text="Facebook"
-								placeholder="https://www.youtube.com/"
-							/>
-						</span>
-						<span class="personal__form-rowTop-semiBlock-social">
-							<cp-text-input2
-								id="instagram_id"
-								v-model="partnerPersonalForm.socials.instagram"
-								:circle="true"
-								label-text="Instagram"
-								placeholder="https://www.youtube.com/"
-							/>
-						</span>
-						<span class="personal__form-rowTop-semiBlock-social">
-							<cp-text-input2
-								id="youtube_id"
-								v-model="partnerPersonalForm.socials.youtube"
-								:circle="true"
-								label-text="YouTube"
-								placeholder="https://www.youtube.com/"
-							/>
-						</span>
-						<span class="personal__form-rowTop-semiBlock-social">
-							<cp-text-input2
-								id="linkedin_id"
-								v-model="partnerPersonalForm.socials.linkedin"
-								:circle="true"
-								label-text="Linkedin"
-								placeholder="https://www.youtube.com/"
+								:label-text="socialMedia.socialMediaName"
+								:placeholder="`https://www.${socialMedia.socialMediaName}.com/`"
 							/>
 						</span>
 					</div>
@@ -191,7 +185,7 @@
 						<span class="personal__form-rowTop-semiBlock-social">
 							<cp-text-input2
 								id="place_id"
-								v-model="partnerPersonalForm.contacts.place"
+								v-model="partnerPersonalForm.data.contacts.place"
 								:circle="false"
 								label-text="País y ciudad"
 								placeholder="introduzca el enlace"
@@ -200,7 +194,7 @@
 						<span class="personal__form-rowTop-semiBlock-social">
 							<cp-text-input2
 								id="tel_id"
-								v-model="partnerPersonalForm.contacts.tel"
+								v-model="partnerPersonalForm.data.contacts.tel"
 								:circle="false"
 								label-text="Teléfono de la empresa"
 								placeholder="introduzca el enlace"
@@ -209,7 +203,7 @@
 						<span class="personal__form-rowTop-semiBlock-social">
 							<cp-text-input2
 								id="email_id"
-								v-model="partnerPersonalForm.contacts.email"
+								v-model="partnerPersonalForm.data.contacts.mail"
 								type="email"
 								:circle="false"
 								label-text="Email"
@@ -220,21 +214,23 @@
 				</div>
 			</div>
 
-			<div class="personal__form-rowTop">
+			<!-- <div class="personal__form-rowTop">
 				<div class="personal__form-rowTop-info">
-					<span>
-						Introduce información clave sobre ti
-					</span>
+					<span> Introduce información clave sobre ti </span>
 				</div>
 				<div class="personal__form-rowTop-input">
-					<cp-text-area v-model="partnerPersonalForm.selfInfo" text-area-id="selfInfo_id" text-area-placeholder="Introduzca el texto"/>
+					<cp-text-area
+						v-model="partnerPersonalForm.data.selfInfo"
+						text-area-id="selfInfo_id"
+						text-area-placeholder="Introduzca el texto"
+					/>
 				</div>
 			</div>
 
 			<div class="personal__form-rowTop">
 				<div class="personal__form-rowTop-info">
 					<span>
-						Sube contenido de foto 
+						Sube contenido de foto
 						<cp-info-pop-up
 							id="mediaContent_picture_id"
 							info="El banner debe cargarse a 1100 por 278 píxeles en formato .png"
@@ -254,7 +250,7 @@
 			<div class="personal__form-rowTop">
 				<div class="personal__form-rowTop-info">
 					<span>
-						Sube contenido de vídeo 
+						Sube contenido de vídeo
 						<cp-info-pop-up
 							id="mediaContent_video_id"
 							info="El banner debe cargarse a 1100 por 278 píxeles en formato .png"
@@ -269,7 +265,7 @@
 						:max-size="25"
 					/>
 				</div>
-			</div>
+			</div> -->
 
 			<div class="personal__form-submit">
 				<cp-button
@@ -281,23 +277,31 @@
 					color="yellowGrey"
 					text="Publicar"
 					:disabled="formSending"
-					@click="sendPartnerRegistrationForm"
+					@click="sendPartnerPersonalForm"
 				/>
 			</div>
 		</v-form>
-		
+
 		<div class="personal__gallery">
 			<h3>Tu contenido fotográfico</h3>
 			<span>Aquí puedes gestionar el contenido de tus fotos.</span>
 		</div>
-		<cp-media-carousel id="gallery_pictures" :is-deletable="true" :media-files-urls="testImages"/>
-		
+		<cp-media-carousel
+			id="gallery_pictures"
+			:is-deletable="true"
+			:media-files-urls="testImages"
+		/>
+
 		<div class="personal__gallery">
 			<h3>Tu contenido de vídeo</h3>
 			<span>Aquí puedes gestionar el contenido de tus vídeos </span>
 		</div>
-		<cp-media-carousel id="gallery_videos" :is-deletable="true" :media-files-urls="testImages"/>
-	
+		<cp-media-carousel
+			id="gallery_videos"
+			:is-deletable="true"
+			:media-files-urls="testImages"
+		/>
+
 		<div class="personal__event-title">
 			<h3>Tu contenido de vídeo</h3>
 			<span>Aquí puedes gestionar el contenido de tus vídeos </span>
@@ -306,7 +310,8 @@
 			id="organizer-events-carousel"
 			:with-edit-controls="true"
 			class="personal__event-carousel"
-			:event-data="sectionData" />
+			:event-data="sectionData"
+		/>
 	</div>
 </template>
 
@@ -315,7 +320,6 @@ import { toast } from 'vue3-toastify';
 import CpButton from '@shared/gui/CpButton.vue';
 import CpDragNDrop from '@shared/gui/CpDragNDrop.vue';
 import { Form as VForm, Field as VField } from 'vee-validate';
-import type { partnerPersonalFormDataType } from '@shared/api/types';
 
 onMounted(() => {
 	isSpin.value = false;
@@ -323,96 +327,82 @@ onMounted(() => {
 
 // test variables -------------------------------
 
-const sectionData: EventCard[] = [  
-  {  
-    id: 1,  
-    attributes: {  
-      linkToBuyTicket: 'https://example.com/ticket1',  
-      eventDate: '2023-10-01T19:00:00Z',  
-      eventName: 'Concert of the Year',  
-      eventShortDescription: 'Join us for a night of amazing music.',  
-      eventMediaPhotos: {  
-        data: [  
-          {  
-            id: 1,  
-            attributes: {  
-              url: '',  
-            },  
-          },  
-          {  
-            id: 2,  
-            attributes: {  
-              url: 'event-card-2.png',  
-            },  
-          },  
-        ],  
-      },  
-    },  
-  },  
-  {  
-    id: 2,  
-    attributes: {  
-      linkToBuyTicket: 'https://example.com/ticket2',  
-      eventDate: '2023-11-05T20:00:00Z',  
-      eventName: 'Art Showcase',  
-      eventShortDescription: 'An exhibition of contemporary art.',  
-      eventMediaPhotos: {  
-        data: [  
-          {  
-            id: 3,  
-            attributes: {  
-              url: 'event-card-4.png',  
-            },  
-          },  
-        ],  
-      },  
-    },  
-  },  
-  {  
-    id: 3,  
-    attributes: {  
-      linkToBuyTicket: 'https://example.com/ticket3',  
-      eventDate: '2023-12-15T18:00:00Z',  
-      eventName: 'Food Festival',  
-      eventShortDescription: 'Taste the best dishes from local chefs.',  
-      eventMediaPhotos: {  
-        data: [  
-          {  
-            id: 4,  
-            attributes: {  
-              url: 'event-card-13.png',  
-            },  
-          },  
-          {  
-            id: 5,  
-            attributes: {  
-              url: 'event-card-14.png',  
-            },  
-          },  
-          {  
-            id: 6,  
-            attributes: {  
-              url: 'event-card-15.png',  
-            },  
-          },  
-        ],  
-      },  
-    },  
-  },  
-];
-
-const testCultureTypeVars = [
-    { id: '1', value: '1', label: 'Consciencia ambiental' },
-    { id: '2', value: '2', label: 'Gestion cultural' },
-    { id: '3', value: '3', label: 'Artes escénicas y danzas' },
-    { id: '4', value: '4', label: 'Fotografia , audiovisual, cinematografico y nuevos medios' },
-    { id: '5', value: '5', label: 'Lenguas indigenas u originarias y tradición oral' },
-    { id: '6', value: '6', label: 'Artesania' },
-    { id: '7', value: '7', label: 'Artes visuales' },
-    { id: '8', value: '8', label: 'Galeria y espacios de arte' },
-    { id: '9', value: '9', label: 'Libro y lectura' },
-    { id: '10', value: '10', label: 'Gastronomia tipica' },
-    { id: '11', value: '11', label: 'Creador de contenido en plataformas digitales' },
+const sectionData: EventCard[] = [
+	{
+		id: 1,
+		attributes: {
+			linkToBuyTicket: 'https://example.com/ticket1',
+			eventDate: '2023-10-01T19:00:00Z',
+			eventName: 'Concert of the Year',
+			eventShortDescription: 'Join us for a night of amazing music.',
+			eventMediaPhotos: {
+				data: [
+					{
+						id: 1,
+						attributes: {
+							url: '',
+						},
+					},
+					{
+						id: 2,
+						attributes: {
+							url: 'event-card-2.png',
+						},
+					},
+				],
+			},
+		},
+	},
+	{
+		id: 2,
+		attributes: {
+			linkToBuyTicket: 'https://example.com/ticket2',
+			eventDate: '2023-11-05T20:00:00Z',
+			eventName: 'Art Showcase',
+			eventShortDescription: 'An exhibition of contemporary art.',
+			eventMediaPhotos: {
+				data: [
+					{
+						id: 3,
+						attributes: {
+							url: 'event-card-4.png',
+						},
+					},
+				],
+			},
+		},
+	},
+	{
+		id: 3,
+		attributes: {
+			linkToBuyTicket: 'https://example.com/ticket3',
+			eventDate: '2023-12-15T18:00:00Z',
+			eventName: 'Food Festival',
+			eventShortDescription: 'Taste the best dishes from local chefs.',
+			eventMediaPhotos: {
+				data: [
+					{
+						id: 4,
+						attributes: {
+							url: 'event-card-13.png',
+						},
+					},
+					{
+						id: 5,
+						attributes: {
+							url: 'event-card-14.png',
+						},
+					},
+					{
+						id: 6,
+						attributes: {
+							url: 'event-card-15.png',
+						},
+					},
+				],
+			},
+		},
+	},
 ];
 
 const testImages = [
@@ -431,96 +421,180 @@ const formVideoSwitcherOptions = [
 	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },
 ];
 
-const videoFiileValue = ref<string | null>('File');
+const videoFileValue = ref<string | null>('File');
 
-watch(videoFiileValue, () => {
-	partnerPersonalForm.videoLink = '';
-	partnerPersonalForm.files.video = null;
+watch(videoFileValue, () => {
+	partnerPersonalForm.data.compVideoLink = '';
+	partnerPersonalForm.files.compVideoFile = null;
 });
 
 const isSpin = ref<boolean>(true);
 const formSending = ref<boolean>(false);
 const personalPartnerForm = ref<HTMLFormElement | null>(null);
 
-const partnerPersonalForm = reactive<partnerPersonalFormDataType>({
-    cultureType: [],
-	resume: '',
-	videoLink: '',
-	selfInfo: '',
-	socials: {
-		telegram: '',
-		facebook: '',
-		youtube: '',
-		twitter: '',
-		instagram: '',
-		linkedin: '',
-	},
-	contacts: {
-		place: '',
-		tel: '',
-		email: '',
+const partnerPersonalForm = reactive<PartnerRegistration>({
+	data: {
+		orgType: '',
+		commercialName: '',
+		compName: '',
+		ruc: '',
+		startDate: '',
+		user: null,
+		personCount: null,
+		middleAge: null,
+		womenPercentage: null,
+		orgResume: '',
+		cultureType: [],
+		orgWorkType: '',
+		eventHostAddress: {
+			city: null,
+			address: '',
+			coordinates: '-13.534793, -71.979812',
+		},
+		personalName: '',
+		personalIdentifyingDocument: '',
+		productDescriptionLink: '',
+		productDescriptionText: '',
+		webpage: '',
+		compVideoLink: '',
+		affiliations: [],
+		socialMedias: [
+			{ socialMediaName: 'TikTok', socialMediaLink: '' },
+			{ socialMediaName: 'Facebook', socialMediaLink: '' },
+			{ socialMediaName: 'Instagram', socialMediaLink: '' },
+			{ socialMediaName: 'LinkedIn', socialMediaLink: '' },
+			{ socialMediaName: 'YouTube', socialMediaLink: '' },
+		],
+		digitalCatalog: '',
+		contacts: {
+			place: '',
+			tel: '',
+			mail: '',
+		},
 	},
 	files: {
-		image: null,
-		video: null,
-		mediaContent: {
-			picture: null,
-			video: null,
-		},
+		personalDocumentScan: null,
+		videoBusinessCard: null,
+		mainBanner: null,
+		compVideoFile: null,
+		mostPopularProduct: null,
+		productDescriptionFile: null,
+		galleryImages: null,
 	},
 });
 
-const checkboxCollectCultureType = (value: number, index: number) => {
-	if (value) {
-		partnerPersonalForm.cultureType.push(value);
-	} else {
-		partnerPersonalForm.cultureType.splice(index, 1);
+const orgSphereChecks = ref([]);
+const userData = ref<CurrentUser>();
+
+const affiliationChecks = ref([]);
+const cityRadioButtons = ref([]);
+
+onBeforeMount(async () => {
+	const storedUserData = localStorage.getItem('myUser');
+	if (storedUserData) {
+		userData.value = JSON.parse(storedUserData);
+	}
+	await getCities();
+	await getCategories();
+	await getAffiliations();
+});
+
+const getCategories = async () => {
+	try {
+		const categories = await requestCategories();
+		orgSphereChecks.value = categories.data.data.map((category: any) => ({
+			id: category.id,
+			value: category.attributes.cultureTypeName,
+			label: category.attributes.cultureTypeName,
+		}));
+	} catch (error) {
+		toast.error(
+			'Nuestro administrador se comunicará conusted por correo electrónico'
+		);
 	}
 };
 
-const sendPartnerRegistrationForm = async () => {
+const getAffiliations = async () => {
+	try {
+		const affiliations = await requestAffiliations();
+		affiliationChecks.value = affiliations.data.data.map(
+			(affiliation: any) => ({
+				id: affiliation.id,
+				value: affiliation.attributes.affiliationName,
+				label: affiliation.attributes.affiliationName,
+			})
+		);
+	} catch (error) {
+		toast.error(
+			'Nuestro administrador se comunicará conusted por correo electrónico'
+		);
+	}
+};
+
+const getCities = async () => {
+	try {
+		const cities = await requestCities();
+		cityRadioButtons.value = cities.data.data.map((city: any) => ({
+			id: city.id,
+			value: city.attributes.cityName,
+			label: city.attributes.cityName,
+		}));
+	} catch (error) {
+		toast.error(
+			'Nuestro administrador se comunicará conusted por correo electrónico'
+		);
+	}
+};
+const checkboxCollectCultureType = (value: number, index: number) => {
+	if (value) {
+		partnerPersonalForm.data.cultureType.push(value);
+	} else {
+		partnerPersonalForm.data.cultureType.splice(index, 1);
+	}
+};
+
+const sendPartnerPersonalForm = async () => {
 	await personalPartnerForm.value?.validate();
-    isSpin.value = true;
-    formSending.value = true;
-    setTimeout(() => {
-        isSpin.value = false;
-        formSending.value = false;
-        toast.success('test submit');
-    }, 1500);
+	isSpin.value = true;
+	formSending.value = true;
+	setTimeout(() => {
+		isSpin.value = false;
+		formSending.value = false;
+		toast.success('test submit');
+	}, 1500);
 };
 </script>
 
 <style scoped lang="scss">
 .personal {
-    box-sizing: border-box;
-    padding: 0 20px 0 20px;
+	box-sizing: border-box;
+	padding: 0 20px 0 20px;
 
-    h2 {
-        font-family: 'Poppins-Medium';
-        font-size: 82px;
-        color: $soft-black;
-        width: 100%;
-        text-align: center;
-        line-height: 123px;
+	h2 {
+		font-family: 'Poppins-Medium';
+		font-size: 82px;
+		color: $soft-black;
+		width: 100%;
+		text-align: center;
+		line-height: 123px;
 
-        @media screen and (max-width: 1280px) {
-            font-size: 72px;
-            line-height: 108px;
-        }
+		@media screen and (max-width: 1280px) {
+			font-size: 72px;
+			line-height: 108px;
+		}
 
-        @media screen and (max-width: 768px) {
-            font-size: 40px;
-            line-height: 60px;
-        }
+		@media screen and (max-width: 768px) {
+			font-size: 40px;
+			line-height: 60px;
+		}
 
-        @media screen and (max-width: 466px) {
-            font-size: 30px;
-            line-height: 39px;
-        }
-        
-    }
+		@media screen and (max-width: 466px) {
+			font-size: 30px;
+			line-height: 39px;
+		}
+	}
 
-    &__form {
+	&__form {
 		width: 100%;
 		margin-top: 100px;
 
@@ -560,7 +634,6 @@ const sendPartnerRegistrationForm = async () => {
 				color: $soft-black;
 
 				@media screen and (max-width: 1280px) {
-					
 				}
 
 				@media (max-width: 955px) {
@@ -590,14 +663,14 @@ const sendPartnerRegistrationForm = async () => {
 				flex-direction: column;
 				width: 55%;
 
-                &-horizontal {
-                    width: 55%;
-                    display: flex;
+				&-horizontal {
+					width: 55%;
+					display: flex;
 
-                    div {
-                        margin-right: 21px;
-                        width: 45%;
-                    }
+					div {
+						margin-right: 21px;
+						width: 45%;
+					}
 
 					@media screen and (max-width: 955px) {
 						margin-top: 15px;
@@ -614,7 +687,7 @@ const sendPartnerRegistrationForm = async () => {
 							width: 100%;
 						}
 					}
-                }
+				}
 
 				&-checks {
 					display: flex;
@@ -705,15 +778,15 @@ const sendPartnerRegistrationForm = async () => {
 				flex-direction: column;
 				width: 55%;
 
-                &-horizontal {
-                    width: 55%;
-                    display: flex;
+				&-horizontal {
+					width: 55%;
+					display: flex;
 
-                    div {
-                        margin-right: 21px;
-                        width: 45%;
-                    }
-                }
+					div {
+						margin-right: 21px;
+						width: 45%;
+					}
+				}
 
 				&-checks {
 					display: flex;
@@ -723,9 +796,9 @@ const sendPartnerRegistrationForm = async () => {
 					flex-wrap: wrap;
 					width: 55%;
 
-					div{
+					div {
 						width: 50%;
-						margin-right: 15px
+						margin-right: 15px;
 					}
 
 					@media screen and (max-width: 1080px) {
@@ -749,9 +822,9 @@ const sendPartnerRegistrationForm = async () => {
 					@media screen and (max-width: 430px) {
 						height: auto;
 
-						div{
+						div {
 							width: 100%;
-							margin-right: 15px
+							margin-right: 15px;
 						}
 					}
 				}
@@ -861,7 +934,7 @@ const sendPartnerRegistrationForm = async () => {
 		}
 
 		@media screen and (max-width: 768px) {
-				margin-bottom: 35px;
+			margin-bottom: 35px;
 		}
 	}
 
@@ -880,12 +953,12 @@ const sendPartnerRegistrationForm = async () => {
 				line-height: 29px;
 
 				@media screen and (max-width: 768px) {
-						margin-bottom: 35px;
+					margin-bottom: 35px;
 				}
 			}
 		}
 		&-carousel {
-			margin-bottom: 70px
+			margin-bottom: 70px;
 		}
 	}
 }

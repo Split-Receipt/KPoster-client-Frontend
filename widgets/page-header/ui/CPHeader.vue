@@ -186,11 +186,7 @@ onUnmounted(() => {
 
 const handleLoginButton = () => {
 	if (isAuthenticated.value) {
-		localStorage.removeItem('myUser');
-		localStorage.removeItem('AuthToken');
-		isAuthenticated.value = false;
-		userRole.value = '';
-		navigateTo('/');
+		navigateTo('/partner-personal-page');
 	} else {
 		handleModalOpen();
 	}
