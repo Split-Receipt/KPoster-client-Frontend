@@ -24,6 +24,7 @@
 
 			<div class="event-card__controls">
 				<button
+					v-if="eventCardData.attributes.linkToBuyTicket"
 					class="event-card__button event-card__button--yellow-grey"
 					:class="[eventCardButtonSize[size]]"
 					@click.stop="buyTicketHandler"

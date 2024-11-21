@@ -225,18 +225,44 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<v-field
 								v-slot="{ errors }"
-								v-model="eventCreateForm.data.eventDate"
+								v-model="eventDate.date"
 								name="eventDate"
 								rules="required"
 							>
 								<cp-text-input2
 									id="event_date_id"
-									v-model="eventCreateForm.data.eventDate"
+									v-model="eventDate.date"
 									type="date"
 									:circle="false"
 									required-field
 									:min="new Date().toISOString().split('T')[0]"
-									label-text="Fecha y hora"
+									label-text="Fecha"
+									placeholder="introduzca el enlace"
+								/>
+
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}</span
+								>
+							</v-field>
+						</span>
+						<span class="eventForm-upperPositionRow-input-details-input">
+							<v-field
+								v-slot="{ errors }"
+								v-model="eventDate.time"
+								name="eventTime"
+								rules="required"
+							>
+								<cp-text-input2
+									id="event_date_id"
+									v-model="eventDate.time"
+									type="time"
+									:circle="false"
+									required-field
+									:min="new Date().toISOString().split('T')[0]"
+									label-text="Hora de inicio del evento"
 									placeholder="introduzca el enlace"
 								/>
 
@@ -616,6 +642,7 @@ import {
 	eventCreate,
 	requestCities,
 } from '@shared/api';
+import { set } from 'date-fns';
 const { $objToFormData } = useNuxtApp();
 const myUser = ref({});
 // Form Data ------------------------------------
@@ -667,6 +694,19 @@ const cities = ref<City[]>([]);
 const eventCreateFormTemplate = ref<HTMLFormElement | null>(null);
 
 const isSpin = ref<boolean>(false);
+
+const eventDate = reactive({
+	date: '',
+	time: '',
+});
+
+watch(eventDate, () => {
+	if (eventDate.date && eventDate.time) {
+		eventCreateForm.data.eventDate = new Date(
+			`${eventDate.date}T${eventDate.time}`
+		);
+	}
+});
 
 onBeforeMount(() => {
 	myUser.value = JSON.parse(localStorage.getItem('myUser') ?? '{}');
