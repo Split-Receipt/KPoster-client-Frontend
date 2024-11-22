@@ -174,51 +174,12 @@ const handleClick = (clickEvent: MouseEvent) => {
 		font-size: $button-font-size-huge;
 	}
 
-	&--squareSize {
-		height: $button-square-width;
-	}
-
-	&--yellow-grey {
-		background: $button-gradient-background-color;
-		animation: 0.3s reverseButtonAnimation backwards;
-		transition: all 0.3s ease;
-		&:hover {
-			animation: 0.3s defaultButtonAnimation forwards;
-			transition: all 0.3s ease;
-		}
-	}
-
-	&--gray {
-		background: $button-gray-background-color;
-	}
-
-	&--transparent {
-		background: transparent;
-		border: 1px solid $button-border-dusty-gray;
-	}
-
-	&--short {
-		width: $button-width-short;
-	}
-
 	&--medium {
-		width: $button-width-medium;
+		min-width: $button-width-medium;
 	}
 
 	&--large {
 		min-width: $button-width-large;
-	}
-
-	&--extra-large {
-		width: $button-width-Extra-large;
-	}
-
-	&--maxWidth {
-		width: $button-width-maxWidth;
-	}
-
-	&--squareWidth {
-		width: $button-square-width;
 	}
 }
 </style>

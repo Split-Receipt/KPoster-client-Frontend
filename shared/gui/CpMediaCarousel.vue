@@ -4,7 +4,7 @@
 			<div class="event-carousel__controls">
 				<cp-button
 					shape="square"
-					color="transparent"
+					size="small"
 					left-icon="arrow-left"
 					:class="[
 						`button-prev__${id}`,
@@ -14,7 +14,7 @@
 				/>
 				<cp-button
 					shape="square"
-					color="black"
+					size="small"
 					left-icon="arrow-right"
 					:class="[
 						`button-next__${id}`,

@@ -19,8 +19,8 @@ $button-size-small: 50px;
 
 $button-circle-height: 60px !important;
 $button-circle-width: 60px !important;
-$button-square-height: 60px;
-$button-square-width: 60px;
+$button-square-height: 60px !important;
+$button-square-width: 60px !important;
 
 $button-circle-withImage-width: 40%;
 $button-circle-withImage-height: 40%;
@@ -29,8 +29,6 @@ $button-circle-withImage-height: 40%;
 $button-width-short: 120px;
 $button-width-medium: 150px;
 $button-width-large: 200px;
-$button-width-Extra-large: 250px;
-$button-width-maxWidth: 100%;
 
 //Fonts
 $button-line-height-small: 21px;

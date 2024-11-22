@@ -3,7 +3,7 @@
 		<div v-if="dateLoaded" class="date-card-carousel">
 			<cp-button
 				shape="circle"
-				color="transparent"
+				size="small"
 				left-icon="arrow-left"
 				class="date-card-button-prev date-card-carousel__button"
 			/>
@@ -53,7 +53,7 @@
 
 			<cp-button
 				shape="circle"
-				color="black"
+				size="small"
 				left-icon="arrow-right"
 				class="date-card-button-next date-card-carousel__button"
 			/>

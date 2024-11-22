@@ -36,10 +36,7 @@
 			<cp-button
 				style="margin-top: 25px"
 				:disabled="passInput !== passConfirm || passConfirm === ''"
-				color="yellowGrey"
-				shape="oval"
 				text="Entrar"
-				width="maxWidth"
 				size="small"
 				@click="register"
 			/>

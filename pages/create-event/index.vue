@@ -600,10 +600,7 @@
 			<div class="eventForm-buttons">
 				<span class="eventForm-buttons-submit">
 					<cp-button
-						color="yellowGrey"
-						shape="oval"
 						text="Publicar"
-						width="maxWidth"
 						size="medium"
 						type="submit"
 						:disabled="disableSubmit"
@@ -612,10 +609,8 @@
 				</span>
 				<span class="eventForm-buttons-clear">
 					<cp-button
-						color="transparent"
-						shape="oval"
+						type="secondary"
 						text="Borrar"
-						width="maxWidth"
 						size="medium"
 					/>
 				</span>

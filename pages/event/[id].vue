@@ -23,10 +23,7 @@
 			<span class="detailed__mainImage-info-button">
 				<cp-button
 					v-if="event.attributes.linkToBuyTicket"
-					color="yellowGrey"
-					shape="oval"
 					text="Horarios y entradas"
-					width="maxWidth"
 					size="medium"
 					:islink="true"
 					:link-to="formatExternalLink(event.attributes.linkToBuyTicket)"
@@ -103,11 +100,8 @@
 				/>
 				<span class="detailed__comment-textArea-submit">
 					<cp-button
-						shape="oval"
-						color="yellowGrey"
 						text="Enviar"
 						size="small"
-						width="extraLarge"
 					/>
 				</span>
 			</div>
@@ -116,11 +110,8 @@
 				<span class="detailed__comment__block-title">
 					<h3>Comentarios</h3>
 					<cp-button
-						shape="oval"
 						size="small"
-						color="transparent"
 						text="Eso es todo&nbsp;&gt;"
-						width="extraLarge"
 					/>
 				</span>
 				<span class="detailed__comment__block-buttons">
@@ -133,16 +124,12 @@
 					<span>
 						<cp-button
 							class="sort-button"
-							shape="oval"
 							size="small"
-							color="transparent"
 							text="Positivos"
 						/>
 						<cp-button
 							class="sort-button"
-							shape="oval"
 							size="small"
-							color="transparent"
 							text="Negativos"
 						/>
 					</span>

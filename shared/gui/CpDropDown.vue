@@ -94,7 +94,7 @@ const dataToFilter = (event: Event) => {
 .popup {
 	--burger-line-width: 50px;
 	--burger-line-height: 50px;
-	--burger-bg: #f6f6f6;
+	--burger-bg: #fff;
 	--burger-color: #353333;
 	--burger-line-border-radius: 0.1875em;
 	--burger-diameter: 3.125em;
@@ -113,7 +113,7 @@ const dataToFilter = (event: Event) => {
 	--nav-border-radius: 20px;
 	--nav-border-color: #9b9494;
 	--nav-border-width: 1px;
-	--nav-bg: #f6f6f6;
+	--nav-bg: #fff;
 	--nav-font-family: 'Poppins', sans-serif;
 	--nav-default-scale: 0.8;
 	--nav-active-scale: 1;

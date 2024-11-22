@@ -29,10 +29,7 @@
 						:with-eye="true"
 					/>
 					<cp-button
-						color="yellowGrey"
-						shape="oval"
 						text="Entrar"
-						width="maxWidth"
 						size="small"
 						:disabled="!loginData.identifier || !loginData.password"
 						@click="login"

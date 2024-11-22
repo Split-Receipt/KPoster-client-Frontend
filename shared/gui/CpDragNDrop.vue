@@ -28,10 +28,7 @@
 					</video>
 					<cp-button
 						v-if="chosenFile"
-						width="short"
 						size="small"
-						shape="oval"
-						color="yellowGrey"
 						:text="$t('clear')"
 						@click="clearInput"
 					/>

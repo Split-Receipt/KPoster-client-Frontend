@@ -55,10 +55,12 @@
 						size="small"
 						type="secondary"
 						shape="circle"
+						control="true"
 					/>
 					<cp-button
 						with-image="/../public/images/login.svg"
 						size="small"
+						control="true"
 						shape="circle"
 						type="secondary"
 						@click="handleLoginButton"

@@ -5,10 +5,7 @@
 		<cp-text-input class="passRestore-email" type="email" placeholder="email"/>
 		<cp-button 
 			class="passRestore-btn"
-			color="yellowGrey"
-			shape="oval"
 			text="Recuperar contraseña"
-			width="maxWidth"
 			size="small"
 		/>
 	</div>
