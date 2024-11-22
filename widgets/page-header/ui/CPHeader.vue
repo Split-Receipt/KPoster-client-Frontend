@@ -33,46 +33,34 @@
 				<div class="header__buttons header__buttons--oval">
 					<cp-button
 						v-if="isAllowedToCreateEvent"
-						width="large"
 						size="small"
-						shape="oval"
-						color="yellowGrey"
-						shadowed="true"
 						:text="$t('create_event')"
 						@click="navigateTo('/create-event')"
 					/>
 					<cp-button
-						width="large"
+						type="ghost"
 						size="small"
-						shape="oval"
-						color="yellowGrey"
-						shadowed="true"
 						:text="$t('sales')"
 					/>
 					<cp-button
-						width="large"
+						type="ghost"
 						size="small"
-						shape="oval"
-						shadowed="true"
-						color="yellowGrey"
 						:text="$t('charity')"
 					/>
 				</div>
 
 				<div class="header__buttons header__buttons--circle">
 					<cp-button
-						color="gray"
 						with-image="/../public/images/search.svg"
 						size="small"
-						outlined="true"
+						type="secondary"
 						shape="circle"
 					/>
 					<cp-button
-						color="gray"
 						with-image="/../public/images/login.svg"
 						size="small"
 						shape="circle"
-						outlined="true"
+						type="secondary"
 						@click="handleLoginButton"
 					/>
 					<lang-selector />
@@ -85,42 +73,31 @@
 				<div class="header__buttons header__buttons--oval">
 					<cp-button
 						v-if="isAllowedToCreateEvent"
-						width="large"
 						size="small"
-						shape="oval"
-						color="yellowGrey"
 						:text="$t('create_event')"
 						@click="navigateTo('/create-event')"
 					/>
 					<cp-button
-						width="large"
 						size="small"
-						shape="oval"
-						color="yellowGrey"
 						:text="$t('sales')"
 					/>
 					<cp-button
-						width="large"
 						size="small"
-						shape="oval"
-						color="yellowGrey"
 						:text="$t('charity')"
 					/>
 				</div>
 				<div class="header__buttons header__buttons--circle">
 					<cp-button
-						color="gray"
 						with-image="/../public/images/search.svg"
 						size="small"
 						shape="circle"
-						text=""
+						type="secondary"
 					/>
 					<cp-button
-						color="gray"
 						with-image="/../public/images/login.svg"
 						size="small"
+						type="secondary"
 						shape="circle"
-						text=""
 						@click="handleLoginButton"
 					/>
 					<lang-selector />

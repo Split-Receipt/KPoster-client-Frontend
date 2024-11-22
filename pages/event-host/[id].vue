@@ -7,7 +7,7 @@
 					Creador de contenido en plataformas digitales
 				</span>
 				<div class="organizer-greet-text-desctop">
-					<h3 class="organizer-greet-text-middle">
+					<h3 class="organizer-greet-text-medium">
 						{{ eventHost?.data.attributes.commercialName }}
 					</h3>
 					<span class="organizer-greet-text-bottom">
@@ -17,7 +17,7 @@
 			</div>
 			<div ref="eventHostMainImage" class="organizer-greet-image" />
 			<div class="organizer-greet-text-mobile">
-				<h3 class="organizer-greet-text-middle">
+				<h3 class="organizer-greet-text-medium">
 					{{ eventHost?.data.attributes.commercialName }}
 				</h3>
 				<span class="organizer-greet-text-bottom">
@@ -347,7 +347,7 @@ const testMapCenter = [-12.046016, -77.030554];
 				}
 			}
 
-			&-middle {
+			&-medium {
 				margin-bottom: 20px;
 				@media screen and (max-width: 1005px) {
 					margin-bottom: 10px;

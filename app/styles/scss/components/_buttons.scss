@@ -13,8 +13,8 @@ $card-shadow: 0px 4px 24px 0px #BEBEBE40;
 
 //Sizes
 $button-size-huge: 70px;
-$button-size-big: 65px;
-$button-size-middle: 60px;
+$button-size-large: 65px;
+$button-size-medium: 60px;
 $button-size-small: 50px;
 
 $button-circle-height: 60px !important;
@@ -34,25 +34,20 @@ $button-width-maxWidth: 100%;
 
 //Fonts
 $button-line-height-small: 21px;
-$button-line-height-middle: 21px;
-$button-line-height-big: 25px;
+$button-line-height-medium: 21px;
+$button-line-height-large: 25px;
 $button-line-height-huge: 28px;
 
 $button-font-size-small: 22px;
-$button-font-size-middle: 22px;
-$button-font-size-big: 24px;
+$button-font-size-medium: 22px;
+$button-font-size-large: 24px;
 $button-font-size-huge: 24px;
 
 $button-circle-border-radius: 50%;
 $button-oval-border-radius: 99px;
 $button-square-border-radius: 15px;
 
-$button-oval-padding: 5px 60px 5px 60px;
-
-$button-small-padding: 11px 30px 11px 30px;
-$button-middle-padding: 20px 40px 20px 40px;
-
-$button-default-padding: 20px 40px 20px 40px;
+$button-default-padding: 10px 20px;
 
 $button-icon-circle-font-size: 22px;
 $button-icon-square-font-size: 25px;

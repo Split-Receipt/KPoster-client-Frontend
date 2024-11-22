@@ -165,7 +165,7 @@ const dataToFilter = (event: Event) => {
 	align-items: center;
 	border-radius: 30px;
 	height: 50px;
-	padding: $button-small-padding;
+	padding: $button-default-padding;
 	box-shadow: $card-shadow;
 }
 

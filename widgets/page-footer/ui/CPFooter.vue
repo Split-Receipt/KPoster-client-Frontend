@@ -10,11 +10,8 @@
 		</div>
 		<cp-button
 			class="footer__button"
-			color="yellowGrey"
-			shape="oval"
 			text="Become a partner"
-			width="maxWidth"
-			size="middle"
+			size="large"
 			:islink="true"
 			link-to="/partners-registration"
 		/>

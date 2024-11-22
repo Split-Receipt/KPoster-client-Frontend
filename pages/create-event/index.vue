@@ -604,7 +604,7 @@
 						shape="oval"
 						text="Publicar"
 						width="maxWidth"
-						size="middle"
+						size="medium"
 						type="submit"
 						:disabled="disableSubmit"
 						@click="sendCreateEventForm"
@@ -616,7 +616,7 @@
 						shape="oval"
 						text="Borrar"
 						width="maxWidth"
-						size="middle"
+						size="medium"
 					/>
 				</span>
 			</div>

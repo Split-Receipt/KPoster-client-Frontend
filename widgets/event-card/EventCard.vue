@@ -1,7 +1,7 @@
 <template>
 	<div class="event-card__wrapper">
-		<div class="event-card" :class="[eventCardSize[size]]">
-			<div class="event-card__img" :class="[eventCardImageSize[size]]">
+		<div class="event-card" :class="`event-card--${size}`">
+			<div class="event-card__img" :class="`event-card__img--${size}`">
 				<nuxt-img
 					placeholder="/images/event-card_blured.jpg"
 					loading="lazy"
@@ -12,32 +12,31 @@
 			<h4 class="event-card__title">
 				{{ eventCardData.attributes.eventName }}
 			</h4>
-			<span class="event-card__text" :class="[eventCardTextSize[size]]">
+			<span class="event-card__text"  :class="`event-card__text--${size}`">
 				{{ eventCardData.attributes.eventShortDescription }}
 			</span>
 			<span
 				class="event-card__date"
-				:class="[eventCardDateSize[size as eventCardDateSizeType]]"
+				:class="`event-card__date--${size}`"
 			>
 				{{ formatedDate }}
 			</span>
 
 			<div class="event-card__controls">
-				<button
+				<cp-button
 					v-if="eventCardData.attributes.linkToBuyTicket"
-					class="event-card__button event-card__button--yellow-grey"
-					:class="[eventCardButtonSize[size]]"
+					class="event-card__button"
+					:class="`event-card__button--${size}`"
+					:text="$t('Buy ticket')"
 					@click.stop="buyTicketHandler"
-				>
-					Buy ticket
-				</button>
+				/>
 
-				<button
-					class="event-card__button event-card__button--transparent"
-					:class="[eventCardButtonSize[size]]"
-				>
-					Learn more
-				</button>
+				<cp-button
+					class="event-card__button"
+					type="secondary"
+					:class="`event-card__button--${size}`"
+					:text="$t('Learn more')"
+				/>
 			</div>
 		</div>
 	</div>
@@ -47,6 +46,8 @@
 import { format } from 'date-fns';
 import type { EventCard } from '@widgets/event-card/types/types';
 import { formatExternalLink } from '@shared/helpers/formatText';
+import CpButton from '@shared/gui/CpButton.vue';
+
 const props = withDefaults(defineProps<Props>(), {
 	size: 'small',
 	eventCardData: (): Props['eventCardData'] => ({
@@ -72,12 +73,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 const config = useRuntimeConfig();
 type Props = {
-	size?:
-		| eventCardSizeType
-		| eventCardImageSizeType
-		| eventCardButtonSizeType
-		| eventCardDateSizeType
-		| eventCardTextSizeType;
+	size?: string;
 	eventCardData: EventCard;
 };
 
@@ -87,7 +83,7 @@ const photoUrl = computed(() => {
 
 	if (eventBannerImageUrl) {
 		return config.public.apiBaseUrl + eventBannerImageUrl?.attributes?.url;
-	} else if (eventImageUrl && eventImageUrl.length) {
+	} else if (eventImageUrl?.length) {
 		return config.public.apiBaseUrl + eventImageUrl[0]?.attributes?.url;
 	}
 
@@ -107,43 +103,6 @@ const formatedDate = computed(() => {
 		'dd/MM/yyyy'
 	);
 });
-
-// ...
-
-enum eventCardSize {
-	small = 'event-card--small',
-	medium = 'event-card--medium',
-	large = 'event-card--large',
-}
-
-enum eventCardImageSize {
-	small = 'event-card__img--small',
-	medium = 'event-card__img--medium',
-	large = 'event-card__img--large',
-}
-
-enum eventCardTextSize {
-	small = 'event-card__text--small',
-	medium = 'event-card__text--medium',
-	large = 'event-card__text--large',
-}
-
-enum eventCardDateSize {
-	small = 'event-card__date--small',
-	medium = 'event-card__date--medium',
-}
-
-enum eventCardButtonSize {
-	small = 'event-card__button--small',
-	medium = 'event-card__button--medium',
-	large = 'event-card__button--large',
-}
-
-type eventCardSizeType = keyof typeof eventCardSize;
-type eventCardImageSizeType = keyof typeof eventCardImageSize;
-type eventCardButtonSizeType = keyof typeof eventCardButtonSize;
-type eventCardDateSizeType = keyof typeof eventCardDateSize;
-type eventCardTextSizeType = keyof typeof eventCardTextSize;
 </script>
 
 <style scoped lang="scss">
@@ -381,100 +340,100 @@ type eventCardTextSizeType = keyof typeof eventCardTextSize;
 		gap: 15px;
 	}
 
-	&__button {
-		font-size: 15px;
-		line-height: 21px;
-		height: 51px;
-		padding: 15px 40px;
-		border: none;
-		cursor: pointer;
-		border-radius: 99px;
+	// &__button {
+	// 	font-size: 15px;
+	// 	line-height: 21px;
+	// 	height: 51px;
+	// 	padding: 15px 40px;
+	// 	border: none;
+	// 	cursor: pointer;
+	// 	border-radius: 99px;
 
-		@media #{$screen-tablet} {
-			font-size: 20px;
-			line-height: 28px;
-			height: 68px;
-		}
+	// 	@media #{$screen-tablet} {
+	// 		font-size: 20px;
+	// 		line-height: 28px;
+	// 		height: 68px;
+	// 	}
 
-		&--yellow-grey {
-			background: $button-gradient-background-color;
-		}
+	// 	&--yellow-grey {
+	// 		background: $button-gradient-background-color;
+	// 	}
 
-		&--transparent {
-			background: transparent;
-			border: 1px solid $button-border-dusty-gray;
-		}
+	// 	&--transparent {
+	// 		background: transparent;
+	// 		border: 1px solid $button-border-dusty-gray;
+	// 	}
 
-		&--small {
-			@media #{$screen-tablet} {
-				padding: 20px 50px 17px 50px;
-			}
+	// 	&--small {
+	// 		@media #{$screen-tablet} {
+	// 			padding: 20px 50px 17px 50px;
+	// 		}
 
-			@media #{$screen-desktop} {
-				font-size: 16px;
-				line-height: 22px;
-				height: 62px;
-			}
+	// 		@media #{$screen-desktop} {
+	// 			font-size: 16px;
+	// 			line-height: 22px;
+	// 			height: 62px;
+	// 		}
 
-			@media #{$screen-big-desktop} {
-				font-size: 16px;
-				line-height: 22px;
-				height: 62px;
-			}
-		}
+	// 		@media #{$screen-big-desktop} {
+	// 			font-size: 16px;
+	// 			line-height: 22px;
+	// 			height: 62px;
+	// 		}
+	// 	}
 
-		&--medium {
-			&:nth-child(2) {
-				margin-top: -5px;
-			}
+	// 	&--medium {
+	// 		&:nth-child(2) {
+	// 			margin-top: -5px;
+	// 		}
 
-			@media #{$screen-tablet} {
-				padding: 20px 60px;
+	// 		@media #{$screen-tablet} {
+	// 			padding: 20px 60px;
 
-				&:nth-child(2) {
-					margin-top: 5px;
-				}
-			}
+	// 			&:nth-child(2) {
+	// 				margin-top: 5px;
+	// 			}
+	// 		}
 
-			@media #{$screen-desktop} {
-				font-size: 18px;
-				line-height: 25px;
-				height: 65px;
+	// 		@media #{$screen-desktop} {
+	// 			font-size: 18px;
+	// 			line-height: 25px;
+	// 			height: 65px;
 
-				&:nth-child(2) {
-					margin: 0 0 0 5px;
-				}
-			}
+	// 			&:nth-child(2) {
+	// 				margin: 0 0 0 5px;
+	// 			}
+	// 		}
 
-			@media #{$screen-big-desktop} {
-				font-size: 22px;
-				line-height: 31px;
-				height: 71px;
-			}
-		}
+	// 		@media #{$screen-big-desktop} {
+	// 			font-size: 22px;
+	// 			line-height: 31px;
+	// 			height: 71px;
+	// 		}
+	// 	}
 
-		&--large {
-			padding: 20px 60px;
+	// 	&--large {
+	// 		padding: 20px 60px;
 
-			&:nth-child(2) {
-				margin-top: -5px;
-			}
+	// 		&:nth-child(2) {
+	// 			margin-top: -5px;
+	// 		}
 
-			@media #{$screen-desktop} {
-				font-size: 18px;
-				line-height: 25px;
-				height: 65px;
+	// 		@media #{$screen-desktop} {
+	// 			font-size: 18px;
+	// 			line-height: 25px;
+	// 			height: 65px;
 
-				&:nth-child(2) {
-					margin: 0 0 0 5px;
-				}
-			}
-		}
+	// 			&:nth-child(2) {
+	// 				margin: 0 0 0 5px;
+	// 			}
+	// 		}
+	// 	}
 
-		&:disabled {
-			opacity: 0.5;
-			cursor: not-allowed;
-		}
-	}
+	// 	&:disabled {
+	// 		opacity: 0.5;
+	// 		cursor: not-allowed;
+	// 	}
+	// }
 }
 </style>

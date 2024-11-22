@@ -27,7 +27,7 @@
 					shape="oval"
 					text="Horarios y entradas"
 					width="maxWidth"
-					size="middle"
+					size="medium"
 					:islink="true"
 					:link-to="formatExternalLink(event.attributes.linkToBuyTicket)"
 				/>

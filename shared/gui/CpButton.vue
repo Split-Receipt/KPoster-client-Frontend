@@ -2,16 +2,13 @@
 	<div class="button__wrapper">
 		<button
 			v-if="!islink"
+			:type="nativeType"
 			:disabled="disabled"
-			:type="type"
 			:class="[
 				'button',
-				buttonColors[color],
-				buttonShapes[shape],
-				buttonSizes[size],
-				buttonWidth[width],
-				outlined ? 'button--outlined' : '',
-				shadowed ? 'button--shadowed' : '',
+				`button--${type}`,
+				`button--${size}`,
+				`button--${shape}`,
 			]"
 			@click="(event) => handleClick(event)"
 		>
@@ -29,10 +26,9 @@
 			:disabled="disabled"
 			:class="[
 				'button',
-				buttonColors[color],
-				buttonShapes[shape],
-				buttonSizes[size],
-				buttonWidth[width],
+				`button--${type}`,
+				`button--${size}`,
+				`button--${shape}`,
 			]"
 			:to="linkTo"
 		>
@@ -50,19 +46,16 @@
 
 <script setup lang="ts">
 type Props = {
-	type?: HTMLButtonElement['type'];
-	shape: keyof typeof buttonShapes;
+	nativeType?: HTMLButtonElement['type'];
+	type?: 'primary' | 'secondary' | 'ghost';
+	shape: 'square' | 'circle' | 'oval';
 	disabled?: boolean;
-	size?: keyof typeof buttonSizes;
-	color: keyof typeof buttonColors;
-	width?: keyof typeof buttonWidth;
+	size?: 'small' | 'medium' | 'large' | 'huge';
 	leftIcon?: string;
 	withImage?: string;
 	text?: string;
 	islink?: boolean;
 	linkTo?: string;
-	outlined?: boolean;
-	shadowed?: boolean;
 };
 
 type Emits = {
@@ -70,11 +63,14 @@ type Emits = {
 };
 
 withDefaults(defineProps<Props>(), {
-	type: 'button',
+	nativeType: 'button',
+	type: 'primary',
 	disabled: false,
 	leftIcon: '',
-	size: 'middle',
-	width: 'medium',
+	text: '',
+	size: 'medium',
+	shape: 'oval',
+	withImage: '',
 });
 
 const emit = defineEmits<Emits>();
@@ -82,37 +78,6 @@ const emit = defineEmits<Emits>();
 const handleClick = (clickEvent: MouseEvent) => {
 	emit('click', clickEvent);
 };
-
-enum buttonShapes {
-	circle = 'button--circle',
-	oval = 'button--oval',
-	square = 'button--square',
-}
-
-enum buttonSizes {
-	small = 'button--small',
-	middle = 'button--middle',
-	big = 'button--big',
-	huge = 'button--huge',
-	squareSize = 'button--squareSize'
-}
-
-enum buttonColors {
-	yellowGrey = 'button--yellow-grey',
-	black = 'button--black',
-	white = 'button--white',
-	gray = 'button--gray',
-	transparent = 'button--transparent',
-}
-
-enum buttonWidth {
-	short = 'button--short',
-	medium = 'button--medium',
-	large = 'button--large',
-	extraLarge = 'button--extra-large',
-	maxWidth = 'button--maxWidth',
-	squareWidth = 'button--squareWidth'
-}
 </script>
 
 <style scoped lang="scss">
@@ -121,23 +86,35 @@ enum buttonWidth {
 	justify-content: center;
 	align-items: center;
 	padding: $button-default-padding;
-	border: none;
-	background-color: transparent;
+	border: none; 
 	text-decoration: none;
-	color: #000000;
+	color: $black;
+	background-color: $white;
 	cursor: pointer;
-	box-shadow: $button-shadow;
 
 	&:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
 	}
 
-	&--outlined {
-		border: 1px solid $dusty-gray;
+	&--primary {
+		background: $button-gradient-background-color;
+		animation: 0.3s reverseButtonAnimation backwards;
+		transition: all 0.3s ease;
+		&:hover {
+			animation: 0.3s defaultButtonAnimation forwards;
+			transition: all 0.3s ease;
+		}
 	}
 
-	&--shadowed {
+	&--secondary {
+		border: 1px solid $dusty-gray;
+		&:hover {
+			border: 1px solid $black;
+		}
+	}
+
+	&--ghost {
 		box-shadow: $button-shadow;
 	}
 
@@ -171,27 +148,24 @@ enum buttonWidth {
 
 	&--oval {
 		border-radius: $button-oval-border-radius;
-		padding: $button-oval-padding;
 	}
 
 	&--small {
 		height: $button-size-small;
 		line-height: $button-line-height-small;
 		font-size: $button-font-size-small;
-		padding: $button-small-padding;
 	}
 
-	&--middle {
-		height: $button-size-middle;
-		line-height: $button-line-height-middle;
-		font-size: $button-font-size-middle;
-		padding: $button-middle-padding;
+	&--medium {
+		height: $button-size-medium;
+		line-height: $button-line-height-medium;
+		font-size: $button-font-size-medium;
 	}
 
-	&--big {
-		height: $button-size-big;
-		line-height: $button-line-height-big;
-		font-size: $button-font-size-big;
+	&--large {
+		height: $button-size-large;
+		line-height: $button-line-height-large;
+		font-size: $button-font-size-large;
 	}
 
 	&--huge {
@@ -202,15 +176,6 @@ enum buttonWidth {
 
 	&--squareSize {
 		height: $button-square-width;
-	}
-
-	&--white {
-		background: $button-white-background-color;
-	}
-
-	&--black {
-		background: $button-black-background-color;
-		color: $button-white-background-color;
 	}
 
 	&--yellow-grey {
