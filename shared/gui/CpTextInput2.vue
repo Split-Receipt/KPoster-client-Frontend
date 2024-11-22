@@ -17,6 +17,7 @@
 		</label>
 		<input
 			:id="props.id"
+			:value="props.modelValue"
 			class="socialMedia__input"
 			:type="props.type"
 			v-bind="$attrs"
@@ -28,6 +29,7 @@
 
 <script setup lang="ts">
 type socialMediaProps = {
+	modelValue: string;
 	id: string;
 	type?: string;
 	placeholder: string;

@@ -9,6 +9,7 @@
 			:id="props.id"
 			type="text"
 			:placeholder="props.placeholder"
+			:value="modelValue"
 			@input="handleInputValueUpdate"
 		/>
 		<div v-if="props.type === 'password'" class="textInput-password">
@@ -35,6 +36,7 @@
 			v-if="props.type === 'date'"
 			:id="props.id"
 			type="date"
+			:value="modelValue"
 			placeholder="ingrese la fecha"
 			@focus="dateInputFocus"
 			@input="handleInputValueUpdate"
@@ -44,6 +46,7 @@
 			:id="props.id"
 			type="number"
 			min="0"
+			:value="modelValue"
 			:placeholder="props.placeholder"
 			@input="handleInputValueUpdate"
 			@keypress="numberInputValidate"
@@ -53,6 +56,7 @@
 
 <script setup lang="ts">
 type textInputProps = {
+	modelValue: string;
 	type: string;
 	placeholder: string;
 	id?: string;

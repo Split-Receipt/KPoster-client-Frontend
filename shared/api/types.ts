@@ -2,7 +2,7 @@ export type PartnerRegistration = {
 	data: {
 		orgType: string;
 		webpage: string;
-		eventHostAddress: Address;
+		eventHostAddress: Address<number>;
 		commercialName: string;
 		compName: string;
 		ruc: string;
@@ -220,7 +220,7 @@ export type CollectionFilters = {
 		$eq: typeof CollectionTypes[keyof typeof CollectionTypes]
 	};
 	events: {
-		eventDate: {
+		eventDate?: {
 			$eq?: Date;
 			$gte?: Date;
 			$lte?: Date;
@@ -298,6 +298,9 @@ export type EventHost = {
 			middleAge: number
 			womenPercentage: number
 			orgWorkType: string
+			cultureType: {
+				data: CultureType[]
+			}
 			socialMedias?: SocialMedia[]
 			personalName: string
 			personalIdentifyingDocument: string
@@ -319,7 +322,7 @@ export type EventHost = {
 					}
 				}[]
 			}
-		eventHostAddress: Address;
+		eventHostAddress: Address<{ data: City }>;
 		events: {
 			data: EventData[]
 		}
@@ -403,12 +406,24 @@ export type CurrentUser =	{
 			createdAt: Date,
 			updatedAt: Date,
 		},
-		eventHostData: null
+		eventHostData: EventHost['data']['attributes'],
 	};
 
-	type Address = {
+	type Address<T> = {
 			coordinates: string;
-			city: number | null;
+			city: T;
 			address: string;
 		};
+
+type CultureType = {
+		id: 2,
+		attributes: {
+			cultureTypeName: string,
+			createdAt: string,
+			updatedAt: string,
+			publishedAt: string,
+			locale: string,
+			cultureTypeCode: string
+		}
+	};
 

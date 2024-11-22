@@ -23,15 +23,18 @@
 			</span>
 
 			<div class="event-card__controls">
-				<button
-					v-if="eventCardData.attributes.linkToBuyTicket"
-					class="event-card__button event-card__button--yellow-grey"
-					:class="[eventCardButtonSize[size]]"
+				<cp-button
+					v-if="eventCardData.attributes.linkToBuyTicket && !withEditControls"
+					color="yellowGrey"
+					shape="oval"
+					text="Comprar un boleto"
+					width="maxWidth"
+					size="middle"
 					@click.stop="buyTicketHandler"
 				/>
 
 				<cp-button
-					v-if="!widthEditControls"
+					v-if="!withEditControls"
 					color="transparent"
 					shape="oval"
 					text="Learn more"
@@ -40,7 +43,7 @@
 				/>
 
 				<cp-button
-					v-if="widthEditControls"
+					v-if="withEditControls"
 					color="yellowGrey"
 					shape="oval"
 					text="Editar evento"
@@ -50,7 +53,7 @@
 				/>
 
 				<cp-button
-					v-if="widthEditControls"
+					v-if="withEditControls"
 					color="transparent"
 					shape="oval"
 					text="Borrar"
@@ -68,6 +71,7 @@ import type { EventCard } from '@widgets/event-card/types/types';
 import { formatExternalLink } from '@shared/helpers/formatText';
 const props = withDefaults(defineProps<Props>(), {
 	size: 'small',
+	withEditControls: false,
 	eventCardData: (): Props['eventCardData'] => ({
 		id: 1,
 		attributes: {
@@ -107,7 +111,7 @@ type Props = {
 		| eventCardDateSizeType
 		| eventCardTextSizeType;
 	eventCardData: EventCard;
-	widthEditControls?: boolean;
+	withEditControls?: boolean;
 };
 
 const photoUrl = computed(() => {

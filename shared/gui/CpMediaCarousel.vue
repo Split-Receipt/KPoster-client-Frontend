@@ -3,7 +3,13 @@
 		<div v-if="isVisible && isDeletable" class="modal">
 			<!-- ToDo separate modal window -->
 			<div ref="permitModal" class="modal-window">
-				<button type="button" class="modal-window-close" @click="modaHandleClose">╳</button>
+				<button
+					type="button"
+					class="modal-window-close"
+					@click="modaHandleClose"
+				>
+					╳
+				</button>
 				<div class="modal-window-content">
 					<h4>¿Eliminar datos?</h4>
 					<span>¿Confirmar eliminación? será imposible cancelar la acción</span>
@@ -15,6 +21,7 @@
 							shape="oval"
 							color="yellowGrey"
 							text="Sí"
+							@click="modalHandleAccept"
 						/>
 						<cp-button
 							class="modal-window-content-controls-decline"
@@ -97,24 +104,27 @@
 					},
 				}"
 			>
-				<swiper-slide
-					v-for="(source, index) in videoFilesUrls"
-					:key="index"
-				>
-					<video 
+				<swiper-slide v-for="(source, index) in videoFilesUrls" :key="index">
+					<video
 						class="event-carousel-video"
 						:src="source"
 						controls
-						:alt="'media' + index" 
+						:alt="'media' + index"
 					/>
 				</swiper-slide>
 				<swiper-slide v-for="(source, index) in mediaFilesUrls" :key="index">
-					<button v-if="isDeletable" class="deleteButton" @click="modaHandleOpen">╳</button>
+					<button
+						v-if="isDeletable"
+						class="deleteButton"
+						@click="modaHandleOpen(source)"
+					>
+						╳
+					</button>
 					<nuxt-img
 						class="event-carousel-image"
-						style="width: 100%; height: auto; object-fit: cover;"
-						:src="source" 
-						:alt="'media' + index" 
+						style="width: 100%; height: auto; object-fit: cover"
+						:src="source"
+						:alt="'media' + index"
 					/>
 				</swiper-slide>
 			</swiper>
@@ -133,16 +143,31 @@ type Props = {
 
 defineProps<Props>();
 
+const emit = defineEmits<Emits>();
+
+const objectToDelete = ref<any>(null);
+
+type Emits = {
+	(e: 'delete', objectToDelete: any): void;
+};
+
 const permitModal = ref<HTMLDivElement | null>(null);
 
 const isVisible = ref<boolean>(false);
 
-const modaHandleOpen = () => {
+const modaHandleOpen = (source: any) => {
+	objectToDelete.value = source;
 	isVisible.value = true;
+};
+
+const modalHandleAccept = () => {
+	isVisible.value = false;
+	emit('delete', objectToDelete.value);
 };
 
 const modaHandleClose = () => {
 	isVisible.value = false;
+	objectToDelete.value = null;
 };
 
 onClickOutside(permitModal, () => modaHandleClose());
@@ -211,7 +236,7 @@ onClickOutside(permitModal, () => modaHandleClose());
 			@media screen and (max-width: 575px) {
 				right: 15px;
 				top: 15px;
-			}	
+			}
 		}
 
 		&-content {
@@ -314,7 +339,6 @@ onClickOutside(permitModal, () => modaHandleClose());
 				}
 			}
 		}
-
 	}
 }
 

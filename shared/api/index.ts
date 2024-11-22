@@ -1,6 +1,7 @@
 import { useNuxtApp } from 'nuxt/app';
 import type { EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, CurrentUser } from '@shared/api/types.ts';
 import type { Axios, AxiosResponse } from 'axios';
+import { id } from 'date-fns/locale';
 
 export const registerPartner = (partnerInfo: PartnerRegistration) => {
 	const { $api } = useNuxtApp();
@@ -173,9 +174,45 @@ export const requestEventsList = (filters: CollectionFilters['events']): Promise
 export const requestEventsHost = (id: number | string): Promise<AxiosResponse<EventHost>> => {
 	const { $api } = useNuxtApp();
 	const params = {
-		populate: '*',
+		populate: {
+			cultureType: true,
+			eventHostAddress: {
+				populate: {
+					city: true,
+				},
+			},
+			videoBusinessCard: {
+				populate: '*',
+			},
+			socialMedias: {
+				populate: '*',
+			},
+			mainBanner: {
+				populate: '*',
+			},
+			compVideoFile: {
+				populate: '*',
+			},
+			mostPopularProduct: {
+				populate: '*',
+			},
+			productDescriptionFile: {
+				populate: '*',
+			},
+			galleryImages: {
+				populate: '*',
+			},
+			contacts: {
+				populate: '*',
+			},
+		},
 	};
 
 	return $api.get(`/api/partners/${id}`, { params });
 };
 
+export const editEventHost = (id: number | string, params: PartnerRegistration): Promise<AxiosResponse<EventHost>> => {
+	const { $api } = useNuxtApp();
+
+	return $api.put(`/api/partners/${id}`, params, { headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${localStorage.getItem('AuthToken')}` } } );
+};

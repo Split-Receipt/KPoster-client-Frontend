@@ -33,12 +33,16 @@
 					rules="required"
 				>
 					<cp-radio-button
-						v-model="partnerPersonalForm.data.eventHostAddress.city"
+						:active-id="partnerPersonalForm.data.eventHostAddress.city ?? ''"
 						:options="cityRadioButtons"
 						class="personal__form-rowTop-input-checks"
 						name="radio2"
 						return-value="id"
 						style="margin-left: -30px"
+						@update:model-value="
+							(value) =>
+								(partnerPersonalForm.data.eventHostAddress.city = value)
+						"
 					/>
 					<span v-if="errors" class="required-input-error-info-leftSide">{{
 						errors[0]
@@ -82,6 +86,7 @@
 						:max-size="5"
 					/>
 				</div>
+				<nuxt-img :src="partnerPersonalForm.files.mainBanner" />
 			</div>
 
 			<div class="personal__form-rowTop">
@@ -112,6 +117,7 @@
 								:default-option="videoFileValue"
 								switcher-name="compVideo"
 								:switcher-options="formVideoSwitcherOptions"
+								@update:model-value="(value) => toggleVideoFormat(value)"
 							/>
 						</div>
 					</span>
@@ -273,44 +279,47 @@
 					class="personal__form-submit-btnContainer"
 					width="maxWidth"
 					size="small"
+					disabled
 					shape="oval"
 					color="yellowGrey"
 					text="Publicar"
-					:disabled="formSending"
 					@click="sendPartnerPersonalForm"
 				/>
 			</div>
 		</v-form>
 
-		<div class="personal__gallery">
+		<div v-if="getMedias.photos.length" class="personal__gallery">
 			<h3>Tu contenido fotográfico</h3>
 			<span>Aquí puedes gestionar el contenido de tus fotos.</span>
 		</div>
 		<cp-media-carousel
+			v-if="getMedias.photos.length"
 			id="gallery_pictures"
 			:is-deletable="true"
-			:media-files-urls="testImages"
+			:media-files-urls="getMedias.photos.map((photo) => photo.file)"
 		/>
 
-		<div class="personal__gallery">
+		<div v-if="getMedias.videos.length" class="personal__gallery">
 			<h3>Tu contenido de vídeo</h3>
 			<span>Aquí puedes gestionar el contenido de tus vídeos </span>
 		</div>
 		<cp-media-carousel
+			v-if="getMedias.photos.length"
 			id="gallery_videos"
 			:is-deletable="true"
-			:media-files-urls="testImages"
+			:media-files-urls="getMedias.videos.map((video) => video.file)"
+			@delete="deleteMedia"
 		/>
 
-		<div class="personal__event-title">
-			<h3>Tu contenido de vídeo</h3>
-			<span>Aquí puedes gestionar el contenido de tus vídeos </span>
+		<div v-if="eventsList?.length" class="personal__event-title">
+			<h3>Eventos que creaste</h3>
+			<span>Ver y editar tus eventos </span>
 		</div>
 		<event-carousel
 			id="organizer-events-carousel"
 			:with-edit-controls="true"
 			class="personal__event-carousel"
-			:event-data="sectionData"
+			:event-data="eventsList"
 		/>
 	</div>
 </template>
@@ -319,6 +328,13 @@
 import { toast } from 'vue3-toastify';
 import CpButton from '@shared/gui/CpButton.vue';
 import CpDragNDrop from '@shared/gui/CpDragNDrop.vue';
+import {
+	requestAffiliations,
+	requestMyUser,
+	requestEventsList,
+	requestEventsHost,
+	editEventHost,
+} from '@shared/api';
 import { Form as VForm, Field as VField } from 'vee-validate';
 
 onMounted(() => {
@@ -326,84 +342,6 @@ onMounted(() => {
 });
 
 // test variables -------------------------------
-
-const sectionData: EventCard[] = [
-	{
-		id: 1,
-		attributes: {
-			linkToBuyTicket: 'https://example.com/ticket1',
-			eventDate: '2023-10-01T19:00:00Z',
-			eventName: 'Concert of the Year',
-			eventShortDescription: 'Join us for a night of amazing music.',
-			eventMediaPhotos: {
-				data: [
-					{
-						id: 1,
-						attributes: {
-							url: '',
-						},
-					},
-					{
-						id: 2,
-						attributes: {
-							url: 'event-card-2.png',
-						},
-					},
-				],
-			},
-		},
-	},
-	{
-		id: 2,
-		attributes: {
-			linkToBuyTicket: 'https://example.com/ticket2',
-			eventDate: '2023-11-05T20:00:00Z',
-			eventName: 'Art Showcase',
-			eventShortDescription: 'An exhibition of contemporary art.',
-			eventMediaPhotos: {
-				data: [
-					{
-						id: 3,
-						attributes: {
-							url: 'event-card-4.png',
-						},
-					},
-				],
-			},
-		},
-	},
-	{
-		id: 3,
-		attributes: {
-			linkToBuyTicket: 'https://example.com/ticket3',
-			eventDate: '2023-12-15T18:00:00Z',
-			eventName: 'Food Festival',
-			eventShortDescription: 'Taste the best dishes from local chefs.',
-			eventMediaPhotos: {
-				data: [
-					{
-						id: 4,
-						attributes: {
-							url: 'event-card-13.png',
-						},
-					},
-					{
-						id: 5,
-						attributes: {
-							url: 'event-card-14.png',
-						},
-					},
-					{
-						id: 6,
-						attributes: {
-							url: 'event-card-15.png',
-						},
-					},
-				],
-			},
-		},
-	},
-];
 
 const testImages = [
 	'https://images.pexels.com/lib/api/pexels.png',
@@ -431,8 +369,8 @@ watch(videoFileValue, () => {
 const isSpin = ref<boolean>(true);
 const formSending = ref<boolean>(false);
 const personalPartnerForm = ref<HTMLFormElement | null>(null);
-
-const partnerPersonalForm = reactive<PartnerRegistration>({
+const eventsList = ref<EventCard[] | null>(null);
+const partnerPersonalForm = reactive({
 	data: {
 		orgType: '',
 		commercialName: '',
@@ -440,9 +378,9 @@ const partnerPersonalForm = reactive<PartnerRegistration>({
 		ruc: '',
 		startDate: '',
 		user: null,
-		personCount: null,
-		middleAge: null,
-		womenPercentage: null,
+		personCount: '',
+		middleAge: '',
+		womenPercentage: '',
 		orgResume: '',
 		cultureType: [],
 		orgWorkType: '',
@@ -473,7 +411,6 @@ const partnerPersonalForm = reactive<PartnerRegistration>({
 		},
 	},
 	files: {
-		personalDocumentScan: null,
 		videoBusinessCard: null,
 		mainBanner: null,
 		compVideoFile: null,
@@ -484,20 +421,215 @@ const partnerPersonalForm = reactive<PartnerRegistration>({
 });
 
 const orgSphereChecks = ref([]);
-const userData = ref<CurrentUser>();
+const userData = ref();
 
 const affiliationChecks = ref([]);
 const cityRadioButtons = ref([]);
+const eventHost = ref<EventHost>();
+
+const getMedias = computed(() => {
+	const photoPaths = ['mainBanner', 'mostPopularProduct'];
+	const videoPaths = ['videoBusinessCard', 'compVideoFile'];
+
+	return {
+		photos: photoPaths.reduce((acc: { path: string; file: string }[], path) => {
+			if (partnerPersonalForm.files[path]) {
+				acc.push({
+					path: path,
+					file: partnerPersonalForm.files[path],
+				});
+			}
+
+			return acc;
+		}, []),
+		videos: videoPaths.reduce((acc: { path: string; file: string }[], path) => {
+			if (partnerPersonalForm.files[path]) {
+				acc.push({
+					path: path,
+					file: partnerPersonalForm.files[path],
+				});
+			}
+
+			return acc;
+		}, []),
+	};
+});
 
 onBeforeMount(async () => {
-	const storedUserData = localStorage.getItem('myUser');
-	if (storedUserData) {
-		userData.value = JSON.parse(storedUserData);
-	}
-	await getCities();
-	await getCategories();
-	await getAffiliations();
+	await requestPageData();
 });
+
+const toggleVideoFormat = () => {
+	if (videoFileValue.value === 'File') {
+		partnerPersonalForm.data.compVideoLink = '';
+	} else {
+		partnerPersonalForm.files.compVideoFile = null;
+	}
+};
+
+const requestPageData = async () => {
+	try {
+		const storedUserData = localStorage.getItem('myUser');
+		if (!storedUserData) {
+			return;
+		}
+		await getCurrentUser();
+		await getEventHostData();
+		await getCities();
+		await getCategories();
+		await getAffiliations();
+		getEventsList();
+		isSpin.value = true;
+	} catch (error) {
+		toast.error(
+			'Nuestro administrador se comunicará conusted por correo electrónico'
+		);
+	} finally {
+		isSpin.value = false;
+	}
+};
+
+const deleteMedia = async (
+	mediaUrl: string,
+	mediaType: 'videos' | 'photos'
+) => {
+	const deletionKey = getMedias.value[mediaType].find(
+		(media) => media.file === mediaUrl
+	);
+
+	if (!deletionKey) {
+		return;
+	}
+
+	partnerPersonalForm.files[deletionKey.path] = null;
+
+	try {
+		await editEventHost(userData.value.eventHostData.id, {
+			files: {
+				[deletionKey.path]: null,
+			},
+		});
+	} catch (error) {
+		toast.error('No se pudo eliminar el medio');
+	}
+};
+
+const getCurrentUser = async () => {
+	try {
+		const requestedUserData = await requestMyUser();
+		userData.value = requestedUserData.data;
+	} catch (error) {
+		toast.error('No se pudo obtener información del usuario');
+		navigateTo('/');
+	}
+};
+
+const getEventHostData = async () => {
+	try {
+		eventHost.value = (
+			await requestEventsHost(userData.value.eventHostData.id)
+		).data;
+
+		Object.assign(partnerPersonalForm, buildPartnerEditForm());
+	} catch (error) {
+		toast.error(
+			'Nuestro administrador se comunicará conusted por correo electrónico'
+		);
+	}
+};
+
+const getEventsList = async () => {
+	if (!userData.value?.eventHostData) {
+		return;
+	}
+	const filters: CollectionFilters['events'] = {
+		eventHost: {
+			commercialName: {
+				$eq: userData.value.eventHostData.commercialName,
+			},
+		},
+	};
+
+	try {
+		const events = await requestEventsList(filters);
+		eventsList.value = events.data.data;
+	} catch (error) {
+		toast.error('No se pudieron cargar eventos');
+	}
+};
+
+const buildPartnerEditForm = () => {
+	if (!eventHost.value) {
+		return partnerPersonalForm;
+	}
+
+	return {
+		data: {
+			orgType: eventHost.value.data.attributes.orgType || '',
+			commercialName: eventHost.value.data.attributes?.commercialName || '',
+			compName: eventHost.value.data.attributes?.compName || '',
+			ruc: eventHost.value.data.attributes?.ruc || '',
+			startDate: eventHost.value.data.attributes?.startDate || '',
+			personCount: eventHost.value.data.attributes?.personCount || null,
+			middleAge: eventHost.value.data.attributes?.middleAge || null,
+			womenPercentage: eventHost.value.data.attributes?.womenPercentage || null,
+			orgResume: eventHost.value.data.attributes?.orgResume || '',
+			cultureType:
+				eventHost.value.data.attributes?.cultureType?.data.map(
+					(item: any) => item.id
+				) || [],
+			orgWorkType: eventHost.value.data.attributes?.orgWorkType || '',
+			eventHostAddress: {
+				city:
+					eventHost.value.data.attributes?.eventHostAddress?.city.data.id ||
+					null,
+				address: '', // Default value as it's not in eventHost.value.data
+				coordinates: '-13.534793, -71.979812', // Static value
+			},
+			personalName: eventHost.value.data.attributes?.personalName || '',
+			personalIdentifyingDocument:
+				eventHost.value.data.attributes?.personalIdentifyingDocument || '',
+			productDescriptionLink:
+				eventHost.value.data.attributes?.productDescriptionLink || '',
+			productDescriptionText:
+				eventHost.value.data.attributes?.productDescriptionText || '',
+			webpage: eventHost.value.data.attributes?.webpage || '',
+			compVideoLink: eventHost.value.data.attributes?.compVideoLink || '',
+			affiliations:
+				eventHost.value.data.attributes?.affiliations?.data.map(
+					(item: any) => item.id
+				) || [],
+			socialMedias: [
+				'TikTok',
+				'Facebook',
+				'Instagram',
+				'YouTube',
+				'LinkedIn',
+			].map((name) => ({
+				socialMediaName: name,
+				socialMediaLink:
+					eventHost.value?.data.attributes.socialMedias?.find(
+						(media: any) => media.socialMediaName === name
+					)?.socialMediaLink || '',
+			})),
+			digitalCatalog: eventHost.value.data.attributes?.digitalCatalog || '',
+			contacts: {
+				place: eventHost.value.data.attributes?.contacts?.place || '',
+				tel: eventHost.value.data.attributes?.contacts?.tel || '',
+				mail: eventHost.value.data.attributes?.contacts?.mail || '',
+			},
+		},
+		files: {
+			personalDocumentScan: null,
+			videoBusinessCard: null,
+			mainBanner: null,
+			compVideoFile: null,
+			mostPopularProduct: null,
+			productDescriptionFile: null,
+			galleryImages: null,
+		},
+	};
+};
 
 const getCategories = async () => {
 	try {
@@ -557,11 +689,19 @@ const sendPartnerPersonalForm = async () => {
 	await personalPartnerForm.value?.validate();
 	isSpin.value = true;
 	formSending.value = true;
-	setTimeout(() => {
-		isSpin.value = false;
-		formSending.value = false;
-		toast.success('test submit');
-	}, 1500);
+
+	try {
+		await editEventHost(userData.value.eventHostData.id, {
+			data: partnerPersonalForm.data,
+		});
+	} catch (error) {
+		toast.error(
+			'Nuestro administrador se comunicará conusted por correo electrónico'
+		);
+	} finally {
+		isSpin.value = true;
+		formSending.value = true;
+	}
 };
 </script>
 
