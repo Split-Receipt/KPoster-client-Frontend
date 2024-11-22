@@ -1,7 +1,8 @@
 <template>
 	<div class="personal">
 		<cp-spinner :is-spinned="isSpin" />
-		<h2>Culture events of Peru</h2>
+		<h2>{{ partnerName }}</h2>
+
 		<v-form ref="personalPartnerForm" class="personal___form">
 			<div class="personal__form-rowTop">
 				<div class="personal__form-rowTop-info">
@@ -341,19 +342,13 @@ onMounted(() => {
 	isSpin.value = false;
 });
 
-// test variables -------------------------------
+const partnerName = computed(() => {
+	if (partnerPersonalForm.data.orgType === 'Person') {
+		return partnerPersonalForm.data.personalName;
+	}
 
-const testImages = [
-	'https://images.pexels.com/lib/api/pexels.png',
-	'https://images.pexels.com/lib/api/pexels.png',
-	'https://images.pexels.com/lib/api/pexels.png',
-	'https://images.pexels.com/lib/api/pexels.png',
-	'https://images.pexels.com/lib/api/pexels.png',
-	'https://images.pexels.com/lib/api/pexels.png',
-];
-
-// ----------------------------------------------
-
+	return partnerPersonalForm.data.commercialName;
+});
 const formVideoSwitcherOptions = [
 	{ optionName: 'Upload File', optionValue: 'File', optionKey: 'FileKey' },
 	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },

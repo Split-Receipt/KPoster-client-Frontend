@@ -166,6 +166,9 @@ export const requestEventsList = (filters: CollectionFilters['events']): Promise
 			},
 		},
 		filters: filters,
+		sort: {
+			createdAt: 'desc',
+		},
 	};
 
 	return $api.get('/api/events', { params });
