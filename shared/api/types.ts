@@ -57,14 +57,14 @@ export type EventCreateType = {
 		eventName: string;
 		eventDescription: string;
 		eventCategory: number[];
-		eventDate: string;
-		eventHost: string;
+		eventDate: Date | string;
+		eventHost: number;
 		eventDuration: string;
 		eventDigitalCatalog: string,
 		eventWebSite: string,
 		eventSocialMedias: { socialMediaName: string, socialMediaLink: string }[];
 		eventAddress: {
-			eventCoordinates: string;
+			coordinates: string;
 			city: number | null;
 			address: string;
 		}
@@ -72,11 +72,7 @@ export type EventCreateType = {
 		eventShortDescription: string;
 		eventRules: string;
 		eventAgeRestrictions: string;
-		eventContacts: {
-			place: string;
-			tel: string;
-			mail: string;
-		};
+		eventContacts: Contacts;
 	}
 	files: {
 		eventBanner: File | null;
@@ -129,21 +125,13 @@ export type EventData = {
 			eventBanner: {
 					data: StrapiMediaDefaultType
 			}
+			eventContacts: { id: number } & Contacts
 			eventMediaPhotos: {
 				data: StrapiMediaDefaultType[]
 			}
 			eventMediaVideos: {
 					data: StrapiMediaDefaultType[]
 			}
-		}
-		eventBanner: {
-			data: StrapiMediaDefaultType
-		}
-		eventMediaPhotos: {
-			data: StrapiMediaDefaultType[]
-		}
-		eventMediaVideos: {
-			data: StrapiMediaDefaultType[]
 		}
 	};
 
@@ -375,11 +363,7 @@ export type partnerPersonalFormDataType = {
 		instagram: string;
 		linkedin: string;
 	};
-	contacts: {
-		place: string;
-		tel: string;
-		email: string;
-	};
+	contacts: Contacts;
 	files: {
 		image: File | null;
 		video: File | null;
@@ -425,5 +409,11 @@ type CultureType = {
 			locale: string,
 			cultureTypeCode: string
 		}
+	};
+
+	type Contacts = {
+		place: string;
+		tel: string;
+		mail: string;
 	};
 

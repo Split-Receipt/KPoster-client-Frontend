@@ -49,7 +49,7 @@
 					text="Editar evento"
 					width="maxWidth"
 					size="middle"
-					@click.stop="buyTicketHandler"
+					@click.stop="navigateTo(`/event-edit/${eventCardData.id}`)"
 				/>
 
 				<cp-button

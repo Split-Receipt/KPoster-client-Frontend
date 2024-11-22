@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 type TextAreaProps = {
-	modelValue: string;
+	modelValue?: string;
 	textAreaId: string;
 	textAreaPlaceholder: string;
 };

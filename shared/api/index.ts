@@ -78,7 +78,7 @@ export const requestEventsColletionByCode = (collectionCode: string) => {
 	return $api.get(`api/events-collections/${collectionCode}`);
 };
 
-export const requestEventById = (id: string) => {
+export const requestEventById = (id: string): Promise<AxiosResponse<{ data: EventData }>> => {
 	const { $api } = useNuxtApp();
 	const params = {
 		populate: {
@@ -90,6 +90,14 @@ export const requestEventById = (id: string) => {
 			},
 		},
 		eventBanner: {
+			populate: '*',
+		},
+
+		eventContacts: {
+			populate: '*',
+		},
+
+		eventCategory: {
 			populate: '*',
 		},
 
@@ -218,4 +226,10 @@ export const editEventHost = (id: number | string, params: PartnerRegistration):
 	const { $api } = useNuxtApp();
 
 	return $api.put(`/api/partners/${id}`, params, { headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${localStorage.getItem('AuthToken')}` } } );
+};
+
+export const editEvent = (id: number | string, params: FormData): Promise<AxiosResponse<EventHost>> => {
+	const { $api } = useNuxtApp();
+
+	return $api.put(`/api/events/${id}`, params, { headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${localStorage.getItem('AuthToken')}` } } );
 };

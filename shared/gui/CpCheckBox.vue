@@ -26,11 +26,7 @@
 </template>
 
 <script setup lang="ts">
-type CheckOption = {
-	id: string;
-	value: string;
-	label?: string;
-};
+import type { CheckOption } from './types';
 
 type CheckEmits = {
 	(event: 'update:checkboxUpdate', eventData: string | CheckOption): void;
