@@ -133,7 +133,7 @@ export default defineI18nConfig(() => ({
 			sales: 'Ventas',
 			create_event: 'Crear evento',
 			news: 'Noticias',
-			charity: 'Caridad',
+			charity: 'Donación',
 			// drag n drop component features
 			clear: 'Clara',
 			drag_n_drop:

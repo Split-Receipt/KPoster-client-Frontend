@@ -10,7 +10,7 @@
 		</div>
 		<cp-button
 			class="footer__button"
-			text="Become a partner"
+			text="Estado de la organización"
 			size="large"
 			:islink="true"
 			link-to="/partners-registration"
