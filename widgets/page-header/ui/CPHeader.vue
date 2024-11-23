@@ -242,7 +242,7 @@ const isAllowedToCreateEvent = computed(() => {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		font-size: 40px;
+		font-size: 30px;
 		color: #fff;
 		z-index: 10;
 
