@@ -105,7 +105,7 @@
 								eventData?.attributes.eventBanner?.data.attributes.url
 							),
 						}"
-						@delete="(value) => deleteFile(value, 'eventBanner')"
+						@delete="(value: CpMediaCardProps['item']) => deleteFile(value, 'eventBanner')"
 					/>
 				</div>
 			</div>
@@ -431,6 +431,18 @@
 					/>
 				</div>
 			</div>
+			<cp-media-carousel
+				v-if="eventData?.attributes.eventMediaPhotos.data?.length > 0"
+				id="foto o sobre tu evento"
+				is-deletable
+				:media-files-objects="
+					eventData.attributes.eventMediaPhotos.data.map((media) => ({
+						id: media.id,
+						source: makeMediaUrl(media.attributes.url),
+					}))
+				"
+				@delete-photo="(value: CpMediaCardProps['item']) => deleteFile(value, 'eventMediaPhotos')"
+			/>
 
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
@@ -451,6 +463,19 @@
 					/>
 				</div>
 			</div>
+
+			<cp-media-carousel
+				v-if="eventData?.attributes.eventMediaVideos.data?.length > 0"
+				id="video o sobre tu evento"
+				is-deletable
+				:video-files-objects="
+					eventData.attributes.eventMediaVideos.data.map((media) => ({
+						id: media.id,
+						source: makeMediaUrl(media.attributes.url),
+					}))
+				"
+				@delete-video="(value: CpMediaCardProps['item']) => deleteFile(value, 'eventMediaVideos')"
+			/>
 
 			<!-- Event city -->
 			<div class="eventForm-upperPositionRow">
@@ -512,7 +537,7 @@
 				</div>
 			</div>
 
-			<!-- map\location  -->
+			<!-- maplocation  -->
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
 					<span>
@@ -630,6 +655,7 @@
 						text="Borrar"
 						width="maxWidth"
 						size="middle"
+						@click="resetForm"
 					/>
 				</span>
 			</div>
@@ -641,6 +667,7 @@
 import { Form as VForm, Field as VField } from 'vee-validate';
 import { toast } from 'vue3-toastify';
 import CpMediaCard from '@shared/gui/CpMediaCard.vue';
+import CpMediaCarousel from '@shared/gui/CpMediaCarousel.vue';
 import CpButton from '@shared/gui/CpButton.vue';
 import CpTextInput from '@shared/gui/CpTextInput.vue';
 import CpTextInput2 from '@shared/gui/CpTextInput2.vue';
@@ -927,11 +954,18 @@ const checkboxCollectCategories = (value: number | string, index: number) => {
 };
 
 const clearFileInputs = () => {
-	Object.keys(eventCreateForm.files).forEach(
-		(key) => {
-			eventCreateForm.files[key as keyof EventCreateType['files']] = null;
-		}
-	);
+	Object.keys(eventCreateForm.files).forEach((key) => {
+		eventCreateForm.files[key as keyof EventCreateType['files']] = null;
+	});
+};
+
+const resetForm = () => {
+	clearFileInputs();
+	if (eventData.value) {
+		mapEventDataToForm(eventData.value);
+	} else {
+		getEvent();
+	}
 };
 // Request data ---------------------------------
 
@@ -973,19 +1007,15 @@ const sendCreateEventForm = async () => {
 		}
 
 		if (eventCreateForm.files.eventMediaPhotos) {
-			eventCreateForm.files.eventMediaPhotos.forEach(
-				(file: File, index: number) => {
-					formData.append(`files.eventMediaPhotos[${index}]`, file);
-				}
-			);
+			eventCreateForm.files.eventMediaPhotos.forEach((file: File) => {
+				formData.append('files.eventMediaPhotos', file);
+			});
 		}
 
 		if (eventCreateForm.files.eventMediaVideos) {
-			eventCreateForm.files.eventMediaVideos.forEach(
-				(file: File, index: number) => {
-					formData.append(`files.eventMediaVideos[${index}]`, file);
-				}
-			);
+			eventCreateForm.files.eventMediaVideos.forEach((file: File) => {
+				formData.append('files.eventMediaVideos', file);
+			});
 		}
 
 		disableSubmit.value = true;
@@ -1029,19 +1059,22 @@ const prepareEventCreationData = () => {
 
 const deleteFile = async (
 	item: CpMediaCardProps['item'],
-	mediaFieldPath: keyof EventCreateType['files'],
-	index?: number
+	mediaFieldPath: keyof EventCreateType['files']
 ) => {
 	const eventFile = eventData.value?.attributes[mediaFieldPath].data;
 	let fileId = null;
 	if (eventFile) {
-		if (Array.isArray(eventFile) && index) {
-			fileId = eventFile[index].id;
+		if (Array.isArray(eventFile)) {
+			const fileInArray = eventFile.find((file) => file.id === item.id);
+			if (fileInArray) {
+				fileId = fileInArray.id;
+			}
 		} else if ('id' in eventFile) {
 			fileId = eventFile.id;
 		}
 	}
-	if (!fileId) {
+
+	if (fileId === undefined || fileId === null) {
 		return;
 	}
 	try {

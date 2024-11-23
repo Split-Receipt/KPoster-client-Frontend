@@ -68,18 +68,32 @@
 					},
 				}"
 			>
+
 				<swiper-slide v-for="(source, index) in videoFilesUrls" :key="index">
 					<cp-media-card
 						type="video"
-						:edit-mode="isDeletable"
 						:item="{ id: index, source }"
 						@delete="(value: CpMediaCardProps['item']) => emit('deleteVideo', value)"
 					/>
 				</swiper-slide>
 				<swiper-slide v-for="(source, index) in mediaFilesUrls" :key="index">
 					<cp-media-card
-						:edit-mode="isDeletable"
 						:item="{ id: index, source }"
+						@delete="(value: CpMediaCardProps['item']) => emit('deletePhoto', value)"
+					/>
+				</swiper-slide>
+				<swiper-slide v-for="item in videoFilesObjects" :key="item.id">
+					<cp-media-card
+						type="video"
+						:item="item"
+						:edit-mode="isDeletable"
+						@delete="(value: CpMediaCardProps['item']) => emit('deleteVideo', value)"
+					/>
+				</swiper-slide>
+				<swiper-slide v-for="item in mediaFilesObjects" :key="item.id">
+					<cp-media-card
+						:edit-mode="isDeletable"
+						:item="item"
 						@delete="(value: CpMediaCardProps['item']) => emit('deletePhoto', value)"
 					/>
 				</swiper-slide>
@@ -94,6 +108,8 @@ import type { CpMediaCardProps } from './types';
 type Props = {
 	mediaFilesUrls?: string[];
 	videoFilesUrls?: string[];
+	mediaFilesObjects?: string[];
+	videoFilesObjects?: string[];
 	id: string | number;
 	isDeletable?: boolean;
 };
