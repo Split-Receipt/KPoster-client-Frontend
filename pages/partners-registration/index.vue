@@ -1200,6 +1200,7 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		personalIdentifyingDocument: '',
 		productDescriptionLink: '',
 		productDescriptionText: '',
+		webpage: '',
 		compVideoLink: '',
 		affiliations: [],
 		socialMedias: [
@@ -1308,8 +1309,8 @@ const sendPartnerRegistrationForm = async () => {
 			partnerRegistrationForm.data.user = newUserId;
 		} else if (localStorage.getItem('myUser')) {
 			partnerRegistrationForm.data.user = JSON.parse(
-				localStorage.getItem('myUser')
-			).id;
+				localStorage.getItem('myUser') ?? 'null'
+			)?.id;
 		}
 		await createPartner();
 		toast.success('El registro fue exitoso');

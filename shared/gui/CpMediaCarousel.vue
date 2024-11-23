@@ -64,23 +64,33 @@
 					},
 				}"
 			>
-				<swiper-slide
-					v-for="(source, index) in videoFilesUrls"
-					:key="index"
-				>
-					<video 
-						class="event-carousel-video"
-						:src="source"
-						controls
-						:alt="'media' + index" 
+
+				<swiper-slide v-for="(source, index) in videoFilesUrls" :key="index">
+					<cp-media-card
+						type="video"
+						:item="{ id: index, source }"
+						@delete="(value: CpMediaCardProps['item']) => emit('deleteVideo', value)"
 					/>
 				</swiper-slide>
 				<swiper-slide v-for="(source, index) in mediaFilesUrls" :key="index">
-					<nuxt-img
-						class="event-carousel-image"
-						style="width: 100%; height: 100%; object-fit: cover;"
-						:src="source" 
-						:alt="'media' + index" 
+					<cp-media-card
+						:item="{ id: index, source }"
+						@delete="(value: CpMediaCardProps['item']) => emit('deletePhoto', value)"
+					/>
+				</swiper-slide>
+				<swiper-slide v-for="item in videoFilesObjects" :key="item.id">
+					<cp-media-card
+						type="video"
+						:item="item"
+						:edit-mode="isDeletable"
+						@delete="(value: CpMediaCardProps['item']) => emit('deleteVideo', value)"
+					/>
+				</swiper-slide>
+				<swiper-slide v-for="item in mediaFilesObjects" :key="item.id">
+					<cp-media-card
+						:edit-mode="isDeletable"
+						:item="item"
+						@delete="(value: CpMediaCardProps['item']) => emit('deletePhoto', value)"
 					/>
 				</swiper-slide>
 			</swiper>
@@ -89,13 +99,26 @@
 </template>
 
 <script setup lang="ts">
+import CpMediaCard from './CpMediaCard.vue';
+import type { CpMediaCardProps } from './types';
 type Props = {
-	mediaFilesUrls: string[];
+	mediaFilesUrls?: string[];
 	videoFilesUrls?: string[];
+	mediaFilesObjects?: string[];
+	videoFilesObjects?: string[];
 	id: string | number;
+	isDeletable?: boolean;
+};
+type Emits = {
+	(
+		e: 'deletePhoto' | 'deleteVideo',
+		objectToDelete: CpMediaCardProps['item']
+	): void;
 };
 
 defineProps<Props>();
+
+const emit = defineEmits<Emits>();
 </script>
 
 <style scoped lang="scss">

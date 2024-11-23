@@ -126,7 +126,7 @@ const changeFilters = (data: any, filterPath: string) => {
 		}
 
 		case 'eventHost': {
-			filters.events.eventHost = { eventHostCode: { $in: data } };
+			filters.events.eventHost = { commercialName: { $in: data } };
 			requestPageData();
 			break;
 		}

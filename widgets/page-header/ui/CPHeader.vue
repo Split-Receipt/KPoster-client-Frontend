@@ -23,7 +23,7 @@
 		<div class="header__controls">
 			<nuxt-link to="/">
 				<nuxt-img
-					src="/images/logo-full.svg"
+					src="/images/logo.svg"
 					class="icon icon-logo header__icon-logo"
 				/>
 			</nuxt-link>
@@ -168,11 +168,7 @@ onUnmounted(() => {
 
 const handleLoginButton = () => {
 	if (isAuthenticated.value) {
-		localStorage.removeItem('myUser');
-		localStorage.removeItem('AuthToken');
-		isAuthenticated.value = false;
-		userRole.value = '';
-		navigateTo('/');
+		navigateTo('/partner-personal-page');
 	} else {
 		handleModalOpen();
 	}
@@ -268,6 +264,7 @@ const isAllowedToCreateEvent = computed(() => {
 	}
 
 	&__icon-logo {
+		width: 60px;
 		@media #{$screen-tablet} {
 			background-color: transparent;
 			width: $header-icon-logo-width-screen-tablet;

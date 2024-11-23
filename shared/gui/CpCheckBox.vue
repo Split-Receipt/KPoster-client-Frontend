@@ -5,6 +5,7 @@
 				:id="props.option.value + props.option.id"
 				:value="props.option.value"
 				type="checkbox"
+				:checked="props.checked"
 				@change="checkBoxAction"
 			/>
 			<label :for="props.option.value + props.option.id" style="--size: 22px">
@@ -25,23 +26,21 @@
 </template>
 
 <script setup lang="ts">
-type CheckOption = {
-	id: string;
-	value: string;
-	label?: string;
-};
+import type { CheckOption } from './types';
 
 type CheckEmits = {
 	(event: 'update:checkboxUpdate', eventData: string | CheckOption): void;
 };
 type Props = {
 	option: CheckOption;
+	checked?: boolean;
 	returnValue?: keyof CheckOption;
 	returnObject?: boolean;
 };
 const props = withDefaults(defineProps<Props>(), {
 	returnValue: 'value',
 	returnObject: false,
+	checked: false,
 });
 const emit = defineEmits<CheckEmits>();
 

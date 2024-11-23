@@ -10,6 +10,7 @@
 				:name="props.name"
 				:value="option.value"
 				type="radio"
+				:checked="option.id === props.activeId"
 				@change="handleRadioCheck"
 			/>
 			<label :for="option.value" style="--size: 22px">
@@ -32,6 +33,7 @@ type RadioVar = {
 };
 
 type RadioProps = {
+	activeId?: string;
 	options: RadioVar[];
 	name: string;
 	returnObject?: boolean;
@@ -44,6 +46,7 @@ type Events = {
 const props = withDefaults(defineProps<RadioProps>(), {
 	returnObject: false,
 	returnValue: 'value',
+	activeId: '',
 });
 const emit = defineEmits<Events>();
 

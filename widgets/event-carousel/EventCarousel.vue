@@ -68,6 +68,7 @@
 			>
 				<swiper-slide v-for="(card, index) in eventData" :key="index">
 					<event-card
+						:with-edit-controls="props.withEditControls"
 						:event-card-data="card"
 						@click="toEventDetailPage(card.id)"
 					/>
@@ -82,9 +83,11 @@ import type { EventCard } from '@widgets/event-card/types/types';
 type Props = {
 	eventData: Array<EventCard>;
 	id: string | number;
+	withEditControls?: boolean;
 };
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
+	withEditControls: false,
 	eventData: (): Props['eventData'] => [
 		{
 			id: 1,

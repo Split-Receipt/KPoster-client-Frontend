@@ -40,8 +40,8 @@ const formatedEventsHostData = computed(() => {
 	return options.map((option: any) => {
 		return {
 			item_title: option.attributes.commercialName,
-			item_UID: option.attributes.eventHostCode,
-			item_value: option.attributes.eventHostCode,
+			item_UID: option.attributes.commercialName,
+			item_value: option.attributes.commercialName,
 			createdAt: option.attributes.createdAt,
 			updatedAt: option.attributes.updatedAt,
 			locale: option.attributes.locale,

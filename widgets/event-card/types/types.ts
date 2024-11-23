@@ -7,8 +7,12 @@ export type EventCard = {
 			| 'eventDate'
 			| 'eventName'
 			| 'eventShortDescription'
-			| 'eventBanner'
 		> & {
+			eventBanner: {
+				data: Pick<StrapiMediaDefaultType, 'id'> & {
+					attributes: Pick<StrapiMediaDefaultType['attributes'], 'url'>
+				}
+			}
 			eventMediaPhotos: {
 				data: Array<Pick<StrapiMediaDefaultType, 'id'> & {
 					attributes: Pick<StrapiMediaDefaultType['attributes'], 'url'>

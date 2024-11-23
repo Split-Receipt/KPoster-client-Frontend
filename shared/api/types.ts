@@ -2,7 +2,7 @@ export type PartnerRegistration = {
 	data: {
 		orgType: string;
 		webpage: string;
-		eventHostAddress: Address;
+		eventHostAddress: Address<number>;
 		commercialName: string;
 		compName: string;
 		ruc: string;
@@ -53,29 +53,29 @@ export type RequestOption = {
 };
 
 export type EventCreateType = {
-	data:{
-	eventName: string;
-	eventDescription: string;
-	eventCategory: number[];
-	eventDate: string | Date;
-	eventHost: string;
-	eventDuration: string;
-	eventDigitalCatalog: string,
-	eventWebSite: string,
-	eventSocialMedias: { socialMediaName: string, socialMediaLink: string }[];
-	eventAddress: Address;
-	linkToBuyTicket: string;
-	eventShortDescription: string;
-	eventRules: string;
-	eventAgeRestrictions: string;
-	eventContacts: {
-		place: string;
-		tel: string;
-		mail: string;
-	};
-}
+	data: {
+		eventName: string;
+		eventDescription: string;
+		eventCategory: number[];
+		eventDate: Date | string;
+		eventHost: number | string;
+		eventDuration: string;
+		eventDigitalCatalog: string,
+		eventWebSite: string,
+		eventSocialMedias: { socialMediaName: string, socialMediaLink: string }[];
+		eventAddress: {
+			coordinates: string;
+			city: number | null;
+			address: string;
+		}
+		linkToBuyTicket: string;
+		eventShortDescription: string;
+		eventRules: string;
+		eventAgeRestrictions: string;
+		eventContacts: Contacts;
+	}
 	files: {
-		eventBanner: File | null;
+		eventBanner: File | null | File[];
 		eventMediaPhotos: File[] | null;
 		eventMediaVideos: File[] | null;
 	}
@@ -125,68 +125,69 @@ export type EventData = {
 			eventBanner: {
 					data: StrapiMediaDefaultType
 			}
+			eventContacts: { id: number } & Contacts
 			eventMediaPhotos: {
 				data: StrapiMediaDefaultType[]
 			}
 			eventMediaVideos: {
 					data: StrapiMediaDefaultType[]
 			}
-	}
-};
+		}
+	};
 
 export type City = {
 	id: number,
 	attributes: {
-			cityName: string,
-			cityCode: string,
-			createdAt: string,
-			updatedAt: string,
-			publishedAt: string,
-			locale: string,
+		cityName: string,
+		cityCode: string,
+		createdAt: string,
+		updatedAt: string,
+		publishedAt: string,
+		locale: string,
 	}
 };
 
 export type EventColletion = {
 	id: 1,
 	attributes: {
-			collectionName: string,
-			createdAt: string,
-			updatedAt: string,
-			publishedAt: string,
-			collectionCode: string,
-			collectionDescription: string,
-			events: {
-				data: EventData[]
-			}
+		collectionName: string,
+		createdAt: string,
+		updatedAt: string,
+		publishedAt: string,
+		collectionCode: string,
+		collectionDescription: string,
+		events: {
+			data: EventData[]
+		}
 	}
 };
 
-export type StrapiMediaDefaultType =	{
-				id: number,
-				attributes: {
-						name: string,
-						alternativeText: string | null,
-						caption: string | null,
-						width: number,
-						height: number,
-						formats: {
-								large: StrapiMediaFormat,
-								small: StrapiMediaFormat,
-								medium: StrapiMediaFormat,
-								thumbnail: StrapiMediaFormat,
-						},
-						hash: string,
-						ext: string,
-						mime: string,
-						size: number,
-						url: string,
-						previewUrl: string | null,
-						provider: string,
-						provider_metadata: string | null,
-						createdAt: string,
-						updatedAt: string,
-						related: any[]
-					}
+export type StrapiMediaDefaultType = {
+	id: number,
+	attributes: {
+		name: string,
+		alternativeText: string | null,
+		caption: string | null,
+		width: number,
+		height: number,
+		formats: {
+			large: StrapiMediaFormat,
+			small: StrapiMediaFormat,
+			medium: StrapiMediaFormat,
+			thumbnail: StrapiMediaFormat,
+		},
+		hash: string,
+		ext: string,
+		mime: string,
+		size: number,
+		url: string,
+		previewUrl: string | null,
+		provider: string,
+		provider_metadata: string | null,
+		createdAt: string,
+		updatedAt: string,
+		related: any[]
+	}
 };
 
 type StrapiMediaFormat = {
@@ -207,7 +208,7 @@ export type CollectionFilters = {
 		$eq: typeof CollectionTypes[keyof typeof CollectionTypes]
 	};
 	events: {
-		eventDate: {
+		eventDate?: {
 			$eq?: Date;
 			$gte?: Date;
 			$lte?: Date;
@@ -225,6 +226,7 @@ export type CollectionFilters = {
 			},
 			commercialName?: {
 				$eq?: string;
+				$in?: string[]
 			}
 		};
 		eventCategory?: {
@@ -236,8 +238,8 @@ export type CollectionFilters = {
 };
 
 export type SocialMedia = {
-		socialMediaName: string;
-		socialMediaLink: string;
+	socialMediaName: string;
+	socialMediaLink: string;
 };
 
 export enum CollectionTypes {
@@ -272,11 +274,11 @@ export type EventHost = {
 				data: StrapiMediaDefaultType[]
 			}
 			contacts: {
-						id: number
-						place: string
-						tel: string
-						mail: string
-					}
+				id: number
+				place: string
+				tel: string
+				mail: string
+			}
 			productDescriptionText: string
 			productDescriptionLink: string
 			compVideoLink: string
@@ -285,6 +287,9 @@ export type EventHost = {
 			middleAge: number
 			womenPercentage: number
 			orgWorkType: string
+			cultureType: {
+				data: CultureType[]
+			}
 			socialMedias?: SocialMedia[]
 			personalName: string
 			personalIdentifyingDocument: string
@@ -306,7 +311,7 @@ export type EventHost = {
 					}
 				}[]
 			}
-		eventHostAddress: Address;
+		eventHostAddress: Address<{ data: City }>;
 		events: {
 			data: EventData[]
 		}
@@ -346,6 +351,29 @@ export type userAuthentificatedData = {
 	}
 };
 
+export type partnerPersonalFormDataType = {
+	cultureType: number[];
+	resume: string;
+	videoLink: string;
+	selfInfo: string;
+	socials: {
+		telegram: string;
+		facebook: string;
+		youtube: string;
+		twitter: string;
+		instagram: string;
+		linkedin: string;
+	};
+	contacts: Contacts;
+	files: {
+		image: File | null;
+		video: File | null;
+		mediaContent: {
+			picture: File | null;
+			video: File | null;
+		}
+	};
+};
 export type CurrentUser =	{
 		id: 64,
 		username: string,
@@ -363,12 +391,30 @@ export type CurrentUser =	{
 			createdAt: Date,
 			updatedAt: Date,
 		},
-		eventHostData: null
+		eventHostData: EventHost['data']['attributes'],
 	};
 
-	type Address = {
+	type Address<T> = {
 			coordinates: string;
-			city: number | null;
+			city: T;
 			address: string;
 		};
+
+type CultureType = {
+		id: 2,
+		attributes: {
+			cultureTypeName: string,
+			createdAt: string,
+			updatedAt: string,
+			publishedAt: string,
+			locale: string,
+			cultureTypeCode: string
+		}
+	};
+
+	type Contacts = {
+		place: string;
+		tel: string;
+		mail: string;
+	};
 

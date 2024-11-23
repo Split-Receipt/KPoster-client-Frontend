@@ -60,8 +60,8 @@ defineRule('minLength', (value: string, [limit]: [number]) => {
 		return true;
 	});
 
-	defineRule('require_checkbox', (value: string[]) => {
-		if (value.length < 1) {
+	defineRule('require_checkbox', (value: string[] | number[]) => {
+		if (value?.length < 1) {
 			return 'require to choose at least one point';
 		}
 

@@ -189,6 +189,7 @@ const dataToFilter = (event: Event) => {
 }
 
 .popup-window {
+	overflow: scroll;
 	transform: scale(var(--nav-default-scale));
 	visibility: hidden;
 	opacity: 0;

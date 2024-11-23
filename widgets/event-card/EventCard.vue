@@ -11,7 +11,7 @@
 			</div>
 			<div class="event-card__content">
 				<h4 class="event-card__title">
-					{{ formattedTitle}}
+					{{ formattedTitle }}
 				</h4>
 				<div class="event-card__text">
 					{{ eventCardData.attributes.eventShortDescription }}
@@ -22,7 +22,22 @@
 
 				<div class="event-card__controls">
 					<cp-button
-						v-if="eventCardData.attributes.linkToBuyTicket"
+						v-if="withEditControls"
+						class="event-card__button"
+						:class="`event-card__button--${size}`"
+						text="Editar evento"
+						@click.stop="navigateTo(`/event-edit/${eventCardData.id}`)"
+					/>
+
+					<cp-button
+						v-if="withEditControls"
+						class="event-card__button"
+						type="secondary"
+						text="Borrar"
+					/>
+
+					<cp-button
+						v-if="eventCardData.attributes.linkToBuyTicket && !withEditControls"
 						class="event-card__button"
 						:class="`event-card__button--${size}`"
 						:text="$t('Buy ticket')"
@@ -30,6 +45,7 @@
 					/>
 
 					<cp-button
+						v-if="!withEditControls"
 						class="event-card__button"
 						type="secondary"
 						:class="`event-card__button--${size}`"
@@ -49,10 +65,19 @@ import CpButton from '@shared/gui/CpButton.vue';
 
 const props = withDefaults(defineProps<Props>(), {
 	size: 'small',
+	withEditControls: false,
 	eventCardData: (): Props['eventCardData'] => ({
 		id: 1,
 		attributes: {
 			linkToBuyTicket: '#',
+			eventBanner: {
+				data: {
+					id: 1,
+					attributes: {
+						url: 'event-card-1.png',
+					},
+				},
+			},
 			eventMediaPhotos: {
 				data: [
 					{
@@ -70,10 +95,12 @@ const props = withDefaults(defineProps<Props>(), {
 		},
 	}),
 });
+
 const config = useRuntimeConfig();
 type Props = {
 	size?: string;
 	eventCardData: EventCard;
+	withEditControls?: boolean;
 };
 
 const photoUrl = computed(() => {
@@ -104,7 +131,9 @@ const formattedDate = computed(() => {
 });
 
 const formattedTitle = computed(() => {
-	return props.eventCardData.attributes.eventName.length > 19 ? props.eventCardData.attributes.eventName.slice(0, 15) + '...' : props.eventCardData.attributes.eventName;
+	return props.eventCardData.attributes.eventName.length > 19
+		? props.eventCardData.attributes.eventName.slice(0, 15) + '...'
+		: props.eventCardData.attributes.eventName;
 });
 </script>
 
