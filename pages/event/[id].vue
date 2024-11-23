@@ -381,7 +381,7 @@ const eventCategoriesNames = computed(() => {
 			line-height: normal;
 
 			@media screen and (max-width: 1280px) {
-				font-size: 72px;
+				font-size: 42px;
 			}
 		}
 	}

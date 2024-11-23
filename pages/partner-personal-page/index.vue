@@ -343,11 +343,13 @@ onMounted(() => {
 });
 
 const partnerName = computed(() => {
-	if (partnerPersonalForm.data.orgType === 'Person') {
+	if (partnerPersonalForm.data.orgType === 'Persona_Natural') {
 		return partnerPersonalForm.data.personalName;
+	} else if (partnerPersonalForm.data.commercialName) {
+		return partnerPersonalForm.data.commercialName;
+	} else {
+		return partnerPersonalForm.data.compName;
 	}
-
-	return partnerPersonalForm.data.commercialName;
 });
 const formVideoSwitcherOptions = [
 	{ optionName: 'Upload File', optionValue: 'File', optionKey: 'FileKey' },
