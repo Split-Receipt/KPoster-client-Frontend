@@ -58,7 +58,7 @@ export type EventCreateType = {
 		eventDescription: string;
 		eventCategory: number[];
 		eventDate: Date | string;
-		eventHost: number;
+		eventHost: number | string;
 		eventDuration: string;
 		eventDigitalCatalog: string,
 		eventWebSite: string,
@@ -75,7 +75,7 @@ export type EventCreateType = {
 		eventContacts: Contacts;
 	}
 	files: {
-		eventBanner: File | null;
+		eventBanner: File | null | File[];
 		eventMediaPhotos: File[] | null;
 		eventMediaVideos: File[] | null;
 	}

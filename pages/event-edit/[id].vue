@@ -95,6 +95,18 @@
 							{{ errors[0] }}</span
 						>
 					</v-field>
+
+					<cp-media-card
+						v-if="eventData?.attributes.eventBanner?.data"
+						:edit-mode="true"
+						:item="{
+							id: eventData?.attributes.eventBanner?.data.id,
+							source: makeMediaUrl(
+								eventData?.attributes.eventBanner?.data.attributes.url
+							),
+						}"
+						@delete="(value) => deleteFile(value, 'eventBanner')"
+					/>
 				</div>
 			</div>
 
@@ -628,6 +640,7 @@
 <script setup lang="ts">
 import { Form as VForm, Field as VField } from 'vee-validate';
 import { toast } from 'vue3-toastify';
+import CpMediaCard from '@shared/gui/CpMediaCard.vue';
 import CpButton from '@shared/gui/CpButton.vue';
 import CpTextInput from '@shared/gui/CpTextInput.vue';
 import CpTextInput2 from '@shared/gui/CpTextInput2.vue';
@@ -643,15 +656,16 @@ import type {
 	EventData,
 } from '@shared/api/types';
 import { fromZonedTime, toDate } from 'date-fns-tz';
-import type { CheckOption } from '@shared/gui/types';
+import type { CheckOption, CpMediaCardProps } from '@shared/gui/types';
 import {
 	requestEventCategories,
 	editEvent,
 	requestCities,
 	requestEventById,
+	deleteMedia,
 } from '@shared/api';
-
-const { $objToFormData } = useNuxtApp();
+import { useRuntimeConfig } from 'nuxt/app';
+const config = useRuntimeConfig();
 const myUser = ref({});
 
 // Form Data ------------------------------------
@@ -785,9 +799,10 @@ const mapEventDataToForm = (source: EventData) => {
 		eventDate.date = eventDateTime.toISOString().split('T')[0];
 		eventDate.time = eventDateTime.toTimeString().split(' ')[0].slice(0, 5);
 	}
+};
 
-	// Map files (assuming you have URLs or file data)
-	// Since files can't be set directly, you might need to handle them differently
+const makeMediaUrl = (path: string) => {
+	return config.public.apiBaseUrl + path;
 };
 
 // New function to prepare data before sending to backend
@@ -911,6 +926,13 @@ const checkboxCollectCategories = (value: number | string, index: number) => {
 	}
 };
 
+const clearFileInputs = () => {
+	Object.keys(eventCreateForm.files).forEach(
+		(key) => {
+			eventCreateForm.files[key as keyof EventCreateType['files']] = null;
+		}
+	);
+};
 // Request data ---------------------------------
 
 const sendCreateEventForm = async () => {
@@ -940,8 +962,14 @@ const sendCreateEventForm = async () => {
 		formData.append('data', JSON.stringify(dataToSend.data));
 
 		// Append files if they have been changed
-		if (eventCreateForm.files.eventBanner instanceof File) {
-			formData.append('files.eventBanner', eventCreateForm.files.eventBanner);
+
+		if (
+			eventCreateForm.files.eventBanner &&
+			Array.isArray(eventCreateForm.files.eventBanner)
+		) {
+			eventCreateForm.files.eventBanner.forEach((file: File) => {
+				formData.append('files.eventBanner', file);
+			});
 		}
 
 		if (eventCreateForm.files.eventMediaPhotos) {
@@ -969,6 +997,7 @@ const sendCreateEventForm = async () => {
 		await editEvent(eventId, formData);
 
 		await getEvent();
+		clearFileInputs();
 
 		isSpin.value = false;
 		toast.success('Evento actualizado exitosamente');
@@ -996,6 +1025,30 @@ const prepareEventCreationData = () => {
 		eventCreateForm.data.eventSocialMedias.filter(
 			(socialMedia) => socialMedia.socialMediaLink !== ''
 		);
+};
+
+const deleteFile = async (
+	item: CpMediaCardProps['item'],
+	mediaFieldPath: keyof EventCreateType['files'],
+	index?: number
+) => {
+	const eventFile = eventData.value?.attributes[mediaFieldPath].data;
+	let fileId = null;
+	if (eventFile) {
+		if (Array.isArray(eventFile) && index) {
+			fileId = eventFile[index].id;
+		} else if ('id' in eventFile) {
+			fileId = eventFile.id;
+		}
+	}
+	if (!fileId) {
+		return;
+	}
+	try {
+		await deleteMedia(fileId);
+	} catch (error) {
+		toast.error('No se pudo eliminar el medio');
+	}
 };
 </script>
 

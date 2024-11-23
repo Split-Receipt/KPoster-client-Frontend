@@ -5,6 +5,7 @@ export type CheckOption = {
 };
 
 export type CpMediaCardProps = {
+	isMediaDeleted?: boolean | null;
 	editMode?: boolean;
 	type?: 'image' | 'video';
 	item: {

@@ -233,3 +233,9 @@ export const editEvent = (id: number | string, params: FormData): Promise<AxiosR
 
 	return $api.put(`/api/events/${id}`, params, { headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${localStorage.getItem('AuthToken')}` } } );
 };
+
+export const deleteMedia = (id: number | string): Promise<AxiosResponse<any>> => {
+	const { $api } = useNuxtApp();
+
+	return $api.delete(`/api/upload/files/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('AuthToken')}` } } );
+};

@@ -110,24 +110,6 @@ const emit = defineEmits<Emits>();
 </script>
 
 <style scoped lang="scss">
-.deleteButton {
-	position: absolute;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border: none;
-	font-size: 14px;
-	right: 5px;
-	top: 5px;
-	width: 40px;
-	height: 40px;
-	background-color: $sunrise-red;
-	border-radius: 50%;
-	color: #fff;
-	text-align: center;
-	cursor: pointer;
-}
-
 .event-carousel {
 	&__controls {
 		position: relative;
