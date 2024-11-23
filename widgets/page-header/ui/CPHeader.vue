@@ -17,7 +17,7 @@
 				class="header__img-pic"
 				src="/images/header-background_small.png"
 			/>
-			<h2>{{ $t('main_title') }}</h2>
+			<h2 class="header__mainTitle">{{ $t('main_title') }}</h2>
 		</div>
 
 		<!-- Блок с контролами заголовка -->
@@ -231,6 +231,18 @@ const isAllowedToCreateEvent = computed(() => {
 			height: $header-pic-height;
 			object-fit: cover;
 		}
+	}
+
+	&__mainTitle {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		font-size: 60px;
+		color: #fff;
+		z-index: 10;
 	}
 
 	&__controls {
