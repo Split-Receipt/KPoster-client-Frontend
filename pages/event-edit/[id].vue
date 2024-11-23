@@ -713,7 +713,7 @@ const eventCreateForm = reactive<EventCreateType>({
 		],
 		eventDuration: '',
 		eventAddress: {
-			coordinates: '-12.046016, -77.030554',
+			coordinates: '-13.527141525687806, -71.96803909279043',
 			city: null,
 			address: '',
 		},

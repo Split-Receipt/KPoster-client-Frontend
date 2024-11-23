@@ -41,7 +41,7 @@ export const EventDefaultValue: EventData = {
     eventAddress: {
       id: 12,
       address: 'Event Address',
-      coordinates: '-12.046016, -77.030554',
+      coordinates: '-13.527141525687806, -71.96803909279043',
       city: {
         data: {
           id: 6,

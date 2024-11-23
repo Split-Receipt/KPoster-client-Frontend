@@ -1194,7 +1194,7 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		eventHostAddress: {
 			city: null,
 			address: '',
-			coordinates: '-13.534793, -71.979812',
+			coordinates: '-13.527141525687806, -71.96803909279043',
 		},
 		personalName: '',
 		personalIdentifyingDocument: '',

@@ -309,7 +309,6 @@
 			<div class="eventForm-row">
 				<div class="eventForm-row-info">
 					<span>
-						<strong class="eventForm-row-info-required">*</strong>
 						Enlace para comprar entradas
 					</span>
 				</div>
@@ -318,7 +317,6 @@
 						v-slot="{ errors }"
 						:model-value="eventCreateForm.data.linkToBuyTicket"
 						name="tickets"
-						rules="required"
 					>
 						<cp-text-input
 							v-model="eventCreateForm.data.linkToBuyTicket"
@@ -658,7 +656,7 @@ const eventCreateForm = reactive<EventCreateType>({
 		],
 		eventDuration: '',
 		eventAddress: {
-			coordinates: '-12.046016, -77.030554',
+			coordinates: '-13.527141525687806, -71.96803909279043',
 			city: null,
 			address: '',
 		},
