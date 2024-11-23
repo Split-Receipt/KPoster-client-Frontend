@@ -17,6 +17,7 @@
 				class="header__img-pic"
 				src="/images/header-background_small.png"
 			/>
+			<h2>{{ $t('main_title') }}</h2>
 		</div>
 
 		<!-- Блок с контролами заголовка -->

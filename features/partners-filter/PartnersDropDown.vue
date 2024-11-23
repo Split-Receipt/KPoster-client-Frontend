@@ -2,7 +2,7 @@
 	<cp-drop-down
 		v-model="pickedEventHost"
 		:options="formatedEventsHostData"
-		drop-down-label="Filter by event organizer"
+		:drop-down-label="$t('event_host_filter_placeholder')"
 		:value="pickedEventHost"
 		@update:model-value="emitFilterChange"
 	/>

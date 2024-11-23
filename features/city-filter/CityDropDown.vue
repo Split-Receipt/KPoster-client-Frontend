@@ -2,7 +2,7 @@
 	<cp-drop-down
 		v-model="pickedCities"
 		:options="formatedCitiesData"
-		drop-down-label="Filter by cities"
+		:drop-down-label="$t('city_filter_placeholder')"
 		:value="pickedCities"
 		@update:model-value="emitFilterChange"
 	/>

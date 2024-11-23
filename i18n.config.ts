@@ -10,6 +10,10 @@ export default defineI18nConfig(() => ({
 			news: 'News',
 			create_event: 'Create event',
 			charity: 'Charity',
+			city_filter_placeholder: 'Filter by city',
+			event_host_filter_placeholder: 'Filter by event host',
+			culture_area_filter_placeholder: 'Filter by culture area',
+			event_category_filter_placeholder: 'Filter by category',
 			// drag n drop component features
 			clear: 'Clear',
 			drag_n_drop: 'Drag and drop some files here or click to select files',
@@ -134,6 +138,10 @@ export default defineI18nConfig(() => ({
 			create_event: 'Crear evento',
 			news: 'Noticias',
 			charity: 'Donación',
+			city_filter_placeholder: 'filtrar por ciudad',
+			event_host_filter_placeholder: 'Filtrar por organizador del evento',
+			culture_area_filter_placeholder: 'Filtrar por área cultural',
+			event_category_filter_placeholder: 'Filtrar por categoría de evento',
 			// drag n drop component features
 			clear: 'Clara',
 			drag_n_drop:

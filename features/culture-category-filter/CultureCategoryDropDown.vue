@@ -2,7 +2,7 @@
 	<cp-drop-down
 		v-model="pickedCultureCategories"
 		:options="formatedCultureCategoriesData"
-		drop-down-label="Filter by culture area"
+		:drop-down-label="$t('culture_area_filter_placeholder')"
 		:value="pickedCultureCategories"
 		@update:model-value="emitFilterChange"
 	/>

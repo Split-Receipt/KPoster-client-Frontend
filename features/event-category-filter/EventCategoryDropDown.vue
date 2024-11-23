@@ -2,7 +2,7 @@
 	<cp-drop-down
 		v-model="pickedEventCategory"
 		:options="formatedEventCategoryData"
-		drop-down-label="Filter by category"
+		:drop-down-label="$t('event_category_filter_placeholder')"
 		:value="pickedEventCategory"
 		@update:model-value="emitFilterChange"
 	/>

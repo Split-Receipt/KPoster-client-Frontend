@@ -10,7 +10,7 @@
 		</div>
 		<cp-button
 			class="footer__button"
-			text="Estado de la organización"
+			:text="$t('partners_button_become_partner')"
 			size="large"
 			:islink="true"
 			link-to="/partners-registration"
