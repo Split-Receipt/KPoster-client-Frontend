@@ -6,6 +6,7 @@ export default defineI18nConfig(() => ({
 			// home page features
 			welcome: 'Welcome',
 			main_title: 'Culture events of Cusco',
+			name_of_platform: 'Culture Portal of Cusco',
 			sales: 'Sales',
 			news: 'News',
 			create_event: 'Create event',
@@ -133,6 +134,7 @@ export default defineI18nConfig(() => ({
 		es: {
 			// home page features
 			welcome: 'Bienvenido',
+			name_of_platform: 'Portal Cultural Cusco',
 			main_title: 'Eventos culturales de Cusco',
 			sales: 'Ventas',
 			create_event: 'Crear evento',

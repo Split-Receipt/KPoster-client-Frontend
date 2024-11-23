@@ -17,7 +17,7 @@
 				class="header__img-pic"
 				src="/images/header-background_small.png"
 			/>
-			<h2 class="header__mainTitle">{{ $t('main_title') }}</h2>
+			<h2 class="header__mainTitle">{{ $t('name_of_platform') }}</h2>
 		</div>
 
 		<!-- Блок с контролами заголовка -->
@@ -238,11 +238,21 @@ const isAllowedToCreateEvent = computed(() => {
 		height: 100%;
 		width: 100%;
 		top: 0;
-		bottom: 0;
 		left: 0;
-		font-size: 60px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 40px;
 		color: #fff;
 		z-index: 10;
+
+		@media #{$screen-tablet} {
+			font-size: 50px;
+		}
+
+		@media #{$screen-desktop} {
+			font-size: 80px;
+		}
 	}
 
 	&__controls {
