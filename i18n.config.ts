@@ -5,7 +5,7 @@ export default defineI18nConfig(() => ({
 		en: {
 			// home page features
 			welcome: 'Welcome',
-			main_title: 'Culture events of Peru',
+			main_title: 'Culture events of Cusco',
 			sales: 'Sales',
 			news: 'News',
 			create_event: 'Create event',
@@ -67,7 +67,7 @@ export default defineI18nConfig(() => ({
 		'en-US': {
 			// home page features
 			welcome: 'Welcome',
-			main_title: 'Cultural Events in Peru',
+			main_title: 'Cultural Events in Cusco',
 			sales: 'Sales',
 			create_event: 'Create event',
 			news: 'News',
@@ -129,7 +129,7 @@ export default defineI18nConfig(() => ({
 		es: {
 			// home page features
 			welcome: 'Bienvenido',
-			main_title: 'Eventos culturales de Perú',
+			main_title: 'Eventos culturales de Cusco',
 			sales: 'Ventas',
 			create_event: 'Crear evento',
 			news: 'Noticias',
@@ -192,7 +192,7 @@ export default defineI18nConfig(() => ({
 		qu: {
 			// home page features
 			welcome: '¡Sumaq kawsay!',
-			main_title: 'Perúmanta jukukuy cultura kawsayninchik',
+			main_title: 'Kusko llaqtapi kulturaykuna',
 			sales: 'Venta',
 			news: 'Ñukanchik',
 			charity: 'Kawsay',
