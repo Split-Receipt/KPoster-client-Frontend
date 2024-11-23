@@ -23,7 +23,7 @@
 		<div class="header__controls">
 			<nuxt-link to="/">
 				<nuxt-img
-					src="/images/logo.png"
+					src="/images/logo.svg"
 					class="icon icon-logo header__icon-logo"
 				/>
 			</nuxt-link>
@@ -282,6 +282,7 @@ const isAllowedToCreateEvent = computed(() => {
 	}
 
 	&__icon-logo {
+		width: 60px;
 		@media #{$screen-tablet} {
 			background-color: transparent;
 			width: $header-icon-logo-width-screen-tablet;
