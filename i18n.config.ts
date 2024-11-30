@@ -5,6 +5,7 @@ export default defineI18nConfig(() => ({
 		en: {
 			// home page features
 			welcome: 'Welcome',
+			about_us_title: 'About us',
 			main_title: 'Culture events of Cusco',
 			name_of_platform: 'Culture Portal of Cusco',
 			sales: 'Sales',
@@ -72,6 +73,7 @@ export default defineI18nConfig(() => ({
 		'en-US': {
 			// home page features
 			welcome: 'Welcome',
+			about_us_title: 'About us',
 			main_title: 'Cultural Events in Cusco',
 			sales: 'Sales',
 			create_event: 'Create event',
@@ -134,6 +136,7 @@ export default defineI18nConfig(() => ({
 		es: {
 			// home page features
 			welcome: 'Bienvenido',
+			about_us_title: 'Sobre nosotros',
 			name_of_platform: 'Portal Cultural Cusco',
 			main_title: 'Eventos culturales de Cusco',
 			sales: 'Ventas',
@@ -202,6 +205,7 @@ export default defineI18nConfig(() => ({
 		qu: {
 			// home page features
 			welcome: '¡Sumaq kawsay!',
+			about_us_title: 'Ñoqaykumanta',
 			main_title: 'Kusko llaqtapi kulturaykuna',
 			sales: 'Venta',
 			news: 'Ñukanchik',

@@ -1,7 +1,6 @@
 import { useNuxtApp } from 'nuxt/app';
-import type { EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, CurrentUser } from '@shared/api/types.ts';
-import type { Axios, AxiosResponse } from 'axios';
-import { id } from 'date-fns/locale';
+import type { BaseStrapiResponse, EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, CurrentUser, AboutPlatform } from '@shared/api/types.ts';
+import type { AxiosResponse } from 'axios';
 
 export const registerPartner = (partnerInfo: PartnerRegistration) => {
 	const { $api } = useNuxtApp();
@@ -238,4 +237,13 @@ export const deleteMedia = (id: number | string): Promise<AxiosResponse<any>> =>
 	const { $api } = useNuxtApp();
 
 	return $api.delete(`/api/upload/files/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('AuthToken')}` } } );
+};
+
+export const requestDataAboutPlatform = (): Promise<AxiosResponse<{ data: BaseStrapiResponse<AboutPlatform> }>> => {
+	const { $api } = useNuxtApp();
+	const params = {
+		populate: '*',
+	};
+
+	return $api.get('/api/cultural-portal-cusco', { params });
 };

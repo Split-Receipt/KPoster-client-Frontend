@@ -418,3 +418,15 @@ type CultureType = {
 		mail: string;
 	};
 
+export type AboutPlatform = {
+		aboutUs: {
+			aboutUsText: string;
+		},
+		culturalPortalContacts: any
+
+};
+
+export type BaseStrapiResponse<T> = {
+	id: number,
+	attributes: T,
+};
