@@ -1,8 +1,7 @@
 import { defineStore, setActivePinia, createPinia } from 'pinia';
-import { requestCities, requestAffiliations , requestCategories } from '@shared/api';
+import { requestCities, requestAffiliations , requestCategories, requestOrganisationTypes } from '@shared/api';
 import type { CommonDataStore } from './types';
 import type { City, Affiliation, CultureType } from '@shared/api/types';
-import { get } from '@vueuse/core';
 
 const pinia = createPinia();
 
@@ -13,6 +12,7 @@ export const useCommonDataStore = defineStore('commonData', {
 		cities: [],
 		affiliations: [],
 		cultureTypes: [],
+		orgTypes: [],
 	}),
 	getters: {
 		getCityOptions: (state) => {
@@ -20,6 +20,14 @@ export const useCommonDataStore = defineStore('commonData', {
 				id: city.id,
 				value: city.attributes.cityName,
 				label: city.attributes.cityName,
+			}));
+		},
+
+		getOrgTypesOptions: (state) => {
+			return state.orgTypes.map((orgType) => ({
+				id: orgType.id,
+				value: orgType.attributes.orgTypeName,
+				label: orgType.attributes.orgTypeName,
 			}));
 		},
 
@@ -46,7 +54,7 @@ export const useCommonDataStore = defineStore('commonData', {
 			try {
 				this.cities = (await requestCities()).data.data;
 			} catch (error) {
-				throw new Error('No se pudo obtener la lista de ciudades');
+				return Promise.reject('No se pudo obtener la lista de ciudades');
 			}
 		},
 
@@ -55,7 +63,7 @@ export const useCommonDataStore = defineStore('commonData', {
 				try {
 					 this.affiliations = (await requestAffiliations()).data.data;
 				} catch (error) {
-					 throw new Error('No se pudo obtener la lista de afiliaciones');
+					 return Promise.reject('No se pudo obtener la lista de afiliaciones');
 				}
 
 		},
@@ -64,11 +72,19 @@ export const useCommonDataStore = defineStore('commonData', {
 			try {
 				this.cultureTypes = (await requestCategories()).data.data;
 			} catch (error) {
-				throw new Error('No se pudo obtener la lista de areas de culturas');
+				return Promise.reject('No se pudo obtener la lista de areas de culturas');
+			}
+		},
+
+		async getOrganisationTypes() {
+			try {
+				this.orgTypes = (await requestOrganisationTypes()).data.data;
+			} catch (error) {
+				return Promise.reject('No se pudo obtener la lista de tipos de organizaciones');
 			}
 		},
 		getAllData() {
-			return Promise.allSettled([this.getCities(), this.getAffiliations(), this.getCultureTypes()]);
+			return Promise.allSettled([this.getCities(), this.getAffiliations(), this.getCultureTypes(), this.getOrganisationTypes()]);
 	},
 },
 });

@@ -22,7 +22,7 @@
 					<v-field v-slot="{ errors }" name="orgType" rules="required">
 						<cp-radio-button
 							v-model="partnerForm.data.orgType"
-							:options="radioOptions1"
+							:options="commonDataStore.getOrgTypesOptions"
 							name="orgType"
 							:active-id="partnerForm.data.orgType"
 							style="margin-left: -30px"
@@ -477,6 +477,7 @@
 								v-for="(item, index) in commonDataStore.getCultureTypesOptions"
 								:key="item.value"
 								:option="item"
+								:checked="partnerForm.data.cultureType.includes(item.id)"
 								return-value="id"
 								@update:checkbox-update="(value: number) => checkboxCollectCultureType(value, index)"
 							/>
@@ -694,6 +695,7 @@
 							v-model="partnerForm.data.eventHostAddress.city"
 							:options="commonDataStore.getCityOptions"
 							name="radio2"
+							:active-id="partnerForm.data.eventHostAddress.city"
 							return-value="id"
 							style="margin-left: -30px"
 						/>
@@ -867,6 +869,7 @@
 								:key="item.value"
 								:option="item"
 								return-value="id"
+								:checked="partnerForm.data.affiliations.includes(item.id)"
 								@update:checkbox-update="(value: number) => checkboxCollectAffiliations(value, index)"
 							/>
 						</div>
@@ -1292,7 +1295,7 @@ const mapPartnerDataToForm = (source: EventHost) => {
 	const attributes = source.data.attributes || {};
 
 	// Основные поля
-	partnerForm.data.orgType = attributes.orgType || '';
+	partnerForm.data.orgType = attributes.orgType.data.id || '';
 	partnerForm.data.commercialName = attributes.commercialName || '';
 	partnerForm.data.compName = attributes.compName || '';
 	partnerForm.data.ruc = attributes.ruc || '';

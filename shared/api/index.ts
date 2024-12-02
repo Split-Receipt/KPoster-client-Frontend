@@ -1,5 +1,5 @@
 import { useNuxtApp } from 'nuxt/app';
-import type { BaseStrapiResponse, EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, CurrentUser, AboutPlatform, Affiliation, EventHost, CultureType } from '@shared/api/types.ts';
+import type { BaseStrapiResponse, EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, CurrentUser, AboutPlatform, Affiliation, EventHost, CultureType, OrgType } from '@shared/api/types.ts';
 import type { AxiosResponse } from 'axios';
 
 export const registerPartner = (partnerInfo: PartnerRegistration) => {
@@ -191,9 +191,11 @@ export const requestEventsHost = (id: number | string): Promise<AxiosResponse<Ev
 					city: true,
 				},
 			},
+			affiliations: true,
 			videoBusinessCard: {
 				populate: '*',
 			},
+			orgType: true,
 			socialMedias: {
 				populate: '*',
 			},
@@ -248,7 +250,7 @@ export const requestDataAboutPlatform = (): Promise<AxiosResponse<{ data: BaseSt
 	return $api.get('/api/cultural-portal-cusco', { params });
 };
 
-export const getOrgTypes = () => {
+export const requestOrganisationTypes = (): Promise<AxiosResponse<{ data: OrgType[] }>> => {
 	const { $api } = useNuxtApp();
 
 	return $api.get('/api/org-types');

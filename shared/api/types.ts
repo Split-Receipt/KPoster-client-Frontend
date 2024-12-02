@@ -442,3 +442,15 @@ export type Affiliation = {
 		affiliationCode: string
 	}
 };
+
+export type OrgType = {
+	id: number,
+	attributes: {
+		orgTypeName: string,
+		createdAt: string,
+		updatedAt: string,
+		publishedAt: string,
+		locale: string,
+		orgTypeCode: string
+	}
+};
