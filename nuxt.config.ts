@@ -2,7 +2,7 @@ import { defineNuxtConfig } from "nuxt/config";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-	app: {
+    app: {
     head: {
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/images/logo.svg' } // Указываем путь к фавикону
@@ -10,7 +10,10 @@ export default defineNuxtConfig({
     }
   },
   devtools: { enabled: true },
-  modules: ["@nuxt/eslint", "nuxt-swiper", "@nuxtjs/i18n", "@nuxt/image", '@vueuse/nuxt'],
+  modules: ["@nuxt/eslint", "nuxt-swiper", "@nuxtjs/i18n", "@nuxt/image", '@vueuse/nuxt', "@pinia/nuxt"],
+	pinia: {
+    storesDirs: ['./stores/**'],
+  },
   i18n: {
     vueI18n: './i18n.config.ts',
     locales: ['en', 'es', 'qu'],
@@ -41,7 +44,8 @@ export default defineNuxtConfig({
     "@features": "/features",
     "@styles": "/app/styles",
     "@app": "/app",
-    "@widgets": "/widgets"
+    "@widgets": "/widgets",
+		"@stores": "/stores"
   },
 
   runtimeConfig: {

@@ -99,20 +99,14 @@
 					text-area-placeholder="Deja tus comentarios"
 				/>
 				<span class="detailed__comment-textArea-submit">
-					<cp-button
-						text="Enviar"
-						size="small"
-					/>
+					<cp-button text="Enviar" size="small" />
 				</span>
 			</div>
 
 			<div class="detailed__comment__block">
 				<span class="detailed__comment__block-title">
 					<h3>Comentarios</h3>
-					<cp-button
-						size="small"
-						text="Eso es todo&nbsp;&gt;"
-					/>
+					<cp-button size="small" text="Eso es todo&nbsp;&gt;" />
 				</span>
 				<span class="detailed__comment__block-buttons">
 					<cp-button
@@ -122,16 +116,8 @@
 						with-image="../public/images/sort.svg"
 					/>
 					<span>
-						<cp-button
-							class="sort-button"
-							size="small"
-							text="Positivos"
-						/>
-						<cp-button
-							class="sort-button"
-							size="small"
-							text="Negativos"
-						/>
+						<cp-button class="sort-button" size="small" text="Positivos" />
+						<cp-button class="sort-button" size="small" text="Negativos" />
 					</span>
 				</span>
 			</div>
@@ -252,6 +238,7 @@ import { toZonedTime } from 'date-fns-tz';
 import { useRuntimeConfig } from 'nuxt/app';
 import EventDetailRec from '@widgets/recommendations/EventDetailRec.vue';
 import CpMediaCarousel from '@shared/gui/CpMediaCarousel.vue';
+import type { EventData } from '@shared/api/types';
 
 const route = useRoute();
 const id = route.params.id as string;

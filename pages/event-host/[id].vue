@@ -114,7 +114,7 @@
 </template>
 
 <script setup lang="ts">
-import type { EventHost } from '@shared/api/types';
+import  { CollectionTypes, type EventHost, type CollectionFilters } from '@shared/api/types';
 import type { EventCard } from '@widgets/event-card/types/types';
 import { requestEventsHost, requestEventsList } from '@shared/api';
 import { useRuntimeConfig } from 'nuxt/app';

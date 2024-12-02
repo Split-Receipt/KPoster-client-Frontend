@@ -1,5 +1,5 @@
 import { useNuxtApp } from 'nuxt/app';
-import type { BaseStrapiResponse, EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, CurrentUser, AboutPlatform } from '@shared/api/types.ts';
+import type { BaseStrapiResponse, EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, CurrentUser, AboutPlatform, Affiliation, EventHost, CultureType } from '@shared/api/types.ts';
 import type { AxiosResponse } from 'axios';
 
 export const registerPartner = (partnerInfo: PartnerRegistration) => {
@@ -24,7 +24,7 @@ export const requestCities = (): Promise<AxiosResponse<{ data: City[] }>> => {
 	return $api.get('api/cities');
 };
 
-export const requestCategories = () => {
+export const requestCategories = (): Promise<AxiosResponse<{ data: CultureType[] }>> => {
 	const { $api } = useNuxtApp();
 
 	return $api.get('api/areas-de-la-culturas');
@@ -135,7 +135,7 @@ export const loginUser = (params: LoginParams) => {
 	return $api.post('/api/auth/local', params);
 };
 
-export const requestAffiliations = (): Promise<AxiosResponse<{ data: { name: string }[] }>> => {
+export const requestAffiliations = (): Promise<AxiosResponse<{ data: Affiliation[] }>> => {
 	const { $api } = useNuxtApp();
 
 	return $api.get('/api/affiliations');
@@ -246,4 +246,10 @@ export const requestDataAboutPlatform = (): Promise<AxiosResponse<{ data: BaseSt
 	};
 
 	return $api.get('/api/cultural-portal-cusco', { params });
+};
+
+export const getOrgTypes = () => {
+	const { $api } = useNuxtApp();
+
+	return $api.get('/api/org-types');
 };

@@ -5,7 +5,12 @@
 </template>
 
 <script setup lang="ts">
+import { useCommonDataStore } from '@stores/common-data-store';
+
+const commonDataStore = useCommonDataStore();
+
 onBeforeMount(() => {
+	commonDataStore.getAllData();
 	const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 	localStorage.setItem('timezone', timezone);
 });

@@ -1,5 +1,5 @@
 import type { RegisterParams } from '@shared/api/types';
-import { registerUser } from '@shared/api';
+import { registerUser, requestMyUser } from '@shared/api';
  const register = async (registrationParams: RegisterParams) => {
 	if (Object.values(registrationParams).some((value) => !value)) {
 		return;

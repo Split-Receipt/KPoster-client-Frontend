@@ -26,22 +26,18 @@
 </template>
 
 <script setup lang="ts">
-type RadioVar = {
-	id: string;
-	value: string;
-	label?: string;
-};
+import type { CheckOption } from './types';
 
 type RadioProps = {
 	activeId?: string;
-	options: RadioVar[];
+	options: CheckOption[];
 	name: string;
 	returnObject?: boolean;
-	returnValue?: keyof RadioVar;
+	returnValue?: keyof CheckOption;
 };
 
 type Events = {
-	(event: 'update:modelValue', eventData: string | RadioVar): void;
+	(event: 'update:modelValue', eventData: string | CheckOption | number): void;
 };
 const props = withDefaults(defineProps<RadioProps>(), {
 	returnObject: false,

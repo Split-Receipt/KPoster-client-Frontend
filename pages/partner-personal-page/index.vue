@@ -1,173 +1,842 @@
 <template>
-	<div class="personal">
+	<div class="partners__main">
 		<cp-spinner :is-spinned="isSpin" />
-		<h2>{{ partnerName }}</h2>
+		<h1 class="partners__title">
+			Ingresa tus datos para registrarte en el Portal Cultural del Cusco
+		</h1>
+		<div class="partners__subtitle">
+			<h3>Llene el formulario de registro</h3>
+		</div>
+		<v-form ref="partnerRegForm">
+			<h3>{{ $t('partners_formTitle') }}</h3>
 
-		<v-form ref="personalPartnerForm" class="personal___form">
-			<div class="personal__form-rowTop">
-				<div class="personal__form-rowTop-info">
+			<!-- Organization type -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-row-info">
 					<span>
-						En que areas de la cultura viva comunitaria se desenvuelve tu
-						organización ? Elección múltiple
+						<strong class="partners__form-row-info-required">*</strong>
+						Tipo de organización
 					</span>
 				</div>
-				<div class="personal__form-rowTop-input-checks">
-					<cp-check-box
-						v-for="(item, index) in orgSphereChecks"
-						:key="index"
-						:option="item"
-						:checked="partnerPersonalForm.data.cultureType.includes(item.id)"
-						return-value="id"
-						@update:checkbox-update="(value: number) => checkboxCollectCultureType(value, index)"
-					/>
+				<div class="partners__form-row-input">
+					<v-field v-slot="{ errors }" name="orgType" rules="required">
+						<cp-radio-button
+							v-model="partnerForm.data.orgType"
+							:options="radioOptions1"
+							name="orgType"
+							:active-id="partnerForm.data.orgType"
+							style="margin-left: -30px"
+						/>
+						<span
+							v-if="errors.length"
+							class="required-input-error-info-leftSide"
+						>
+							{{ errors[0] }}
+						</span>
+					</v-field>
 				</div>
 			</div>
 
-			<div class="personal__form-rowTop">
-				<div class="personal__form-rowTop-info">
-					<span> Dónde se ubica tu organización? </span>
-				</div>
-				<v-field
-					v-slot="{ errors }"
-					v-model="partnerPersonalForm.data.eventHostAddress.city"
-					name="eventHostCity"
-					rules="required"
-				>
-					<cp-radio-button
-						:active-id="partnerPersonalForm.data.eventHostAddress.city ?? ''"
-						:options="cityRadioButtons"
-						class="personal__form-rowTop-input-checks"
-						name="radio2"
-						return-value="id"
-						style="margin-left: -30px"
-						@update:model-value="
-							(value) =>
-								(partnerPersonalForm.data.eventHostAddress.city = value)
-						"
-					/>
-					<span v-if="errors" class="required-input-error-info-leftSide">{{
-						errors[0]
-					}}</span>
-				</v-field>
-			</div>
-
-			<div class="personal__form-row">
-				<div class="personal__form-row-info">
+			<!-- personal activity (First name) -->
+			<div
+				v-if="partnerForm.data.orgType === 'Persona_Natural'"
+				class="partners__form-row"
+			>
+				<div class="partners__form-row-info">
 					<span>
-						<strong class="personal__form-row-info-required">*</strong>
-						Rango de edad y porcentaje de mujeres , aprox
+						<strong class="partners__form-row-info-required">*</strong>
+						Nombre
+						<cp-info-pop-up
+							id="Nombre_comercial_info"
+							info="test info Nombre"
+						/>
 					</span>
 				</div>
-				<div class="personal__form-row-input-horizontal">
-					<cp-text-input
-						v-model="partnerPersonalForm.data.personCount"
-						type="number"
-						placeholder="Numero de personans"
-					/>
-					<cp-text-input
-						v-model="partnerPersonalForm.data.womenPercentage"
-						type="number"
-						placeholder="Porcenaje de mujeres"
-					/>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerForm.data.personalName"
+						name="commercialName"
+						rules="required"
+					>
+						<cp-text-input
+							v-model="partnerForm.data.personalName"
+							type="text"
+							placeholder="ingrese el nombre"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
 				</div>
 			</div>
 
-			<div class="personal__form-rowTop">
-				<div class="personal__form-rowTop-info">
+			<!-- Persona lIdentifying Document  -->
+			<div
+				v-if="partnerForm.data.orgType === 'Persona_Natural'"
+				class="partners__form-rowDnD"
+			>
+				<div class="partners__form-row-info">
 					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Tipo de documento de identidad
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerForm.data.personalIdentifyingDocument"
+						name="orgType"
+						rules="required"
+					>
+						<cp-radio-button
+							v-model="partnerForm.data.personalIdentifyingDocument"
+							:options="docTypeOptions"
+							name="PersonalIdentifyingDocument"
+							style="margin-left: -30px"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- Persona lIdentifying Document scan -->
+			<div
+				v-if="partnerForm.data.orgType === 'Persona_Natural'"
+				class="partners__form-rowDnD"
+			>
+				<div class="partners__form-rowDnD-info">
+					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Escaneo de un documento de identidad
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerForm.files.personalDocumentScan"
+						name="personalDocumentScan"
+						rules="required_file"
+					>
+						<cp-drag-n-drop
+							v-model="partnerForm.files.personalDocumentScan"
+							:is-single="true"
+							type="image"
+							:max-size="5"
+							:is-invalid="errors.length > 0"
+						/>
+						<span v-if="errors" class="required-input-error-info-center">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- Organization name -->
+			<div
+				v-if="partnerForm.data.orgType !== 'Persona_Natural'"
+				class="partners__form-row"
+			>
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Nombre comercial
+						<cp-info-pop-up
+							id="Nombre_comercial_info"
+							info="test info Nombre"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerForm.data.commercialName"
+						name="commercialName"
+						rules="required"
+					>
+						<cp-text-input
+							v-model="partnerForm.data.commercialName"
+							type="text"
+							placeholder="Nombre comercial"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- Company name -->
+			<div
+				v-if="partnerForm.data.orgType !== 'Persona_Natural'"
+				class="partners__form-row"
+			>
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Razón social
+						<cp-info-pop-up id="Razón_social_info" info="test info Razón" />
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerForm.data.compName"
+						name="compName"
+						rules="required"
+					>
+						<cp-text-input
+							v-model="partnerForm.data.compName"
+							type="text"
+							placeholder="Razón social"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- Pay number -->
+			<div
+				v-if="partnerForm.data.orgType !== 'Persona_Natural'"
+				class="partners__form-row"
+			>
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						RUC
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerForm.data.compName"
+						name="ruc"
+						rules="required"
+					>
+						<cp-text-input
+							v-model="partnerForm.data.ruc"
+							type="text"
+							placeholder="RUC"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- activity start date -->
+			<div class="partners__form-row">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Fecha de inicio de actividades
+						<cp-info-pop-up id="startDate_info" info="start date info" />
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerForm.data.startDate"
+						name="startDate"
+						rules="required"
+					>
+						<cp-text-input
+							v-model="partnerForm.data.startDate"
+							type="date"
+							placeholder="ingrese la fecha"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- people count in organization -->
+			<div class="partners__form-row">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Numero de personas de tu organización
+						<cp-info-pop-up id="personCount" info="person count info" />
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerForm.data.personCount"
+						name="personCount"
+						rules="require_number"
+					>
+						<cp-text-input
+							v-model="partnerForm.data.personCount"
+							type="number"
+							placeholder="Numero de personas"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- Age range and woman percentage -->
+			<div class="partners__form-row">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Rango de edad y porcentaje de mujeres, aprox
+						<cp-info-pop-up
+							id="middleAge"
+							info="tmiddle age and woman percentage info"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<div class="partners__form-row-input-flexBlock">
+						<span>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="partnerForm.data.middleAge"
+								name="middleAge"
+								rules="require_number"
+							>
+								<cp-text-input
+									v-model="partnerForm.data.middleAge"
+									type="number"
+									placeholder="Numero de personas"
+									:class="{
+										'required-input-error-textInput': errors.length > 0,
+									}"
+								/>
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}</span
+								>
+							</v-field>
+						</span>
+						<span>
+							<v-field
+								v-slot="{ errors }"
+								:model-value="partnerForm.data.womenPercentage"
+								name="womenPercentage"
+								rules="require_number"
+							>
+								<cp-text-input
+									v-model="partnerForm.data.womenPercentage"
+									type="number"
+									placeholder="porcentaje de mujeres"
+									:class="{
+										'required-input-error-textInput': errors.length > 0,
+									}"
+								/>
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}</span
+								>
+							</v-field>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- main Banner -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
 						Subir el logo o imagen principal
-						<cp-info-pop-up id="logo_update" info="test info Nombre" />
 					</span>
 				</div>
-				<div class="personal__form-rowTop-input">
-					<cp-drag-n-drop
-						v-model="partnerPersonalForm.files.mainBanner"
-						:is-single="true"
-						type="image"
-						:max-size="5"
-					/>
+				<div class="partners__form-rowDnD-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerForm.files.mainBanner"
+						name="banner"
+						rules="required_file"
+					>
+						<cp-drag-n-drop
+							v-model="partnerForm.files.mainBanner"
+							:is-single="true"
+							type="image"
+							:max-size="5"
+							:is-invalid="errors.length > 0"
+						/>
+						<span v-if="errors" class="required-input-error-info-center">{{
+							errors[0]
+						}}</span>
+					</v-field>
 				</div>
-				<nuxt-img :src="partnerPersonalForm.files.mainBanner" />
 			</div>
 
-			<div class="personal__form-rowTop">
-				<div class="personal__form-rowTop-info">
+			<!-- organization Resume -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
 					<span>
-						Resume lo que hace tu organizacion
-						<cp-info-pop-up id="resume" info="250-500 palabras" />
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Resume lo que hace tu organización
+						<cp-info-pop-up id="org_resume" info="250-500 palabras" />
 					</span>
 				</div>
-				<div class="personal__form-rowTop-input">
-					<cp-text-area
-						v-model="partnerPersonalForm.data.orgResume"
-						text-area-id="resume_id"
-						text-area-placeholder="Resume lo que hace tu organizacion"
-					/>
+				<div class="partners__form-rowDnD-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerForm.data.orgResume"
+						name="orgResume"
+						rules="required"
+					>
+						<cp-text-area
+							v-model="partnerForm.data.orgResume"
+							text-area-id="orgResume"
+							text-area-placeholder="resume lo que hace tu organización"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-center">{{
+							errors[0]
+						}}</span>
+					</v-field>
 				</div>
 			</div>
 
-			<div class="personal__form-rowTop">
-				<div class="personal__form-rowTop-info">
+			<!-- company Video File -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
 					<span>
 						Sube el vídeo de tu empresa o incrusta un enlace desde youtube o
 						vimeo
-						<cp-info-pop-up id="video_id" info="250-500 palabras" />
-						<div class="personal__form-switcherBlock">
+						<cp-info-pop-up
+							id="youtube_o_vimeo_info"
+							info="Si subes tu propio vídeo, debe estar en formato .mp4 y no debe superar los 50 megabytes de tamaño"
+						/>
+						<div class="partners__form-switcherBlock">
 							<cp-switcher
-								v-model="videoFileValue"
-								:default-option="videoFileValue"
+								v-model="compVideoValue"
+								:default-option="compVideoValue"
 								switcher-name="compVideo"
-								:switcher-options="formVideoSwitcherOptions"
-								@update:model-value="(value) => toggleVideoFormat(value)"
+								:switcher-options="compVideoSwitcherOptions"
 							/>
 						</div>
 					</span>
 				</div>
-				<div class="personal__form-rowTop-input">
-					<cp-drag-n-drop
-						v-if="videoFileValue === 'File'"
-						v-model="partnerPersonalForm.files.compVideoFile"
-						:is-single="true"
-						type="video"
-						:max-size="50"
-					/>
-					<cp-text-input2
-						v-else
-						id="linkVideo_id"
-						v-model="partnerPersonalForm.data.compVideoLink"
-						:circle="true"
-						label-text="YouTube / Vimeo"
-						placeholder="https://www.youtube.com/"
-					/>
+				<div class="partners__form-rowDnD-input">
+					<span class="partners__form-rowDnD-semiBlock">
+						<div>
+							<cp-drag-n-drop
+								v-if="compVideoValue === 'File'"
+								v-model="partnerForm.files.compVideoFile"
+								:is-single="true"
+								type="video"
+								:max-size="50"
+							/>
+							<span
+								v-else
+								class="partners__form-rowDnD-semiBlock-social-maxWidth"
+								style="padding-top: 12px"
+							>
+								<cp-text-input2
+									id="compVideo_id"
+									v-model="partnerForm.data.compVideoLink"
+									:circle="true"
+									label-text="YouTube / Vimeo"
+									placeholder="https://www.youtube.com/"
+								/>
+							</span>
+						</div>
+					</span>
 				</div>
 			</div>
 
-			<div
-				v-if="partnerPersonalForm.data.socialMedias?.length"
-				class="personal__form-rowTop"
-			>
-				<div class="personal__form-rowTop-info">
+			<!-- culture Type -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						En que areas de la cultura viva comunitaria se desenvuelve tu
+						organización ? Elección múltiple
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-if="commonDataStore.getCultureTypesOptions.length > 0"
+						v-slot="{ errors }"
+						name="cultureType"
+						rules="require_checkbox"
+						:model-value="partnerForm.data.cultureType"
+					>
+						<div>
+							<cp-check-box
+								v-for="(item, index) in commonDataStore.getCultureTypesOptions"
+								:key="item.value"
+								:option="item"
+								return-value="id"
+								@update:checkbox-update="(value: number) => checkboxCollectCultureType(value, index)"
+							/>
+						</div>
+						<span
+							v-if="errors && partnerForm.data.cultureType.length < 1"
+							class="required-input-error-info-leftSide"
+						>
+							{{ errors[0] }}</span
+						>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- organization Work Type -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Especificar la labor que realiza en el área seleccionada de cultura
+						viva comunitaria
+						<cp-info-pop-up id="org_Work_Type" info="orgWorkType info" />
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerForm.data.orgWorkType"
+						name="orgWorkType"
+						rules="required"
+					>
+						<cp-text-area
+							v-model="partnerForm.data.orgWorkType"
+							text-area-id="orgWorkType"
+							text-area-placeholder="describe los detalles del texto de tu industria"
+							:class="{ 'required-input-error-textInput': errors.length > 0 }"
+						/>
+						<span v-if="errors" class="required-input-error-info-center">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- Product description -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Sube tus principales productos y sus descripciones
+						<cp-info-pop-up
+							id="principales_productos_info"
+							info="El banner debe cargarse a 1100 por 278 píxeles en formato .png"
+						/>
+						<div class="partners__form-switcherBlock">
+							<cp-switcher
+								v-model="mainProdValue"
+								:default-option="mainProdValue"
+								switcher-name="mainProd"
+								:switcher-options="mainProdSwitcherOptions"
+							/>
+						</div>
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<v-field
+						v-if="mainProdValue === 'File'"
+						v-slot="{ errors }"
+						:model-value="partnerForm.files.productDescriptionFile"
+						name="productDescription"
+						rules="required_file"
+					>
+						<cp-drag-n-drop
+							v-model="partnerForm.files.productDescriptionFile"
+							:is-single="true"
+							type="image"
+							:max-size="5"
+							:is-invalid="errors.length > 0"
+						/>
+						<span
+							v-if="errors && mainProdValue === 'File'"
+							class="required-input-error-info-center"
+						>
+							{{ errors[0] }}</span
+						>
+					</v-field>
+					<v-field
+						v-if="mainProdValue === 'Link'"
+						v-slot="{ errors }"
+						:model-value="partnerForm.data.productDescriptionLink"
+						name="productDescription"
+						rules="required"
+					>
+						<span
+							class="partners__form-rowDnD-semiBlock-social-maxWidth"
+							style="padding-top: 12px"
+						>
+							<cp-text-input2
+								id="compVideo_id"
+								v-model="partnerForm.data.productDescriptionLink"
+								:circle="true"
+								label-text="Descripción del Producto"
+								placeholder="Descripción del Producto"
+								:class="{
+									'required-input-error-socialMedia': errors.length > 0,
+									'required-input-default-socialMedia': errors.length < 1,
+								}"
+							/>
+							<span
+								v-if="errors && mainProdValue === 'Link'"
+								class="required-input-error-info-leftSide"
+							>
+								{{ errors[0] }}
+							</span>
+						</span>
+					</v-field>
+					<v-field
+						v-if="mainProdValue === 'Text'"
+						v-slot="{ errors }"
+						:model-value="partnerForm.data.productDescriptionText"
+						name="productDescription"
+						rules="required"
+					>
+						<span
+							class="partners__form-rowDnD-semiBlock-social-maxWidth"
+							style="padding-top: 12px"
+						>
+							<label class="input-laabel" for="mainProdTextArea">
+								Descripción del Producto</label
+							>
+							<cp-text-area
+								v-model="partnerForm.data.productDescriptionText"
+								:class="{ 'required-input-error-textInput': errors.length > 0 }"
+								text-area-id="mainProdTextArea"
+								text-area-label="Descripción del Producto"
+								text-area-placeholder="por favor escriba una descripción del producto"
+							/>
+							<span
+								v-if="errors && mainProdValue === 'Text'"
+								class="required-input-error-info-center"
+							>
+								{{ errors[0] }}
+							</span>
+						</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- webPage -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						Pagina web
+						<cp-info-pop-up id="WebPage_info" info="Pagina web info" />
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<div>
+						<cp-text-input
+							v-model="partnerForm.data.webpage"
+							type="text"
+							placeholder="https://"
+						/>
+					</div>
+				</div>
+			</div>
+
+			<!-- digital Catalog -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						Catalogo digital
+						<cp-info-pop-up
+							id="Catalogo_digital_info"
+							info="Catalogo digital info"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<div>
+						<cp-text-input
+							v-model="partnerForm.data.digitalCatalog"
+							type="text"
+							placeholder="https://"
+						/>
+						<cp-button
+							class="partners__form__button"
+							width="maxWidth"
+							size="small"
+							shape="oval"
+							color="yellowGrey"
+							text="Crea tu propio catalogo digital"
+						/>
+					</div>
+				</div>
+			</div>
+
+			<!-- organization location -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-row-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Dónde se ubica tu organización?
+						<cp-info-pop-up id="Dónde_se_ubica_info" info="test info Dónde" />
+					</span>
+				</div>
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerForm.data.eventHostAddress.city"
+						name="eventHostCity"
+						rules="required"
+					>
+						<cp-radio-button
+							v-model="partnerForm.data.eventHostAddress.city"
+							:options="commonDataStore.getCityOptions"
+							name="radio2"
+							return-value="id"
+							style="margin-left: -30px"
+						/>
+						<span v-if="errors" class="required-input-error-info-leftSide">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- contacts -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Añadir datos del contacto de la empresa
+						<cp-info-pop-up
+							id="contact_info"
+							info="Agregar número activo para la comunicación y con formato internacional. ej: 51 933625150 "
+						/>
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<div class="partners__form-rowDnD-input-socialsAndContacts">
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<v-field
+								v-slot="{ errors }"
+								:model-value="partnerForm.data.contacts.place"
+								name="place"
+								rules="required"
+							>
+								<cp-text-input2
+									id="place"
+									v-model="partnerForm.data.contacts.place"
+									label-text="País y dirección"
+									placeholder="introduzca el enlace"
+									:class="{
+										'required-input-error-socialMedia': errors.length > 0,
+									}"
+								/>
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}</span
+								>
+							</v-field>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<v-field
+								v-slot="{ errors }"
+								:model-value="partnerForm.data.contacts.tel"
+								name="tel"
+								rules="required"
+							>
+								<cp-text-input2
+									id="tel_id"
+									v-model="partnerForm.data.contacts.tel"
+									label-text="Teléfono de la empresa"
+									placeholder="introduzca el enlace"
+									:class="{
+										'required-input-error-socialMedia': errors.length > 0,
+									}"
+								/>
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}</span
+								>
+							</v-field>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-social">
+							<v-field
+								v-slot="{ errors }"
+								:model-value="partnerForm.data.contacts.mail"
+								name="mail"
+								rules="required|email"
+							>
+								<cp-text-input2
+									id="mail_id"
+									v-model="partnerForm.data.contacts.mail"
+									label-text="Email"
+									placeholder="introduzca el enlace"
+									:class="{
+										'required-input-error-socialMedia': errors.length > 0,
+									}"
+								/>
+								<span v-if="errors" class="required-input-error-info-leftSide">
+									{{ errors[0] }}</span
+								>
+							</v-field>
+						</span>
+					</div>
+				</div>
+			</div>
+			<!-- location on map -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						<strong class="partners__form-row-info-required">*</strong>
+						Marcar la ubicación del evento
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input fullWidth-map">
+					<div class="partnerRegistration__map">
+						<v-field
+							v-slot="{ errors }"
+							:model-value="partnerForm.data.eventHostAddress.coordinates"
+							name="eventCoordinates"
+							rules="require_coordinates"
+						>
+							<cp-map
+								:coordinates-output="true"
+								:center="getCoordinates"
+								@update:coordinates-update="setCoordinates"
+							/>
+							<span
+								v-if="errors.length"
+								class="required-input-error-info-center"
+							>
+								{{ errors[0] }}
+							</span>
+						</v-field>
+					</div>
+				</div>
+			</div>
+
+			<!-- social Medias -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
 					<span>
 						Redes sociales
 						<cp-info-pop-up
-							id="socials_id"
+							id="Redes_sociales_info"
 							info="No se admitirán redes personales"
 						/>
 					</span>
 				</div>
-				<div class="personal__form-rowTop-input">
-					<div class="partners__form-rowTop-input-socialsAndContacts">
+				<div class="partners__form-rowDnD-input">
+					<div class="partners__form-rowDnD-input-socialsAndContacts">
 						<span
-							v-for="(socialMedia, index) in partnerPersonalForm.data
-								.socialMedias"
+							v-for="(socialMedia, index) in partnerForm.data.socialMedias"
 							:key="socialMedia.socialMediaName"
-							class="personal__form-rowTop-semiBlock-social"
+							class="partners__form-rowDnD-semiBlock-social"
 						>
 							<cp-text-input2
 								:id="socialMedia.socialMediaName + '_id'"
-								v-model="
-									partnerPersonalForm.data.socialMedias[index].socialMediaLink
-								"
+								v-model="partnerForm.data.socialMedias[index].socialMediaLink"
 								:circle="true"
 								:label-text="socialMedia.socialMediaName"
 								:placeholder="`https://www.${socialMedia.socialMediaName}.com/`"
@@ -177,76 +846,72 @@
 				</div>
 			</div>
 
-			<div class="personal__form-rowTop">
-				<div class="personal__form-rowTop-info">
+			<!-- culture Type -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-row-info">
 					<span>
-						Añadir datos del contacto de la empresa
-						<cp-info-pop-up
-							id="contacts_id"
-							info="Agregar número activo para la comunicación y con formato internacional. ej: 51 933625150 "
-						/>
+						<strong class="partners__form-row-info-required">*</strong>
+						Afiliaciones o in incitativas
 					</span>
 				</div>
-				<div class="personal__form-rowTop-input">
-					<div class="partners__form-rowTop-input-socialsAndContacts">
-						<span class="personal__form-rowTop-semiBlock-social">
-							<cp-text-input2
-								id="place_id"
-								v-model="partnerPersonalForm.data.contacts.place"
-								:circle="false"
-								label-text="País y ciudad"
-								placeholder="introduzca el enlace"
+				<div class="partners__form-row-input">
+					<v-field
+						v-slot="{ errors }"
+						name="Affiliations"
+						rules="require_checkbox"
+						:model-value="partnerForm.data.affiliations"
+					>
+						<div>
+							<cp-check-box
+								v-for="(item, index) in commonDataStore.getAffiliationsOptions"
+								:key="item.value"
+								:option="item"
+								return-value="id"
+								@update:checkbox-update="(value: number) => checkboxCollectAffiliations(value, index)"
 							/>
-						</span>
-						<span class="personal__form-rowTop-semiBlock-social">
-							<cp-text-input2
-								id="tel_id"
-								v-model="partnerPersonalForm.data.contacts.tel"
-								:circle="false"
-								label-text="Teléfono de la empresa"
-								placeholder="introduzca el enlace"
-							/>
-						</span>
-						<span class="personal__form-rowTop-semiBlock-social">
-							<cp-text-input2
-								id="email_id"
-								v-model="partnerPersonalForm.data.contacts.mail"
-								type="email"
-								:circle="false"
-								label-text="Email"
-								placeholder="introduzca el enlace"
-							/>
-						</span>
-					</div>
+						</div>
+						<span
+							v-if="errors && partnerForm.data.affiliations.length < 1"
+							class="required-input-error-info-leftSide"
+						>
+							{{ errors[0] }}</span
+						>
+					</v-field>
 				</div>
 			</div>
 
-			<!-- <div class="personal__form-rowTop">
-				<div class="personal__form-rowTop-info">
-					<span> Introduce información clave sobre ti </span>
+			<!-- video Business Card -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						Sube el video que explica su servicio y producto o incrusta el
+						enlace desde Youtube o Vimeo
+					</span>
 				</div>
-				<div class="personal__form-rowTop-input">
-					<cp-text-area
-						v-model="partnerPersonalForm.data.selfInfo"
-						text-area-id="selfInfo_id"
-						text-area-placeholder="Introduzca el texto"
+				<div class="partners__form-rowDnD-input">
+					<cp-drag-n-drop
+						v-model="partnerForm.files.videoBusinessCard"
+						:is-single="true"
+						type="video"
+						:max-size="50"
 					/>
 				</div>
 			</div>
 
-			<div class="personal__form-rowTop">
-				<div class="personal__form-rowTop-info">
+			<!-- most Popular Product -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
 					<span>
-						Sube contenido de foto
+						Descargar el producto más popular
 						<cp-info-pop-up
-							id="mediaContent_picture_id"
+							id="Descargar_info"
 							info="El banner debe cargarse a 1100 por 278 píxeles en formato .png"
 						/>
 					</span>
 				</div>
-				<div class="personal__form-rowTop-input">
+				<div class="partners__form-rowDnD-input">
 					<cp-drag-n-drop
-						v-model="partnerPersonalForm.files.mediaContent.picture"
+						v-model="partnerForm.files.mostPopularProduct"
 						:is-single="true"
 						type="image"
 						:max-size="5"
@@ -254,120 +919,209 @@
 				</div>
 			</div>
 
-			<div class="personal__form-rowTop">
-				<div class="personal__form-rowTop-info">
+			<!-- gallery Images -->
+			<div class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
 					<span>
-						Sube contenido de vídeo
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Añadir fotos a la galería
 						<cp-info-pop-up
-							id="mediaContent_video_id"
-							info="El banner debe cargarse a 1100 por 278 píxeles en formato .png"
+							id="galería_info"
+							info="Sube un máximo de 6 fotos que no excedan los 2MB"
 						/>
 					</span>
 				</div>
-				<div class="personal__form-rowTop-input">
-					<cp-drag-n-drop
-						v-model="partnerPersonalForm.files.mediaContent.video"
-						:is-single="true"
-						type="video"
-						:max-size="25"
+				<div class="partners__form-rowDnD-input">
+					<v-field
+						v-slot="{ errors }"
+						:model-value="partnerForm.files.galleryImages"
+						name="gallery_DnD"
+						rules="required_file"
+					>
+						<cp-drag-n-drop
+							v-model="partnerForm.files.galleryImages"
+							:is-multi="true"
+							type="image"
+							:max-size="2"
+							:is-invalid="errors.length > 0"
+						/>
+						<span v-if="errors" class="required-input-error-info-center">{{
+							errors[0]
+						}}</span>
+					</v-field>
+				</div>
+			</div>
+
+			<!-- Registration Data -->
+			<div v-if="!userData" class="partners__form-rowDnD">
+				<div class="partners__form-rowDnD-info">
+					<span>
+						<strong class="partners__form-rowDnD-info-required">*</strong>
+						Detalles de inicio de sesión
+						<cp-info-pop-up
+							id="user_registration_info"
+							info="No se admitirán redes personales"
+						/>
+					</span>
+				</div>
+				<div class="partners__form-rowDnD-input">
+					<div class="partners__form-rowDnD-input-authInfo">
+						<span class="partners__form-rowDnD-semiBlock-authInfo">
+							<v-field
+								v-slot="{ errors }"
+								:model-value="userRegistrationData.username"
+								name="username"
+								rules="required"
+							>
+								<cp-text-input2
+									id="username_id"
+									v-model="userRegistrationData.username"
+									:circle="true"
+									label-text="Nombre de usuario"
+									placeholder="Nombre"
+								/>
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}
+								</span>
+							</v-field>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-authInfo">
+							<v-field
+								v-slot="{ errors }"
+								:model-value="userRegistrationData.username"
+								name="eventHostRegistrationEmail"
+								rules="required"
+							>
+								<cp-text-input2
+									id="email_id"
+									v-model="userRegistrationData.email"
+									:circle="true"
+									label-text="Email"
+									placeholder="example@example.com"
+								/>
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}
+								</span>
+							</v-field>
+						</span>
+
+						<span class="partners__form-rowDnD-semiBlock-authInfo">
+							<v-field
+								v-slot="{ errors }"
+								:model-value="userRegistrationData.password"
+								name="eventHostRegistrationPassword"
+								rules="required|minLength:8"
+							>
+								<cp-text-input2
+									id="pass_id"
+									v-model="userRegistrationData.password"
+									:circle="true"
+									type="password"
+									label-text="Password"
+									placeholder="Password"
+								/>
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}
+								</span>
+							</v-field>
+						</span>
+						<span class="partners__form-rowDnD-semiBlock-authInfo">
+							<v-field
+								v-slot="{ errors }"
+								v-model="passwordConfirmationValue"
+								name="eventHostPasswordConfirmation"
+								rules="required|confirmed:eventHostRegistrationPassword"
+							>
+								<cp-text-input2
+									id="confirmPass_id"
+									v-model="passwordConfirmationValue"
+									:circle="true"
+									type="password"
+									label-text="Confirm Password"
+									placeholder="Password again"
+								/>
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}
+								</span>
+							</v-field>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="partners__form-submit">
+				<div class="partners__form-submit-btnContainer">
+					<cp-button
+						ref="submitBtn"
+						class="partners__form__button"
+						width="maxWidth"
+						size="small"
+						shape="oval"
+						color="yellowGrey"
+						text="submit"
+						:disabled="formSended"
+						@click="submitPartnerForm"
 					/>
 				</div>
-			</div> -->
-
-			<div class="personal__form-submit">
-				<cp-button
-					ref="submitBtn"
-					class="personal__form-submit-btnContainer"
-					width="maxWidth"
-					size="small"
-					disabled
-					shape="oval"
-					color="yellowGrey"
-					text="Publicar"
-					@click="sendPartnerPersonalForm"
-				/>
 			</div>
 		</v-form>
-
-		<div v-if="getMedias.photos.length" class="personal__gallery">
-			<h3>Tu contenido fotográfico</h3>
-			<span>Aquí puedes gestionar el contenido de tus fotos.</span>
-		</div>
-		<cp-media-carousel
-			v-if="getMedias.photos.length"
-			id="gallery_pictures"
-			:is-deletable="true"
-			:media-files-urls="getMedias.photos.map((photo) => photo.file)"
-		/>
-
-		<div v-if="getMedias.videos.length" class="personal__gallery">
-			<h3>Tu contenido de vídeo</h3>
-			<span>Aquí puedes gestionar el contenido de tus vídeos </span>
-		</div>
-		<cp-media-carousel
-			v-if="getMedias.photos.length"
-			id="gallery_videos"
-			:is-deletable="true"
-			:media-files-urls="getMedias.videos.map((video) => video.file)"
-			@delete="deleteMedia"
-		/>
-
-		<div v-if="eventsList?.length" class="personal__event-title">
-			<h3>Eventos que creaste</h3>
-			<span>Ver y editar tus eventos </span>
-		</div>
-		<event-carousel
-			id="organizer-events-carousel"
-			:with-edit-controls="true"
-			class="personal__event-carousel"
-			:event-data="eventsList"
-		/>
 	</div>
 </template>
 
 <script setup lang="ts">
+import { reactive, ref, onBeforeMount, computed } from 'vue';
+import type { CheckOption } from '@shared/gui/types';
 import { toast } from 'vue3-toastify';
 import CpButton from '@shared/gui/CpButton.vue';
+import CpRadioButton from '@shared/gui/CpRadioButton.vue';
+import CpTextInput from '@shared/gui/CpTextInput.vue';
+import CpTextArea from '@shared/gui/CpTextArea.vue';
 import CpDragNDrop from '@shared/gui/CpDragNDrop.vue';
-import {
-	requestAffiliations,
-	requestMyUser,
-	requestEventsList,
-	requestEventsHost,
-	editEventHost,
-} from '@shared/api';
+import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
+import CpMap from '@shared/gui/CpMap.vue';
 import { Form as VForm, Field as VField } from 'vee-validate';
+import {
+	registerPartner,
+	requestCities,
+	requestCategories,
+	requestAffiliations,
+	requestEventsHost, // Добавляем функцию запроса партнера по ID
+} from '@shared/api';
+import registerUserForPartner from '@features/register-user';
+import type {
+	PartnerRegistration,
+	CurrentUser,
+	EventHost,
+} from '@shared/api/types.ts';
+import { useCommonDataStore } from '@stores/common-data-store';
 
-onMounted(() => {
-	isSpin.value = false;
-});
+const commonDataStore = useCommonDataStore();
 
-const partnerName = computed(() => {
-	if (partnerPersonalForm.data.orgType === 'Persona_Natural') {
-		return partnerPersonalForm.data.personalName;
-	} else if (partnerPersonalForm.data.commercialName) {
-		return partnerPersonalForm.data.commercialName;
-	} else {
-		return partnerPersonalForm.data.compName;
+const formSended = ref(false);
+const { $objToFormData } = useNuxtApp();
+
+const userData = ref<CurrentUser | null>(null);
+onBeforeMount(async () => {
+	const storedUserData = localStorage.getItem('myUser');
+	if (storedUserData) {
+		userData.value = JSON.parse(storedUserData);
 	}
-});
-const formVideoSwitcherOptions = [
-	{ optionName: 'Upload File', optionValue: 'File', optionKey: 'FileKey' },
-	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },
-];
-
-const videoFileValue = ref<string | null>('File');
-
-watch(videoFileValue, () => {
-	partnerPersonalForm.data.compVideoLink = '';
-	partnerPersonalForm.files.compVideoFile = null;
+	await fetchInitialData();
 });
 
-const isSpin = ref<boolean>(true);
-const formSending = ref<boolean>(false);
-const personalPartnerForm = ref<HTMLFormElement | null>(null);
-const eventsList = ref<EventCard[] | null>(null);
-const partnerPersonalForm = reactive({
+const partnerForm = reactive<PartnerRegistration>({
 	data: {
 		orgType: '',
 		commercialName: '',
@@ -375,16 +1129,16 @@ const partnerPersonalForm = reactive({
 		ruc: '',
 		startDate: '',
 		user: null,
-		personCount: '',
-		middleAge: '',
-		womenPercentage: '',
+		personCount: null,
+		middleAge: null,
+		womenPercentage: null,
 		orgResume: '',
 		cultureType: [],
 		orgWorkType: '',
 		eventHostAddress: {
 			city: null,
 			address: '',
-			coordinates: '-13.534793, -71.979812',
+			coordinates: '-13.527141525687806, -71.96803909279043',
 		},
 		personalName: '',
 		personalIdentifyingDocument: '',
@@ -408,6 +1162,7 @@ const partnerPersonalForm = reactive({
 		},
 	},
 	files: {
+		personalDocumentScan: null,
 		videoBusinessCard: null,
 		mainBanner: null,
 		compVideoFile: null,
@@ -417,317 +1172,249 @@ const partnerPersonalForm = reactive({
 	},
 });
 
-const orgSphereChecks = ref([]);
-const userData = ref();
-
-const affiliationChecks = ref([]);
-const cityRadioButtons = ref([]);
-const eventHost = ref<EventHost>();
-
-const getMedias = computed(() => {
-	const photoPaths = ['mainBanner', 'mostPopularProduct'];
-	const videoPaths = ['videoBusinessCard', 'compVideoFile'];
-
-	return {
-		photos: photoPaths.reduce((acc: { path: string; file: string }[], path) => {
-			if (partnerPersonalForm.files[path]) {
-				acc.push({
-					path: path,
-					file: partnerPersonalForm.files[path],
-				});
-			}
-
-			return acc;
-		}, []),
-		videos: videoPaths.reduce((acc: { path: string; file: string }[], path) => {
-			if (partnerPersonalForm.files[path]) {
-				acc.push({
-					path: path,
-					file: partnerPersonalForm.files[path],
-				});
-			}
-
-			return acc;
-		}, []),
-	};
+const userRegistrationData = reactive({
+	username: '',
+	email: '',
+	password: '',
 });
 
-onBeforeMount(async () => {
-	await requestPageData();
-});
+const passwordConfirmationValue = ref<string>('');
+const isSpin = ref<boolean>(false);
+const partnerRegForm = ref<HTMLFormElement | null>(null);
 
-const toggleVideoFormat = () => {
-	if (videoFileValue.value === 'File') {
-		partnerPersonalForm.data.compVideoLink = '';
-	} else {
-		partnerPersonalForm.files.compVideoFile = null;
+const radioOptions1 = [
+	{ id: 'emp', value: 'Empresa', label: 'Empresa' },
+	{ id: 'ong', value: 'ONG', label: 'ONG' },
+	{
+		id: 'Organizacion_Cultural',
+		value: 'Organizacion_Cultural',
+		label: 'Organizacion Cultural',
+	},
+	{ id: 'Persona_Natural', value: 'Persona_Natural', label: 'Persona Natural' },
+];
+
+const fetchInitialData = async () => {
+	try {
+		await getPartnerById();
+	} catch (error) {
+		toast.error('Ошибка при загрузке начальных данных');
 	}
 };
 
-const requestPageData = async () => {
+const getPartnerById = async () => {
 	try {
-		const storedUserData = localStorage.getItem('myUser');
-		if (!storedUserData) {
+		if (!userData.value?.eventHostData) {
 			return;
 		}
-		await getCurrentUser();
-		await getEventHostData();
-		await getCities();
-		await getCategories();
-		await getAffiliations();
-		getEventsList();
-		isSpin.value = true;
+		const response = await requestEventsHost(userData.value.eventHostData.id);
+		const partnerData = response.data;
+
+		// Мапим данные партнера в форму
+		mapPartnerDataToForm(partnerData);
 	} catch (error) {
-		toast.error(
-			'Nuestro administrador se comunicará conusted por correo electrónico'
-		);
+		toast.error('Ошибка при получении данных партнера');
+	}
+};
+
+const submitPartnerForm = async () => {
+	const isValid = await partnerRegForm.value?.validate();
+	if (!isValid || !isValid.valid) {
+		toast.error('Форма заполнена неверно');
+
+		return;
+	}
+
+	if (localStorage.getItem('AuthToken')) {
+		toast.error('Сначала выйдите из текущей учетной записи');
+
+		return;
+	}
+
+	isSpin.value = true;
+	formSended.value = true;
+
+	try {
+		if (!userData.value) {
+			const newUserId = await registerUserForPartner(userRegistrationData);
+			if (!newUserId) {
+				throw new Error('Не удалось зарегистрировать пользователя');
+			}
+			partnerForm.data.user = newUserId;
+		} else {
+			partnerForm.data.user = userData.value.id;
+		}
+
+		preparePartnerData();
+		const partnerPayload = $objToFormData(toRaw(partnerForm));
+		await registerPartner(partnerPayload);
+		toast.success('Регистрация прошла успешно');
+		setTimeout(() => {
+			navigateTo('/');
+		}, 2000);
+	} catch (error: any) {
+		toast.error(error.message || 'Ошибка при регистрации партнера');
+		formSended.value = false;
 	} finally {
 		isSpin.value = false;
 	}
 };
 
-const deleteMedia = async (
-	mediaUrl: string,
-	mediaType: 'videos' | 'photos'
-) => {
-	const deletionKey = getMedias.value[mediaType].find(
-		(media) => media.file === mediaUrl
+const preparePartnerData = () => {
+	partnerForm.data.cultureType = selectedCultureTypes.value.map((item) =>
+		Number(item)
 	);
-
-	if (!deletionKey) {
-		return;
-	}
-
-	partnerPersonalForm.files[deletionKey.path] = null;
-
-	try {
-		await editEventHost(userData.value.eventHostData.id, {
-			files: {
-				[deletionKey.path]: null,
-			},
-		});
-	} catch (error) {
-		toast.error('No se pudo eliminar el medio');
-	}
-};
-
-const getCurrentUser = async () => {
-	try {
-		const requestedUserData = await requestMyUser();
-		userData.value = requestedUserData.data;
-	} catch (error) {
-		toast.error('No se pudo obtener información del usuario');
-		navigateTo('/');
-	}
-};
-
-const getEventHostData = async () => {
-	try {
-		eventHost.value = (
-			await requestEventsHost(userData.value.eventHostData.id)
-		).data;
-
-		Object.assign(partnerPersonalForm, buildPartnerEditForm());
-	} catch (error) {
-		toast.error(
-			'Nuestro administrador se comunicará conusted por correo electrónico'
+	partnerForm.data.affiliations = selectedAffiliations.value.map((item) =>
+		Number(item)
+	);
+	if (partnerForm.data.socialMedias) {
+		partnerForm.data.socialMedias = partnerForm.data.socialMedias.filter(
+			(socialMedia) => socialMedia.socialMediaLink
 		);
 	}
 };
 
-const getEventsList = async () => {
-	if (!userData.value?.eventHostData) {
-		return;
-	}
-	const filters: CollectionFilters['events'] = {
-		eventHost: {
-			commercialName: {
-				$eq: userData.value.eventHostData.commercialName,
-			},
-		},
+const selectedCultureTypes = computed(() => partnerForm.data.cultureType);
+
+const selectedAffiliations = computed(() => partnerForm.data.affiliations);
+
+const setCoordinates = (coordinatesFromMap: { coordinates: number[] }) => {
+	partnerForm.data.eventHostAddress.coordinates = `${coordinatesFromMap.coordinates[0]},${coordinatesFromMap.coordinates[1]}`;
+};
+
+const getCoordinates = computed(() => {
+	return partnerForm.data.eventHostAddress.coordinates
+		.split(',')
+		.map((coordinate) => Number(coordinate));
+});
+
+// Функция маппинга данных партнера в форму
+const mapPartnerDataToForm = (source: EventHost) => {
+	const attributes = source.data.attributes || {};
+
+	// Основные поля
+	partnerForm.data.orgType = attributes.orgType || '';
+	partnerForm.data.commercialName = attributes.commercialName || '';
+	partnerForm.data.compName = attributes.compName || '';
+	partnerForm.data.ruc = attributes.ruc || '';
+	partnerForm.data.startDate = attributes.startDate || '';
+	partnerForm.data.personCount = attributes.personCount || null;
+	partnerForm.data.middleAge = attributes.middleAge || null;
+	partnerForm.data.womenPercentage = attributes.womenPercentage || null;
+	partnerForm.data.orgResume = attributes.orgResume || '';
+	partnerForm.data.orgWorkType = attributes.orgWorkType || '';
+	partnerForm.data.personalName = attributes.personalName || '';
+	partnerForm.data.personalIdentifyingDocument =
+		attributes.personalIdentifyingDocument || '';
+	partnerForm.data.productDescriptionLink =
+		attributes.productDescriptionLink || '';
+	partnerForm.data.productDescriptionText =
+		attributes.productDescriptionText || '';
+	partnerForm.data.webpage = attributes.webpage || '';
+	partnerForm.data.compVideoLink = attributes.compVideoLink || '';
+	partnerForm.data.digitalCatalog = attributes.digitalCatalog || '';
+
+	// Адрес
+	partnerForm.data.eventHostAddress = {
+		coordinates:
+			attributes.eventHostAddress?.coordinates ||
+			'-13.527141525687806, -71.96803909279043',
+		city: attributes.eventHostAddress?.city?.data?.id || null,
+		address: attributes.eventHostAddress?.address || '',
 	};
 
-	try {
-		const events = await requestEventsList(filters);
-		eventsList.value = events.data.data;
-	} catch (error) {
-		toast.error('No se pudieron cargar eventos');
+	// Тип культуры
+	partnerForm.data.cultureType =
+		attributes.cultureType?.data?.map((item: any) => item.id) || [];
+
+	// Аффилиации
+	partnerForm.data.affiliations =
+		attributes.affiliations?.data?.map((item: any) => item.id) || [];
+
+	// Социальные сети
+	if (attributes.socialMedias && attributes.socialMedias.length > 0) {
+		partnerForm.data.socialMedias = attributes.socialMedias
+			.map((item: any) => ({
+				socialMediaName: item.socialMediaName || '',
+				socialMediaLink: item.socialMediaLink || '',
+			}))
+			.filter(
+				(item: any) =>
+					item.socialMediaLink && item.socialMediaLink.trim() !== ''
+			);
 	}
-};
 
-const buildPartnerEditForm = () => {
-	if (!eventHost.value) {
-		return partnerPersonalForm;
-	}
-
-	return {
-		data: {
-			orgType: eventHost.value.data.attributes.orgType || '',
-			commercialName: eventHost.value.data.attributes?.commercialName || '',
-			compName: eventHost.value.data.attributes?.compName || '',
-			ruc: eventHost.value.data.attributes?.ruc || '',
-			startDate: eventHost.value.data.attributes?.startDate || '',
-			personCount: eventHost.value.data.attributes?.personCount || null,
-			middleAge: eventHost.value.data.attributes?.middleAge || null,
-			womenPercentage: eventHost.value.data.attributes?.womenPercentage || null,
-			orgResume: eventHost.value.data.attributes?.orgResume || '',
-			cultureType:
-				eventHost.value.data.attributes?.cultureType?.data.map(
-					(item: any) => item.id
-				) || [],
-			orgWorkType: eventHost.value.data.attributes?.orgWorkType || '',
-			eventHostAddress: {
-				city:
-					eventHost.value.data.attributes?.eventHostAddress?.city.data.id ||
-					null,
-				address: '', // Default value as it's not in eventHost.value.data
-				coordinates: '-13.534793, -71.979812', // Static value
-			},
-			personalName: eventHost.value.data.attributes?.personalName || '',
-			personalIdentifyingDocument:
-				eventHost.value.data.attributes?.personalIdentifyingDocument || '',
-			productDescriptionLink:
-				eventHost.value.data.attributes?.productDescriptionLink || '',
-			productDescriptionText:
-				eventHost.value.data.attributes?.productDescriptionText || '',
-			webpage: eventHost.value.data.attributes?.webpage || '',
-			compVideoLink: eventHost.value.data.attributes?.compVideoLink || '',
-			affiliations:
-				eventHost.value.data.attributes?.affiliations?.data.map(
-					(item: any) => item.id
-				) || [],
-			socialMedias: [
-				'TikTok',
-				'Facebook',
-				'Instagram',
-				'YouTube',
-				'LinkedIn',
-			].map((name) => ({
-				socialMediaName: name,
-				socialMediaLink:
-					eventHost.value?.data.attributes.socialMedias?.find(
-						(media: any) => media.socialMediaName === name
-					)?.socialMediaLink || '',
-			})),
-			digitalCatalog: eventHost.value.data.attributes?.digitalCatalog || '',
-			contacts: {
-				place: eventHost.value.data.attributes?.contacts?.place || '',
-				tel: eventHost.value.data.attributes?.contacts?.tel || '',
-				mail: eventHost.value.data.attributes?.contacts?.mail || '',
-			},
-		},
-		files: {
-			personalDocumentScan: null,
-			videoBusinessCard: null,
-			mainBanner: null,
-			compVideoFile: null,
-			mostPopularProduct: null,
-			productDescriptionFile: null,
-			galleryImages: null,
-		},
-	};
-};
-
-const getCategories = async () => {
-	try {
-		const categories = await requestCategories();
-		orgSphereChecks.value = categories.data.data.map((category: any) => ({
-			id: category.id,
-			value: category.attributes.cultureTypeName,
-			label: category.attributes.cultureTypeName,
-		}));
-	} catch (error) {
-		toast.error(
-			'Nuestro administrador se comunicará conusted por correo electrónico'
-		);
-	}
-};
-
-const getAffiliations = async () => {
-	try {
-		const affiliations = await requestAffiliations();
-		affiliationChecks.value = affiliations.data.data.map(
-			(affiliation: any) => ({
-				id: affiliation.id,
-				value: affiliation.attributes.affiliationName,
-				label: affiliation.attributes.affiliationName,
-			})
-		);
-	} catch (error) {
-		toast.error(
-			'Nuestro administrador se comunicará conusted por correo electrónico'
-		);
-	}
-};
-
-const getCities = async () => {
-	try {
-		const cities = await requestCities();
-		cityRadioButtons.value = cities.data.data.map((city: any) => ({
-			id: city.id,
-			value: city.attributes.cityName,
-			label: city.attributes.cityName,
-		}));
-	} catch (error) {
-		toast.error(
-			'Nuestro administrador se comunicará conusted por correo electrónico'
-		);
-	}
-};
-const checkboxCollectCultureType = (value: number, index: number) => {
-	if (value) {
-		partnerPersonalForm.data.cultureType.push(value);
-	} else {
-		partnerPersonalForm.data.cultureType.splice(index, 1);
-	}
-};
-
-const sendPartnerPersonalForm = async () => {
-	await personalPartnerForm.value?.validate();
-	isSpin.value = true;
-	formSending.value = true;
-
-	try {
-		await editEventHost(userData.value.eventHostData.id, {
-			data: partnerPersonalForm.data,
-		});
-	} catch (error) {
-		toast.error(
-			'Nuestro administrador se comunicará conusted por correo electrónico'
-		);
-	} finally {
-		isSpin.value = true;
-		formSending.value = true;
+	// Контакты
+	if (attributes.contacts) {
+		partnerForm.data.contacts.place = attributes.contacts.place || '';
+		partnerForm.data.contacts.tel = attributes.contacts.tel || '';
+		partnerForm.data.contacts.mail = attributes.contacts.mail || '';
 	}
 };
 </script>
 
 <style scoped lang="scss">
-.personal {
-	box-sizing: border-box;
-	padding: 0 20px 0 20px;
-
-	h2 {
-		font-family: 'Poppins-Medium';
-		font-size: 82px;
-		color: $soft-black;
-		width: 100%;
-		text-align: center;
-		line-height: 123px;
-
-		@media screen and (max-width: 1280px) {
-			font-size: 72px;
-			line-height: 108px;
+.partners {
+	&__main {
+		padding: 0 5%;
+		@media #{$screen-tablet} {
+			margin-top: 10px;
 		}
 
-		@media screen and (max-width: 768px) {
-			font-size: 40px;
-			line-height: 60px;
+		@media #{$screen-desktop} {
+			margin-top: 33px;
+		}
+	}
+
+	&__title {
+		margin-bottom: 45px;
+		font-size: 70px;
+		font-family: $font-family-medium-expanded;
+
+		@media (max-width: 1265px) {
+			line-height: 80px;
 		}
 
-		@media screen and (max-width: 466px) {
+		@media (max-width: 1024px) {
+			font-size: 35px;
+			line-height: 45px;
+		}
+
+		@media (max-width: 645px) {
+			font-size: 25px;
+			line-height: 35px;
+		}
+	}
+
+	&__subtitle {
+		width: 50%;
+		h3 {
 			font-size: 30px;
-			line-height: 39px;
+			font-weight: 500;
+			line-height: 42px;
+			color: #353333;
+
+			@media (max-width: 1265px) {
+				line-height: 80px;
+			}
+
+			@media (max-width: 1024px) {
+				font-size: 30px;
+				line-height: 35px;
+			}
+
+			@media (max-width: 645px) {
+				font-size: 20px;
+				line-height: 30px;
+			}
+		}
+
+		span {
+			display: inline-block;
+			margin-top: 15px;
+			font-size: 18px;
+			font-weight: 400;
+			line-height: 28.8px;
+			color: #888888;
 		}
 	}
 
@@ -768,10 +1455,7 @@ const sendPartnerPersonalForm = async () => {
 				font-size: 24px;
 				font-weight: 500;
 				line-height: 33.6px;
-				color: $soft-black;
-
-				@media screen and (max-width: 1280px) {
-				}
+				color: #353333;
 
 				@media (max-width: 955px) {
 					width: 100%;
@@ -786,7 +1470,6 @@ const sendPartnerPersonalForm = async () => {
 					color: red;
 					font-size: 32px;
 					margin-left: -20px;
-
 					@media (max-width: 430px) {
 						margin-left: -15px !important;
 						padding-left: 5px !important;
@@ -799,53 +1482,6 @@ const sendPartnerPersonalForm = async () => {
 				align-items: center;
 				flex-direction: column;
 				width: 55%;
-
-				&-horizontal {
-					width: 55%;
-					display: flex;
-
-					div {
-						margin-right: 21px;
-						width: 45%;
-					}
-
-					@media screen and (max-width: 955px) {
-						margin-top: 15px;
-						width: 100%;
-					}
-
-					@media screen and (max-width: 530px) {
-						margin-top: 0;
-						flex-direction: column;
-						width: 100%;
-
-						div {
-							margin-top: 15px;
-							width: 100%;
-						}
-					}
-				}
-
-				&-checks {
-					display: flex;
-					height: 250px;
-					align-items: center;
-					flex-direction: column;
-					flex-wrap: wrap;
-					width: 55%;
-				}
-
-				&-socialsAndContacts {
-					span {
-						@media (max-width: 720px) {
-							width: 100%;
-						}
-					}
-					@media (max-width: 720px) {
-						flex-direction: column;
-						align-items: flex-start !important;
-					}
-				}
 
 				@media (max-width: 955px) {
 					width: 100%;
@@ -863,137 +1499,35 @@ const sendPartnerPersonalForm = async () => {
 					justify-content: flex-start;
 					width: 100%;
 				}
-			}
-		}
 
-		&-rowTop {
-			display: flex;
-			align-items: flex-start;
-			margin: 60px 0 60px 0;
-
-			@media (max-width: 955px) {
-				flex-direction: column;
-				align-items: flex-start;
-			}
-
-			&-info {
-				display: flex;
-				align-items: center;
-				width: 55%;
-				padding-right: 55px;
-				padding-top: 5px;
-				font-size: 24px;
-				font-weight: 500;
-				line-height: 33.6px;
-				color: $soft-black;
-
-				@media (max-width: 955px) {
-					width: 100%;
-					padding-right: 0;
-				}
-
-				span {
-					padding-top: 5px;
-					text-align: start;
-				}
-
-				&-required {
-					color: red;
-					font-size: 32px;
-					margin-left: -20px;
-
-					@media (max-width: 430px) {
-						margin-left: -15px !important;
-						padding-left: 5px !important;
-					}
-				}
-			}
-
-			&-input {
-				display: flex;
-				align-items: center;
-				flex-direction: column;
-				width: 55%;
-
-				&-horizontal {
-					width: 55%;
-					display: flex;
-
-					div {
-						margin-right: 21px;
-						width: 45%;
-					}
-				}
-
-				&-checks {
-					display: flex;
-					height: 250px;
-					align-items: flex-start;
-					flex-direction: column;
-					flex-wrap: wrap;
-					width: 55%;
-
-					div {
-						width: 50%;
-						margin-right: 15px;
-					}
-
-					@media screen and (max-width: 1080px) {
-						height: 350px;
-					}
-
-					@media screen and (max-width: 960px) {
-						height: 380px;
-					}
-
-					@media screen and (max-width: 955px) {
-						margin-top: 15px;
-						width: 100%;
-						height: 250px;
-					}
-
-					@media screen and (max-width: 560px) {
-						height: 380px;
-					}
-
-					@media screen and (max-width: 430px) {
-						height: auto;
-
-						div {
-							width: 100%;
-							margin-right: 15px;
-						}
-					}
-				}
-
-				&-socialsAndContacts {
+				&-flexBlock {
 					span {
-						@media (max-width: 720px) {
-							width: 100%;
+						width: calc(50% - 7.5px);
+						&:last-child {
+							margin-left: 15px;
+						}
+
+						@media (max-width: 610px) {
+							// width: 100%;
+							&:last-child {
+								margin-left: 0;
+								margin-top: 5px;
+							}
 						}
 					}
 
-					@media (max-width: 720px) {
+					@media (max-width: 610px) {
 						flex-direction: column;
 						align-items: flex-start !important;
 					}
 				}
 
-				@media (max-width: 955px) {
-					margin-top: 20px;
-					width: 100%;
-				}
+				&-subInputs {
+					margin-top: 15px;
 
-				input {
-					width: 100%;
-				}
-				div {
-					display: flex;
-					flex-wrap: wrap;
-					align-items: center;
-					justify-content: flex-start;
-					justify-content: space-between;
-					width: 100%;
+					&-item {
+						margin-top: 20px;
+					}
 				}
 			}
 
@@ -1012,9 +1546,138 @@ const sendPartnerPersonalForm = async () => {
 						width: 100%;
 						min-height: 250px;
 					}
+				}
+
+				&-input {
+					width: 50%;
+					padding: 10px;
+					margin-top: 15px;
+
+					&-maxWidth {
+						width: 100%;
+						min-height: 250px;
+					}
+
+					&-subInputs {
+						margin-top: 15px;
+					}
+				}
+			}
+		}
+
+		&-rowDnD {
+			display: flex;
+			align-items: flex-start;
+			margin: 60px 0 60px 0;
+
+			@media (max-width: 955px) {
+				flex-direction: column;
+				align-items: flex-start;
+			}
+
+			&-info {
+				display: flex;
+				align-items: center;
+				width: 55%;
+				padding-right: 55px;
+				padding-top: 5px;
+				font-size: 24px;
+				font-weight: 500;
+				line-height: 33.6px;
+				color: #353333;
+
+				@media (max-width: 955px) {
+					width: 100%;
+					padding-right: 0;
+				}
+
+				span {
+					padding-top: 5px;
+					text-align: start;
+				}
+
+				&-required {
+					color: red;
+					font-size: 32px;
+					margin-left: -20px;
+					@media (max-width: 430px) {
+						margin-left: -15px !important;
+						padding-left: 5px !important;
+					}
+				}
+			}
+
+			&-input {
+				display: flex;
+				align-items: center;
+				flex-direction: column;
+				width: 55%;
+
+				@media (max-width: 955px) {
+					margin-top: 20px;
+					width: 100%;
+				}
+
+				input {
+					width: 100%;
+				}
+				div {
+					display: flex;
+					flex-wrap: wrap;
+					align-items: center;
+					justify-content: flex-start;
+					justify-content: space-between;
+					width: 100%;
+				}
+
+				&-authInfo {
+					display: flex;
+					flex-direction: column;
+					justify-content: space-between;
+					align-items: flex-start !important;
+				}
+
+				&-socialsAndContacts {
+					span {
+						@media (max-width: 720px) {
+							width: 100%;
+						}
+					}
+					@media (max-width: 720px) {
+						flex-direction: column;
+						align-items: flex-start !important;
+					}
+				}
+
+				&-subInputs {
+					margin-top: 15px;
+				}
+			}
+
+			&-semiBlock {
+				display: flex !important;
+				flex-direction: column !important;
+				min-width: 100%;
+				min-height: 250px;
+
+				&-authInfo {
+					width: 70%;
+					margin-top: 15px;
+					padding: 10px;
 
 					@media (max-width: 720px) {
 						width: 100%;
+					}
+				}
+
+				&-social {
+					width: 50%;
+					padding: 10px;
+					margin-top: 15px;
+
+					&-maxWidth {
+						width: 100%;
+						min-height: 250px;
 					}
 				}
 
@@ -1041,8 +1704,69 @@ const sendPartnerPersonalForm = async () => {
 			margin-top: 30px;
 		}
 
+		&-soloInput {
+			display: flex;
+			justify-content: end;
+			margin: 60px 0 60px 0;
+			width: 100%;
+
+			&__container {
+				width: 50%;
+			}
+
+			&__socials {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				margin-left: -10px;
+
+				&-item {
+					width: 100%;
+					padding: 10px;
+					margin-top: 15px;
+
+					&-block {
+						display: flex;
+						width: 100%;
+						margin-bottom: 15px;
+					}
+				}
+			}
+
+			&__title {
+				display: flex;
+				flex-direction: column;
+
+				&-main {
+					font-size: 30px;
+					line-height: 42px;
+					font-weight: 500;
+					color: #353333;
+					margin-bottom: 12px;
+
+					&-required {
+						color: red;
+						font-size: 32px;
+						margin-left: -20px;
+						@media (max-width: 430px) {
+							margin-left: -15px !important;
+							padding-left: 5px !important;
+						}
+					}
+				}
+
+				&-second {
+					font-size: 18px;
+					line-height: 28.8px;
+					font-weight: 400;
+					color: #888888;
+					margin-bottom: 20px;
+				}
+			}
+		}
+
 		&-submit {
-			box-sizing: border-box;
+			margin-bottom: 60px;
 			padding: 0 15%;
 			display: flex;
 			justify-content: space-around;
@@ -1053,51 +1777,10 @@ const sendPartnerPersonalForm = async () => {
 			}
 		}
 	}
+}
 
-	&__gallery {
-		box-sizing: border-box;
-
-		h3 {
-			color: $soft-black;
-			font-size: 34px;
-			line-height: 51px;
-			margin-top: 70px;
-		}
-
-		span {
-			color: $gray;
-			font-size: 16px;
-			line-height: 29px;
-		}
-
-		@media screen and (max-width: 768px) {
-			margin-bottom: 35px;
-		}
-	}
-
-	&__event {
-		&-title {
-			h3 {
-				color: $soft-black;
-				font-size: 34px;
-				line-height: 51px;
-				margin-top: 70px;
-			}
-
-			span {
-				color: $gray;
-				font-size: 16px;
-				line-height: 29px;
-
-				@media screen and (max-width: 768px) {
-					margin-bottom: 35px;
-				}
-			}
-		}
-		&-carousel {
-			margin-bottom: 70px;
-		}
-	}
+.partners__form__button {
+	margin-top: 20px;
 }
 
 .required-input {
@@ -1140,6 +1823,60 @@ const sendPartnerPersonalForm = async () => {
 				justify-content: space-around;
 				line-height: 35px;
 			}
+		}
+	}
+}
+
+.cascade-error {
+	&-leftSide {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		color: crimson;
+		justify-content: flex-start;
+		line-height: 35px;
+		margin-top: -15px;
+	}
+
+	&-center {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		color: crimson;
+		justify-content: space-around;
+		line-height: 35px;
+		margin-top: -15px;
+	}
+}
+
+.input-laabel {
+	margin-bottom: 15px;
+	font-size: 22px;
+	line-height: 35.2px;
+	color: #353333;
+}
+.partnerRegistration__map {
+	width: 100%;
+	height: 40vh;
+	main {
+		border-radius: 30px;
+		overflow: hidden;
+	}
+
+	@media screen and (max-width: 600px) {
+		height: 50vh;
+	}
+
+	@media screen and (max-width: 520px) {
+		height: 40vh;
+	}
+}
+.full-width {
+	&-map {
+		@media screen and (max-width: 955px) {
+			display: flex;
+			justify-content: space-around;
+			width: 100%;
 		}
 	}
 }

@@ -6,7 +6,7 @@ export type PartnerRegistration = {
 		commercialName: string;
 		compName: string;
 		ruc: string;
-		startDate: string;
+		startDate: Date | string;
 		personCount: number | null;
 		middleAge: number | null;
 		womenPercentage: number | null;
@@ -391,17 +391,17 @@ export type CurrentUser =	{
 			createdAt: Date,
 			updatedAt: Date,
 		},
-		eventHostData: EventHost['data']['attributes'],
+		eventHostData: EventHost['data']['attributes'] & { id: EventHost['data']['id'] },
 	};
 
 	type Address<T> = {
 			coordinates: string;
-			city: T;
+			city: T | null;
 			address: string;
 		};
 
-type CultureType = {
-		id: 2,
+export type CultureType = {
+		id: number,
 		attributes: {
 			cultureTypeName: string,
 			createdAt: string,
@@ -429,4 +429,16 @@ export type AboutPlatform = {
 export type BaseStrapiResponse<T> = {
 	id: number,
 	attributes: T,
+};
+
+export type Affiliation = {
+	id: number,
+	attributes: {
+		affiliationName: string,
+		createdAt: string,
+		updatedAt: string,
+		publishedAt: string,
+		locale: string,
+		affiliationCode: string
+	}
 };

@@ -8,7 +8,8 @@
 			"@features/*": ["./features/*"],
 			"@styles/*": ["./app/styles/*"],
 			"@app/*": ["./app/*"],
-			"@widgets/*": ["./widgets/*"]
+			"@widgets/*": ["./widgets/*"],
+			"@stores/*": ["./stores/*"]
 		}
 	}
 }

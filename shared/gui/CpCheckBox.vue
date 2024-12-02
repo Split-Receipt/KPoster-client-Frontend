@@ -29,7 +29,7 @@
 import type { CheckOption } from './types';
 
 type CheckEmits = {
-	(event: 'update:checkboxUpdate', eventData: string | CheckOption): void;
+	(event: 'update:checkboxUpdate', eventData: string | CheckOption | number): void;
 };
 type Props = {
 	option: CheckOption;
