@@ -88,7 +88,6 @@ onBeforeMount(() => {
 	}
 
 	&-text {
-		color: $gray;
 		font-size: 22px;
 		font-style: normal;
 		font-weight: 400;

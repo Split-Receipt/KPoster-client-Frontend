@@ -4,8 +4,8 @@ export const footerLists = {
 		listItems: [
 			{
 				id: 1,
-				text: 'referencia',
-				href: '#',
+				text: 'Sobre la plataforma',
+				href: '/about-us',
 			},
 			{
 				id: 2,
