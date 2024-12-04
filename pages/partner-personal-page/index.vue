@@ -29,6 +29,7 @@
 							v-model="partnerForm.data.orgType"
 							:options="commonDataStore.getOrgTypesOptions"
 							name="orgType"
+							return-value="id"
 							:active-id="partnerForm.data.orgType"
 							style="margin-left: -30px"
 						/>
@@ -1345,16 +1346,6 @@ const mainProdSwitcherOptions = [
 	{ optionName: 'Type text', optionValue: 'Text', optionKey: 'TextKey' },
 ];
 
-watch(mainProdValue, () => {
-	partnerForm.files.productDescriptionFile = null;
-	partnerForm.data.productDescriptionLink = '';
-	partnerForm.data.productDescriptionText = '';
-});
-watch(compVideoValue, () => {
-	partnerForm.data.compVideoLink = '';
-	partnerForm.files.compVideoFile = null;
-});
-
 const fetchInitialData = async () => {
 	try {
 		await getPartnerById();
@@ -1487,6 +1478,10 @@ const preparePartnerData = () => {
 	partnerForm.data.affiliations = selectedAffiliations.value.map((item) =>
 		Number(item)
 	);
+
+	prepareMainProductDescriptionFields();
+	prepareCompVideoFields();
+
 	if (partnerForm.data.socialMedias) {
 		partnerForm.data.socialMedias = partnerForm.data.socialMedias
 			.map((socialMedia: SocialMedia) => {
@@ -1500,6 +1495,44 @@ const preparePartnerData = () => {
 					socialMedia.socialMediaLink &&
 					socialMedia.socialMediaLink.trim() !== ''
 			);
+	}
+};
+
+const prepareMainProductDescriptionFields = () => {
+	switch (mainProdValue.value) {
+		case 'File':
+			{
+				partnerForm.data.productDescriptionLink = '';
+				partnerForm.data.productDescriptionText = '';
+			}
+			break;
+		case 'Link':
+			{
+				partnerForm.files.productDescriptionFile = null;
+				partnerForm.data.productDescriptionText = '';
+			}
+			break;
+		case 'Text':
+			{
+				partnerForm.data.productDescriptionLink = '';
+				partnerForm.files.productDescriptionFile = null;
+			}
+			break;
+	}
+};
+
+const prepareCompVideoFields = () => {
+	switch (compVideoValue.value) {
+		case 'File':
+			{
+				partnerForm.data.compVideoLink = '';
+			}
+			break;
+		case 'Link':
+			{
+				partnerForm.files.compVideoFile = null;
+			}
+			break;
 	}
 };
 
