@@ -2,11 +2,8 @@
 	<div class="partners__main">
 		<cp-spinner :is-spinned="isSpin" />
 		<h1 class="partners__title">
-			Ingresa tus datos para registrarte en el Portal Cultural del Cusco
+			Tu cuenta personal de organizador de eventos
 		</h1>
-		<div class="partners__subtitle">
-			<h3>Llene el formulario de registro</h3>
-		</div>
 		<v-form ref="partnerRegForm">
 			<h3>{{ $t('partners_formTitle') }}</h3>
 
@@ -1070,115 +1067,6 @@
 				@delete-photo="(value: CpMediaCardProps['item']) => deleteFile(value, 'galleryImages')"
 			/>
 
-			<!-- Registration Data -->
-			<div v-if="!userData" class="partners__form-rowDnD">
-				<div class="partners__form-rowDnD-info">
-					<span>
-						<strong class="partners__form-rowDnD-info-required">*</strong>
-						Detalles de inicio de sesión
-						<cp-info-pop-up
-							id="user_registration_info"
-							info="No se admitirán redes personales"
-						/>
-					</span>
-				</div>
-				<div class="partners__form-rowDnD-input">
-					<div class="partners__form-rowDnD-input-authInfo">
-						<span class="partners__form-rowDnD-semiBlock-authInfo">
-							<v-field
-								v-slot="{ errors }"
-								:model-value="userRegistrationData.username"
-								name="username"
-								rules="required"
-							>
-								<cp-text-input2
-									id="username_id"
-									v-model="userRegistrationData.username"
-									:circle="true"
-									label-text="Nombre de usuario"
-									placeholder="Nombre"
-								/>
-								<span
-									v-if="errors.length"
-									class="required-input-error-info-center"
-								>
-									{{ errors[0] }}
-								</span>
-							</v-field>
-						</span>
-						<span class="partners__form-rowDnD-semiBlock-authInfo">
-							<v-field
-								v-slot="{ errors }"
-								:model-value="userRegistrationData.username"
-								name="eventHostRegistrationEmail"
-								rules="required"
-							>
-								<cp-text-input2
-									id="email_id"
-									v-model="userRegistrationData.email"
-									:circle="true"
-									label-text="Email"
-									placeholder="example@example.com"
-								/>
-								<span
-									v-if="errors.length"
-									class="required-input-error-info-center"
-								>
-									{{ errors[0] }}
-								</span>
-							</v-field>
-						</span>
-
-						<span class="partners__form-rowDnD-semiBlock-authInfo">
-							<v-field
-								v-slot="{ errors }"
-								:model-value="userRegistrationData.password"
-								name="eventHostRegistrationPassword"
-								rules="required|minLength:8"
-							>
-								<cp-text-input2
-									id="pass_id"
-									v-model="userRegistrationData.password"
-									:circle="true"
-									type="password"
-									label-text="Password"
-									placeholder="Password"
-								/>
-								<span
-									v-if="errors.length"
-									class="required-input-error-info-center"
-								>
-									{{ errors[0] }}
-								</span>
-							</v-field>
-						</span>
-						<span class="partners__form-rowDnD-semiBlock-authInfo">
-							<v-field
-								v-slot="{ errors }"
-								v-model="passwordConfirmationValue"
-								name="eventHostPasswordConfirmation"
-								rules="required|confirmed:eventHostRegistrationPassword"
-							>
-								<cp-text-input2
-									id="confirmPass_id"
-									v-model="passwordConfirmationValue"
-									:circle="true"
-									type="password"
-									label-text="Confirm Password"
-									placeholder="Password again"
-								/>
-								<span
-									v-if="errors.length"
-									class="required-input-error-info-center"
-								>
-									{{ errors[0] }}
-								</span>
-							</v-field>
-						</span>
-					</div>
-				</div>
-			</div>
-
 			<div class="partners__form-submit">
 				<div class="partners__form-submit-btnContainer">
 					<cp-button
@@ -1219,13 +1107,11 @@ import CpSwitcher from '@shared/gui/CpSwitcher.vue';
 import { Form as VForm, Field as VField } from 'vee-validate';
 import CpMediaCarousel from '@shared/gui/CpMediaCarousel.vue';
 import {
-	registerPartner,
 	requestEventsHost,
 	deleteMedia,
 	requestEventsList,
 	editEventHost,
 } from '@shared/api';
-import registerUserForPartner from '@features/register-user';
 import type {
 	PartnerRegistration,
 	CurrentUser,
@@ -1249,6 +1135,8 @@ onBeforeMount(async () => {
 	const storedUserData = localStorage.getItem('myUser');
 	if (storedUserData) {
 		userData.value = JSON.parse(storedUserData);
+	} else {
+		navigateTo('/');
 	}
 	await fetchInitialData();
 });
@@ -1436,7 +1324,7 @@ const getPartnerById = async () => {
 const submitPartnerForm = async () => {
 	const isValid = await partnerRegForm.value?.validate();
 	if (!isValid || !isValid.valid) {
-		toast.error('Форма заполнена неверно');
+		toast.error('Algunos campos están completados incorrectamente');
 
 		return;
 	}
@@ -1445,16 +1333,6 @@ const submitPartnerForm = async () => {
 	formSended.value = true;
 
 	try {
-		if (!userData.value) {
-			const newUserId = await registerUserForPartner(userRegistrationData);
-			if (!newUserId) {
-				throw new Error('Не удалось зарегистрировать пользователя');
-			}
-			partnerForm.data.user = newUserId;
-		} else {
-			partnerForm.data.user = userData.value.id;
-		}
-
 		preparePartnerData();
 		const partnerPayload = $objToFormData(toRaw(partnerForm));
 		if (userData.value?.eventHostData) {
@@ -1462,9 +1340,9 @@ const submitPartnerForm = async () => {
 		} else {
 			throw new Error('No se pudo encontrar el usuario');
 		}
-		toast.success('Регистрация прошла успешно');
+		toast.success('Información actualizada exitosamente');
 	} catch (error: any) {
-		toast.error(error.message || 'Ошибка при регистрации партнера');
+		toast.error('No se pudo actualizar la información');
 		formSended.value = false;
 	} finally {
 		isSpin.value = false;

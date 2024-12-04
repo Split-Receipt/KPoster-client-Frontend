@@ -12,7 +12,7 @@ import { loginUser, requestMyUser } from '@shared/api';
 		localStorage.setItem('myUser', JSON.stringify(myUser.data));
 		window.dispatchEvent(new CustomEvent('login', { detail: myUser.data }));
 	} catch (e) {
-		console.error(e);
+		throw new Error('No se pudo iniciar sesión');
 	}
 
  };

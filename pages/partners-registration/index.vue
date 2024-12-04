@@ -27,8 +27,9 @@
 					>
 						<cp-radio-button
 							v-model="partnerRegistrationForm.data.orgType"
-							:options="radioOptions1"
+							:options="commonDataStore.getOrgTypesOptions"
 							name="orgType"
+							return-value="id"
 							style="margin-left: -30px"
 						/>
 						<span v-if="errors" class="required-input-error-info-leftSide">{{
@@ -469,7 +470,7 @@
 				</div>
 				<div class="partners__form-row-input">
 					<v-field
-						v-if="orgSphereChecks.length > 0"
+						v-if="commonDataStore.getCultureTypesOptions.length > 0"
 						v-slot="{ errors }"
 						name="cultureType"
 						rules="require_checkbox"
@@ -477,7 +478,7 @@
 					>
 						<div>
 							<cp-check-box
-								v-for="(item, index) in orgSphereChecks"
+								v-for="(item, index) in commonDataStore.getCultureTypesOptions"
 								:key="item.value"
 								:option="item"
 								return-value="id"
@@ -697,7 +698,7 @@
 					>
 						<cp-radio-button
 							v-model="partnerRegistrationForm.data.eventHostAddress.city"
-							:options="cityRadioButtons"
+							:options="commonDataStore.getCityOptions"
 							name="radio2"
 							return-value="id"
 							style="margin-left: -30px"
@@ -874,7 +875,7 @@
 					>
 						<div>
 							<cp-check-box
-								v-for="(item, index) in affiliationChecks"
+								v-for="(item, index) in commonDataStore.getAffiliationsOptions"
 								:key="item.value"
 								:option="item"
 								return-value="id"
@@ -1105,13 +1106,13 @@ import CpMap from '@shared/gui/CpMap.vue';
 import type { CurrentUser, PartnerRegistration } from '@shared/api/types.ts';
 import {
 	registerPartner,
-	requestCities,
-	requestCategories,
-	requestAffiliations,
 } from '@shared/api';
 import registerUserForPartner from '@features/register-user';
 import { Form as VForm, Field as VField } from 'vee-validate';
 import CpTextArea from '@shared/gui/CpTextArea.vue';
+import { useCommonDataStore } from '@stores/common-data-store';
+
+const commonDataStore = useCommonDataStore();
 
 const formSended = ref(false);
 const { $objToFormData } = useNuxtApp();
@@ -1122,24 +1123,9 @@ onBeforeMount(async () => {
 	if (storedUserData) {
 		userData.value = JSON.parse(storedUserData);
 	}
-	await getCities();
-	await getCategories();
-	await getAffiliations();
 });
 
 // test values ----------------------------------------------------------
-const radioOptions1 = [
-	{ id: 'emp', value: 'Empresa', label: 'Empresa' },
-	{ id: 'ong', value: 'ONG', label: 'ONG' },
-	{
-		id: 'Organizacion Cultural',
-		value: 'Organizacion_Cultural',
-		label: 'Organizacion Cultural',
-	},
-	{ id: 'Persona Natural', value: 'Persona_Natural', label: 'Persona Natural' },
-];
-
-const cityRadioButtons = ref([]);
 
 const docTypeOptions = [
 	{
@@ -1170,11 +1156,6 @@ const mainProdSwitcherOptions = [
 	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },
 	{ optionName: 'Type text', optionValue: 'Text', optionKey: 'TextKey' },
 ];
-
-const orgSphereChecks = ref([]);
-
-const affiliationChecks = ref([]);
-
 // ----------------------------------------------------------------------
 
 const partnerRegistrationForm = reactive<PartnerRegistration>({
@@ -1351,53 +1332,6 @@ const createPartner = async () => {
 			toast.error(error.error.message);
 		}
 		toast.error('Error al intentar crear un organizador');
-	}
-};
-
-const getCities = async () => {
-	try {
-		const cities = await requestCities();
-		cityRadioButtons.value = cities.data.data.map((city: any) => ({
-			id: city.id,
-			value: city.attributes.cityName,
-			label: city.attributes.cityName,
-		}));
-	} catch (error) {
-		toast.error(
-			'Nuestro administrador se comunicará conusted por correo electrónico'
-		);
-	}
-};
-
-const getCategories = async () => {
-	try {
-		const categories = await requestCategories();
-		orgSphereChecks.value = categories.data.data.map((category: any) => ({
-			id: category.id,
-			value: category.attributes.cultureTypeName,
-			label: category.attributes.cultureTypeName,
-		}));
-	} catch (error) {
-		toast.error(
-			'Nuestro administrador se comunicará conusted por correo electrónico'
-		);
-	}
-};
-
-const getAffiliations = async () => {
-	try {
-		const affiliations = await requestAffiliations();
-		affiliationChecks.value = affiliations.data.data.map(
-			(affiliation: any) => ({
-				id: affiliation.id,
-				value: affiliation.attributes.affiliationName,
-				label: affiliation.attributes.affiliationName,
-			})
-		);
-	} catch (error) {
-		toast.error(
-			'Nuestro administrador se comunicará conusted por correo electrónico'
-		);
 	}
 };
 </script>
