@@ -377,6 +377,23 @@
 					</v-field>
 				</div>
 			</div>
+			<cp-media-carousel
+				v-if="
+					eventHostOriginalData &&
+						eventHostOriginalData.data.attributes.mainBanner?.data?.length > 0
+				"
+				id="mainBanner"
+				is-deletable
+				:media-files-objects="
+					eventHostOriginalData.data.attributes.mainBanner.data.map(
+						(media) => ({
+							id: media.id,
+							source: makeMediaUrl(media.attributes.url),
+						})
+					)
+				"
+				@delete-photo="(value: CpMediaCardProps['item']) => deleteFile(value, 'mainBanner')"
+			/>
 
 			<!-- organization Resume -->
 			<div class="partners__form-rowDnD">
@@ -479,7 +496,7 @@
 								:option="item"
 								:checked="partnerForm.data.cultureType.includes(item.id)"
 								return-value="id"
-								@update:checkbox-update="(value: number) => checkboxCollectCultureType(value, index)"
+								@update:checkbox-update="(value) => checkboxCollectCultureType(value as number, index)"
 							/>
 						</div>
 						<span
@@ -695,7 +712,7 @@
 							v-model="partnerForm.data.eventHostAddress.city"
 							:options="commonDataStore.getCityOptions"
 							name="radio2"
-							:active-id="partnerForm.data.eventHostAddress.city"
+							:active-id="partnerForm.data.eventHostAddress.city?.toString()"
 							return-value="id"
 							style="margin-left: -30px"
 						/>
@@ -805,7 +822,9 @@
 							<cp-map
 								:coordinates-output="true"
 								:center="getCoordinates"
-								@update:coordinates-update="setCoordinates"
+								@update:coordinates-update="
+									(coordinates) => setCoordinates(coordinates)
+								"
 							/>
 							<span
 								v-if="errors.length"
@@ -870,7 +889,7 @@
 								:option="item"
 								return-value="id"
 								:checked="partnerForm.data.affiliations.includes(item.id)"
-								@update:checkbox-update="(value: number) => checkboxCollectAffiliations(value, index)"
+								@update:checkbox-update="(value) => checkboxCollectAffiliations(value as number, index)"
 							/>
 						</div>
 						<span
@@ -901,6 +920,25 @@
 				</div>
 			</div>
 
+			<cp-media-carousel
+				v-if="
+					eventHostOriginalData &&
+						eventHostOriginalData?.data?.attributes.videoBusinessCard.data
+							?.length > 0
+				"
+				id="videoBusinessCard"
+				is-deletable
+				:video-files-objects="
+					eventHostOriginalData.data.attributes.videoBusinessCard.data.map(
+						(media) => ({
+							id: media.id,
+							source: makeMediaUrl(media.attributes.url),
+						})
+					)
+				"
+				@delete-video="(value: CpMediaCardProps['item']) => deleteFile(value, 'videoBusinessCard')"
+			/>
+
 			<!-- most Popular Product -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
@@ -921,6 +959,24 @@
 					/>
 				</div>
 			</div>
+			<cp-media-carousel
+				v-if="
+					eventHostOriginalData &&
+						eventHostOriginalData?.data?.attributes.mostPopularProduct.data
+							?.length > 0
+				"
+				id="mostPopularProduct"
+				is-deletable
+				:media-files-objects="
+					eventHostOriginalData.data.attributes.mostPopularProduct.data.map(
+						(media) => ({
+							id: media.id,
+							source: makeMediaUrl(media.attributes.url),
+						})
+					)
+				"
+				@delete-photo="(value: CpMediaCardProps['item']) => deleteFile(value, 'mostPopularProduct')"
+			/>
 
 			<!-- gallery Images -->
 			<div class="partners__form-rowDnD">
@@ -954,6 +1010,24 @@
 					</v-field>
 				</div>
 			</div>
+
+			<cp-media-carousel
+				v-if="
+					eventHostOriginalData &&
+						eventHostOriginalData?.data?.attributes.galleryImages.data?.length > 0
+				"
+				id="galleryImages"
+				is-deletable
+				:media-files-objects="
+					eventHostOriginalData.data.attributes.galleryImages.data.map(
+						(media) => ({
+							id: media.id,
+							source: makeMediaUrl(media.attributes.url),
+						})
+					)
+				"
+				@delete-photo="(value: CpMediaCardProps['item']) => deleteFile(value, 'galleryImages')"
+			/>
 
 			<!-- Registration Data -->
 			<div v-if="!userData" class="partners__form-rowDnD">
@@ -1080,40 +1154,52 @@
 				</div>
 			</div>
 		</v-form>
+		<event-carousel
+			id="eventHostEvents"
+			with-edit-controls
+			:event-data="eventHostEventsList"
+		/>
 	</div>
 </template>
 
 <script setup lang="ts">
 import { reactive, ref, onBeforeMount, computed } from 'vue';
-import type { CheckOption } from '@shared/gui/types';
+import type { CoordinatesType, CpMediaCardProps } from '@shared/gui/types';
 import { toast } from 'vue3-toastify';
 import CpButton from '@shared/gui/CpButton.vue';
 import CpRadioButton from '@shared/gui/CpRadioButton.vue';
+import EventCarousel from '@widgets/event-carousel/EventCarousel.vue';
 import CpTextInput from '@shared/gui/CpTextInput.vue';
 import CpTextArea from '@shared/gui/CpTextArea.vue';
 import CpDragNDrop from '@shared/gui/CpDragNDrop.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpMap from '@shared/gui/CpMap.vue';
+import CpSwitcher from '@shared/gui/CpSwitcher.vue';
 import { Form as VForm, Field as VField } from 'vee-validate';
+import CpMediaCarousel from '@shared/gui/CpMediaCarousel.vue';
 import {
 	registerPartner,
-	requestCities,
-	requestCategories,
-	requestAffiliations,
-	requestEventsHost, // Добавляем функцию запроса партнера по ID
+	requestEventsHost,
+	deleteMedia,
+	requestEventsList,
 } from '@shared/api';
 import registerUserForPartner from '@features/register-user';
 import type {
 	PartnerRegistration,
 	CurrentUser,
 	EventHost,
+	EventData,
 } from '@shared/api/types.ts';
 import { useCommonDataStore } from '@stores/common-data-store';
+import { useRuntimeConfig } from 'nuxt/app';
 
 const commonDataStore = useCommonDataStore();
 
 const formSended = ref(false);
 const { $objToFormData } = useNuxtApp();
+const eventHostOriginalData = ref<EventHost | null>(null);
+const config = useRuntimeConfig();
+const compVideoValue = ref<string | null>('File');
 
 const userData = ref<CurrentUser | null>(null);
 onBeforeMount(async () => {
@@ -1184,36 +1270,131 @@ const userRegistrationData = reactive({
 const passwordConfirmationValue = ref<string>('');
 const isSpin = ref<boolean>(false);
 const partnerRegForm = ref<HTMLFormElement | null>(null);
+const mainProdValue = ref<string | null>('File');
+const eventHostEventsList = ref<EventData[]>([]);
 
-const radioOptions1 = [
-	{ id: 'emp', value: 'Empresa', label: 'Empresa' },
-	{ id: 'ong', value: 'ONG', label: 'ONG' },
+const docTypeOptions = [
 	{
-		id: 'Organizacion_Cultural',
-		value: 'Organizacion_Cultural',
-		label: 'Organizacion Cultural',
+		id: 'Permiso_de_residencia',
+		value: 'Permiso_de_residencia',
+		label: 'Permiso de residencia',
 	},
-	{ id: 'Persona_Natural', value: 'Persona_Natural', label: 'Persona Natural' },
+	{
+		id: 'Licencia_de_conducir',
+		value: 'Licencia_de_conducir',
+		label: 'Licencia de conducir',
+	},
+	{
+		id: 'Pasaporte_extranjero',
+		value: 'Pasaporte_extranjero',
+		label: 'Pasaporte extranjero',
+	},
+	{ id: 'Pasaporte_local', value: 'Pasaporte_local', label: 'Pasaporte local' },
 ];
+
+const compVideoSwitcherOptions = [
+	{ optionName: 'Upload File', optionValue: 'File', optionKey: 'FileKey' },
+	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },
+];
+
+const mainProdSwitcherOptions = [
+	{ optionName: 'Upload File', optionValue: 'File', optionKey: 'FileKey' },
+	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },
+	{ optionName: 'Type text', optionValue: 'Text', optionKey: 'TextKey' },
+];
+
+watch(mainProdValue, () => {
+	partnerForm.files.productDescriptionFile = null;
+	partnerForm.data.productDescriptionLink = '';
+	partnerForm.data.productDescriptionText = '';
+});
+watch(compVideoValue, () => {
+	partnerForm.data.compVideoLink = '';
+	partnerForm.files.compVideoFile = null;
+});
 
 const fetchInitialData = async () => {
 	try {
 		await getPartnerById();
+		await getEventHostEvents();
 	} catch (error) {
 		toast.error('Ошибка при загрузке начальных данных');
 	}
 };
 
+const makeMediaUrl = (path: string) => {
+	return config.public.apiBaseUrl + path;
+};
+
+const getEventHostEvents = async () => {
+	const filters = {
+		eventHost: {
+			commercialName: {
+				$eq: eventHostOriginalData.value?.data.attributes.commercialName,
+			},
+		},
+	};
+	try {
+		const events = await requestEventsList(filters);
+		eventHostEventsList.value = events.data.data;
+	} catch (error) {
+		toast.error('No se pudieron obtener los eventos');
+	}
+};
+
+const deleteFile = async (
+	item: CpMediaCardProps['item'],
+	mediaFieldPath: keyof PartnerRegistration['files']
+) => {
+	const eventFile =
+		eventHostOriginalData.value?.data.attributes[mediaFieldPath].data;
+	let fileId = null;
+	if (eventFile) {
+		if (Array.isArray(eventFile)) {
+			const fileInArray = eventFile.find((file) => file.id === item.id);
+			if (fileInArray) {
+				fileId = fileInArray.id;
+			}
+		} else if ('id' in eventFile) {
+			fileId = eventFile.id;
+		}
+	}
+
+	if (fileId === undefined || fileId === null) {
+		return;
+	}
+	try {
+		await deleteMedia(fileId);
+	} catch (error) {
+		toast.error('No se pudo eliminar el medio');
+	}
+};
+
+const checkboxCollectCultureType = (value: number, index: number) => {
+	if (value) {
+		partnerForm.data.cultureType.push(value);
+	} else {
+		partnerForm.data.cultureType.splice(index, 1);
+	}
+};
+
+const checkboxCollectAffiliations = (value: number, index: number) => {
+	if (value) {
+		partnerForm.data.affiliations.push(value);
+	} else {
+		partnerForm.data.affiliations.splice(index, 1);
+	}
+};
 const getPartnerById = async () => {
 	try {
 		if (!userData.value?.eventHostData) {
 			return;
 		}
 		const response = await requestEventsHost(userData.value.eventHostData.id);
-		const partnerData = response.data;
+		eventHostOriginalData.value = response.data;
 
 		// Мапим данные партнера в форму
-		mapPartnerDataToForm(partnerData);
+		mapPartnerDataToForm(eventHostOriginalData.value);
 	} catch (error) {
 		toast.error('Ошибка при получении данных партнера');
 	}
@@ -1280,7 +1461,7 @@ const selectedCultureTypes = computed(() => partnerForm.data.cultureType);
 
 const selectedAffiliations = computed(() => partnerForm.data.affiliations);
 
-const setCoordinates = (coordinatesFromMap: { coordinates: number[] }) => {
+const setCoordinates = (coordinatesFromMap: CoordinatesType) => {
 	partnerForm.data.eventHostAddress.coordinates = `${coordinatesFromMap.coordinates[0]},${coordinatesFromMap.coordinates[1]}`;
 };
 

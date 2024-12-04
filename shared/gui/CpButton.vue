@@ -48,7 +48,7 @@
 type Props = {
 	nativeType?: HTMLButtonElement['type'];
 	type?: 'primary' | 'secondary' | 'ghost';
-	shape: 'square' | 'circle' | 'oval';
+	shape?: 'square' | 'circle' | 'oval';
 	disabled?: boolean;
 	size?: 'small' | 'medium' | 'large' | 'huge';
 	leftIcon?: string;
@@ -71,6 +71,7 @@ withDefaults(defineProps<Props>(), {
 	size: 'medium',
 	shape: 'oval',
 	withImage: '',
+	linkTo: '',
 });
 
 const emit = defineEmits<Emits>();
@@ -86,7 +87,7 @@ const handleClick = (clickEvent: MouseEvent) => {
 	justify-content: center;
 	align-items: center;
 	padding: $button-default-padding;
-	border: none; 
+	border: none;
 	text-decoration: none;
 	color: $black;
 	background-color: $white;

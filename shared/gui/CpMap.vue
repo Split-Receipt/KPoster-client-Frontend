@@ -42,10 +42,7 @@
 <script setup lang="ts">
 import 'leaflet/dist/leaflet.css';
 import { LMap, LTileLayer, LMarker } from '@vue-leaflet/vue-leaflet';
-
-type CoordinatesType = {
-	coordinates: number[] | string;
-};
+import type { CoordinatesType } from './types';
 
 type mapProps = {
 	center: number[] | string;
@@ -64,7 +61,6 @@ const handleCoords = (coords: number[] | string) => {
 	} else if (Array.isArray(coords)) {
 		return coords;
 	} else {
-
 		return coords.split(',').map((coord) => {
 			return parseFloat(coord);
 		});

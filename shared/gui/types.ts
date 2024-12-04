@@ -13,3 +13,7 @@ export type CpMediaCardProps = {
 		source: string;
 	};
 };
+
+export type CoordinatesType = {
+	coordinates: number[] | string;
+};

@@ -104,8 +104,8 @@ import type { CpMediaCardProps } from './types';
 type Props = {
 	mediaFilesUrls?: string[];
 	videoFilesUrls?: string[];
-	mediaFilesObjects?: string[];
-	videoFilesObjects?: string[];
+	mediaFilesObjects?: CpMediaCardProps['item'][];
+	videoFilesObjects?: CpMediaCardProps['item'][];
 	id: string | number;
 	isDeletable?: boolean;
 };
