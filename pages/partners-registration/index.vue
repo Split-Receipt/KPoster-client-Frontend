@@ -1179,7 +1179,7 @@ const affiliationChecks = ref([]);
 
 const partnerRegistrationForm = reactive<PartnerRegistration>({
 	data: {
-		orgType: '',
+		orgType: null,
 		commercialName: '',
 		compName: '',
 		ruc: '',

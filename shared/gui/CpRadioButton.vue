@@ -29,7 +29,7 @@
 import type { CheckOption } from './types';
 
 type RadioProps = {
-	activeId?: string;
+	activeId?: string | number;
 	options: CheckOption[];
 	name: string;
 	returnObject?: boolean;

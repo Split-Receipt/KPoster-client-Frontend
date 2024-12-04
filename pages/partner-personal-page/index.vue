@@ -19,7 +19,12 @@
 					</span>
 				</div>
 				<div class="partners__form-row-input">
-					<v-field v-slot="{ errors }" name="orgType" rules="required">
+					<v-field
+						v-slot="{ errors }"
+						v-model="partnerForm.data.orgType"
+						name="orgType"
+						rules="required"
+					>
 						<cp-radio-button
 							v-model="partnerForm.data.orgType"
 							:options="commonDataStore.getOrgTypesOptions"
@@ -352,17 +357,20 @@
 			<!-- main Banner -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
-					<span>
-						<strong class="partners__form-rowDnD-info-required">*</strong>
-						Subir el logo o imagen principal
-					</span>
+					<span> Subir el logo o imagen principal </span>
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<v-field
 						v-slot="{ errors }"
 						:model-value="partnerForm.files.mainBanner"
 						name="banner"
-						rules="required_file"
+						:rules="
+							eventHostOriginalData &&
+								eventHostOriginalData?.data?.attributes.mainBanner.data?.length >
+								0
+								? ''
+								: 'required_file'
+						"
 					>
 						<cp-drag-n-drop
 							v-model="partnerForm.files.mainBanner"
@@ -565,7 +573,13 @@
 						v-slot="{ errors }"
 						:model-value="partnerForm.files.productDescriptionFile"
 						name="productDescription"
-						rules="required_file"
+						:rules="
+							eventHostOriginalData &&
+								eventHostOriginalData?.data?.attributes.productDescriptionFile
+									.data?.length > 0
+								? ''
+								: 'required_file'
+						"
 					>
 						<cp-drag-n-drop
 							v-model="partnerForm.files.productDescriptionFile"
@@ -581,6 +595,7 @@
 							{{ errors[0] }}</span
 						>
 					</v-field>
+
 					<v-field
 						v-if="mainProdValue === 'Link'"
 						v-slot="{ errors }"
@@ -642,6 +657,26 @@
 					</v-field>
 				</div>
 			</div>
+
+			<cp-media-carousel
+				v-if="
+					mainProdValue === 'File' &&
+						eventHostOriginalData &&
+						eventHostOriginalData?.data?.attributes.productDescriptionFile.data
+							?.length > 0
+				"
+				id="mostPopularProduct"
+				is-deletable
+				:media-files-objects="
+					eventHostOriginalData.data.attributes.productDescriptionFile.data.map(
+						(media) => ({
+							id: media.id,
+							source: makeMediaUrl(media.attributes.url),
+						})
+					)
+				"
+				@delete-photo="(value: CpMediaCardProps['item']) => deleteFile(value, 'productDescriptionFile')"
+			/>
 
 			<!-- webPage -->
 			<div class="partners__form-rowDnD">
@@ -712,7 +747,7 @@
 							v-model="partnerForm.data.eventHostAddress.city"
 							:options="commonDataStore.getCityOptions"
 							name="radio2"
-							:active-id="partnerForm.data.eventHostAddress.city?.toString()"
+							:active-id="partnerForm.data.eventHostAddress.city ?? ''"
 							return-value="id"
 							style="margin-left: -30px"
 						/>
@@ -982,7 +1017,6 @@
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
-						<strong class="partners__form-rowDnD-info-required">*</strong>
 						Añadir fotos a la galería
 						<cp-info-pop-up
 							id="galería_info"
@@ -995,7 +1029,13 @@
 						v-slot="{ errors }"
 						:model-value="partnerForm.files.galleryImages"
 						name="gallery_DnD"
-						rules="required_file"
+						:rules="
+							eventHostOriginalData &&
+								eventHostOriginalData?.data?.attributes.galleryImages.data
+									?.length > 0
+								? ''
+								: 'required_file'
+						"
 					>
 						<cp-drag-n-drop
 							v-model="partnerForm.files.galleryImages"
@@ -1182,6 +1222,7 @@ import {
 	requestEventsHost,
 	deleteMedia,
 	requestEventsList,
+	editEventHost,
 } from '@shared/api';
 import registerUserForPartner from '@features/register-user';
 import type {
@@ -1189,6 +1230,7 @@ import type {
 	CurrentUser,
 	EventHost,
 	EventData,
+	SocialMedia,
 } from '@shared/api/types.ts';
 import { useCommonDataStore } from '@stores/common-data-store';
 import { useRuntimeConfig } from 'nuxt/app';
@@ -1212,7 +1254,7 @@ onBeforeMount(async () => {
 
 const partnerForm = reactive<PartnerRegistration>({
 	data: {
-		orgType: '',
+		orgType: null,
 		commercialName: '',
 		compName: '',
 		ruc: '',
@@ -1408,12 +1450,6 @@ const submitPartnerForm = async () => {
 		return;
 	}
 
-	if (localStorage.getItem('AuthToken')) {
-		toast.error('Сначала выйдите из текущей учетной записи');
-
-		return;
-	}
-
 	isSpin.value = true;
 	formSended.value = true;
 
@@ -1430,11 +1466,12 @@ const submitPartnerForm = async () => {
 
 		preparePartnerData();
 		const partnerPayload = $objToFormData(toRaw(partnerForm));
-		await registerPartner(partnerPayload);
+		if (userData.value?.eventHostData) {
+			await editEventHost(userData.value.eventHostData.id, partnerPayload);
+		} else {
+			throw new Error('No se pudo encontrar el usuario');
+		}
 		toast.success('Регистрация прошла успешно');
-		setTimeout(() => {
-			navigateTo('/');
-		}, 2000);
 	} catch (error: any) {
 		toast.error(error.message || 'Ошибка при регистрации партнера');
 		formSended.value = false;
@@ -1451,9 +1488,18 @@ const preparePartnerData = () => {
 		Number(item)
 	);
 	if (partnerForm.data.socialMedias) {
-		partnerForm.data.socialMedias = partnerForm.data.socialMedias.filter(
-			(socialMedia) => socialMedia.socialMediaLink
-		);
+		partnerForm.data.socialMedias = partnerForm.data.socialMedias
+			.map((socialMedia: SocialMedia) => {
+				return {
+					socialMediaName: socialMedia.socialMediaName || '',
+					socialMediaLink: socialMedia.socialMediaLink || '',
+				};
+			})
+			.filter(
+				(socialMedia) =>
+					socialMedia.socialMediaLink &&
+					socialMedia.socialMediaLink.trim() !== ''
+			);
 	}
 };
 
@@ -1476,7 +1522,7 @@ const mapPartnerDataToForm = (source: EventHost) => {
 	const attributes = source.data.attributes || {};
 
 	// Основные поля
-	partnerForm.data.orgType = attributes.orgType.data.id || '';
+	partnerForm.data.orgType = attributes.orgType.data.id || null;
 	partnerForm.data.commercialName = attributes.commercialName || '';
 	partnerForm.data.compName = attributes.compName || '';
 	partnerForm.data.ruc = attributes.ruc || '';
@@ -1516,15 +1562,12 @@ const mapPartnerDataToForm = (source: EventHost) => {
 
 	// Социальные сети
 	if (attributes.socialMedias && attributes.socialMedias.length > 0) {
-		partnerForm.data.socialMedias = attributes.socialMedias
-			.map((item: any) => ({
-				socialMediaName: item.socialMediaName || '',
-				socialMediaLink: item.socialMediaLink || '',
-			}))
-			.filter(
-				(item: any) =>
-					item.socialMediaLink && item.socialMediaLink.trim() !== ''
-			);
+		partnerForm.data.socialMedias?.forEach((item: SocialMedia, index) => {
+			if (attributes.socialMedias) {
+				item.socialMediaLink =
+					attributes.socialMedias[index]?.socialMediaLink ?? '';
+			}
+		});
 	}
 
 	// Контакты

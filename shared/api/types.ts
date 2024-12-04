@@ -1,6 +1,6 @@
 export type PartnerRegistration = {
 	data: {
-		orgType: string;
+		orgType: number | null;
 		webpage: string;
 		eventHostAddress: Address<number>;
 		commercialName: string;
@@ -315,7 +315,9 @@ export type EventHost = {
 		events: {
 			data: EventData[]
 		}
-		orgType: string
+		orgType: {
+			data: OrgType
+		}
 		eventHostCode: string
 		createdAt: string
 		updatedAt: string
