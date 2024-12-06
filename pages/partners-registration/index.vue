@@ -41,7 +41,7 @@
 
 			<!-- personal activity (First name) -->
 			<div
-				v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'"
+				v-if="currentPartnerType === 'persona_natural'"
 				class="partners__form-row"
 			>
 				<div class="partners__form-row-info">
@@ -76,7 +76,7 @@
 
 			<!-- Persona lIdentifying Document  -->
 			<div
-				v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'"
+				v-if="currentPartnerType === 'persona_natural'"
 				class="partners__form-rowDnD"
 			>
 				<div class="partners__form-row-info">
@@ -109,7 +109,7 @@
 
 			<!-- Persona lIdentifying Document scan -->
 			<div
-				v-if="partnerRegistrationForm.data.orgType === 'Persona_Natural'"
+				v-if="currentPartnerType === 'persona_natural'"
 				class="partners__form-rowDnD"
 			>
 				<div class="partners__form-rowDnD-info">
@@ -141,7 +141,7 @@
 
 			<!-- Organization name -->
 			<div
-				v-if="partnerRegistrationForm.data.orgType !== 'Persona_Natural'"
+				v-if="currentPartnerType !== 'persona-natural'"
 				class="partners__form-row"
 			>
 				<div class="partners__form-row-info">
@@ -176,7 +176,7 @@
 
 			<!-- Company name -->
 			<div
-				v-if="partnerRegistrationForm.data.orgType !== 'Persona_Natural'"
+				v-if="currentPartnerType !== 'persona-natural'"
 				class="partners__form-row"
 			>
 				<div class="partners__form-row-info">
@@ -208,7 +208,7 @@
 
 			<!-- Pay number -->
 			<div
-				v-if="partnerRegistrationForm.data.orgType !== 'Persona_Natural'"
+				v-if="currentPartnerType !== 'persona-natural'"
 				class="partners__form-row"
 			>
 				<div class="partners__form-row-info">
@@ -1104,9 +1104,7 @@ import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpTextInput2 from '@shared/gui/CpTextInput2.vue';
 import CpMap from '@shared/gui/CpMap.vue';
 import type { CurrentUser, PartnerRegistration } from '@shared/api/types.ts';
-import {
-	registerPartner,
-} from '@shared/api';
+import { registerPartner } from '@shared/api';
 import registerUserForPartner from '@features/register-user';
 import { Form as VForm, Field as VField } from 'vee-validate';
 import CpTextArea from '@shared/gui/CpTextArea.vue';
@@ -1334,6 +1332,16 @@ const createPartner = async () => {
 		toast.error('Error al intentar crear un organizador');
 	}
 };
+
+const currentPartnerType = computed(() => {
+	if (partnerRegistrationForm.data.orgType) {
+		return commonDataStore.orgTypes.find(
+			(orgType) => orgType.id === partnerRegistrationForm.data.orgType
+		)?.attributes.orgTypeCode;
+	}
+
+	return '';
+});
 </script>
 
 <style scoped lang="scss">
