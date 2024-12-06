@@ -1,0 +1,64 @@
+name: Release Prod Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Choose release type'
+        required: true
+        default: ''
+        type: choice
+        options:
+          - Major
+
+jobs:
+  update-project-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '18'
+
+      - name: Get release type
+        id: get_release_type
+        run: echo "::set-output name=release_type::${{ inputs.release_type }}"
+
+      - name: Set Git author information
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+      
+      - name: Major release
+        if: steps.get_release_type.outputs.release_type == 'Major'
+        run: npm version major && git push origin main
+      
+      - name: Minor release
+        if: steps.get_release_type.outputs.release_type == 'Minor'
+        run: npm version minor && git push origin main
+      
+      - name: Patch release
+        if: steps.get_release_type.outputs.release_type == 'Patch'
+        run: npm version patch && git push origin main
+
+  deploy:
+    needs: update-project-version
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run command on remote server
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{secrets.PROD_HOST}}
+        username: ${{secrets.PROD_HOST_USER}}
+        key: ${{secrets.PROD_HOST_KEY}}
+        script: |
+          echo '--- START WORK ON REMOTE SERVER ---';
+          cd ${{ secrets.PROD_PROJECT_FOLDER }};
+          git checkout main;
+          git pull;
+          echo "APP_VERSION=$(cat package.json | grep '"version"' | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')" > app-version.env;
+          docker rmi $(docker images --filter "reference=culture-portal-cusco-client*" -q);
+          docker compose --env-file app-version.env up --detach;
