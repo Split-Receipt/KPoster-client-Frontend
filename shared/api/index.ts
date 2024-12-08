@@ -1,5 +1,5 @@
 import { useNuxtApp } from 'nuxt/app';
-import type { BaseStrapiResponse, EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, CurrentUser, AboutPlatform, Affiliation, EventHost, CultureType, OrgType } from '@shared/api/types.ts';
+import type { BaseStrapiResponse, EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, CurrentUser, AboutPlatform, Affiliation, EventHost, CultureType, OrgType, NewsOne } from '@shared/api/types.ts';
 import type { AxiosResponse } from 'axios';
 
 export const registerPartner = (partnerInfo: PartnerRegistration) => {
@@ -254,4 +254,26 @@ export const requestOrganisationTypes = (): Promise<AxiosResponse<{ data: OrgTyp
 	const { $api } = useNuxtApp();
 
 	return $api.get('/api/org-types');
+};
+
+export const requestPlatformNews = (): Promise<AxiosResponse<{ data: NewsOne[] }>> => {
+	const { $api } = useNuxtApp();
+	const params = {
+		populate: {
+			newsMainBanner: {
+				populate: '*',
+			},
+		},
+	};
+
+	return $api.get('/api/news', { params });
+};
+
+export const requestPlatformNewsById = (id: number): Promise<AxiosResponse<{ data: NewsOne }>> => {
+const { $api } = useNuxtApp();
+	const params = {
+		populate: '*',
+	};
+
+	return $api.get(`/api/news/${id}`, { params });
 };

@@ -3,6 +3,7 @@ export default defineI18nConfig(() => ({
 	locale: 'en-US',
 	messages: {
 		en: {
+			more_info: 'More info',
 			// home page features
 			welcome: 'Welcome',
 			about_us_title: 'About us',
@@ -71,6 +72,7 @@ export default defineI18nConfig(() => ({
 			partners_button_become_partner: 'Become a partner',
 		},
 		'en-US': {
+			more_info: 'More info',
 			// home page features
 			welcome: 'Welcome',
 			about_us_title: 'About us',
@@ -134,6 +136,7 @@ export default defineI18nConfig(() => ({
 			partners_button_become_partner: 'Become a partner',
 		},
 		es: {
+			more_info: 'Leer más',
 			// home page features
 			welcome: 'Bienvenido',
 			about_us_title: 'Sobre nosotros',

@@ -83,6 +83,7 @@ const handleClick = (clickEvent: MouseEvent) => {
 
 <style scoped lang="scss">
 .button {
+	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;

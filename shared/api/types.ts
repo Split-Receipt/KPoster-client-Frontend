@@ -456,3 +456,19 @@ export type OrgType = {
 		orgTypeCode: string
 	}
 };
+
+export type NewsOne = BaseStrapiResponse<
+	 {
+		title: string,
+		newsText: string,
+		newsMedia: {
+			data: StrapiMediaDefaultType[]
+		}
+		createdAt: string,
+		updatedAt: string,
+		newsMainBanner: {
+			data: StrapiMediaDefaultType
+		}
+		publishedAt: string,
+		locale: string
+	}>;
