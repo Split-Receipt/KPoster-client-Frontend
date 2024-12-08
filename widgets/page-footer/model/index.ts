@@ -9,8 +9,8 @@ export const footerLists = {
 			},
 			{
 				id: 2,
-				text: 'referencia 2',
-				href: '#',
+				text: 'Noticias',
+				href: '/news',
 			},
 			{
 				id: 3,

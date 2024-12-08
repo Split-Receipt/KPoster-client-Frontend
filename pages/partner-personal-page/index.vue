@@ -42,7 +42,7 @@
 
 			<!-- personal activity (First name) -->
 			<div
-				v-if="partnerForm.data.orgType === 'Persona_Natural'"
+				v-if="currentPartnerType === 'persona_natural'"
 				class="partners__form-row"
 			>
 				<div class="partners__form-row-info">
@@ -77,7 +77,7 @@
 
 			<!-- Persona lIdentifying Document  -->
 			<div
-				v-if="partnerForm.data.orgType === 'Persona_Natural'"
+				v-if="currentPartnerType === 'persona_natural'"
 				class="partners__form-rowDnD"
 			>
 				<div class="partners__form-row-info">
@@ -108,7 +108,7 @@
 
 			<!-- Persona lIdentifying Document scan -->
 			<div
-				v-if="partnerForm.data.orgType === 'Persona_Natural'"
+				v-if="currentPartnerType === 'persona_natural'"
 				class="partners__form-rowDnD"
 			>
 				<div class="partners__form-rowDnD-info">
@@ -140,7 +140,7 @@
 
 			<!-- Organization name -->
 			<div
-				v-if="partnerForm.data.orgType !== 'Persona_Natural'"
+				v-if="currentPartnerType !== 'persona_natural'"
 				class="partners__form-row"
 			>
 				<div class="partners__form-row-info">
@@ -175,7 +175,7 @@
 
 			<!-- Company name -->
 			<div
-				v-if="partnerForm.data.orgType !== 'Persona_Natural'"
+				v-if="currentPartnerType !== 'persona_natural'"
 				class="partners__form-row"
 			>
 				<div class="partners__form-row-info">
@@ -207,7 +207,7 @@
 
 			<!-- Pay number -->
 			<div
-				v-if="partnerForm.data.orgType !== 'Persona_Natural'"
+				v-if="currentPartnerType !== 'persona_natural'"
 				class="partners__form-row"
 			>
 				<div class="partners__form-row-info">
@@ -1084,6 +1084,7 @@
 			</div>
 		</v-form>
 		<event-carousel
+			v-if="eventHostEventsList.length > 0"
 			id="eventHostEvents"
 			with-edit-controls
 			:event-data="eventHostEventsList"
@@ -1149,9 +1150,9 @@ const partnerForm = reactive<PartnerRegistration>({
 		ruc: '',
 		startDate: '',
 		user: null,
-		personCount: null,
-		middleAge: null,
-		womenPercentage: null,
+		personCount: 0,
+		middleAge: 0,
+		womenPercentage: 0,
 		orgResume: '',
 		cultureType: [],
 		orgWorkType: '',
@@ -1192,13 +1193,6 @@ const partnerForm = reactive<PartnerRegistration>({
 	},
 });
 
-const userRegistrationData = reactive({
-	username: '',
-	email: '',
-	password: '',
-});
-
-const passwordConfirmationValue = ref<string>('');
 const isSpin = ref<boolean>(false);
 const partnerRegForm = ref<HTMLFormElement | null>(null);
 const mainProdValue = ref<string | null>('File');
@@ -1248,6 +1242,9 @@ const makeMediaUrl = (path: string) => {
 };
 
 const getEventHostEvents = async () => {
+	if (!eventHostOriginalData.value) {
+		return;
+	}
 	const filters = {
 		eventHost: {
 			commercialName: {
@@ -1375,6 +1372,16 @@ const preparePartnerData = () => {
 			);
 	}
 };
+
+const currentPartnerType = computed(() => {
+	if (partnerForm.data.orgType) {
+		return commonDataStore.orgTypes.find(
+			(orgType) => orgType.id === partnerForm.data.orgType
+		)?.attributes.orgTypeCode;
+	}
+
+	return '';
+});
 
 const prepareMainProductDescriptionFields = () => {
 	switch (mainProdValue.value) {
