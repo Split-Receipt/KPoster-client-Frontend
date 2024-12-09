@@ -117,16 +117,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import CpButton from '@shared/gui/CpButton.vue';
 import CpUpScroll from '@shared/gui/CpUpScroll.vue';
-import { useRouter } from 'vue-router';
+import { useUserStore } from '@stores/user-store';
+import { UserRolesTypes } from '@shared/api/types';
 
+const userStore = useUserStore();
 const loginModalIsOpen = ref(false);
 const isMenuOpen = ref(false);
-const isAuthenticated = ref(false);
-const userRole = ref({});
-const router = useRouter();
 
 const handleModalOpen = () => {
 	loginModalIsOpen.value = true;
@@ -144,31 +143,8 @@ const toggleMenu = () => {
 watch(isMenuOpen, (newVal) => {
 	document.body.style.overflow = newVal ? 'hidden' : '';
 });
-
-const getUserDataFromLocalStorage = () => {
-	if (localStorage.getItem('myUser')) {
-		const myUser = JSON.parse(localStorage.getItem('myUser') as string);
-		isAuthenticated.value = true;
-		userRole.value = myUser.role;
-	}
-};
-
-const handleLogin = (event: CustomEvent) => {
-	isAuthenticated.value = true;
-	userRole.value = event.detail.role;
-};
-
-onMounted(() => {
-	getUserDataFromLocalStorage();
-	window.addEventListener('login', handleLogin);
-});
-
-onUnmounted(() => {
-	window.removeEventListener('login', handleLogin);
-});
-
 const handleLoginButton = () => {
-	if (isAuthenticated.value) {
+	if (userStore.isAuth) {
 		navigateTo('/partner-personal-page');
 	} else {
 		handleModalOpen();
@@ -181,7 +157,7 @@ const handleModalClose = (newState) => {
 
 const isAllowedToCreateEvent = computed(() => {
 	return (
-		isAuthenticated.value && userRole.value?.name === 'Organizador de eventos'
+		userStore.isAuth && userStore.getUserRole === UserRolesTypes.eventHost
 	);
 });
 </script>

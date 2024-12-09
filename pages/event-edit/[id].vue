@@ -432,7 +432,7 @@
 				</div>
 			</div>
 			<cp-media-carousel
-				v-if="eventData?.attributes.eventMediaPhotos.data?.length > 0"
+				v-if="eventData"
 				id="foto o sobre tu evento"
 				is-deletable
 				:media-files-objects="
@@ -465,7 +465,7 @@
 			</div>
 
 			<cp-media-carousel
-				v-if="eventData?.attributes.eventMediaVideos.data?.length > 0"
+				v-if="eventData"
 				id="video o sobre tu evento"
 				is-deletable
 				:video-files-objects="
@@ -478,7 +478,7 @@
 			/>
 
 			<!-- Event city -->
-			<div class="eventForm-upperPositionRow">
+			<div v-if="eventCreateForm.data.eventAddress.city" class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
 					<span>
 						<strong class="eventForm-upperPositionRow-info-required">*</strong>
@@ -642,8 +642,8 @@
 						shape="oval"
 						text="Publicar"
 						width="maxWidth"
-						size="middle"
-						type="submit"
+						size="medium"
+						native-type="submit"
 						:disabled="disableSubmit"
 						@click="sendCreateEventForm"
 					/>
@@ -654,7 +654,7 @@
 						shape="oval"
 						text="Borrar"
 						width="maxWidth"
-						size="middle"
+						size="medium"
 						@click="resetForm"
 					/>
 				</span>
@@ -692,8 +692,11 @@ import {
 	deleteMedia,
 } from '@shared/api';
 import { useRuntimeConfig } from 'nuxt/app';
+import { useUserStore } from '@stores/user-store';
+import { UserRolesTypes } from '@shared/api/types';
+
 const config = useRuntimeConfig();
-const myUser = ref({});
+const { isAuth, user, getUserRole } = useUserStore();
 
 // Form Data ------------------------------------
 
@@ -745,7 +748,7 @@ const eventCreateFormTemplate = ref<HTMLFormElement | null>(null);
 
 const isSpin = ref<boolean>(false);
 const route = useRoute();
-const eventData = ref<EventData>();
+const eventData = ref<EventData | null>(null);
 
 const eventDate = reactive({
 	date: '',
@@ -878,7 +881,6 @@ const getEvent = async () => {
 };
 
 onBeforeMount(async () => {
-	myUser.value = JSON.parse(localStorage.getItem('myUser') ?? '{}');
 	await getEvent();
 	await getEventCategories();
 	await getCities();
@@ -971,7 +973,6 @@ const resetForm = () => {
 
 const sendCreateEventForm = async () => {
 	const isValid = await eventCreateFormTemplate.value?.validate();
-	const currentUser = JSON.parse(localStorage.getItem('myUser') ?? '{}');
 
 	if (!isValid.valid) {
 		isSpin.value = false;
@@ -980,7 +981,7 @@ const sendCreateEventForm = async () => {
 		return;
 	}
 
-	if (!(currentUser?.role.name === 'Organizador de eventos')) {
+	if (getUserRole !== UserRolesTypes.eventHost) {
 		toast.error('Sólo los organizadores pueden crear eventos');
 		navigateTo('/');
 
@@ -1041,12 +1042,12 @@ const sendCreateEventForm = async () => {
 };
 
 const prepareEventCreationData = () => {
-	const currentUser = JSON.parse(localStorage.getItem('myUser') ?? 'null');
-	if (!currentUser) {
+	const currentUserEventHostId = user?.eventHostData?.id;
+	if (!isAuth && currentUserEventHostId) {
 		throw new Error('Tu usuario no pudo ser identificado');
 	}
 	const timezone = localStorage.getItem('timezone');
-	eventCreateForm.data.eventHost = currentUser.eventHostData.id;
+	eventCreateForm.data.eventHost = currentUserEventHostId as number;
 	eventCreateForm.data.eventDate = fromZonedTime(
 		toDate(eventCreateForm.data.eventDate),
 		timezone ?? 'America/Lima'

@@ -967,7 +967,7 @@
 			</div>
 
 			<!-- Registration Data -->
-			<div v-if="!userData" class="partners__form-rowDnD">
+			<div v-if="!isAuth" class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
 						<strong class="partners__form-rowDnD-info-required">*</strong>
@@ -1103,25 +1103,18 @@ import CpRadioButton from '@shared/gui/CpRadioButton.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpTextInput2 from '@shared/gui/CpTextInput2.vue';
 import CpMap from '@shared/gui/CpMap.vue';
-import type { CurrentUser, PartnerRegistration } from '@shared/api/types.ts';
+import type { MyUser, PartnerRegistration } from '@shared/api/types.ts';
 import { registerPartner } from '@shared/api';
-import registerUserForPartner from '@features/register-user';
 import { Form as VForm, Field as VField } from 'vee-validate';
 import CpTextArea from '@shared/gui/CpTextArea.vue';
 import { useCommonDataStore } from '@stores/common-data-store';
+import { useUserStore } from '@stores/user-store';
 
+const { register, isAuth, user } = useUserStore();
 const commonDataStore = useCommonDataStore();
 
 const formSended = ref(false);
 const { $objToFormData } = useNuxtApp();
-
-const userData = ref<CurrentUser>();
-onBeforeMount(async () => {
-	const storedUserData = localStorage.getItem('myUser');
-	if (storedUserData) {
-		userData.value = JSON.parse(storedUserData);
-	}
-});
 
 // test values ----------------------------------------------------------
 
@@ -1164,9 +1157,9 @@ const partnerRegistrationForm = reactive<PartnerRegistration>({
 		ruc: '',
 		startDate: '',
 		user: null,
-		personCount: null,
-		middleAge: null,
-		womenPercentage: null,
+		personCount: 0,
+		middleAge: 0,
+		womenPercentage: 0,
 		orgResume: '',
 		cultureType: [],
 		orgWorkType: '',
@@ -1263,7 +1256,7 @@ const checkboxCollectAffiliations = (value: number, index: number) => {
 const sendPartnerRegistrationForm = async () => {
 	const isValid = await partnerRegForm.value?.validate();
 
-	if (localStorage.getItem('AuthToken')) {
+	if (isAuth) {
 		toast.error('Primero debe cerrar sesión en su cuenta actual');
 
 		return;
@@ -1279,17 +1272,15 @@ const sendPartnerRegistrationForm = async () => {
 	try {
 		isSpin.value = true;
 		formSended.value = true;
-		if (!localStorage.getItem('AuthToken')) {
-			const newUserId = await registerUserForPartner(userRegistrationData);
+		if (!isAuth) {
+			await register(userRegistrationData);
 
-			if (!newUserId) {
+			if (!user?.id) {
 				throw new Error('No se pudo encontrar el usuario');
 			}
-			partnerRegistrationForm.data.user = newUserId;
-		} else if (localStorage.getItem('myUser')) {
-			partnerRegistrationForm.data.user = JSON.parse(
-				localStorage.getItem('myUser') ?? 'null'
-			)?.id;
+			partnerRegistrationForm.data.user = user.id;
+		} else if (user) {
+			partnerRegistrationForm.data.user = user.id;
 		}
 		await createPartner();
 		toast.success('El registro fue exitoso');
@@ -1298,7 +1289,7 @@ const sendPartnerRegistrationForm = async () => {
 		}, 2000);
 	} catch (error) {
 		if (error.error) {
-			toast.error(error.error.message);
+			toast.error(error.error.message as string);
 		} else {
 			toast.error(
 				'Nuestro administrador se comunicará conusted por correo electrónico'

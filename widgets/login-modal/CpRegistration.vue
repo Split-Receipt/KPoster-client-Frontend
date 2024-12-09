@@ -24,8 +24,8 @@
 					placeholder="password"
 					:with-eye="true"
 				/>
-				<span class="registration-passConfirm-info"
-				>Repita la contraseña de nuevo</span
+				<span class="registration-passConfirm-info">
+					Repita la contraseña de nuevo</span
 				>
 				<nuxt-img
 					v-if="passInput === passConfirm && passConfirm !== ''"
@@ -46,8 +46,10 @@
 
 <script setup lang="ts">
 import type { RegisterParams } from '@shared/api/types';
-import { registerUser } from '@shared/api';
+import { useUserStore } from '@stores/user-store';
+import { toast } from 'vue3-toastify';
 
+const userStore = useUserStore();
 const passInput = ref<string>('');
 const passConfirm = ref<string>('');
 const username = ref<string>('');
@@ -63,9 +65,9 @@ const register = async () => {
 		return;
 	}
 	try {
-		await registerUser(registerParams);
+		await userStore.register(registerParams);
 	} catch (e) {
-		console.error(e);
+		toast.error(e as string);
 	}
 };
 </script>

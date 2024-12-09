@@ -70,10 +70,11 @@
 import { onClickOutside } from '@vueuse/core';
 import CpButton from '@shared/gui/CpButton.vue';
 import CpTextInput from '@shared/gui/CpTextInput.vue';
-import loginUser from '@features/login-user';
 import type { LoginParams } from '@shared/api/types';
 import { toast } from 'vue3-toastify';
+import { useUserStore } from '@stores/user-store';
 const emit = defineEmits<modalEvents>();
+const userStore = useUserStore();
 
 // import CpRestorePass from './CpRestorePass.vue';
 
@@ -105,11 +106,11 @@ const goingToLogin = () => {
 
 const login = async () => {
 	try {
-		await loginUser(loginData);
+		await userStore.login(loginData);
 		toast.success('Autorización exitosa');
 		hanldeCloseModal();
 	} catch (error) {
-		toast.error('Error de autorización');
+		toast.error(error as string);
 	}
 };
 

@@ -1115,28 +1115,25 @@ import {
 } from '@shared/api';
 import type {
 	PartnerRegistration,
-	CurrentUser,
 	EventHost,
 	EventData,
 	SocialMedia,
 } from '@shared/api/types.ts';
 import { useCommonDataStore } from '@stores/common-data-store';
 import { useRuntimeConfig } from 'nuxt/app';
+import { useUserStore } from '@stores/user-store';
+import { UserRolesTypes } from '@shared/api/types';
 
 const commonDataStore = useCommonDataStore();
-
+const { user, isAuth, getUserRole } = useUserStore();
 const formSended = ref(false);
 const { $objToFormData } = useNuxtApp();
 const eventHostOriginalData = ref<EventHost | null>(null);
 const config = useRuntimeConfig();
 const compVideoValue = ref<string | null>('File');
 
-const userData = ref<CurrentUser | null>(null);
 onBeforeMount(async () => {
-	const storedUserData = localStorage.getItem('myUser');
-	if (storedUserData) {
-		userData.value = JSON.parse(storedUserData);
-	} else {
+	if (!isAuth) {
 		navigateTo('/');
 	}
 	await fetchInitialData();
@@ -1233,7 +1230,7 @@ const fetchInitialData = async () => {
 		await getPartnerById();
 		await getEventHostEvents();
 	} catch (error) {
-		toast.error('Ошибка при загрузке начальных данных');
+		toast.error('Error al cargar la información del organizador');
 	}
 };
 
@@ -1304,17 +1301,22 @@ const checkboxCollectAffiliations = (value: number, index: number) => {
 	}
 };
 const getPartnerById = async () => {
+	const currentUserEventHostId = user?.eventHostData?.id;
 	try {
-		if (!userData.value?.eventHostData) {
+		if (
+			!isAuth &&
+			getUserRole !== UserRolesTypes.eventHost &&
+			!currentUserEventHostId
+		) {
 			return;
 		}
-		const response = await requestEventsHost(userData.value.eventHostData.id);
+		const response = await requestEventsHost(currentUserEventHostId as number);
 		eventHostOriginalData.value = response.data;
 
 		// Мапим данные партнера в форму
 		mapPartnerDataToForm(eventHostOriginalData.value);
 	} catch (error) {
-		toast.error('Ошибка при получении данных партнера');
+		toast.error('Error al cargar la información del organizador');
 	}
 };
 
@@ -1332,8 +1334,13 @@ const submitPartnerForm = async () => {
 	try {
 		preparePartnerData();
 		const partnerPayload = $objToFormData(toRaw(partnerForm));
-		if (userData.value?.eventHostData) {
-			await editEventHost(userData.value.eventHostData.id, partnerPayload);
+		if (
+			isAuth &&
+			user &&
+			user.eventHostData?.id &&
+			getUserRole === UserRolesTypes.eventHost
+		) {
+			await editEventHost(user.eventHostData.id, partnerPayload);
 		} else {
 			throw new Error('No se pudo encontrar el usuario');
 		}

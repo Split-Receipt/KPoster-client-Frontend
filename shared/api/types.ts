@@ -339,19 +339,42 @@ export type LoginParams = {
 	password: string;
 };
 
-export type userAuthentificatedData = {
+export type LoginData = {
 	jwt: string;
-	user: {
-		blocked: boolean
-		confirmed: true
-		createdAt: Date
-		email: string
-		id: number
-		provider: string
-		updatedAt: Date
-		username: string
-	}
+	user: MyUser;
 };
+
+export type MyUser = {
+	blocked: boolean
+	confirmed: true
+	createdAt: Date
+	email: string
+	id: number
+	provider: string
+	updatedAt: Date
+	username: string
+	role: UserRole
+	eventHostData?: { id: EventHost['data']['id'] }
+};
+
+export type UserRole = {
+	id: number,
+	type: UserRolesTypes,
+	name: UserRolesNames
+	description: string
+	createdAt: Date
+	updatedAt: Date
+};
+
+export enum UserRolesTypes {
+	eventHost = 'organizador_de_eventos',
+	client = 'cliente'
+}
+
+export enum UserRolesNames {
+	eventHost = 'Organizador de eventos',
+	client = 'Cliente'
+}
 
 export type partnerPersonalFormDataType = {
 	cultureType: number[];
@@ -376,25 +399,6 @@ export type partnerPersonalFormDataType = {
 		}
 	};
 };
-export type CurrentUser =	{
-		id: 64,
-		username: string,
-		email: string,
-		provider: string,
-		confirmed: string,
-		blocked: string,
-		createdAt: Date,
-		updatedAt: Date,
-		role: {
-			id: number,
-			name: string,
-			description: string,
-			type: string,
-			createdAt: Date,
-			updatedAt: Date,
-		},
-		eventHostData: EventHost['data']['attributes'] & { id: EventHost['data']['id'] },
-	};
 
 	type Address<T> = {
 			coordinates: string;

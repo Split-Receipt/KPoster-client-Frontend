@@ -308,9 +308,7 @@
 			<!-- Event ticket -->
 			<div class="eventForm-row">
 				<div class="eventForm-row-info">
-					<span>
-						Enlace para comprar entradas
-					</span>
+					<span> Enlace para comprar entradas </span>
 				</div>
 				<div class="eventForm-row-input fullWidth-tickets">
 					<v-field
@@ -600,17 +598,13 @@
 					<cp-button
 						text="Publicar"
 						size="medium"
-						type="submit"
+						native-type="submit"
 						:disabled="disableSubmit"
 						@click="sendCreateEventForm"
 					/>
 				</span>
 				<span class="eventForm-buttons-clear">
-					<cp-button
-						type="secondary"
-						text="Borrar"
-						size="medium"
-					/>
+					<cp-button type="secondary" text="Borrar" size="medium" />
 				</span>
 			</div>
 		</v-form>
@@ -635,9 +629,11 @@ import {
 	eventCreate,
 	requestCities,
 } from '@shared/api';
-import { set } from 'date-fns';
+import { useUserStore } from '@stores/user-store';
+import { UserRolesTypes } from '@shared/api/types';
+
+const { isAuth, user, getUserRole } = useUserStore();
 const { $objToFormData } = useNuxtApp();
-const myUser = ref({});
 // Form Data ------------------------------------
 
 const eventCreateForm = reactive<EventCreateType>({
@@ -702,7 +698,6 @@ watch(eventDate, () => {
 });
 
 onBeforeMount(() => {
-	myUser.value = JSON.parse(localStorage.getItem('myUser') ?? '{}');
 	getEventCategories();
 	getCities();
 });
@@ -777,7 +772,6 @@ const checkboxCollectCategories = (value: number, index: number) => {
 
 const sendCreateEventForm = async () => {
 	const isValid = await eventCreateFormTemplate.value?.validate();
-	const currentUser = JSON.parse(localStorage.getItem('myUser') ?? '{}');
 
 	if (!isValid.valid) {
 		isSpin.value = false;
@@ -786,7 +780,7 @@ const sendCreateEventForm = async () => {
 		return;
 	}
 
-	if (!(currentUser?.role.name === 'Organizador de eventos')) {
+	if (getUserRole !== UserRolesTypes.eventHost) {
 		toast.error('Sólo los organizadores pueden crear eventos');
 		navigateTo('/');
 
@@ -815,12 +809,12 @@ const sendCreateEventForm = async () => {
 };
 
 const prepareEventCreationData = () => {
-	const currentUser = JSON.parse(localStorage.getItem('myUser') ?? 'null');
-	if (!currentUser) {
+	const currentUserEventHostId = user?.eventHostData?.id;
+	if (!isAuth && currentUserEventHostId) {
 		throw new Error('Tu usuario no pudo ser identificado');
 	}
 	const timezone = localStorage.getItem('timezone');
-	eventCreateForm.data.eventHost = currentUser.eventHostData.id;
+	eventCreateForm.data.eventHost = currentUserEventHostId as number;
 	eventCreateForm.data.eventDate = fromZonedTime(
 		toDate(eventCreateForm.data.eventDate),
 		timezone ?? 'America/Lima'

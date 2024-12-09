@@ -6,12 +6,13 @@
 
 <script setup lang="ts">
 import { useCommonDataStore } from '@stores/common-data-store';
+import { useUserStore } from '@stores/user-store';
 import { toast } from 'vue3-toastify';
 
 const commonDataStore = useCommonDataStore();
+const userStore = useUserStore();
 
 const requestCommonData = async () => {
-	
 	const results = await commonDataStore.getAllData();
 	const erroredRequestsMessages = results
 		.filter((result) => result.status === 'rejected')
@@ -23,10 +24,19 @@ const requestCommonData = async () => {
 	}
 };
 
+const makeInitialRequests = async () => {
+	try {
+		await userStore.getMyUser();
+		await requestCommonData();
+	} catch (e) {
+		toast.error(e as string);
+	}
+};
+
 onBeforeMount(() => {
-	requestCommonData();
 	const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 	localStorage.setItem('timezone', timezone);
+	makeInitialRequests();
 });
 </script>
 

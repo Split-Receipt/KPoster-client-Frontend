@@ -1,6 +1,12 @@
 <template>
 	<div class="textInput">
-		<label v-if="props.type === 'text' || props.type === 'email' && props.labelText" class="" :for="props.id">
+		<label
+			v-if="
+				props.type === 'text' || (props.type === 'email' && props.labelText)
+			"
+			class=""
+			:for="props.id"
+		>
 			<strong v-if="props.isRequired">*</strong>
 			{{ props.labelText }}
 		</label>
@@ -25,8 +31,9 @@
 			<nuxt-img
 				v-if="withEye"
 				class="textInput-password-open"
-				:src="`../public/images/eye${!passIsVisible ?'-closed' : '' }.svg`"
-				@click="passVisibilityToggle"/>
+				:src="`../public/images/eye${!passIsVisible ? '-closed' : ''}.svg`"
+				@click="passVisibilityToggle"
+			/>
 		</div>
 		<label v-if="props.type === 'date' && props.labelText" :for="props.id">
 			<strong v-if="props.isRequired">*</strong>
@@ -56,7 +63,7 @@
 
 <script setup lang="ts">
 type textInputProps = {
-	modelValue: string;
+	modelValue: string | number | Date | null;
 	type: string;
 	placeholder: string;
 	id?: string;
@@ -66,11 +73,23 @@ type textInputProps = {
 };
 
 type Events = {
-	(event: 'update:modelValue', eventData: string): void;
+	(event: 'update:modelValue', eventData: string | number | Date): void;
 };
 
 const props = defineProps<textInputProps>();
+
 const emit = defineEmits<Events>();
+
+onBeforeMount(() => {
+	handleNullInModelValue();
+});
+
+const handleNullInModelValue = () => {
+	if (props.modelValue === null) {
+		emit('update:modelValue', '');
+	}
+};
+
 const passValue = ref<string>();
 const passInput = ref<HTMLInputElement | null>(null);
 const passIsVisible = ref<boolean>(false);
@@ -87,7 +106,13 @@ const dateInputFocus = (e: Event) => {
 
 const handleInputValueUpdate = (e: Event) => {
 	const target = e.target as HTMLInputElement;
-	emit('update:modelValue', target.value);
+	if (props.type === 'number') {
+		emit('update:modelValue', Number(target.value));
+	} else if (props.type === 'date') {
+		emit('update:modelValue', new Date(target.value));
+	} else {
+		emit('update:modelValue', target.value);
+	}
 };
 
 const passVisibilityToggle = () => {
@@ -101,10 +126,10 @@ const passVisibilityToggle = () => {
 };
 
 const numberInputValidate = (event: any) => {
-        if (!/[0-9]/.test(event.key)) {
-            event.preventDefault();
-        }
-    };
+	if (!/[0-9]/.test(event.key)) {
+		event.preventDefault();
+	}
+};
 </script>
 
 <style scoped lang="scss">
@@ -138,7 +163,6 @@ const numberInputValidate = (event: any) => {
 		&:focus {
 			outline: none;
 		}
-
 	}
 
 	&-password {

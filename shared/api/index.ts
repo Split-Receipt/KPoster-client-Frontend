@@ -1,5 +1,5 @@
 import { useNuxtApp } from 'nuxt/app';
-import type { BaseStrapiResponse, EventCreateType, userAuthentificatedData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, CurrentUser, AboutPlatform, Affiliation, EventHost, CultureType, OrgType, NewsOne } from '@shared/api/types.ts';
+import type { BaseStrapiResponse, EventCreateType, LoginData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, MyUser, AboutPlatform, Affiliation, EventHost, CultureType, OrgType, NewsOne } from '@shared/api/types.ts';
 import type { AxiosResponse } from 'axios';
 
 export const registerPartner = (partnerInfo: PartnerRegistration) => {
@@ -123,7 +123,7 @@ export const requestEventById = (id: string): Promise<AxiosResponse<{ data: Even
 	return $api.get(`api/events/${id}`, { params });
 };
 
-export const registerUser = (params: RegisterParams): Promise<AxiosResponse<userAuthentificatedData>> => {
+export const registerUser = (params: RegisterParams): Promise<AxiosResponse<LoginData>> => {
 	const { $api } = useNuxtApp();
 
 	return $api.post('/api/auth/local/register', params);
@@ -141,7 +141,7 @@ export const requestAffiliations = (): Promise<AxiosResponse<{ data: Affiliation
 	return $api.get('/api/affiliations');
 };
 
-export const requestMyUser  = (): Promise<AxiosResponse<{ data: CurrentUser }>> => {
+export const requestMyUser  = (): Promise<AxiosResponse<MyUser>> => {
 	const { $api } = useNuxtApp();
 
 	const params = {
