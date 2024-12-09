@@ -1103,7 +1103,7 @@ import CpRadioButton from '@shared/gui/CpRadioButton.vue';
 import CpInfoPopUp from '@shared/gui/CpInfoPopUp.vue';
 import CpTextInput2 from '@shared/gui/CpTextInput2.vue';
 import CpMap from '@shared/gui/CpMap.vue';
-import type { MyUser, PartnerRegistration } from '@shared/api/types.ts';
+import type { PartnerRegistration } from '@shared/api/types.ts';
 import { registerPartner } from '@shared/api';
 import { Form as VForm, Field as VField } from 'vee-validate';
 import CpTextArea from '@shared/gui/CpTextArea.vue';

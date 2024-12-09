@@ -30,7 +30,6 @@ const props = defineProps<SpinnerProps>();
 	z-index: 9999;
 	position: fixed;
 	background-color: #fff;
-	opacity: 0.5;
 
 	&__loader {
 		display: flex;

@@ -1,6 +1,7 @@
 <template>
 	<c-p-header />
-	<nuxt-page />
+	<cp-spinner v-if="isLoading" :is-spinned="isLoading" />
+	<nuxt-page v-else />
 	<c-p-footer />
 </template>
 
@@ -11,6 +12,7 @@ import { toast } from 'vue3-toastify';
 
 const commonDataStore = useCommonDataStore();
 const userStore = useUserStore();
+const isLoading = ref(true);
 
 const requestCommonData = async () => {
 	const results = await commonDataStore.getAllData();
@@ -30,6 +32,8 @@ const makeInitialRequests = async () => {
 		await requestCommonData();
 	} catch (e) {
 		toast.error(e as string);
+	} finally {
+		isLoading.value = false;
 	}
 };
 

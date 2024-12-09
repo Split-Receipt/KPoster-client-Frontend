@@ -38,16 +38,8 @@
 						:text="$t('create_event')"
 						@click="navigateTo('/create-event')"
 					/>
-					<cp-button
-						type="ghost"
-						size="small"
-						:text="$t('sales')"
-					/>
-					<cp-button
-						type="ghost"
-						size="small"
-						:text="$t('charity')"
-					/>
+					<cp-button type="ghost" size="small" :text="$t('sales')" />
+					<cp-button type="ghost" size="small" :text="$t('charity')" />
 				</div>
 
 				<div class="header__buttons header__buttons--circle">
@@ -71,23 +63,17 @@
 			</div>
 
 			<!-- Оверлей и мобильное меню -->
-			<div v-if="isMenuOpen" class="overlay" @click="handleOutsideClick" />
+			<div v-if="isMenuOpen" class="overlay" @click="toggleMenu" />
 			<div v-if="isMenuOpen" class="header__menu-mobile">
 				<div class="header__buttons header__buttons--oval">
 					<cp-button
 						v-if="isAllowedToCreateEvent"
 						size="small"
 						:text="$t('create_event')"
-						@click="navigateTo('/create-event')"
+						@click="mobileMenuActionsDecorator(navigateTo,'/create-event')"
 					/>
-					<cp-button
-						size="small"
-						:text="$t('sales')"
-					/>
-					<cp-button
-						size="small"
-						:text="$t('charity')"
-					/>
+					<cp-button size="small" :text="$t('sales')" />
+					<cp-button size="small" :text="$t('charity')" />
 				</div>
 				<div class="header__buttons header__buttons--circle">
 					<cp-button
@@ -101,7 +87,7 @@
 						size="small"
 						type="secondary"
 						shape="circle"
-						@click="handleLoginButton"
+						@click="mobileMenuActionsDecorator(handleLoginButton)"
 					/>
 					<lang-selector />
 				</div>
@@ -131,8 +117,13 @@ const handleModalOpen = () => {
 	loginModalIsOpen.value = true;
 };
 
-const handleOutsideClick = () => {
-	isMenuOpen.value = false;
+const mobileMenuActionsDecorator = (cb: (argument?: string) => void, cbArgs?: string) => {
+	toggleMenu();
+	if (cbArgs) {
+		return cb(cbArgs);
+	} else {
+		return cb();
+	}
 };
 
 const toggleMenu = () => {
@@ -156,9 +147,7 @@ const handleModalClose = (newState) => {
 };
 
 const isAllowedToCreateEvent = computed(() => {
-	return (
-		userStore.isAuth && userStore.getUserRole === UserRolesTypes.eventHost
-	);
+	return userStore.isAuth && userStore.getUserRole === UserRolesTypes.eventHost;
 });
 </script>
 
