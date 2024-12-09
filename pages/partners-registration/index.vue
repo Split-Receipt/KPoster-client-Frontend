@@ -967,7 +967,7 @@
 			</div>
 
 			<!-- Registration Data -->
-			<div v-if="!isAuth" class="partners__form-rowDnD">
+			<div v-if="!userStore.isAuth" class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
 					<span>
 						<strong class="partners__form-rowDnD-info-required">*</strong>
@@ -1110,7 +1110,7 @@ import CpTextArea from '@shared/gui/CpTextArea.vue';
 import { useCommonDataStore } from '@stores/common-data-store';
 import { useUserStore } from '@stores/user-store';
 
-const { register, isAuth, user } = useUserStore();
+const userStore = useUserStore();
 const commonDataStore = useCommonDataStore();
 
 const formSended = ref(false);
@@ -1256,7 +1256,7 @@ const checkboxCollectAffiliations = (value: number, index: number) => {
 const sendPartnerRegistrationForm = async () => {
 	const isValid = await partnerRegForm.value?.validate();
 
-	if (isAuth) {
+	if (userStore.isAuth) {
 		toast.error('Primero debe cerrar sesión en su cuenta actual');
 
 		return;
@@ -1272,15 +1272,15 @@ const sendPartnerRegistrationForm = async () => {
 	try {
 		isSpin.value = true;
 		formSended.value = true;
-		if (!isAuth) {
-			await register(userRegistrationData);
+		if (!userStore.isAuth) {
+			await userStore.register(userRegistrationData);
 
-			if (!user?.id) {
+			if (!userStore.user || userStore.user.id) {
 				throw new Error('No se pudo encontrar el usuario');
 			}
-			partnerRegistrationForm.data.user = user.id;
-		} else if (user) {
-			partnerRegistrationForm.data.user = user.id;
+			partnerRegistrationForm.data.user = userStore.user.id;
+		} else if (userStore.user) {
+			partnerRegistrationForm.data.user = userStore.user.id;
 		}
 		await createPartner();
 		toast.success('El registro fue exitoso');

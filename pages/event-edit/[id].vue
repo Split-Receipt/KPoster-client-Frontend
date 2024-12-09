@@ -695,8 +695,9 @@ import { useRuntimeConfig } from 'nuxt/app';
 import { useUserStore } from '@stores/user-store';
 import { UserRolesTypes } from '@shared/api/types';
 
+const userStore = useUserStore();
+
 const config = useRuntimeConfig();
-const { isAuth, user, getUserRole } = useUserStore();
 
 // Form Data ------------------------------------
 
@@ -981,7 +982,7 @@ const sendCreateEventForm = async () => {
 		return;
 	}
 
-	if (getUserRole !== UserRolesTypes.eventHost) {
+	if (userStore.getUserRole !== UserRolesTypes.eventHost) {
 		toast.error('Sólo los organizadores pueden crear eventos');
 		navigateTo('/');
 
@@ -1042,8 +1043,8 @@ const sendCreateEventForm = async () => {
 };
 
 const prepareEventCreationData = () => {
-	const currentUserEventHostId = user?.eventHostData?.id;
-	if (!isAuth && currentUserEventHostId) {
+	const currentUserEventHostId = userStore.user?.eventHostData?.id;
+	if (!userStore.isAuth && currentUserEventHostId) {
 		throw new Error('Tu usuario no pudo ser identificado');
 	}
 	const timezone = localStorage.getItem('timezone');

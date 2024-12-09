@@ -1123,9 +1123,9 @@ import { useCommonDataStore } from '@stores/common-data-store';
 import { useRuntimeConfig } from 'nuxt/app';
 import { useUserStore } from '@stores/user-store';
 import { UserRolesTypes } from '@shared/api/types';
+const userStore = useUserStore();
 
 const commonDataStore = useCommonDataStore();
-const { user, isAuth, getUserRole } = useUserStore();
 const formSended = ref(false);
 const { $objToFormData } = useNuxtApp();
 const eventHostOriginalData = ref<EventHost | null>(null);
@@ -1133,7 +1133,7 @@ const config = useRuntimeConfig();
 const compVideoValue = ref<string | null>('File');
 
 onBeforeMount(async () => {
-	if (!isAuth) {
+	if (!userStore.isAuth) {
 		navigateTo('/');
 	}
 	await fetchInitialData();
@@ -1301,11 +1301,11 @@ const checkboxCollectAffiliations = (value: number, index: number) => {
 	}
 };
 const getPartnerById = async () => {
-	const currentUserEventHostId = user?.eventHostData?.id;
+	const currentUserEventHostId = userStore.user?.eventHostData?.id;
 	try {
 		if (
-			!isAuth &&
-			getUserRole !== UserRolesTypes.eventHost &&
+			!userStore.isAuth &&
+			userStore.getUserRole !== UserRolesTypes.eventHost &&
 			!currentUserEventHostId
 		) {
 			return;
@@ -1335,12 +1335,12 @@ const submitPartnerForm = async () => {
 		preparePartnerData();
 		const partnerPayload = $objToFormData(toRaw(partnerForm));
 		if (
-			isAuth &&
-			user &&
-			user.eventHostData?.id &&
-			getUserRole === UserRolesTypes.eventHost
+			userStore.isAuth &&
+			userStore.user &&
+			userStore.user.eventHostData?.id &&
+			userStore.getUserRole === UserRolesTypes.eventHost
 		) {
-			await editEventHost(user.eventHostData.id, partnerPayload);
+			await editEventHost(userStore.user.eventHostData.id, partnerPayload);
 		} else {
 			throw new Error('No se pudo encontrar el usuario');
 		}

@@ -54,7 +54,7 @@ export const useUserStore = defineStore('userData', {
 
 		 },
 		 async getMyUser() {
-			if (!localStorage.getItem('AuthToken') && !localStorage.getItem('isAuth')) {
+			if (!localStorage.getItem('AuthToken') || !localStorage.getItem('isAuth')) {
 				return;
 			}
 			try {

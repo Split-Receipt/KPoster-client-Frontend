@@ -9,6 +9,7 @@
 			/>
 		</div>
 		<cp-button
+			v-if="showBecomePartnerButton"
 			class="footer__button"
 			:text="$t('partners_button_become_partner')"
 			size="large"
@@ -22,6 +23,13 @@
 import FooterList from './FooterList.vue';
 import CpButton from '@shared/gui/CpButton.vue';
 import { footerLists } from '../model';
+import { useUserStore } from '@stores/user-store';
+import { UserRolesTypes } from '@shared/api/types';
+const userStore = useUserStore();
+
+const showBecomePartnerButton = computed(() => {
+	return userStore.isAuth && userStore.getUserRole !== UserRolesTypes.eventHost;
+});
 </script>
 
 <style scoped lang="scss">
