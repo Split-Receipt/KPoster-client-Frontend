@@ -28,7 +28,7 @@ import { UserRolesTypes } from '@shared/api/types';
 const userStore = useUserStore();
 
 const showBecomePartnerButton = computed(() => {
-	return userStore.isAuth && userStore.getUserRole !== UserRolesTypes.eventHost;
+	return userStore.getUserRole !== UserRolesTypes.eventHost;
 });
 </script>
 
