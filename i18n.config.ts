@@ -3,6 +3,7 @@ export default defineI18nConfig(() => ({
 	locale: 'en-US',
 	messages: {
 		en: {
+			sign_out: 'Sign out',
 			more_info: 'More info',
 			// home page features
 			welcome: 'Welcome',
@@ -72,6 +73,7 @@ export default defineI18nConfig(() => ({
 			partners_button_become_partner: 'Become a partner',
 		},
 		'en-US': {
+			sign_out: 'Sign out',
 			more_info: 'More info',
 			// home page features
 			welcome: 'Welcome',
@@ -136,6 +138,7 @@ export default defineI18nConfig(() => ({
 			partners_button_become_partner: 'Become a partner',
 		},
 		es: {
+			sign_out: 'Finalizar la sesión',
 			more_info: 'Leer más',
 			// home page features
 			welcome: 'Bienvenido',
@@ -206,6 +209,7 @@ export default defineI18nConfig(() => ({
 			partners_button_become_partner: 'Conviértete en socio',
 		},
 		qu: {
+			sign_out: 'Lloqsiy',
 			// home page features
 			welcome: '¡Sumaq kawsay!',
 			about_us_title: 'Ñoqaykumanta',

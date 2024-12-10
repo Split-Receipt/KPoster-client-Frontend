@@ -40,6 +40,13 @@
 					/>
 					<cp-button type="ghost" size="small" :text="$t('sales')" />
 					<cp-button type="ghost" size="small" :text="$t('charity')" />
+					<cp-button
+						v-if="userStore.isAuth"
+						type="ghost"
+						size="small"
+						:text="$t('sign_out')"
+						@click="logoutUser"
+					/>
 				</div>
 
 				<div class="header__buttons header__buttons--circle">
@@ -70,10 +77,19 @@
 						v-if="isAllowedToCreateEvent"
 						size="small"
 						:text="$t('create_event')"
-						@click="mobileMenuActionsDecorator(navigateTo, `/${locale}/create-event`)"
+						@click="
+							mobileMenuActionsDecorator(navigateTo, `/${locale}/create-event`)
+						"
 					/>
 					<cp-button size="small" :text="$t('sales')" />
 					<cp-button size="small" :text="$t('charity')" />
+					<cp-button
+						v-if="userStore.isAuth"
+						type="ghost"
+						size="small"
+						:text="$t('sign_out')"
+						@click="mobileMenuActionsDecorator(logoutUser)"
+					/>
 				</div>
 				<div class="header__buttons header__buttons--circle">
 					<cp-button
@@ -119,6 +135,10 @@ const handleModalOpen = () => {
 	loginModalIsOpen.value = true;
 };
 
+const logoutUser = () => {
+	userStore.logout();
+	navigateTo(`/${locale.value}`);
+};
 const mobileMenuActionsDecorator = (
 	cb: (argument?: string) => void,
 	cbArgs?: string
