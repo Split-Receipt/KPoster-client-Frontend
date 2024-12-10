@@ -27,7 +27,7 @@
 							:options="commonDataStore.getOrgTypesOptions"
 							name="orgType"
 							return-value="id"
-							:active-id="partnerForm.data.orgType"
+							:active-id="partnerForm.data.orgType as number"
 							style="margin-left: -30px"
 						/>
 						<span

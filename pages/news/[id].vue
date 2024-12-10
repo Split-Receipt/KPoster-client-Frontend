@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import { requestPlatformNewsById } from '@shared/api';
 import type { NewsOne } from '@shared/api/types';
-import CpMarkdownViewer from '@shared/gui/CpMarkdownViewer.vue';
+import CpMarkdownViewer from '@shared/gui/CpMardownViewer/CpMarkdownViewer.vue';
 import { useRuntimeConfig } from 'nuxt/app';
 
 const route = useRoute();

@@ -482,7 +482,7 @@
 								:key="item.value"
 								:option="item"
 								return-value="id"
-								@update:checkbox-update="(value: number) => checkboxCollectCultureType(value, index)"
+								@update:checkbox-update="(value) => checkboxCollectCultureType(value as number, index)"
 							/>
 						</div>
 						<span
@@ -811,7 +811,7 @@
 							<cp-map
 								:coordinates-output="true"
 								:center="getCoordinates"
-								@update:coordinates-update="setCoordinates"
+								@update:coordinates-update="(coordinates) => setCoordinates(coordinates)"
 							/>
 							<span
 								v-if="errors.length"
@@ -879,7 +879,7 @@
 								:key="item.value"
 								:option="item"
 								return-value="id"
-								@update:checkbox-update="(value: number) => checkboxCollectAffiliations(value, index)"
+								@update:checkbox-update="(value) => checkboxCollectAffiliations(value as number, index)"
 							/>
 						</div>
 						<span
@@ -1109,6 +1109,7 @@ import { Form as VForm, Field as VField } from 'vee-validate';
 import CpTextArea from '@shared/gui/CpTextArea.vue';
 import { useCommonDataStore } from '@stores/common-data-store';
 import { useUserStore } from '@stores/user-store';
+import type { CoordinatesType } from '@shared/gui/types';
 
 const { locale } = useI18n();
 
@@ -1235,7 +1236,7 @@ const checkboxCollectCultureType = (value: number, index: number) => {
 	}
 };
 
-const setCoordinates = (coordinatesFromMap: { coordinates: number[] }) => {
+const setCoordinates = (coordinatesFromMap: CoordinatesType) => {
 	partnerRegistrationForm.data.eventHostAddress.coordinates = `${coordinatesFromMap.coordinates[0]},${coordinatesFromMap.coordinates[1]}`;
 };
 
@@ -1290,13 +1291,9 @@ const sendPartnerRegistrationForm = async () => {
 			navigateTo(`/${locale.value}`);
 		}, 2000);
 	} catch (error) {
-		if (error.error) {
-			toast.error(error.error.message as string);
-		} else {
 			toast.error(
 				'Nuestro administrador se comunicará conusted por correo electrónico'
 			);
-		}
 		formSended.value = false;
 	} finally {
 		isSpin.value = false;
@@ -1319,9 +1316,6 @@ const createPartner = async () => {
 	try {
 		await registerPartner(partnerRegPayload);
 	} catch (error) {
-		if (error.error) {
-			toast.error(error.error.message);
-		}
 		toast.error('Error al intentar crear un organizador');
 	}
 };

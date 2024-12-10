@@ -167,7 +167,7 @@ const handleLoginButton = () => {
 	}
 };
 
-const handleModalClose = (newState) => {
+const handleModalClose = (newState: boolean) => {
 	loginModalIsOpen.value = newState;
 };
 

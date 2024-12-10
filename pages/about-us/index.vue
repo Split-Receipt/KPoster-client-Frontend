@@ -14,7 +14,7 @@
 import type { AboutPlatform } from '@shared/api/types';
 import { requestDataAboutPlatform } from '@shared/api';
 import { toast } from 'vue3-toastify';
-import CpMarkdownViewer from '@shared/gui/CpMarkdownViewer.vue';
+import CpMarkdownViewer from '@shared/gui/CpMardownViewer/CpMarkdownViewer.vue';
 const aboutPlatform = ref<AboutPlatform['aboutUs']['aboutUsText']>();
 
 const getInfoAboutPlatform = async () => {
