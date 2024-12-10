@@ -73,7 +73,7 @@ type textInputProps = {
 };
 
 type Events = {
-	(event: 'update:modelValue', eventData: string | number | Date): void;
+	(event: 'update:modelValue', eventData: string | number): void;
 };
 
 const props = defineProps<textInputProps>();
@@ -108,8 +108,6 @@ const handleInputValueUpdate = (e: Event) => {
 	const target = e.target as HTMLInputElement;
 	if (props.type === 'number') {
 		emit('update:modelValue', Number(target.value));
-	} else if (props.type === 'date') {
-		emit('update:modelValue', new Date(target.value));
 	} else {
 		emit('update:modelValue', target.value);
 	}
