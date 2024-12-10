@@ -478,7 +478,10 @@
 			/>
 
 			<!-- Event city -->
-			<div v-if="eventCreateForm.data.eventAddress.city" class="eventForm-upperPositionRow">
+			<div
+				v-if="eventCreateForm.data.eventAddress.city"
+				class="eventForm-upperPositionRow"
+			>
 				<div class="eventForm-upperPositionRow-info">
 					<span>
 						<strong class="eventForm-upperPositionRow-info-required">*</strong>
@@ -694,6 +697,8 @@ import {
 import { useRuntimeConfig } from 'nuxt/app';
 import { useUserStore } from '@stores/user-store';
 import { UserRolesTypes } from '@shared/api/types';
+
+const { locale } = useI18n();
 
 const userStore = useUserStore();
 
@@ -984,7 +989,7 @@ const sendCreateEventForm = async () => {
 
 	if (userStore.getUserRole !== UserRolesTypes.eventHost) {
 		toast.error('Sólo los organizadores pueden crear eventos');
-		navigateTo('/');
+		navigateTo(`/${locale.value}`);
 
 		return;
 	}

@@ -80,11 +80,6 @@
 
 <script setup lang="ts">
 import type { EventCard } from '@widgets/event-card/types/types';
-type Props = {
-	eventData: Array<EventCard>;
-	id: string | number;
-	withEditControls?: boolean;
-};
 
 const props = withDefaults(defineProps<Props>(), {
 	withEditControls: false,
@@ -111,9 +106,15 @@ const props = withDefaults(defineProps<Props>(), {
 		},
 	],
 });
+const { locale } = useI18n();
+type Props = {
+	eventData: Array<EventCard>;
+	id: string | number;
+	withEditControls?: boolean;
+};
 
 const toEventDetailPage = (cardId: number) => {
-	navigateTo(`/event/${cardId}`);
+	navigateTo(`/${locale.value}/event/${cardId}`);
 };
 </script>
 

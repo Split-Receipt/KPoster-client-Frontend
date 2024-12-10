@@ -7,7 +7,7 @@
 				class="news-card__more-info"
 				type="secondary"
 				:text="$t('more_info')"
-				@click="navigateTo(`/news/${item.id}`)"
+				@click="navigateTo(`/${locale}/news/${item.id}`)"
 			/>
 		</div>
 	</div>
@@ -17,8 +17,10 @@
 import type { NewsOne } from '@shared/api/types';
 import { useRuntimeConfig } from 'nuxt/app';
 import CpButton from '@shared/gui/CpButton.vue';
-
 const props = defineProps<{ item: NewsOne }>();
+
+const { locale } = useI18n();
+
 const config = useRuntimeConfig();
 
 const getMediaUrl = computed(() => {

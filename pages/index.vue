@@ -37,7 +37,7 @@
 					:key="event.id + event.attributes.eventName"
 					size="medium"
 					:event-card-data="event"
-					@click="navigateTo(`event/${event.id}`)"
+					@click="navigateTo(`/${locale}/event/${event.id}`)"
 				/>
 			</cp-grid-layout>
 		</main>
@@ -58,6 +58,8 @@ import { startOfDay, endOfDay } from 'date-fns';
 import CpGridLayout from '@shared/gui/CpGridLayout.vue';
 import EventCard from '@widgets/event-card/EventCard.vue';
 import { fromZonedTime } from 'date-fns-tz';
+
+const { locale } = useI18n();
 
 const { availableLocales, setLocale } = useI18n();
 const eventsCollections = ref();

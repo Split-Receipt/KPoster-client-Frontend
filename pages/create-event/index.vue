@@ -632,6 +632,8 @@ import {
 import { useUserStore } from '@stores/user-store';
 import { UserRolesTypes } from '@shared/api/types';
 
+const { locale } = useI18n();
+
 const userStore = useUserStore();
 const { $objToFormData } = useNuxtApp();
 // Form Data ------------------------------------
@@ -782,7 +784,7 @@ const sendCreateEventForm = async () => {
 
 	if (userStore.getUserRole !== UserRolesTypes.eventHost) {
 		toast.error('Sólo los organizadores pueden crear eventos');
-		navigateTo('/');
+		navigateTo(`/${locale.value}`);
 
 		return;
 	}
@@ -797,7 +799,7 @@ const sendCreateEventForm = async () => {
 		toast.success('Evento creado exitosamente');
 		eventCreateFormTemplate.value?.resetForm();
 		setTimeout(() => {
-			navigateTo('/');
+			navigateTo(`/${locale.value}`);
 		}, 2000);
 	} catch (error) {
 		disableSubmit.value = false;

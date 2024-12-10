@@ -26,7 +26,9 @@
 						class="event-card__button"
 						:class="`event-card__button--${size}`"
 						text="Editar evento"
-						@click.stop="navigateTo(`/event-edit/${eventCardData.id}`)"
+						@click.stop="
+							navigateTo(`/${locale}/event-edit/${eventCardData.id}`)
+						"
 					/>
 
 					<cp-button
@@ -95,6 +97,8 @@ const props = withDefaults(defineProps<Props>(), {
 		},
 	}),
 });
+
+const { locale } = useI18n();
 
 const config = useRuntimeConfig();
 type Props = {

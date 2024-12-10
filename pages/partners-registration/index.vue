@@ -1110,6 +1110,8 @@ import CpTextArea from '@shared/gui/CpTextArea.vue';
 import { useCommonDataStore } from '@stores/common-data-store';
 import { useUserStore } from '@stores/user-store';
 
+const { locale } = useI18n();
+
 const userStore = useUserStore();
 const commonDataStore = useCommonDataStore();
 
@@ -1285,7 +1287,7 @@ const sendPartnerRegistrationForm = async () => {
 		await createPartner();
 		toast.success('El registro fue exitoso');
 		setTimeout(() => {
-			navigateTo('/');
+			navigateTo(`/${locale.value}`);
 		}, 2000);
 	} catch (error) {
 		if (error.error) {

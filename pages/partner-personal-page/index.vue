@@ -1123,6 +1123,7 @@ import { useCommonDataStore } from '@stores/common-data-store';
 import { useRuntimeConfig } from 'nuxt/app';
 import { useUserStore } from '@stores/user-store';
 import { UserRolesTypes } from '@shared/api/types';
+const { locale } = useI18n();
 const userStore = useUserStore();
 
 const commonDataStore = useCommonDataStore();
@@ -1134,7 +1135,7 @@ const compVideoValue = ref<string | null>('File');
 
 onBeforeMount(async () => {
 	if (!userStore.isAuth) {
-		navigateTo('/');
+		navigateTo(`/${locale.value}`);
 	}
 	await fetchInitialData();
 });

@@ -36,7 +36,7 @@
 						v-if="isAllowedToCreateEvent"
 						size="small"
 						:text="$t('create_event')"
-						@click="navigateTo('/create-event')"
+						@click="navigateTo(`/${locale}/create-event`)"
 					/>
 					<cp-button type="ghost" size="small" :text="$t('sales')" />
 					<cp-button type="ghost" size="small" :text="$t('charity')" />
@@ -70,7 +70,7 @@
 						v-if="isAllowedToCreateEvent"
 						size="small"
 						:text="$t('create_event')"
-						@click="mobileMenuActionsDecorator(navigateTo,'/create-event')"
+						@click="mobileMenuActionsDecorator(navigateTo, `/${locale}/create-event`)"
 					/>
 					<cp-button size="small" :text="$t('sales')" />
 					<cp-button size="small" :text="$t('charity')" />
@@ -109,6 +109,8 @@ import CpUpScroll from '@shared/gui/CpUpScroll.vue';
 import { useUserStore } from '@stores/user-store';
 import { UserRolesTypes } from '@shared/api/types';
 
+const { locale } = useI18n();
+
 const userStore = useUserStore();
 const loginModalIsOpen = ref(false);
 const isMenuOpen = ref(false);
@@ -117,7 +119,10 @@ const handleModalOpen = () => {
 	loginModalIsOpen.value = true;
 };
 
-const mobileMenuActionsDecorator = (cb: (argument?: string) => void, cbArgs?: string) => {
+const mobileMenuActionsDecorator = (
+	cb: (argument?: string) => void,
+	cbArgs?: string
+) => {
 	toggleMenu();
 	if (cbArgs) {
 		return cb(cbArgs);
@@ -136,7 +141,7 @@ watch(isMenuOpen, (newVal) => {
 });
 const handleLoginButton = () => {
 	if (userStore.isAuth) {
-		navigateTo('/partner-personal-page');
+		navigateTo(`/${locale.value}/partner-personal-page`);
 	} else {
 		handleModalOpen();
 	}
