@@ -1,5 +1,5 @@
 import { defineStore, setActivePinia, createPinia } from 'pinia';
-import { requestCities, requestAffiliations , requestCategories, requestOrganisationTypes } from '@shared/api';
+import { requestCities, requestAffiliations , requestCategories, requestOrganisationTypes, requestDataAboutPlatform } from '@shared/api';
 import type { CommonDataStore } from './types';
 import type { City, Affiliation, CultureType } from '@shared/api/types';
 
@@ -13,6 +13,7 @@ export const useCommonDataStore = defineStore('commonData', {
 		affiliations: [],
 		cultureTypes: [],
 		orgTypes: [],
+		platformData: null,
 	}),
 	getters: {
 		getCityOptions: (state) => {
@@ -83,8 +84,23 @@ export const useCommonDataStore = defineStore('commonData', {
 				return Promise.reject('No se pudo obtener la lista de tipos de organizaciones');
 			}
 		},
+
+		async getInfoAboutPlatform() {
+			try {
+					const { data } = await requestDataAboutPlatform();
+					this.platformData = data.data;
+
+			} catch (e) {
+				return Promise.reject('Error al obtener la información de la página');
+			}
+		},
 		getAllData() {
-			return Promise.allSettled([this.getCities(), this.getAffiliations(), this.getCultureTypes(), this.getOrganisationTypes()]);
+			return Promise.allSettled([ this.getInfoAboutPlatform(),
+				 this.getCities(),
+				 this.getAffiliations(),
+				 this.getCultureTypes(),
+				 this.getOrganisationTypes(),
+				]);
 	},
 },
 });

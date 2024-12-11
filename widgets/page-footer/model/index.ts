@@ -1,26 +1,42 @@
-export const footerLists = {
+export type FooterLists = {
+	generalInfo: FooterListType,
+	contactsList: FooterListType,
+	socialList: FooterListType
+};
+export type FooterListItem = {
+	id: number,
+	text: string,
+	href?: string
+	linkType?: string
+};
+
+export type FooterListType = {
+	header: string,
+	listItems: FooterListItem[]
+};
+export const footerLists: FooterLists = {
 	generalInfo: {
-		header: 'Cualquier información',
+		header: 'footer_title_addition_info',
 		listItems: [
 			{
 				id: 1,
-				text: 'Sobre la plataforma',
+				text: 'about_us_title',
 				href: '/about-us',
 			},
 			{
 				id: 2,
-				text: 'Noticias',
+				text: 'news',
 				href: '/news',
 			},
 			{
 				id: 3,
-				text: 'referencia 3',
-				href: '#',
+				text: 'contacts_title',
+				href: '/contacts',
 			},
 		],
 	},
 	contactsList: {
-		header: 'Contactos',
+		header: 'contacts_title',
 		listItems: [
 			{
 				id: 1,
@@ -38,21 +54,21 @@ export const footerLists = {
 		],
 	},
 	socialList: {
-		header: 'Nuestras redes sociales',
+		header: 'footer_title_our_socials',
 		listItems: [
 			{
 				id: 1,
-				text: 'Facebook',
+				text: 'facebook',
 				href: '#',
 			},
 			{
 				id: 2,
-				text: 'TikTok',
+				text: 'tikTok',
 				href: '#',
 			},
 			{
 				id: 3,
-				text: 'LinkedIn',
+				text: 'linkedIn',
 				href: '#',
 			},
 		],

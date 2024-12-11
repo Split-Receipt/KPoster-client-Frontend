@@ -2,7 +2,7 @@
 	<div class="footer">
 		<div class="footer__list-wrapper">
 			<footer-list
-				v-for="(list, index) in footerLists"
+				v-for="(list, index) in footerListData"
 				:key="index"
 				class="footer__list"
 				:list="list"
@@ -14,7 +14,7 @@
 			:text="$t('partners_button_become_partner')"
 			size="large"
 			:islink="true"
-			link-to="/partners-registration"
+			:link-to="`/${locale}/partners-registration`"
 		/>
 	</div>
 </template>
@@ -22,11 +22,72 @@
 <script setup lang="ts">
 import FooterList from './FooterList.vue';
 import CpButton from '@shared/gui/CpButton.vue';
-import { footerLists } from '../model';
+import { footerLists, type FooterListItem } from '../model';
 import { useUserStore } from '@stores/user-store';
-import { UserRolesTypes } from '@shared/api/types';
+import { useCommonDataStore } from '@stores/common-data-store';
+import {
+	UserRolesTypes,
+	type BaseStrapiResponse,
+	type AboutPlatform,
+} from '@shared/api/types';
+import { formatExternalLink } from '@shared/helpers/formatText';
+const { locale } = useI18n();
 const userStore = useUserStore();
+const commonDataStore = useCommonDataStore();
 
+const footerListData = computed(() => {
+	if (commonDataStore.platformData) {
+		const formattedContacts = formatPlatformContactsContacts(
+			commonDataStore.platformData.attributes.platformContacts
+		);
+
+		footerLists.contactsList.listItems = formattedContacts;
+		if (commonDataStore.platformData.attributes.platformSocialMedias) {
+			const formattedSocialMedias = formatPlatformSocialMedias(
+				commonDataStore.platformData.attributes.platformSocialMedias
+			);
+
+			footerLists.socialList.listItems = formattedSocialMedias;
+		}
+	}
+
+	return footerLists;
+});
+
+const formatPlatformContactsContacts = (
+	platformContacts: BaseStrapiResponse<AboutPlatform>['attributes']['platformContacts']
+) => {
+	return Object.keys(platformContacts).reduce(
+		(acc: FooterListItem[], key, index: number) => {
+			if (key !== 'id') {
+				acc.push({
+					id: index,
+					text: platformContacts[
+						key as keyof typeof platformContacts
+					] as string,
+				});
+			}
+
+			return acc;
+		},
+		[]
+	);
+};
+
+const formatPlatformSocialMedias = (
+	platformSocialMedias: BaseStrapiResponse<AboutPlatform>['attributes']['platformSocialMedias']
+) => {
+	return platformSocialMedias.reduce((acc: FooterListItem[], item) => {
+		acc.push({
+			id: item.id,
+			text: item.socialMediaName,
+			href: formatExternalLink(item.socialMediaLink),
+			linkType: 'external',
+		});
+
+		return acc;
+	}, []);
+};
 const showBecomePartnerButton = computed(() => {
 	return userStore.getUserRole !== UserRolesTypes.eventHost;
 });

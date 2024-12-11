@@ -22,11 +22,7 @@ export type PartnerRegistration = {
 		affiliations: number[];
 		socialMedias: SocialMedia[];
 		digitalCatalog: string;
-		contacts: {
-			place: string;
-			tel: string;
-			mail: string;
-		};
+		contacts: Contacts;
 	};
 	files: {
 		personalDocumentScan: File[] | null;
@@ -60,9 +56,9 @@ export type EventCreateType = {
 		eventDate: Date | string;
 		eventHost: number | string;
 		eventDuration: string;
-		eventDigitalCatalog: string,
-		eventWebSite: string,
-		eventSocialMedias: { socialMediaName: string, socialMediaLink: string }[];
+		eventDigitalCatalog: string;
+		eventWebSite: string;
+		eventSocialMedias: { socialMediaName: string; socialMediaLink: string }[];
 		eventAddress: {
 			coordinates: string;
 			city: number | null;
@@ -82,7 +78,7 @@ export type EventCreateType = {
 };
 
 export type EventCategory = {
-	id: number,
+	id: number;
 	attributes: {
 		eventCategoryName: string
 		eventCategoryCode: string
@@ -93,31 +89,31 @@ export type EventCategory = {
 	}
 };
 export type EventData = {
-	id: number,
+	id: number;
 	attributes: {
-			eventDigitalCatalog?: string,
-			eventWebSite?: string,
-			eventName: string,
+			eventDigitalCatalog?: string;
+			eventWebSite?: string;
+			eventName: string;
 			eventHost: EventHost
-			eventDescription: string,
+			eventDescription: string;
 			eventCategory:{
-				data: EventCategory[] },
-			eventId: string,
-			eventDate: string,
-			createdAt: string,
-			updatedAt: string,
-			publishedAt: string,
-			locale: string,
-			linkToBuyTicket: string,
-			eventShortDescription: string,
-			eventDuration: string | null,
-			eventRules: string | null,
-			eventAgeRestrictions: string | null,
+				data: EventCategory[] };
+			eventId: string;
+			eventDate: string;
+			createdAt: string;
+			updatedAt: string;
+			publishedAt: string;
+			locale: string;
+			linkToBuyTicket: string;
+			eventShortDescription: string;
+			eventDuration: string | null;
+			eventRules: string | null;
+			eventAgeRestrictions: string | null;
 			eventSocialMedias: SocialMedia[]
 			eventAddress: {
-					id: number,
-					address: string,
-					coordinates: string,
+					id: number;
+					address: string;
+					coordinates: string;
 					city: {
 							data: City
 					}
@@ -136,26 +132,26 @@ export type EventData = {
 	};
 
 export type City = {
-	id: number,
+	id: number;
 	attributes: {
-		cityName: string,
-		cityCode: string,
-		createdAt: string,
-		updatedAt: string,
-		publishedAt: string,
-		locale: string,
+		cityName: string;
+		cityCode: string;
+		createdAt: string;
+		updatedAt: string;
+		publishedAt: string;
+		locale: string;
 	}
 };
 
 export type EventColletion = {
-	id: 1,
+	id: 1;
 	attributes: {
-		collectionName: string,
-		createdAt: string,
-		updatedAt: string,
-		publishedAt: string,
-		collectionCode: string,
-		collectionDescription: string,
+		collectionName: string;
+		createdAt: string;
+		updatedAt: string;
+		publishedAt: string;
+		collectionCode: string;
+		collectionDescription: string;
 		events: {
 			data: EventData[]
 		}
@@ -163,43 +159,43 @@ export type EventColletion = {
 };
 
 export type StrapiMediaDefaultType = {
-	id: number,
+	id: number;
 	attributes: {
-		name: string,
-		alternativeText: string | null,
-		caption: string | null,
-		width: number,
-		height: number,
+		name: string;
+		alternativeText: string | null;
+		caption: string | null;
+		width: number;
+		height: number;
 		formats: {
-			large: StrapiMediaFormat,
-			small: StrapiMediaFormat,
-			medium: StrapiMediaFormat,
-			thumbnail: StrapiMediaFormat,
-		},
-		hash: string,
-		ext: string,
-		mime: string,
-		size: number,
-		url: string,
-		previewUrl: string | null,
-		provider: string,
-		provider_metadata: string | null,
-		createdAt: string,
-		updatedAt: string,
+			large: StrapiMediaFormat;
+			small: StrapiMediaFormat;
+			medium: StrapiMediaFormat;
+			thumbnail: StrapiMediaFormat;
+		};
+		hash: string;
+		ext: string;
+		mime: string;
+		size: number;
+		url: string;
+		previewUrl: string | null;
+		provider: string;
+		provider_metadata: string | null;
+		createdAt: string;
+		updatedAt: string;
 		related: any[]
 	}
 };
 
 type StrapiMediaFormat = {
-	ext: string,
-	url: string,
-	hash: string,
-	mime: string,
-	name: string,
-	path: string | null,
-	size: number,
-	width: number,
-	height: number,
+	ext: string;
+	url: string;
+	hash: string;
+	mime: string;
+	name: string;
+	path: string | null;
+	size: number;
+	width: number;
+	height: number;
 	sizeInBytes: number
 };
 
@@ -223,7 +219,7 @@ export type CollectionFilters = {
 		eventHost?: {
 			eventHostCode?: {
 				$in?: string[];
-			},
+			};
 			commercialName?: {
 				$eq?: string;
 				$in?: string[]
@@ -273,12 +269,7 @@ export type EventHost = {
 			galleryImages: {
 				data: StrapiMediaDefaultType[]
 			}
-			contacts: {
-				id: number
-				place: string
-				tel: string
-				mail: string
-			}
+			contacts: Contacts;
 			productDescriptionText: string
 			productDescriptionLink: string
 			compVideoLink: string
@@ -323,9 +314,9 @@ export type EventHost = {
 		updatedAt: string
 		publishedAt: string
 		locale: string
-		},
+		};
 		id: number
-	},
+	};
 };
 
 export type RegisterParams = {
@@ -358,8 +349,8 @@ export type MyUser = {
 };
 
 export type UserRole = {
-	id: number,
-	type: UserRolesTypes,
+	id: number;
+	type: UserRolesTypes;
 	name: UserRolesNames
 	description: string
 	createdAt: Date
@@ -407,13 +398,13 @@ export type partnerPersonalFormDataType = {
 		};
 
 export type CultureType = {
-		id: number,
+		id: number;
 		attributes: {
-			cultureTypeName: string,
-			createdAt: string,
-			updatedAt: string,
-			publishedAt: string,
-			locale: string,
+			cultureTypeName: string;
+			createdAt: string;
+			updatedAt: string;
+			publishedAt: string;
+			locale: string;
 			cultureTypeCode: string
 		}
 	};
@@ -427,52 +418,60 @@ export type CultureType = {
 export type AboutPlatform = {
 		aboutUs: {
 			aboutUsText: string;
-		},
-		culturalPortalContacts: any
+		};
+		culturalPortalContacts: CulturalPortalContacts;
+		platformContacts: { id: number } & Contacts;
+		platformSocialMedias: ({ id: number } & SocialMedia)[]
+};
 
+type CulturalPortalContacts = {
+	id: number;
+	contactName: string;
+	contactSocialMedias: SocialMedia[];
+	contacts: Contacts;
 };
 
 export type BaseStrapiResponse<T> = {
-	id: number,
-	attributes: T,
+	id: number;
+	attributes: T;
 };
 
 export type Affiliation = {
-	id: number,
+	id: number;
 	attributes: {
-		affiliationName: string,
-		createdAt: string,
-		updatedAt: string,
-		publishedAt: string,
-		locale: string,
+		affiliationName: string;
+		createdAt: string;
+		updatedAt: string;
+		publishedAt: string;
+		locale: string;
 		affiliationCode: string
 	}
 };
 
 export type OrgType = {
-	id: number,
+	id: number;
 	attributes: {
-		orgTypeName: string,
-		createdAt: string,
-		updatedAt: string,
-		publishedAt: string,
-		locale: string,
+		orgTypeName: string;
+		createdAt: string;
+		updatedAt: string;
+		publishedAt: string;
+		locale: string;
 		orgTypeCode: string
 	}
 };
 
 export type NewsOne = BaseStrapiResponse<
 	 {
-		title: string,
-		newsText: string,
+		title: string;
+		newsText: string;
 		newsMedia: {
 			data: StrapiMediaDefaultType[]
 		}
-		createdAt: string,
-		updatedAt: string,
+		createdAt: string;
+		updatedAt: string;
 		newsMainBanner: {
 			data: StrapiMediaDefaultType
 		}
-		publishedAt: string,
+		publishedAt: string;
 		locale: string
 	}>;

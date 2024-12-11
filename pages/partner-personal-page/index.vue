@@ -1083,12 +1083,15 @@
 				</div>
 			</div>
 		</v-form>
-		<event-carousel
-			v-if="eventHostEventsList.length > 0"
-			id="eventHostEvents"
-			with-edit-controls
-			:event-data="eventHostEventsList"
-		/>
+		<div>
+			<h3 class="eventForm-row-title">Eventos</h3>
+			<event-carousel
+				v-if="eventHostEventsList.length > 0"
+				id="eventHostEvents"
+				with-edit-controls
+				:event-data="eventHostEventsList"
+			/>
+		</div>
 	</div>
 </template>
 

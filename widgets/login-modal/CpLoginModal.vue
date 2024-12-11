@@ -74,6 +74,7 @@ import type { LoginParams } from '@shared/api/types';
 import { toast } from 'vue3-toastify';
 import { useUserStore } from '@stores/user-store';
 const emit = defineEmits<modalEvents>();
+const { locale } = useI18n();
 const userStore = useUserStore();
 
 // import CpRestorePass from './CpRestorePass.vue';
@@ -109,6 +110,7 @@ const login = async () => {
 		await userStore.login(loginData);
 		toast.success('Autorización exitosa');
 		hanldeCloseModal();
+		navigateTo(`/${locale}/`);
 	} catch (error) {
 		toast.error(error as string);
 	}

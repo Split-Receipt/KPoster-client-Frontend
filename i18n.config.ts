@@ -3,11 +3,14 @@ export default defineI18nConfig(() => ({
 	locale: 'en-US',
 	messages: {
 		en: {
+			footer_title_our_socials: 'Our social medias',
 			sign_out: 'Sign out',
 			more_info: 'More info',
+			footer_title_addition_info: 'Additional information',
 			// home page features
 			welcome: 'Welcome',
 			about_us_title: 'About us',
+			contacts_title: 'Contacts',
 			main_title: 'Culture events of Cusco',
 			name_of_platform: 'Culture Portal of Cusco',
 			sales: 'Sales',
@@ -71,8 +74,15 @@ export default defineI18nConfig(() => ({
 			partners_our_contacts: 'Contacts',
 			partners_our_social_networks: 'Our social networks',
 			partners_button_become_partner: 'Become a partner',
+			facebook: 'Facebook',
+			instagram: 'Instagram',
+			linkedIn: 'LinkedIn',
+			tikTok: 'TikTok',
 		},
 		'en-US': {
+			footer_title_our_socials: 'Our social medias',
+			contacts_title: 'Contacts',
+			footer_title_addition_info: 'Additional information',
 			sign_out: 'Sign out',
 			more_info: 'More info',
 			// home page features
@@ -136,9 +146,16 @@ export default defineI18nConfig(() => ({
 			partners_our_contacts: 'Contacts',
 			partners_our_social_networks: 'Our social networks',
 			partners_button_become_partner: 'Become a partner',
+			facebook: 'Facebook',
+			instagram: 'Instagram',
+			linkedIn: 'LinkedIn',
+			tikTok: 'TikTok',
 		},
 		es: {
+			footer_title_our_socials: 'Nuestras redes sociales',
 			sign_out: 'Finalizar la sesión',
+			footer_title_addition_info: 'Información adicional',
+			contacts_title: 'Contactos',
 			more_info: 'Leer más',
 			// home page features
 			welcome: 'Bienvenido',
@@ -207,9 +224,16 @@ export default defineI18nConfig(() => ({
 			partners_our_contacts: 'Contactos',
 			partners_our_social_networks: 'Nuestras redes sociales',
 			partners_button_become_partner: 'Conviértete en socio',
+			facebook: 'Facebook',
+			instagram: 'Instagram',
+			linkedIn: 'LinkedIn',
+			tikTok: 'TikTok',
 		},
 		qu: {
+			footer_title_our_socials: 'Redes sociales nisqayku',
 			sign_out: 'Lloqsiy',
+			contacts_title: 'Kontak',
+			footer_title_addition_info: 'Yapamanta willakuy',
 			// home page features
 			welcome: '¡Sumaq kawsay!',
 			about_us_title: 'Ñoqaykumanta',
@@ -271,6 +295,10 @@ export default defineI18nConfig(() => ({
 			partners_our_contacts: 'Contactos nisqakuna',
 			partners_our_social_networks: 'Redes sociales nisqayku',
 			partners_button_become_partner: 'Socioman tukupuy',
+			facebook: 'Facebook',
+			instagram: 'Instagram',
+			linkedIn: 'LinkedIn',
+			tikTok: 'TikTok',
 		},
 	},
 }));

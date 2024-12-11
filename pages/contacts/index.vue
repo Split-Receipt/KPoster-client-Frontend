@@ -21,8 +21,8 @@
 				</div>
 				<div class="contacts-referenses-socials">
 					<cp-social-link
-						social-link="http://localhost:3000/esevent-host"
-						social-name="instagram"
+						social-media-link="http://localhost:3000/esevent-host"
+						social-media-name="instagram"
 					/>
 					<cp-social-link
 						social-link="http://localhost:3000/esevent-host"

@@ -399,6 +399,7 @@
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
 					<span>
+						<strong class="eventForm-upperPositionRow-info-required">*</strong>
 						Sube contenido de foto o sobre tu evento
 						<cp-info-pop-up
 							id="media_id"
@@ -407,12 +408,22 @@
 					</span>
 				</div>
 				<div class="eventForm-upperPositionRow-input fullWidth-banner">
-					<cp-drag-n-drop
-						v-model="eventCreateForm.files.eventMediaPhotos"
-						:is-multi="true"
-						type="image"
-						:max-size="5"
-					/>
+					<v-field
+						v-slot="{ errors }"
+						:model-value="eventCreateForm.files.eventMediaPhotos"
+						name="mediaPhotos"
+						rules="required_file"
+					>
+						<cp-drag-n-drop
+							v-model="eventCreateForm.files.eventMediaPhotos"
+							:is-multi="true"
+							type="image"
+							:max-size="5"
+						/>
+						<span v-if="errors.length" class="required-input-error-info-center">
+							{{ errors[0] }}</span
+						>
+					</v-field>
 				</div>
 			</div>
 

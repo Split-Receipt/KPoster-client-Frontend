@@ -432,7 +432,7 @@
 				</div>
 			</div>
 			<cp-media-carousel
-				v-if="eventData"
+				v-if="eventData && eventData.attributes.eventMediaPhotos?.data?.length > 0"
 				id="foto o sobre tu evento"
 				is-deletable
 				:media-files-objects="
@@ -465,7 +465,7 @@
 			</div>
 
 			<cp-media-carousel
-				v-if="eventData"
+				v-if="eventData && eventData.attributes.eventMediaVideos?.data?.length > 0"
 				id="video o sobre tu evento"
 				is-deletable
 				:video-files-objects="

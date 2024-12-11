@@ -2,7 +2,7 @@
 	<div class="footer-list__wrapper">
 		<ul class="footer-list">
 			<h5 class="footer-list__header">
-				{{ list.header }}
+				{{ $t(list.header) }}
 			</h5>
 
 			<div class="footer-list__inner">
@@ -11,16 +11,18 @@
 					:key="item.id"
 					class="footer-list__item"
 				>
-					<a
+					<nuxt-link
 						v-if="!!item.href"
-						:href="item.href"
+						:to="item.href"
 						class="footer-list__text footer-list__link"
+						:target="item.linkType === 'external' ? '_blank' : '_self'"
+						:external="item.linkType === 'external'"
 					>
-						{{ item.text }}
-					</a>
+						{{ $t(item.text) ?? item.text }}
+					</nuxt-link>
 
 					<span v-else class="footer-list__text">
-						{{ item.text }}
+						{{ $t(item.text) ?? item.text }}
 					</span>
 				</li>
 			</div>
@@ -29,17 +31,12 @@
 </template>
 
 <script setup lang="ts">
+import type { FooterListItem } from '../model';
 type Props = {
 	list: {
 		header: string;
-		listItems: Array<List>;
+		listItems: FooterListItem[];
 	};
-};
-
-type List = {
-	id: number | string;
-	text: string;
-	href?: string;
 };
 
 defineProps<Props>();
