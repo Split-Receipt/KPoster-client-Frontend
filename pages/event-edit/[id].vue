@@ -320,28 +320,14 @@
 			<!-- Event ticket -->
 			<div class="eventForm-row">
 				<div class="eventForm-row-info">
-					<span>
-						<strong class="eventForm-row-info-required">*</strong>
-						Enlace para comprar entradas
-					</span>
+					<span> Enlace para comprar entradas </span>
 				</div>
 				<div class="eventForm-row-input fullWidth-tickets">
-					<v-field
-						v-slot="{ errors }"
-						:model-value="eventCreateForm.data.linkToBuyTicket"
-						name="tickets"
-						rules="required"
-					>
-						<cp-text-input
-							v-model="eventCreateForm.data.linkToBuyTicket"
-							placeholder="http://tickets.com"
-							type="text"
-							:class="{ 'required-input-error-textInput': errors.length > 0 }"
-						/>
-						<span v-if="errors.length" class="required-input-error-info-center">
-							{{ errors[0] }}
-						</span>
-					</v-field>
+					<cp-text-input
+						v-model="eventCreateForm.data.linkToBuyTicket"
+						placeholder="http://tickets.com"
+						type="text"
+					/>
 				</div>
 			</div>
 
@@ -432,7 +418,9 @@
 				</div>
 			</div>
 			<cp-media-carousel
-				v-if="eventData && eventData.attributes.eventMediaPhotos?.data?.length > 0"
+				v-if="
+					eventData && eventData.attributes.eventMediaPhotos?.data?.length > 0
+				"
 				id="foto o sobre tu evento"
 				is-deletable
 				:media-files-objects="
@@ -465,7 +453,9 @@
 			</div>
 
 			<cp-media-carousel
-				v-if="eventData && eventData.attributes.eventMediaVideos?.data?.length > 0"
+				v-if="
+					eventData && eventData.attributes.eventMediaVideos?.data?.length > 0
+				"
 				id="video o sobre tu evento"
 				is-deletable
 				:video-files-objects="
