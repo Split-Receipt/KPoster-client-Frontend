@@ -1278,7 +1278,7 @@ const sendPartnerRegistrationForm = async () => {
 		if (!userStore.isAuth) {
 			await userStore.register(userRegistrationData);
 
-			if (!userStore.user || userStore.user.id) {
+			if (!userStore.user || !userStore.user.id) {
 				throw new Error('No se pudo encontrar el usuario');
 			}
 			partnerRegistrationForm.data.user = userStore.user.id;
@@ -1304,7 +1304,7 @@ const createPartner = async () => {
 	const partnerSocialMedias = toRaw(partnerRegistrationForm.data.socialMedias);
 	if (partnerSocialMedias) {
 		if (!partnerSocialMedias.length) {
-			delete partnerRegistrationForm.data.socialMedias;
+			partnerRegistrationForm.data.socialMedias = [];
 		} else {
 			partnerRegistrationForm.data.socialMedias = partnerSocialMedias.filter(
 				(socialMedia) => socialMedia.socialMediaLink
