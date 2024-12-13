@@ -13,10 +13,6 @@
 				<city-drop-down
 					@change:filter-cities="(value: string[]) => changeFilters(value, 'city')"
 				/>
-
-				<partners-drop-down
-					@change:event-host="(value: string[]) => changeFilters(value, 'eventHost')"
-				/>
 				<event-category-drop-down
 					@change:filter-event-cats="(value: string[]) => changeFilters(value, 'eventCategory')"
 				/>
@@ -123,12 +119,6 @@ const changeFilters = (data: any, filterPath: string) => {
 					},
 				},
 			};
-			requestPageData();
-			break;
-		}
-
-		case 'eventHost': {
-			filters.events.eventHost = { commercialName: { $in: data } };
 			requestPageData();
 			break;
 		}

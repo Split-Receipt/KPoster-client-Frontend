@@ -169,9 +169,14 @@ const formattedTitle = computed(() => {
 		&-pic {
 			width: 100%;
 			height: inherit;
-			object-fit: cover;
+			object-fit: fill;
 			border-radius: $event-card-default-border-radius;
+
+			@media screen and (min-width: 718px) {
+				object-fit: cover;
+			}
 		}
+
 	}
 
 	&__title {
