@@ -1,9 +1,7 @@
 <template>
 	<div class="textInput">
 		<label
-			v-if="
-				props.type === 'text' || (props.type === 'email' && props.labelText)
-			"
+			v-if="props.labelText"
 			class=""
 			:for="props.id"
 		>
@@ -152,11 +150,11 @@ const numberInputValidate = (event: any) => {
 
 	input {
 		width: 100%;
-		padding: 15px 15px 10px 15px;
+		padding: 15px 10px;
 		border: none;
-		background-color: #f6f6f6;
-		border-radius: 12px;
-		color: #353333;
+		background-color: $white;
+		border: 1px solid $gray;
+		color: $gray;
 
 		&:focus {
 			outline: none;
@@ -177,45 +175,17 @@ const numberInputValidate = (event: any) => {
 		&-open {
 			position: absolute;
 			cursor: pointer;
-			width: 30px;
-			top: 13px;
-			right: 5px;
+			width: 25px;
+			top: 17px;
+			right: 10px;
 		}
 
 		&-closed {
 			position: absolute;
 			cursor: pointer;
-			width: 30px;
-			top: 13px;
-			right: 5px;
-		}
-	}
-
-	&-password {
-		position: relative;
-
-		&-invisible {
-			padding-right: 40px !important;
-		}
-
-		&-visible {
-			padding-right: 40px !important;
-		}
-
-		&-open {
-			position: absolute;
-			cursor: pointer;
-			width: 30px;
-			top: 13px;
-			right: 5px;
-		}
-
-		&-closed {
-			position: absolute;
-			cursor: pointer;
-			width: 30px;
-			top: 13px;
-			right: 5px;
+			width: 25px;
+			top: 18px;
+			right: 10px;
 		}
 	}
 }

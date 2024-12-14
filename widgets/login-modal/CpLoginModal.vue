@@ -6,7 +6,7 @@
 				v-if="loginModalState !== 'login'"
 				class="modal-content-backward"
 				@click="goingToLogin"
-			>&lt; Back</span
+			>Back</span
 			>
 			<div v-if="loginModalState === 'login'" class="modal-content-login">
 				<h2 class="modal-content-title">Iniciar sesión en el perfil</h2>
@@ -17,9 +17,12 @@
 							placeholder="email"
 							type="email"
 						/>
-						<!-- <span class="modal-content-inputs-passRestore">
-							<span @click="goingToPassRestore">Recuperar contraseña?</span>
-						</span> ToDo => open when be ready email server -->
+						<span
+							class="modal-content-inputs-passRestore" 
+						>
+							Recuperar contraseña?
+						</span> 
+						<!-- @click="goingToPassRestore" ToDo => open when be ready email server -->
 					</div>
 					<cp-text-input
 						v-model="loginData.password"
@@ -37,13 +40,9 @@
 				</div>
 			</div>
 			<cp-registration v-if="loginModalState === 'registration'" />
-			<div
-				v-if="loginModalState === 'login'"
-				class="modal-content-inputs-sideAccount"
-			>
-				<span class="modal-content-inputs-sideAccount-title"
-				>O a través de una cuenta</span
-				>
+			<div class="modal-content-inputs-sideAccount">
+				<div class="modal-content-inputs-sideAccount-title"
+				>O a través de una cuenta</div>
 				<div class="modal-content-inputs-sideAccount-buttons">
 					<nuxt-img
 						class="modal-content-inputs-sideAccount-buttons-google"
@@ -144,11 +143,8 @@ onClickOutside(modalMain, () => hanldeCloseModal());
 		align-items: center;
 		border-radius: 35px;
 		padding: 40px;
-		min-width: 450px;
-		width: 30%;
-		height: auto;
-		opacity: 1;
-		background: #eeeeee;
+		min-width: 480px;
+		background: $white;
 		position: absolute;
 		scrollbar-width: none;
 
@@ -184,12 +180,13 @@ onClickOutside(modalMain, () => hanldeCloseModal());
 			position: absolute;
 			right: 40px;
 			top: 40px;
-			width: 56px;
-			height: 56px;
-			background-size: 36px;
-			border: 1px solid #000;
+			width: 55px;
+			height: 55px;
+			background-size: 30px;
+			border: 1.5px solid #000;
 			padding: 5px;
 			border-radius: 50%;
+			background-color: $white;
 			background-image: url('/public/images/close.svg');
 			background-position: center;
 			background-repeat: no-repeat;
@@ -215,8 +212,7 @@ onClickOutside(modalMain, () => hanldeCloseModal());
 			left: 40px;
 			top: 50px;
 			font-size: 22px;
-			line-height: 35.2px;
-			font-weight: 400;
+			line-height: 35px;
 			color: #353333;
 			cursor: pointer;
 			@media screen and (max-height: 630px) {
@@ -237,7 +233,7 @@ onClickOutside(modalMain, () => hanldeCloseModal());
 			font-size: 30px;
 			width: 80%;
 			line-height: 42px;
-			font-weight: 500;
+			font-weight: 600;
 			text-align: center;
 			color: #353333;
 			cursor: default;
@@ -250,7 +246,6 @@ onClickOutside(modalMain, () => hanldeCloseModal());
 		}
 
 		&-login {
-			height: 100%;
 			width: 100%;
 			display: flex;
 			flex-direction: column;
@@ -268,8 +263,7 @@ onClickOutside(modalMain, () => hanldeCloseModal());
 			&-info {
 				text-align: center;
 				font-size: 22px;
-				line-height: 35.2px;
-				font-weight: 400;
+				line-height: 35px;
 				color: #888888;
 			}
 
@@ -305,7 +299,7 @@ onClickOutside(modalMain, () => hanldeCloseModal());
 					margin-top: 5px;
 					font-size: 14px;
 					line-height: 22.4px;
-					font-weight: 500;
+					font-weight: 600;
 					color: #353333;
 				}
 			}
@@ -316,19 +310,12 @@ onClickOutside(modalMain, () => hanldeCloseModal());
 
 			&-passRestore {
 				display: flex;
-				width: 100%;
-				align-items: center;
 				justify-content: flex-end;
-
-				span {
-					text-decoration: none;
-					cursor: pointer;
-					color: #888888;
-					font-size: 14px;
-					font-weight: 500;
-					line-height: 22.4px;
-					margin-top: 5px;
-				}
+				cursor: pointer;
+				color: #888888;
+				font-size: 14px;
+				line-height: 22px;
+				margin-top: 5px;
 			}
 
 			&-password {
@@ -347,15 +334,14 @@ onClickOutside(modalMain, () => hanldeCloseModal());
 					display: block;
 					text-align: center;
 					font-size: 22px;
-					font-weight: 400;
-					line-height: 35.2px;
 					color: #888888;
-					cursor: default;
+					margin-bottom: 25px;
 				}
 
 				&-buttons {
 					display: flex;
 					justify-content: space-between;
+					gap: 34px;
 
 					&-google {
 						height: 50px;
@@ -401,12 +387,9 @@ onClickOutside(modalMain, () => hanldeCloseModal());
 			}
 			span {
 				font-size: 22px;
-				font-weight: 400;
-				line-height: 35.2px;
+				line-height: 35px;
 				color: #353333;
-				padding: 5px;
 				cursor: pointer;
-				text-decoration: none;
 				border-bottom: 1px solid #353333;
 			}
 		}
