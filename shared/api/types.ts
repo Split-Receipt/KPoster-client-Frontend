@@ -359,7 +359,8 @@ export type UserRole = {
 
 export enum UserRolesTypes {
 	eventHost = 'organizador_de_eventos',
-	client = 'cliente'
+	client = 'cliente',
+	authenticated = 'authenticated'
 }
 
 export enum UserRolesNames {

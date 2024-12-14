@@ -110,7 +110,7 @@ const login = async () => {
 		await userStore.login(loginData);
 		toast.success('Autorización exitosa');
 		hanldeCloseModal();
-		navigateTo(`/${locale}/`);
+		navigateTo(`/${locale.value}/`);
 	} catch (error) {
 		toast.error(error as string);
 	}
