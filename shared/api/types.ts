@@ -200,7 +200,7 @@ type StrapiMediaFormat = {
 };
 
 export type CollectionFilters = {
-	type: {
+	type?: {
 		$eq: typeof CollectionTypes[keyof typeof CollectionTypes]
 	};
 	events: {
