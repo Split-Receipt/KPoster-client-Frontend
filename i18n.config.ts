@@ -3,6 +3,9 @@ export default defineI18nConfig(() => ({
 	locale: 'en-US',
 	messages: {
 		en: {
+			to_main_page: 'To the main page',
+			client_personal_page: 'Client personal page',
+			client_personal_page_description: 'Your status in the system is now Client. If you have previously applied for registration as a partner, please wait until the verification process is complete. After you receive the status of an event organizer, your personal account will be displayed on this page. If you have not applied, this section is currently under development, but this will not prevent you from choosing an event to your liking, so we recommend that you return to the main page',
 			footer_title_our_socials: 'Our social medias',
 			sign_out: 'Sign out',
 			more_info: 'More info',
@@ -80,6 +83,8 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		'en-US': {
+			to_main_page: 'To the main page',
+			client_personal_page: 'Client personal page',
 			footer_title_our_socials: 'Our social medias',
 			contacts_title: 'Contacts',
 			footer_title_addition_info: 'Additional information',
@@ -152,6 +157,9 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		es: {
+			to_main_page: 'Hogar',
+			client_personal_page_description: 'Ahora su estado en el sistema es Cliente. Si anteriormente envió una solicitud para registrarlo como socio, espere hasta que se complete el proceso de verificación. Después de recibir el estado de organizador de eventos, su cuenta personal se mostrará en esta página. Si no has enviado una solicitud, entonces esta sección se encuentra actualmente en desarrollo, pero esto no te impedirá elegir un evento de tu agrado, por lo que te recomendamos regresar a la página principal.',
+			client_personal_page: 'Página personal del cliente',
 			footer_title_our_socials: 'Nuestras redes sociales',
 			sign_out: 'Finalizar la sesión',
 			footer_title_addition_info: 'Información adicional',
@@ -230,6 +238,9 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		qu: {
+			to_main_page: 'Wasi',
+			lient_personal_page_description: 'Kunanqa sistemapi estadoyki Cliente kaq. Sichus ñawpaqta huk mañakuyta apachirqanki huk socio hina registrakunaykipaq, ama hina kaspa suyay chiqaqchay ruway tukukunankama. Huk evento organizador kaqpa estadonta chaskisqaykimanta, sapalla yupayniyki kay p\'anqapi rikuchikunqa. Sichus mana huk mañakuyta apachirqankichu, chaymanta kay t\'aqa kunan wiñachiypi kachkan, ichaqa kayqa mana harkasunkichu huk ruwayta munasqaykiman hina akllanaykipaq, chayrayku yuyaychaykiku hatun p\'anqaman kutinaykipaq',
+			client_personal_page: 'Clientepa sapan p\'anqan',
 			footer_title_our_socials: 'Redes sociales nisqayku',
 			sign_out: 'Lloqsiy',
 			contacts_title: 'Kontak',
