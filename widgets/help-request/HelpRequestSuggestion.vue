@@ -38,6 +38,7 @@ const commonDataStore = useCommonDataStore();
 	&__title {
 		margin-bottom: 20px;
 		font-size: 30px;
+		line-height: initial;
 	}
 	&__content {
 		display: flex;
