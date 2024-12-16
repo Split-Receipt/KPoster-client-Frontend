@@ -3,6 +3,8 @@ export default defineI18nConfig(() => ({
 	locale: 'en-US',
 	messages: {
 		en: {
+			help_request_title: 'Does the form seem complicated?',
+			help_request_description: 'Contact us in any convenient way and we will help you',
 			to_main_page: 'To the main page',
 			client_personal_page: 'Client personal page',
 			client_personal_page_description: 'Your status in the system is now Client. If you have previously applied for registration as a partner, please wait until the verification process is complete. After you receive the status of an event organizer, your personal account will be displayed on this page. If you have not applied, this section is currently under development, but this will not prevent you from choosing an event to your liking, so we recommend that you return to the main page',
@@ -83,6 +85,8 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		'en-US': {
+			help_request_description: 'Contact us in any convenient way and we will help you',
+			help_request_title: 'Does the form seem complicated?',
 			to_main_page: 'To the main page',
 			client_personal_page: 'Client personal page',
 			footer_title_our_socials: 'Our social medias',
@@ -157,6 +161,8 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		es: {
+			help_request_description: 'Contáctanos de forma cómoda y te ayudaremos',
+			help_request_title: '¿El formulario parece complicado?',
 			to_main_page: 'Hogar',
 			client_personal_page_description: 'Ahora su estado en el sistema es Cliente. Si anteriormente envió una solicitud para registrarlo como socio, espere hasta que se complete el proceso de verificación. Después de recibir el estado de organizador de eventos, su cuenta personal se mostrará en esta página. Si no has enviado una solicitud, entonces esta sección se encuentra actualmente en desarrollo, pero esto no te impedirá elegir un evento de tu agrado, por lo que te recomendamos regresar a la página principal.',
 			client_personal_page: 'Página personal del cliente',
@@ -238,6 +244,8 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		qu: {
+			help_request_description: 'Conveniente manerapi rimanakuy hinaspa yanapasqaykiku',
+			help_request_title: '¿Complicadochu rikchakun chay formulario?',
 			to_main_page: 'Wasi',
 			lient_personal_page_description: 'Kunanqa sistemapi estadoyki Cliente kaq. Sichus ñawpaqta huk mañakuyta apachirqanki huk socio hina registrakunaykipaq, ama hina kaspa suyay chiqaqchay ruway tukukunankama. Huk evento organizador kaqpa estadonta chaskisqaykimanta, sapalla yupayniyki kay p\'anqapi rikuchikunqa. Sichus mana huk mañakuyta apachirqankichu, chaymanta kay t\'aqa kunan wiñachiypi kachkan, ichaqa kayqa mana harkasunkichu huk ruwayta munasqaykiman hina akllanaykipaq, chayrayku yuyaychaykiku hatun p\'anqaman kutinaykipaq',
 			client_personal_page: 'Clientepa sapan p\'anqan',

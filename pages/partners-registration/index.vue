@@ -1,12 +1,9 @@
 <template>
 	<div class="partners__main">
-		<cp-spinner :is-spinned="isSpin" />
 		<h1 class="partners__title">
 			Ingresa tus datos para registrarte en el Portal Cultural del Cusco
 		</h1>
-		<div class="partners__subtitle">
-			<h3>Llene el formulario de registro</h3>
-		</div>
+		<help-request-suggestion class="partners__help-request-suggestion"/>
 		<v-form ref="partnerRegForm" class="partners__form">
 			<h3>{{ $t('partners_formTitle') }}</h3>
 
@@ -811,7 +808,9 @@
 							<cp-map
 								:coordinates-output="true"
 								:center="getCoordinates"
-								@update:coordinates-update="(coordinates) => setCoordinates(coordinates)"
+								@update:coordinates-update="
+									(coordinates) => setCoordinates(coordinates)
+								"
 							/>
 							<span
 								v-if="errors.length"
@@ -1291,9 +1290,9 @@ const sendPartnerRegistrationForm = async () => {
 			navigateTo(`/${locale.value}`);
 		}, 2000);
 	} catch (error) {
-			toast.error(
-				'Nuestro administrador se comunicará conusted por correo electrónico'
-			);
+		toast.error(
+			'Nuestro administrador se comunicará conusted por correo electrónico'
+		);
 		formSended.value = false;
 	} finally {
 		isSpin.value = false;
@@ -1333,6 +1332,11 @@ const currentPartnerType = computed(() => {
 
 <style scoped lang="scss">
 .partners {
+
+	&__help-request-suggestion {
+		align-self: flex-start;
+		margin-top: 20px;
+	}
 	&__main {
 		padding: 0 5%;
 		@media #{$screen-tablet} {
@@ -1399,7 +1403,7 @@ const currentPartnerType = computed(() => {
 
 	&__form {
 		width: 100%;
-		margin-top: 100px;
+		margin-top: 20px;
 
 		h3 {
 			font-size: 34px;
