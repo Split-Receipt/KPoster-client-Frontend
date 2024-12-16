@@ -39,24 +39,6 @@
 			<cp-registration v-if="loginModalState === 'registration'" />
 			<div
 				v-if="loginModalState === 'login'"
-				class="modal-content-inputs-sideAccount"
-			>
-				<span class="modal-content-inputs-sideAccount-title"
-				>O a través de una cuenta</span
-				>
-				<div class="modal-content-inputs-sideAccount-buttons">
-					<nuxt-img
-						class="modal-content-inputs-sideAccount-buttons-google"
-						src="../public/images/google-login.svg"
-					/>
-					<nuxt-img
-						class="modal-content-inputs-sideAccount-buttons-facebook"
-						src="../public/images/facebook-login.svg"
-					/>
-				</div>
-			</div>
-			<div
-				v-if="loginModalState === 'login'"
 				class="modal-content-registrationBtn"
 			>
 				<span @click="goingToRegistration">Registrarse</span>
