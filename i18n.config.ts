@@ -5,7 +5,7 @@ export default defineI18nConfig(() => ({
 		en: {
 			help_request_title: 'Does the form seem complicated?',
 			help_request_description: 'Contact us in any convenient way and we will help you',
-			to_main_page: 'To the main page',
+			to_main_page: 'Home',
 			client_personal_page: 'Client personal page',
 			client_personal_page_description: 'Your status in the system is now Client. If you have previously applied for registration as a partner, please wait until the verification process is complete. After you receive the status of an event organizer, your personal account will be displayed on this page. If you have not applied, this section is currently under development, but this will not prevent you from choosing an event to your liking, so we recommend that you return to the main page',
 			footer_title_our_socials: 'Our social medias',

@@ -39,7 +39,16 @@
 						@click="navigateTo(`/${locale}/create-event`)"
 					/>
 					<to-main v-if="route.path !== `/${locale}`" @click="toggleMenu" />
-					<cp-button type="ghost" size="small" :text="$t('charity')" />
+					<cp-button
+						size="small"
+						:text="$t('news')"
+						@click="navigateTo(`/${locale}/news`)"
+					/>
+					<cp-button
+						size="small"
+						:text="$t('about_us_title')"
+						@click="navigateTo(`/${locale}/about-us`)"
+					/>
 					<cp-button
 						v-if="userStore.isAuth"
 						type="ghost"
@@ -75,7 +84,16 @@
 						"
 					/>
 					<to-main v-if="route.path !== `/${locale}`" @click="toggleMenu" />
-					<cp-button size="small" :text="$t('charity')" />
+					<cp-button
+						size="small"
+						:text="$t('news')"
+						@click="mobileMenuActionsDecorator(navigateTo, `/${locale}/news`)"
+					/>
+					<cp-button
+						size="small"
+						:text="$t('about_us_title')"
+						@click="mobileMenuActionsDecorator(navigateTo, `/${locale}/about-us`)"
+					/>
 					<cp-button
 						v-if="userStore.isAuth"
 						type="ghost"
