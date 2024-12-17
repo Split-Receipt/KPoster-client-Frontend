@@ -22,12 +22,18 @@
 
 		<!-- Блок с контролами заголовка -->
 		<div class="header__controls">
-			<nuxt-link to="/">
-				<nuxt-img
-					src="/images/logo.svg"
-					class="icon icon-logo header__icon-logo"
-				/>
-			</nuxt-link>
+			<div class="header__logo">
+				<nuxt-link to="/">
+					<nuxt-img
+						src="/images/logo-hatun.png"
+						class="icon icon-logo header__icon-logo"
+					/>
+					<nuxt-img
+						src="/images/logo-cusco.png"
+						class="icon icon-logo header__icon-logo"
+					/>
+				</nuxt-link>
+			</div>
 
 			<!-- Бургер-меню и кнопки на десктопе -->
 			<div class="header__menu">
@@ -265,19 +271,15 @@ const isAllowedToCreateEvent = computed(() => {
 		}
 	}
 
-	&__icon-logo {
-		width: 60px;
-		@media #{$screen-tablet} {
-			background-color: transparent;
-			width: $header-icon-logo-width-screen-tablet;
-			height: $header-icon-logo-height-screen-tablet;
-		}
+	&__logo {
+		width: 80%;
+		height: 90%;
 
-		@media #{$screen-desktop} {
-			background-color: transparent;
-			width: $header-icon-logo-width-screen-desktop;
-			height: $header-icon-logo-height-screen-desktop;
-		}
+	}
+
+	&__icon-logo {
+		max-width: 195px;
+		height: 100%;
 	}
 
 	&__menu {
