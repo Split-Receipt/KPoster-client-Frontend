@@ -288,7 +288,7 @@ const getEventById = async (id: string) => {
 const formatDateByTZ = (eventDate: Date) => {
 	return format(
 		toZonedTime(eventDate, localStorage.getItem('timezone') ?? 'America/Lima'),
-		'PPPPpppp'
+		'dd.MM HH:mm'
 	);
 };
 
@@ -343,6 +343,7 @@ const eventCategoriesNames = computed(() => {
 </script>
 
 <style scoped lang="scss">
+/** Требуется: почистить стили, переименовать классы*/
 .detailed {
 	padding: 0 20px;
 	@media #{$screen-tablet} {
@@ -479,6 +480,7 @@ const eventCategoriesNames = computed(() => {
 	}
 
 	&__mainImage {
+		--horizontal-offset: calc(50% - 5px);
 		margin-top: 80px;
 		position: relative;
 		width: 100%;
@@ -487,6 +489,7 @@ const eventCategoriesNames = computed(() => {
 		background-image: url('../../public/images/detailBg.png');
 		background-repeat: no-repeat;
 		background-size: cover;
+		box-shadow: inset 500px 0 150px -50px rgba(18, 18, 18, 0.5);
 
 		@media screen and (max-width: 700px) {
 			height: 40vw;
@@ -494,6 +497,7 @@ const eventCategoriesNames = computed(() => {
 
 		@media screen and (max-width: 620px) {
 			height: 50vw;
+			box-shadow: inset 200px 0 150px -50px rgba(18, 18, 18, 0.5);
 		}
 
 		@media screen and (max-width: 515px) {

@@ -1,15 +1,20 @@
 <template>
-	<slot name="header" />
-	<div class="grid-container">
-		<slot />
+	<div class="grid">
+		<slot name="header"/>
+		<div class="grid__container">
+			<slot />
+		</div>
 	</div>
 </template>
 
 <style scoped lang="scss">
-.grid-container {
-	display: grid;
-	gap: 16px;
-	grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-	padding: 55px 16px 55px 16px;
+.grid {
+	padding: 20px 16px 40px 16px;
+
+	&__container {
+		display: grid;
+		gap: 16px;
+		grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+	}
 }
 </style>

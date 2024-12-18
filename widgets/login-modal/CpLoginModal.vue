@@ -119,6 +119,7 @@ onClickOutside(modalMain, () => hanldeCloseModal());
 </script>
 
 <style scoped lang="scss">
+/** Требуется: почистить стили, переименовать классы*/
 .modal {
 	width: 100%;
 	height: 100%;
