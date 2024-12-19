@@ -1,7 +1,7 @@
 import { useNuxtApp } from 'nuxt/app';
 import type { BaseStrapiResponse, EventCreateType, LoginData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, MyUser, AboutPlatform, Affiliation, EventHost, CultureType, OrgType, NewsOne } from '@shared/api/types.ts';
 import type { AxiosResponse } from 'axios';
-import { id } from 'date-fns/locale';
+import { startOfDay } from 'date-fns';
 
 export const registerPartner = (partnerInfo: PartnerRegistration) => {
 	const { $api } = useNuxtApp();
@@ -48,6 +48,11 @@ export const requestEventsColletions = (filters: CollectionFilters) => {
 	const params = {
 		populate: {
 			events: {
+				filters: {
+					eventDate: {
+						$gte: startOfDay(new Date()),
+					},
+				},
 				populate: {
 					eventAddress: {
 						populate: {
