@@ -152,7 +152,6 @@ const dataToFilter = (event: Event) => {
 	display: flex;
 	align-items: center;
 	width: fit-content;
-	margin: 0 15px 0 0;
 	position: relative;
 }
 

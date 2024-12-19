@@ -1,14 +1,16 @@
 <template>
-	<div class="news-page">
-		<h1 class="news-page__title">{{ $t('news') }}</h1>
-		<div v-if="news.length > 0" class="news-page__content">
-			<cp-news-card v-for="item in news" :key="item.id" :item="item"/>
-		</div>
-	</div>
+	<cp-base-page :header="$t('news')">
+		<template #content>
+			<div v-if="news.length > 0" class="news-page__content">
+				<cp-news-card v-for="item in news" :key="item.id" :item="item"/>
+			</div>
+		</template>
+	</cp-base-page>
 </template>
 
 <script setup lang="ts">
 import CpNewsCard from '@entities/CpNewsCard/CpNewsCard.vue';
+import CpBasePage from '@shared/gui/CpBasePage.vue';
 import { requestPlatformNews } from '@shared/api';
 import type { NewsOne } from '@shared/api/types';
 

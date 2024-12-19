@@ -1,19 +1,21 @@
 <template>
-	<div class="news-detail-page">
-		<h1>{{ newsData?.attributes.title ?? 'Noticia' }}</h1>
-		<nuxt-img
-			v-if="newsData?.attributes.newsMainBanner?.data"
-			class="news-detail-page__img"
-			:src="getMediaUrl"
-		/>
-		<cp-markdown-viewer :markdown-text="newsData?.attributes.newsText ?? ''" />
-	</div>
+	<cp-base-page :header="newsData?.attributes.title ?? 'Noticia'" class="news-detail-page">
+		<template #content>
+			<nuxt-img
+				v-if="newsData?.attributes.newsMainBanner?.data"
+				class="news-detail-page__img"
+				:src="getMediaUrl"
+			/>
+			<cp-markdown-viewer :markdown-text="newsData?.attributes.newsText ?? ''" />
+		</template>
+	</cp-base-page>
 </template>
 
 <script setup lang="ts">
 import { requestPlatformNewsById } from '@shared/api';
 import type { NewsOne } from '@shared/api/types';
 import CpMarkdownViewer from '@shared/gui/CpMardownViewer/CpMarkdownViewer.vue';
+import CpBasePage from '@shared/gui/CpBasePage.vue';
 import { useRuntimeConfig } from 'nuxt/app';
 
 const route = useRoute();

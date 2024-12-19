@@ -44,7 +44,6 @@ const getMediaUrl = computed(() => {
 	border-radius: $event-card-default-border-radius;
 	background-color: $event-card-text-background-color;
 	box-shadow: $card-shadow;
-	text-align: center;
 	overflow: hidden;
 	gap: 20px;
 
@@ -66,6 +65,7 @@ const getMediaUrl = computed(() => {
 
 	&__title {
 		white-space: nowrap;
+		text-align: left;
 	}
 
 	@media #{$screen-tablet} {

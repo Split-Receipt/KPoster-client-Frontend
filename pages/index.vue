@@ -1,14 +1,11 @@
 <template>
-	<div class="main-page">
-		<main class="main-page__main">
-			<h1 class="main-page__title">{{ $t('main_title') }}</h1>
-
+	<cp-base-page :header="$t('main_title')" class="main-page">
+		<template #content>
 			<div class="main-page__date-carousel">
 				<date-card-carousel
 					@change:filter-date="(value: Date) => changeFilters(value, 'date')"
 				/>
 			</div>
-
 			<div class="main-page__filters">
 				<city-drop-down
 					@change:filter-cities="(value: string[]) => changeFilters(value, 'city')"
@@ -25,8 +22,10 @@
 				/>
 			</div>
 			<div>
-				<h4 class="main-page__list-title">{{ formattedDate }}</h4>
 				<cp-grid-layout v-if="events.length">
+					<template #header>
+						<h4 class="main-page__list-title">{{ $t('Eventos hoy') }}</h4>
+					</template>
 					<event-card
 						v-for="event in events"
 						:key="event.id + event.attributes.eventName"
@@ -35,16 +34,16 @@
 						@click="navigateTo(`/${locale}/event/${event.id}`)"
 					/>
 				</cp-grid-layout>
-				<div v-else class="main-page__section-placeholder">
+				<h5 v-else class="main-page__section-placeholder">
 					{{ $t('Sin eventos') }}
-				</div>
+				</h5>
 			</div>
-		</main>
-	</div>
+		</template>
+	</cp-base-page>
 </template>
 
 <script setup lang="ts">
-import { format , startOfDay, endOfDay } from 'date-fns';
+import { startOfDay, endOfDay } from 'date-fns';
 import PartnersDropDown from '@features/partners-filter/PartnersDropDown.vue';
 import CityDropDown from '@features/city-filter/CityDropDown.vue';
 import EventCategoryDropDown from '@features/event-category-filter/EventCategoryDropDown.vue';
@@ -55,6 +54,7 @@ import {
 	type EventData,
 } from '@shared/api/types';
 import CpGridLayout from '@shared/gui/CpGridLayout.vue';
+import CpBasePage from '@shared/gui/CpBasePage.vue';
 import EventCard from '@widgets/event-card/EventCard.vue';
 import { fromZonedTime } from 'date-fns-tz';
 
@@ -84,14 +84,6 @@ const filtersForCollections: CollectionFilters = {
 onBeforeMount(() => {
 	requestPageData;
 });
-
-const formattedDate = computed(() => {
-	return format(
-		new Date(filters.events?.eventDate?.$gte),
-		'EEE, do MMMM'
-	);
-});
-
 const requestPageData = () => {
 	getEventsCollection();
 	getEvents();
@@ -166,45 +158,8 @@ const changeFilters = (data: any, filterPath: string) => {
 
 <style scoped lang="scss">
 .main-page {
-	&__main {
-		margin-top: 2px;
-		padding-left: 10px;
-
-		&__title {
-			@media #{$screen-desktop} {
-				font-family: $font-family-medium-expanded;
-			}
-		}
-
-		@media #{$screen-tablet} {
-			margin-top: 10px;
-		}
-
-		@media #{$screen-desktop} {
-			padding: 0 5%;
-			margin-top: 25px;
-		}
-	}
-
-	&__title {
-		text-align: center;
-		@media #{$screen-tablet} {
-			max-width: 55%;
-			font-family: $font-family-medium-expanded;
-		}
-
-		@media #{$screen-desktop} {
-			max-width: 100%;
-			font-family: $font-family-medium-expanded;
-		}
-	}
-
-	&__date-carousel {
-		margin-top: 25px;
-	}
-
 	&__list-title {
-		margin: 10px 20px;
+		margin-bottom: 30px;
 	}
 
 	&__section {
@@ -236,15 +191,14 @@ const changeFilters = (data: any, filterPath: string) => {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			font-size: 30px;
-			padding: 20px 0;
 		}
 	}
-}
 
-.main-page__filters {
-	display: flex;
-	flex-wrap: wrap;
-	padding: 20px;
+	&__filters {
+		display: flex;
+		flex-wrap: wrap;
+		padding: 20px;
+		gap: 20px;
+	}
 }
 </style>

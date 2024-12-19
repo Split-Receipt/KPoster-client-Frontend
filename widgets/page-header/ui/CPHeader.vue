@@ -40,7 +40,7 @@
 						:text="$t('create_event')"
 						@click="navigateTo(`/${locale}/create-event`)"
 					/>
-					<to-main v-if="route.path !== `/${locale}`" @click="toggleMenu" />
+					<to-main v-if="route.path !== `/${locale}`"/>
 					<cp-button
 						size="small"
 						:text="$t('news')"

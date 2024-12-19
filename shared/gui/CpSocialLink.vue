@@ -54,8 +54,8 @@ const socialMediaFormattedValues = computed(() => {
 .animatedLink {
 	z-index: 1;
 	padding: 0;
-	width: 45px;
-	height: 45px;
+	width: 36px;
+	height: 36px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -99,8 +99,8 @@ const socialMediaFormattedValues = computed(() => {
 	&__logo {
 		z-index: 1;
 		padding: 0;
-		width: 45px;
-		height: 45px;
+		width: 36px;
+		height: 36px;
 		display: flex;
 		align-items: center;
 		justify-content: center;

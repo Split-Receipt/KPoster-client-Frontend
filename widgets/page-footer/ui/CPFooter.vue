@@ -129,8 +129,6 @@ const showBecomePartnerButton = computed(() => {
 		align-items: center;
 		gap: 50px;
 
-		@media #{$screen-tablet} {
-		}
 	}
 
 	&__logos {
@@ -148,25 +146,10 @@ const showBecomePartnerButton = computed(() => {
 	&__list-wrapper {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 10px;
-	}
+		gap: 25px;
 
-	&__list {
 		@media #{$screen-tablet} {
-			height: $footer-media-tablet-height;
-			width: $footer-media-tablet-width;
-		}
-
-		@media #{$screen-desktop} {
-			min-height: $footer-media-desktop-min-height;
-			width: $footer-media-desktop-width;
-		}
-
-		@media #{$screen-big-desktop} {
-			width: $footer-big-desktop-width;
-			&:nth-child(3) {
-				width: $footer-big-desktop-width-child;
-			}
+			gap: 70px;
 		}
 	}
 

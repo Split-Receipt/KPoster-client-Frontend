@@ -1,17 +1,16 @@
 <template>
-	<div class="about-us">
-		<div class="about-us-main-title">
-			<h1>{{ $t('main_title') }}</h1>
-		</div>
-		<h2 class="about-us-sub-title">{{ $t('about_us_title') }}</h2>
-		<span v-if="aboutPlatform" class="about-us-text">
-			<cp-markdown-viewer :markdown-text="aboutPlatform" />
-		</span>
-	</div>
+	<cp-base-page :header="$t('about_us_title')" class="about-us">
+		<template #content>
+			<div v-if="aboutPlatform" class="about-us-text">
+				<cp-markdown-viewer :markdown-text="aboutPlatform" />
+			</div>
+		</template>
+	</cp-base-page>
 </template>
 
 <script setup lang="ts">
 import type { AboutPlatform } from '@shared/api/types';
+import CpBasePage from '@shared/gui/CpBasePage.vue';
 import { requestDataAboutPlatform } from '@shared/api';
 import { toast } from 'vue3-toastify';
 import CpMarkdownViewer from '@shared/gui/CpMardownViewer/CpMarkdownViewer.vue';
@@ -34,80 +33,17 @@ onBeforeMount(() => {
 
 <style scoped lang="scss">
 .about-us {
-	padding: 0 20px 0 20px;
-	color: $black;
-
-	&-main-title {
-		width: 100%;
-		margin-top: 50px;
-
-		h1 {
-			width: 100%;
-			font-family: $font-family-medium-expanded;
-			text-align: center;
-			font-size: 82px;
-			font-style: normal;
-			font-weight: 500;
-			line-height: normal;
-			text-align: center;
-
-			@media screen and (max-width: 1280px) {
-				font-size: 72px;
-			}
-
-			@media screen and (max-width: 768px) {
-				font-size: 40px;
-			}
-
-			@media screen and (max-width: 360px) {
-				font-size: 30px;
-			}
-		}
-	}
+	font-family: $font-family-medium-expanded;
 
 	&-sub-title {
 		margin-bottom: 0.5em;
-		font-family: $font-family-medium-expanded;
-		font-size: 70px;
-		font-style: normal;
-		font-weight: 500;
 		line-height: 120%;
-		margin-top: 70px;
-
-		@media screen and (max-width: 1280px) {
-			font-size: 66px;
-		}
-
-		@media screen and (max-width: 768px) {
-			font-size: 32px;
-		}
-
-		@media screen and (max-width: 360px) {
-			font-size: 28px;
-		}
+		margin-top: 20px;
 	}
 
 	&-text {
 		font-size: 22px;
-		font-style: normal;
-		font-weight: 400;
 		line-height: 160%;
-		display: block;
-		margin: 0 15% 140px 0;
-
-		&-top {
-			margin-bottom: 2em;
-			display: block;
-		}
-
-		&-mid {
-			margin-bottom: 2em;
-			display: block;
-		}
-
-		&-bottom {
-			display: block;
-		}
 
 		@media screen and (max-width: 1280px) {
 			font-size: 16px;

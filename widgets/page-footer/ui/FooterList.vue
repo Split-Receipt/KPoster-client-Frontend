@@ -65,6 +65,7 @@ defineProps<Props>();
 
 	&__header {
 		color: $footer-list-header-color;
+		white-space: nowrap;
 	}
 
 	&__item {
