@@ -2,10 +2,9 @@
 	<div class="textInput">
 		<label
 			v-if="props.labelText"
-			class=""
 			:for="props.id"
+			:class="{'required-field': props.isRequired}"
 		>
-			<strong v-if="props.isRequired">*</strong>
 			{{ props.labelText }}
 		</label>
 		<input
@@ -33,8 +32,7 @@
 				@click="passVisibilityToggle"
 			/>
 		</div>
-		<label v-if="props.type === 'date' && props.labelText" :for="props.id">
-			<strong v-if="props.isRequired">*</strong>
+		<label v-if="props.type === 'date' && props.labelText" :for="props.id" :class="{'required-field': props.isRequired}">
 			{{ props.labelText }}
 		</label>
 		<input

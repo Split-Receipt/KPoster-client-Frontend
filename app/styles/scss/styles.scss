@@ -21,3 +21,15 @@
 .v-md-editor__right-area {
 	height: 100%;
 }
+
+.required-field {
+	position: relative;
+
+	&::after {
+		content: "*";
+		color: $sunrise-red;
+		position: absolute;
+		top: -5px;
+		left: -10px;
+	}
+}
