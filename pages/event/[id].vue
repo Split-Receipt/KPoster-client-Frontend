@@ -31,25 +31,8 @@
 			</span>
 		</div>
 
-		<div class="detailed__relatedList">
-			<cp-huge-link-btn
-				v-if="event.attributes.eventDigitalCatalog"
-				class="detailed__relatedList-item"
-				huge-title="Tu catalogo digital"
-				:huge-link="formatExternalLink(event.attributes.eventDigitalCatalog)"
-			/>
-			<cp-huge-link-btn
-				v-if="event.attributes.eventWebSite"
-				class="detailed__relatedList-item"
-				huge-title="Pagina web"
-				:huge-link="formatExternalLink(event.attributes.eventWebSite)"
-			/>
-		</div>
-
 		<div class="detailed__EventCard">
-			<h2 class="detailed__EventCard-title">
-				{{ event.attributes.eventName }}
-			</h2>
+			<h2 class="detailed__EventCard-title">Información del evento</h2>
 			<div class="detailed__EventCard-text">
 				<span>
 					{{ event.attributes.eventHost.data.attributes.commercialName }}
@@ -63,7 +46,7 @@
 		</div>
 
 		<div v-if="eventSocialMedias.length" class="detailed__socialMedias">
-			<span class="detailed__socialMedias-title">Social media:</span>
+			<span class="detailed__socialMedias-title">redes sociales:</span>
 			<div class="detailed__socialMedias-links">
 				<cp-social-link
 					v-for="value in eventSocialMedias"
@@ -82,7 +65,28 @@
 			/>
 		</div>
 
-		<div class="detailed__carousel slider-gallery">
+		<div>
+			<h2 class="detailed__map-title">Relacionados</h2>
+			<div class="detailed__relatedList">
+				<cp-huge-link-btn
+					v-if="event.attributes.eventDigitalCatalog"
+					class="detailed__relatedList-item"
+					huge-title="Tu catalogo digital"
+					:huge-link="formatExternalLink(event.attributes.eventDigitalCatalog)"
+				/>
+				<cp-huge-link-btn
+					v-if="event.attributes.eventWebSite"
+					class="detailed__relatedList-item"
+					huge-title="Pagina web"
+					:huge-link="formatExternalLink(event.attributes.eventWebSite)"
+				/>
+			</div>
+		</div>
+
+		<div
+			v-if="getMediaPhotosUrls.length || getMediaVideosUrls.length"
+			class="detailed__carousel slider-gallery"
+		>
 			<h2 class="detailed__carousel-title-gallery">Event gallery</h2>
 			<cp-media-carousel
 				id="qwe123"
@@ -363,12 +367,12 @@ const eventCategoriesNames = computed(() => {
 
 		h2 {
 			font-family: 'Poppins-Medium';
-			font-size: 82px;
 			font-style: normal;
+			font-size: 22px;
 			font-weight: 500;
 			line-height: normal;
 
-			@media screen and (max-width: 1280px) {
+			@media #{$screen-tablet} {
 				font-size: 42px;
 			}
 		}
@@ -420,7 +424,6 @@ const eventCategoriesNames = computed(() => {
 	&__relatedList {
 		display: flex;
 		flex-wrap: wrap;
-		margin-top: 56px;
 
 		&-item {
 			margin: 0 19px 19px 0;
@@ -428,11 +431,10 @@ const eventCategoriesNames = computed(() => {
 	}
 
 	&__EventCard {
-		margin-top: 100px;
+		margin-top: 20px;
 
 		&-title {
 			font-size: 70px;
-			line-height: 98px;
 			font-weight: 500;
 			color: #353333;
 			font-family: 'Poppins-Medium';
@@ -480,8 +482,7 @@ const eventCategoriesNames = computed(() => {
 	}
 
 	&__mainImage {
-		--horizontal-offset: calc(50% - 5px);
-		margin-top: 80px;
+		margin-top: 22px;
 		position: relative;
 		width: 100%;
 		height: 30vw;
@@ -490,6 +491,10 @@ const eventCategoriesNames = computed(() => {
 		background-repeat: no-repeat;
 		background-size: cover;
 		box-shadow: inset 500px 0 150px -50px rgba(18, 18, 18, 0.5);
+
+		@media #{$screen-tablet} {
+			margin-top: 30px;
+		}
 
 		@media screen and (max-width: 700px) {
 			height: 40vw;
@@ -623,7 +628,7 @@ const eventCategoriesNames = computed(() => {
 		}
 
 		&-title {
-			margin-top: 100px;
+			margin-top: 20px;
 			margin-left: 5vw;
 			margin-bottom: 40px;
 			font-size: 60px;

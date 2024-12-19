@@ -13,10 +13,6 @@
 				<city-drop-down
 					@change:filter-cities="(value: string[]) => changeFilters(value, 'city')"
 				/>
-
-				<partners-drop-down
-					@change:event-host="(value: string[]) => changeFilters(value, 'eventHost')"
-				/>
 				<event-category-drop-down
 					@change:filter-event-cats="(value: string[]) => changeFilters(value, 'eventCategory')"
 				/>
@@ -68,11 +64,19 @@ const { availableLocales, setLocale } = useI18n();
 const eventsCollections = ref();
 const events = ref<EventData[]>([]);
 const filters: CollectionFilters = {
-	type: { $eq: CollectionTypes.forMainPage },
 	events: {
 		eventDate: {
 			$gte: startOfDay(new Date()),
 			$lte: endOfDay(new Date()),
+		},
+	},
+};
+
+const filtersForCollections: CollectionFilters = {
+	type: { $eq: CollectionTypes.forMainPage },
+	events: {
+		eventDate: {
+			$gte: startOfDay(new Date()),
 		},
 	},
 };
@@ -107,7 +111,7 @@ onMounted(() => {
 
 const getEventsCollection = async () => {
 	try {
-		const eventsCollectionsRequestData = await requestEventsColletions(filters);
+		const eventsCollectionsRequestData = await requestEventsColletions(filtersForCollections);
 		eventsCollections.value = eventsCollectionsRequestData.data.data;
 	} catch (e) {
 		console.error(e);
@@ -133,12 +137,6 @@ const changeFilters = (data: any, filterPath: string) => {
 					},
 				},
 			};
-			requestPageData();
-			break;
-		}
-
-		case 'eventHost': {
-			filters.events.eventHost = { commercialName: { $in: data } };
 			requestPageData();
 			break;
 		}

@@ -40,20 +40,6 @@
 				</div>
 			</div>
 			<cp-registration v-if="loginModalState === 'registration'" />
-			<div class="modal-content-inputs-sideAccount">
-				<div class="modal-content-inputs-sideAccount-title"
-				>O a través de una cuenta</div>
-				<div class="modal-content-inputs-sideAccount-buttons">
-					<nuxt-img
-						class="modal-content-inputs-sideAccount-buttons-google"
-						src="../public/images/google-login.svg"
-					/>
-					<nuxt-img
-						class="modal-content-inputs-sideAccount-buttons-facebook"
-						src="../public/images/facebook-login.svg"
-					/>
-				</div>
-			</div>
 			<div
 				v-if="loginModalState === 'login'"
 				class="modal-content-registrationBtn"
@@ -109,7 +95,7 @@ const login = async () => {
 		await userStore.login(loginData);
 		toast.success('Autorización exitosa');
 		hanldeCloseModal();
-		navigateTo(`/${locale}/`);
+		navigateTo(`/${locale.value}/`);
 	} catch (error) {
 		toast.error(error as string);
 	}

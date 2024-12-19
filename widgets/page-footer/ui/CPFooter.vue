@@ -8,14 +8,21 @@
 				:list="list"
 			/>
 		</div>
-		<cp-button
-			v-if="showBecomePartnerButton"
-			class="footer__button"
-			:text="$t('partners_button_become_partner')"
-			size="large"
-			:islink="true"
-			:link-to="`/${locale}/partners-registration`"
-		/>
+		<div class="footer__content">
+			<cp-button
+				v-if="showBecomePartnerButton"
+				class="footer__button"
+				:text="$t('partners_button_become_partner')"
+				size="large"
+				:islink="true"
+				:link-to="`/${locale}/partners-registration`"
+			/>
+			<div class="footer__logos">
+				<nuxt-img src="/images/logo-hatun.png" class="footer__icon-logo" />
+				<nuxt-img src="/images/logo-cusco.png" class="footer__icon-logo" />
+			</div>
+
+		</div>
 	</div>
 </template>
 
@@ -114,6 +121,30 @@ const showBecomePartnerButton = computed(() => {
 		justify-content: space-around;
 	}
 
+	&__content {
+		display: flex;
+		width: 100%;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 50px;
+
+		@media #{$screen-tablet} {
+		}
+	}
+
+	&__logos {
+		display: flex;
+	}
+
+	&__icon-logo {
+		width: 100px;
+		height: 100%;
+		@media #{$screen-desktop} {
+			width: 140px;
+		}
+	}
+
 	&__list-wrapper {
 		display: flex;
 		flex-wrap: wrap;
@@ -141,6 +172,7 @@ const showBecomePartnerButton = computed(() => {
 
 	&__button {
 		width: 300px;
+		justify-self: center;
 		align-self: center;
 
 		@media #{$screen-desktop} {

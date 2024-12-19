@@ -22,12 +22,14 @@
 
 		<!-- Блок с контролами заголовка -->
 		<div class="header__controls">
-			<nuxt-link to="/">
-				<nuxt-img
-					src="/images/logo.svg"
-					class="icon icon-logo header__icon-logo"
-				/>
-			</nuxt-link>
+			<div class="header__logo">
+				<nuxt-link to="/">
+					<nuxt-img
+						src="/images/logo.svg"
+						class="icon icon-logo header__icon-logo"
+					/>
+				</nuxt-link>
+			</div>
 
 			<!-- Бургер-меню и кнопки на десктопе -->
 			<div class="header__menu">
@@ -38,8 +40,17 @@
 						:text="$t('create_event')"
 						@click="navigateTo(`/${locale}/create-event`)"
 					/>
-					<cp-button type="ghost" size="small" :text="$t('sales')" />
-					<cp-button type="ghost" size="small" :text="$t('charity')" />
+					<to-main v-if="route.path !== `/${locale}`" @click="toggleMenu" />
+					<cp-button
+						size="small"
+						:text="$t('news')"
+						@click="navigateTo(`/${locale}/news`)"
+					/>
+					<cp-button
+						size="small"
+						:text="$t('about_us_title')"
+						@click="navigateTo(`/${locale}/about-us`)"
+					/>
 					<cp-button
 						v-if="userStore.isAuth"
 						type="ghost"
@@ -50,13 +61,6 @@
 				</div>
 
 				<div class="header__buttons header__buttons--circle">
-					<cp-button
-						with-image="/../public/images/search.svg"
-						size="small"
-						type="secondary"
-						shape="circle"
-						control="true"
-					/>
 					<cp-button
 						with-image="/../public/images/login.svg"
 						size="small"
@@ -81,8 +85,19 @@
 							mobileMenuActionsDecorator(navigateTo, `/${locale}/create-event`)
 						"
 					/>
-					<cp-button size="small" :text="$t('sales')" />
-					<cp-button size="small" :text="$t('charity')" />
+					<to-main v-if="route.path !== `/${locale}`" @click="toggleMenu" />
+					<cp-button
+						size="small"
+						:text="$t('news')"
+						@click="mobileMenuActionsDecorator(navigateTo, `/${locale}/news`)"
+					/>
+					<cp-button
+						size="small"
+						:text="$t('about_us_title')"
+						@click="
+							mobileMenuActionsDecorator(navigateTo, `/${locale}/about-us`)
+						"
+					/>
 					<cp-button
 						v-if="userStore.isAuth"
 						type="ghost"
@@ -92,12 +107,6 @@
 					/>
 				</div>
 				<div class="header__buttons header__buttons--circle">
-					<cp-button
-						with-image="/../public/images/search.svg"
-						size="small"
-						shape="circle"
-						type="secondary"
-					/>
 					<cp-button
 						with-image="/../public/images/login.svg"
 						size="small"
@@ -124,12 +133,14 @@ import CpButton from '@shared/gui/CpButton.vue';
 import CpUpScroll from '@shared/gui/CpUpScroll.vue';
 import { useUserStore } from '@stores/user-store';
 import { UserRolesTypes } from '@shared/api/types';
+import ToMain from '@features/to-main/ToMain.vue';
 
 const { locale } = useI18n();
 
 const userStore = useUserStore();
 const loginModalIsOpen = ref(false);
 const isMenuOpen = ref(false);
+const route = useRoute();
 
 const handleModalOpen = () => {
 	loginModalIsOpen.value = true;

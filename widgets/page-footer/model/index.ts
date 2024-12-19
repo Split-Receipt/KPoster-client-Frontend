@@ -20,13 +20,13 @@ export const footerLists: FooterLists = {
 		listItems: [
 			{
 				id: 1,
-				text: 'about_us_title',
-				href: '/about-us',
+				text: 'sales',
+				href: '#',
 			},
 			{
 				id: 2,
-				text: 'news',
-				href: '/news',
+				text: 'charity',
+				href: '#',
 			},
 			{
 				id: 3,
