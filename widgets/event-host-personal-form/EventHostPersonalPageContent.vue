@@ -388,7 +388,7 @@
 						})
 					)
 				"
-				@delete-photo="(value: CpMediaCardProps['item']) => deleteFile(value, 'mainBanner')"
+				@delete-photo="(value: CpMediaCardProps['item']) => deleteFile(value.id, 'mainBanner')"
 			/>
 
 			<!-- organization Resume -->
@@ -659,7 +659,7 @@
 						})
 					)
 				"
-				@delete-photo="(value: CpMediaCardProps['item']) => deleteFile(value, 'productDescriptionFile')"
+				@delete-photo="(value: CpMediaCardProps['item']) => deleteFile(value.id, 'productDescriptionFile')"
 			/>
 
 			<!-- webPage -->
@@ -951,7 +951,7 @@
 						})
 					)
 				"
-				@delete-video="(value: CpMediaCardProps['item']) => deleteFile(value, 'videoBusinessCard')"
+				@delete-video="(value: CpMediaCardProps['item']) => deleteFile(value.id, 'videoBusinessCard')"
 			/>
 
 			<!-- most Popular Product -->
@@ -990,7 +990,7 @@
 						})
 					)
 				"
-				@delete-photo="(value: CpMediaCardProps['item']) => deleteFile(value, 'mostPopularProduct')"
+				@delete-photo="(value: CpMediaCardProps['item']) => deleteFile(value.id, 'mostPopularProduct')"
 			/>
 
 			<!-- gallery Images -->
@@ -1046,7 +1046,7 @@
 						})
 					)
 				"
-				@delete-photo="(value: CpMediaCardProps['item']) => deleteFile(value, 'galleryImages')"
+				@delete-photo="(value: CpMediaCardProps['item']) => deleteFile(value.id, 'galleryImages')"
 			/>
 
 			<div class="partners__form-submit">
@@ -1131,8 +1131,8 @@ const partnerForm = reactive<PartnerRegistration>({
 		commercialName: '',
 		compName: '',
 		ruc: '',
-		startDate: '',
 		user: null,
+		startDate: '',
 		personCount: 0,
 		middleAge: 0,
 		womenPercentage: 0,
@@ -1244,7 +1244,7 @@ const getEventHostEvents = async () => {
 };
 
 const deleteFile = async (
-	item: CpMediaCardProps['item'],
+	itemId: CpMediaCardProps['item']['id'],
 	mediaFieldPath: keyof PartnerRegistration['files']
 ) => {
 	const eventFile =
@@ -1252,7 +1252,7 @@ const deleteFile = async (
 	let fileId = null;
 	if (eventFile) {
 		if (Array.isArray(eventFile)) {
-			const fileInArray = eventFile.find((file) => file.id === item.id);
+			const fileInArray = eventFile.find((file) => file.id === itemId);
 			if (fileInArray) {
 				fileId = fileInArray.id;
 			}
@@ -1301,11 +1301,30 @@ const getPartnerById = async () => {
 
 		// Мапим данные партнера в форму
 		mapPartnerDataToForm(eventHostOriginalData.value);
+		setProductSwitchers();
+		setCompVideoSwitcher();
 	} catch (error) {
 		toast.error('Error al cargar la información del organizador');
 	}
 };
 
+const setProductSwitchers = () => {
+	if (partnerForm.files.productDescriptionFile) {
+		mainProdValue.value = 'File';
+	} else if (partnerForm.data.productDescriptionLink) {
+		mainProdValue.value = 'Link';
+	} else if (partnerForm.data.productDescriptionText) {
+		mainProdValue.value = 'Text';
+	}
+};
+
+const setCompVideoSwitcher = () => {
+	if (partnerForm.files.compVideoFile) {
+		compVideoValue.value = 'File';
+	} else {
+		compVideoValue.value = 'Link';
+	}
+};
 const submitPartnerForm = async () => {
 	const isValid = await partnerRegForm.value?.validate();
 	if (!isValid || !isValid.valid) {
@@ -1327,6 +1346,7 @@ const submitPartnerForm = async () => {
 			userStore.getUserRole === UserRolesTypes.eventHost
 		) {
 			await editEventHost(userStore.user.eventHostData.id, partnerPayload);
+			await deleteUnusedMedia();
 		} else {
 			throw new Error('No se pudo encontrar el usuario');
 		}
@@ -1339,7 +1359,29 @@ const submitPartnerForm = async () => {
 	}
 };
 
+const deleteUnusedMedia = async () => {
+	if (mainProdValue.value !== 'File') {
+		const file =
+			eventHostOriginalData.value?.data.attributes.productDescriptionFile?.data;
+		if (file && file.length > 0) {
+			await deleteFile(file[0].id, 'productDescriptionFile');
+		}
+	}
+
+	if (compVideoValue.value !== 'File') {
+		const file =
+			eventHostOriginalData.value?.data.attributes.compVideoFile?.data;
+		if (file && file.length > 0) {
+			await deleteFile(file[0]?.id, 'compVideoFile');
+		}
+	}
+};
+
 const preparePartnerData = () => {
+	if (!userStore.user?.id) {
+		return;
+	}
+	partnerForm.data.user = userStore.user?.id;
 	partnerForm.data.cultureType = selectedCultureTypes.value.map((item) =>
 		Number(item)
 	);

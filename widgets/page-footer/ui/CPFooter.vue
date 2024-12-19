@@ -21,7 +21,6 @@
 				<nuxt-img src="/images/logo-hatun.png" class="footer__icon-logo" />
 				<nuxt-img src="/images/logo-cusco.png" class="footer__icon-logo" />
 			</div>
-
 		</div>
 	</div>
 </template>
@@ -41,25 +40,27 @@ import { formatExternalLink } from '@shared/helpers/formatText';
 const { locale } = useI18n();
 const userStore = useUserStore();
 const commonDataStore = useCommonDataStore();
+const footerListData = reactive({ ...footerLists });
 
-const footerListData = computed(() => {
-	if (commonDataStore.platformData) {
-		const formattedContacts = formatPlatformContactsContacts(
-			commonDataStore.platformData.attributes.platformContacts
-		);
-
-		footerLists.contactsList.listItems = formattedContacts;
-		if (commonDataStore.platformData.attributes.platformSocialMedias) {
-			const formattedSocialMedias = formatPlatformSocialMedias(
-				commonDataStore.platformData.attributes.platformSocialMedias
+watch(
+	() => commonDataStore.platformData,
+	() => {
+		if (commonDataStore.platformData) {
+			const formattedContacts = formatPlatformContactsContacts(
+				commonDataStore.platformData.attributes.platformContacts
 			);
 
-			footerLists.socialList.listItems = formattedSocialMedias;
+			footerListData.contactsList.listItems = formattedContacts;
+			if (commonDataStore.platformData.attributes.platformSocialMedias) {
+				const formattedSocialMedias = formatPlatformSocialMedias(
+					commonDataStore.platformData.attributes.platformSocialMedias
+				);
+
+				footerListData.socialList.listItems = formattedSocialMedias;
+			}
 		}
 	}
-
-	return footerLists;
-});
+);
 
 const formatPlatformContactsContacts = (
 	platformContacts: BaseStrapiResponse<AboutPlatform>['attributes']['platformContacts']
@@ -128,7 +129,6 @@ const showBecomePartnerButton = computed(() => {
 		justify-content: center;
 		align-items: center;
 		gap: 50px;
-
 	}
 
 	&__logos {

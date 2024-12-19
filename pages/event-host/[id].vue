@@ -100,7 +100,10 @@
 			</div>
 		</div>
 
-		<div v-if="eventHost?.data.attributes.compVideoLink" class="organizer-video">
+		<div
+			v-if="eventHost?.data.attributes.compVideoLink"
+			class="organizer-video"
+		>
 			<iframe
 				:src="eventHost.data.attributes.compVideoLink"
 				title="YouTube or Vimeo video player"
@@ -114,7 +117,12 @@
 </template>
 
 <script setup lang="ts">
-import  { CollectionTypes, type EventHost, type CollectionFilters } from '@shared/api/types';
+import {
+	CollectionTypes,
+	type EventHost,
+	type CollectionFilters,
+	type StrapiMediaDefaultType,
+} from '@shared/api/types';
 import type { EventCard } from '@widgets/event-card/types/types';
 import { requestEventsHost, requestEventsList } from '@shared/api';
 import { useRuntimeConfig } from 'nuxt/app';
@@ -226,11 +234,25 @@ const getMediaPhotosUrls = computed(() => {
 
 const getMediaVideosUrls = computed(() => {
 	const eventHostData = eventHost.value?.data.attributes;
+	let everyPossibleVideoOfEventHost: StrapiMediaDefaultType[] = [];
 	if (eventHostData) {
-		const everyPossibleVideoOfEventHost = [
-			...eventHostData.videoBusinessCard.data,
-			...eventHostData.compVideoFile.data,
-		];
+		if (
+			eventHostData.videoBusinessCard.data &&
+			eventHostData.compVideoFile.data
+		) {
+			everyPossibleVideoOfEventHost = [
+				...eventHostData.videoBusinessCard.data,
+				...eventHostData.compVideoFile.data,
+			];
+		} else if (eventHostData.compVideoFile.data) {
+			everyPossibleVideoOfEventHost = [...eventHostData.compVideoFile.data];
+		} else if (eventHostData.videoBusinessCard.data) {
+			everyPossibleVideoOfEventHost = [...eventHostData.videoBusinessCard.data];
+		}
+
+		if (!everyPossibleVideoOfEventHost.length) {
+			return [];
+		}
 
 		return everyPossibleVideoOfEventHost.map((image) => {
 			return config.public.apiBaseUrl + image.attributes.url;
