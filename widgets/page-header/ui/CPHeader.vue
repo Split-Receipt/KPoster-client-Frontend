@@ -34,23 +34,24 @@
 			<!-- Бургер-меню и кнопки на десктопе -->
 			<div class="header__menu">
 				<div class="header__buttons header__buttons--oval">
+					<to-main v-if="route.path !== `/${locale}`" @click="toggleMenu" />
+					<cp-button
+						size="small"
+						:text="$t('about_us_title')"
+						@click="navigateTo(`/${locale}/about-us`)"
+					/>
 					<cp-button
 						v-if="isAllowedToCreateEvent"
 						size="small"
 						:text="$t('create_event')"
 						@click="navigateTo(`/${locale}/create-event`)"
 					/>
-					<to-main v-if="route.path !== `/${locale}`" @click="toggleMenu" />
 					<cp-button
 						size="small"
 						:text="$t('news')"
 						@click="navigateTo(`/${locale}/news`)"
 					/>
-					<cp-button
-						size="small"
-						:text="$t('about_us_title')"
-						@click="navigateTo(`/${locale}/about-us`)"
-					/>
+
 					<cp-button
 						v-if="userStore.isAuth"
 						type="ghost"
@@ -77,6 +78,14 @@
 			<div v-if="isMenuOpen" class="overlay" @click="toggleMenu" />
 			<div v-if="isMenuOpen" class="header__menu-mobile">
 				<div class="header__buttons header__buttons--oval">
+					<to-main v-if="route.path !== `/${locale}`" @click="toggleMenu" />
+					<cp-button
+						size="small"
+						:text="$t('about_us_title')"
+						@click="
+							mobileMenuActionsDecorator(navigateTo, `/${locale}/about-us`)
+						"
+					/>
 					<cp-button
 						v-if="isAllowedToCreateEvent"
 						size="small"
@@ -85,18 +94,10 @@
 							mobileMenuActionsDecorator(navigateTo, `/${locale}/create-event`)
 						"
 					/>
-					<to-main v-if="route.path !== `/${locale}`" @click="toggleMenu" />
 					<cp-button
 						size="small"
 						:text="$t('news')"
 						@click="mobileMenuActionsDecorator(navigateTo, `/${locale}/news`)"
-					/>
-					<cp-button
-						size="small"
-						:text="$t('about_us_title')"
-						@click="
-							mobileMenuActionsDecorator(navigateTo, `/${locale}/about-us`)
-						"
 					/>
 					<cp-button
 						v-if="userStore.isAuth"

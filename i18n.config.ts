@@ -163,7 +163,7 @@ export default defineI18nConfig(() => ({
 		es: {
 			help_request_description: 'Contáctanos de forma cómoda y te ayudaremos',
 			help_request_title: '¿El formulario parece complicado?',
-			to_main_page: 'Hogar',
+			to_main_page: 'Inicio',
 			client_personal_page_description: 'Ahora su estado en el sistema es Cliente. Si anteriormente envió una solicitud para registrarlo como socio, espere hasta que se complete el proceso de verificación. Después de recibir el estado de organizador de eventos, su cuenta personal se mostrará en esta página. Si no has enviado una solicitud, entonces esta sección se encuentra actualmente en desarrollo, pero esto no te impedirá elegir un evento de tu agrado, por lo que te recomendamos regresar a la página principal.',
 			client_personal_page: 'Página personal del cliente',
 			footer_title_our_socials: 'Nuestras redes sociales',
