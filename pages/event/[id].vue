@@ -65,7 +65,7 @@
 			/>
 		</div>
 
-		<div>
+		<div v-if="event.attributes.eventDigitalCatalog || event.attributes.eventWebSite">
 			<h2 class="detailed__map-title">Relacionados</h2>
 			<div class="detailed__relatedList">
 				<cp-huge-link-btn
