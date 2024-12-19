@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import CpSocialLink from '@shared/gui/CpSocialLink.vue';
-import CpHugeLinkBtn from '@shared/gui/CpHugeLinkBtn.vue';
+import CplinkBtn from '@shared/gui/CpLinkBtn.vue';
 import CpMap from '@shared/gui/CpMap.vue';
 import CpButton from '@shared/gui/CpButton.vue';
 import CpMarkdownViewer from '@shared/gui/CpMardownViewer/CpMarkdownViewer.vue';

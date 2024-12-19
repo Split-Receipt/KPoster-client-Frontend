@@ -214,7 +214,6 @@ onMounted(async () => {
 
 .swiper-slide {
 	width: auto;
-	padding: $date-card-carousel-swiper-slide-padding-mobile;
 
 	@media #{$screen-tablet} {
 		padding: $date-card-carousel-swiper-slide-padding-tablet;

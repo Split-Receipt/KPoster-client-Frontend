@@ -1,64 +1,66 @@
 <template>
-	<div class="hugeLink">
-		<span class="hugeLink__title">
-			{{ props.hugeTitle }} 
-		</span>
-		<a :href="props.hugeLink" class="hugeLink__circle"/>
+	<div class="link">
+		<h5 class="link__title">
+			{{ props.title }} 
+		</h5>
+		<a :href="props.link" class="link__circle" target="_blank"/>
 	</div>
 </template>
 
 <script setup lang="ts">
-type HugeLinkProps = {
-    hugeTitle: string;
-    hugeLink: string;
+type Props = {
+    title: string;
+    link: string;
 };
-const props = defineProps<HugeLinkProps>();
+const props = defineProps<Props>();
 </script>
 
 <style scoped lang="scss">
-    .hugeLink {
+    .link {
         display: flex;
-        width: 455px;
-        height: 156px;  
+        width: 300px;
+        height: 130px;  
         border-radius: 20px;
         background: $button-gradient-background-color;
-        position: relative;
-
-        @media screen and (max-width: 999px) {
-            width: 100%;
-        }
+        padding: 15px;
+        display: grid;
+        grid-template-columns: auto 35px;
 
         &__title {
-            width: 80%;
-            height: 100%;
-            font-size: 30px;
-            line-height: 42px;
-            color: #353333;
-            padding: 34px 24px 24px 24px;
             display: flex;
             align-items: center;
             justify-content: flex-start;
         }
 
         &__circle {
-            background: #ffffff;
-            height: 50px;
-            width: 50px;
+            background: $white;
+            height: 35px;
+            width: 35px;
             border-radius: 50%;
-            position: absolute;
-            right: 24px;
-            bottom: 24px;
             cursor: pointer;
             background-image: url('../../public/images/arrowRight.svg');
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
             transition: all 0.3s ease;
+            align-self: flex-end;
 
             &:hover {
                 transition: all 0.3s ease;
                 transform: scale(1.05);
             }
         }
+
+        @media screen and (min-width: 600px) {
+            padding: 24px;
+			width: 455px;
+            height: 156px; 
+            grid-template-columns: auto 50px;
+
+            &__circle {
+                height: 50px;
+                width: 50px;
+            }
+		}
     }
 </style>

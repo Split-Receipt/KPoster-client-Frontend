@@ -5,14 +5,15 @@
 				v-for="contact in contactList"
 				:key="contact.email"
 				:contact="contact"
-				class="contacts__block"/>
+				class="contacts__block"
+			/>
 		</template>
 	</cp-base-page>
 </template>
 
 <script setup lang="ts">
 import CpBasePage from '@shared/gui/CpBasePage.vue';
-import ContactBlock from './ContactBlock.vue';
+import ContactBlock from '@features/contacts/ContactBlock.vue';
 
 const contactMock = {
 	name: 'John Doe',
