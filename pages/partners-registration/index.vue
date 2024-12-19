@@ -6,8 +6,7 @@
 				<!-- Organization type -->
 				<div class="partners__form-rowDnD">
 					<div class="partners__form-row-info">
-						<span>
-							<strong class="partners__form-row-info-required">*</strong>
+						<span class="required-field">
 							Tipo de organizaón
 						</span>
 					</div>
@@ -38,8 +37,7 @@
 					class="partners__form-row"
 				>
 					<div class="partners__form-row-info">
-						<span>
-							<strong class="partners__form-row-info-required">*</strong>
+						<span class="required-field">
 							Nombre
 							<cp-info-pop-up
 								id="Nombre_comercial_info"
@@ -73,8 +71,7 @@
 					class="partners__form-rowDnD"
 				>
 					<div class="partners__form-row-info">
-						<span>
-							<strong class="partners__form-row-info-required">*</strong>
+						<span class="required-field">
 							Tipo de documento de identidad
 						</span>
 					</div>
@@ -106,8 +103,7 @@
 					class="partners__form-rowDnD"
 				>
 					<div class="partners__form-rowDnD-info">
-						<span>
-							<strong class="partners__form-rowDnD-info-required">*</strong>
+						<span class="required-field">
 							Escaneo de un documento de identidad
 						</span>
 					</div>
@@ -138,8 +134,7 @@
 					class="partners__form-row"
 				>
 					<div class="partners__form-row-info">
-						<span>
-							<strong class="partners__form-row-info-required">*</strong>
+						<span class="required-field">
 							Nombre comercial
 							<cp-info-pop-up
 								id="Nombre_comercial_info"
@@ -173,8 +168,7 @@
 					class="partners__form-row"
 				>
 					<div class="partners__form-row-info">
-						<span>
-							<strong class="partners__form-row-info-required">*</strong>
+						<span class="required-field">
 							Razón social
 							<cp-info-pop-up id="Razón_social_info" info="test info Razón" />
 						</span>
@@ -205,8 +199,7 @@
 					class="partners__form-row"
 				>
 					<div class="partners__form-row-info">
-						<span>
-							<strong class="partners__form-row-info-required">*</strong>
+						<span class="required-field">
 							RUC
 						</span>
 					</div>
@@ -233,8 +226,7 @@
 				<!-- activity start date -->
 				<div class="partners__form-row">
 					<div class="partners__form-row-info">
-						<span>
-							<strong class="partners__form-row-info-required">*</strong>
+						<span class="required-field">
 							Fecha de inicio de actividades
 							<cp-info-pop-up id="startDate_info" info="start date info" />
 						</span>
@@ -262,8 +254,7 @@
 				<!-- people count in organization -->
 				<div class="partners__form-row">
 					<div class="partners__form-row-info">
-						<span>
-							<strong class="partners__form-row-info-required">*</strong>
+						<span class="required-field">
 							Numero de personas de tu organización
 							<cp-info-pop-up id="personCount" info="person count info" />
 						</span>
@@ -291,8 +282,7 @@
 				<!-- Age range and woman percentage -->
 				<div class="partners__form-row">
 					<div class="partners__form-row-info">
-						<span>
-							<strong class="partners__form-row-info-required">*</strong>
+						<span class="required-field">
 							Rango de edad y porcentaje de mujeres, aprox
 							<cp-info-pop-up
 								id="middleAge"
@@ -349,8 +339,7 @@
 				<!-- main Banner -->
 				<div class="partners__form-rowDnD">
 					<div class="partners__form-rowDnD-info">
-						<span>
-							<strong class="partners__form-rowDnD-info-required">*</strong>
+						<span class="required-field">
 							Subir el logo o imagen principal
 						</span>
 					</div>
@@ -378,8 +367,7 @@
 				<!-- organization Resume -->
 				<div class="partners__form-rowDnD">
 					<div class="partners__form-rowDnD-info">
-						<span>
-							<strong class="partners__form-rowDnD-info-required">*</strong>
+						<span class="required-field">
 							Resume lo que hace tu organización
 							<cp-info-pop-up id="org_resume" info="250-500 palabras" />
 						</span>
@@ -455,8 +443,7 @@
 				<!-- culture Type -->
 				<div class="partners__form-rowDnD">
 					<div class="partners__form-row-info">
-						<span>
-							<strong class="partners__form-row-info-required">*</strong>
+						<span class="required-field">
 							En que areas de la cultura viva comunitaria se desenvuelve tu
 							organización ? Elección múltiple
 						</span>
@@ -493,8 +480,7 @@
 				<!-- organization Work Type -->
 				<div class="partners__form-rowDnD">
 					<div class="partners__form-rowDnD-info">
-						<span>
-							<strong class="partners__form-rowDnD-info-required">*</strong>
+						<span class="required-field">
 							Especificar la labor que realiza en el área seleccionada de cultura
 							viva comunitaria
 							<cp-info-pop-up id="org_Work_Type" info="orgWorkType info" />
@@ -523,8 +509,7 @@
 				<!-- Product description -->
 				<div class="partners__form-rowDnD">
 					<div class="partners__form-rowDnD-info">
-						<span>
-							<strong class="partners__form-rowDnD-info-required">*</strong>
+						<span class="required-field">
 							Sube tus principales productos y sus descripciones
 							<cp-info-pop-up
 								id="principales_productos_info"
@@ -676,8 +661,7 @@
 				<!-- organization location -->
 				<div class="partners__form-rowDnD">
 					<div class="partners__form-row-info">
-						<span>
-							<strong class="partners__form-row-info-required">*</strong>
+						<span class="required-field">
 							Dónde se ubica tu organización?
 							<cp-info-pop-up id="Dónde_se_ubica_info" info="test info Dónde" />
 						</span>
@@ -706,8 +690,7 @@
 				<!-- contacts -->
 				<div class="partners__form-rowDnD">
 					<div class="partners__form-rowDnD-info">
-						<span>
-							<strong class="partners__form-rowDnD-info-required">*</strong>
+						<span class="required-field">
 							Añadir datos del contacto de la empresa
 							<cp-info-pop-up
 								id="contact_info"
@@ -786,8 +769,7 @@
 				<!-- location on map -->
 				<div class="partners__form-rowDnD">
 					<div class="partners__form-rowDnD-info">
-						<span>
-							<strong class="partners__form-row-info-required">*</strong>
+						<span class="required-field">
 							Marcar la ubicación del evento
 						</span>
 					</div>
@@ -918,8 +900,7 @@
 				<!-- gallery Images -->
 				<div class="partners__form-rowDnD">
 					<div class="partners__form-rowDnD-info">
-						<span>
-							<strong class="partners__form-rowDnD-info-required">*</strong>
+						<span class="required-field">
 							Añadir fotos a la galería
 							<cp-info-pop-up
 								id="galería_info"
@@ -951,8 +932,7 @@
 				<!-- Registration Data -->
 				<div v-if="!userStore.isAuth" class="partners__form-rowDnD">
 					<div class="partners__form-rowDnD-info">
-						<span>
-							<strong class="partners__form-rowDnD-info-required">*</strong>
+						<span class="required-field">
 							Detalles de inicio de sesión
 							<cp-info-pop-up
 								id="user_registration_info"
@@ -1331,7 +1311,7 @@ const currentPartnerType = computed(() => {
 			margin-top: 33px;
 		}
 	}
-	
+
 	&__subtitle {
 		width: 50%;
 		h3 {

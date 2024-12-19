@@ -6,8 +6,7 @@
 			<!-- Event Name -->
 			<div class="eventForm-row">
 				<div class="eventForm-row-info">
-					<span>
-						<strong class="eventForm-row-info-required">*</strong>
+					<span class="required-field">
 						Introduce el nombre de tu evento
 					</span>
 				</div>
@@ -34,8 +33,7 @@
 			<!-- Event Category -->
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
-					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
+					<span class="required-field">
 						Seleccionar categoría de evento
 					</span>
 				</div>
@@ -69,8 +67,7 @@
 			<!-- Event Poster/Banner -->
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
-					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
+					<span class="required-field">
 						Sube un banner o póster del evento
 						<cp-info-pop-up
 							id="banner_poster"
@@ -334,8 +331,7 @@
 			<!-- Event description -->
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
-					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
+					<span class="required-field">
 						Introduce una descripción de tu evento
 					</span>
 				</div>
@@ -366,8 +362,7 @@
 
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
-					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
+					<span class="required-field">
 						Descripción breve del evento
 					</span>
 				</div>
@@ -473,8 +468,7 @@
 				class="eventForm-upperPositionRow"
 			>
 				<div class="eventForm-upperPositionRow-info">
-					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
+					<span class="required-field">
 						Seleccione la ciudad donde se realizará el evento
 					</span>
 				</div>
@@ -505,8 +499,7 @@
 			<!-- Event Adres -->
 			<div class="eventForm-row">
 				<div class="eventForm-row-info">
-					<span>
-						<strong class="eventForm-row-info-required">*</strong>
+					<span class="required-field">
 						Introduce la dirección del evento
 					</span>
 				</div>
@@ -533,8 +526,7 @@
 			<!-- maplocation  -->
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
-					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
+					<span class="required-field">
 						Marcar la ubicación del evento
 					</span>
 				</div>
@@ -565,8 +557,7 @@
 			<!-- Contacts -->
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
-					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
+					<span class="required-field">
 						Complete los datos de contacto del organizador y del servicio de
 						soporte.
 					</span>

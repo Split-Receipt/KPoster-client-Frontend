@@ -6,8 +6,7 @@
 			<!-- Event Name -->
 			<div class="eventForm-row">
 				<div class="eventForm-row-info">
-					<span>
-						<strong class="eventForm-row-info-required">*</strong>
+					<span class="required-field">
 						Introduce el nombre de tu evento
 					</span>
 				</div>
@@ -34,8 +33,7 @@
 			<!-- Event Category -->
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
-					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
+					<span class="required-field">
 						Seleccionar categoría de evento
 					</span>
 				</div>
@@ -68,8 +66,7 @@
 			<!-- Event Poster/Banner -->
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
-					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
+					<span class="required-field">
 						Sube un banner o póster del evento
 						<cp-info-pop-up
 							id="banner_poster"
@@ -332,8 +329,7 @@
 			<!-- Event description -->
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
-					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
+					<span class="required-field">
 						Introduce una descripción de tu evento
 					</span>
 				</div>
@@ -364,8 +360,7 @@
 
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
-					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
+					<span class="required-field">
 						Descripción breve del evento
 					</span>
 				</div>
@@ -398,8 +393,7 @@
 			<!-- Media b'out event -->
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
-					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
+					<span class="required-field">
 						Sube contenido de foto o sobre tu evento
 						<cp-info-pop-up
 							id="media_id"
@@ -450,8 +444,7 @@
 			<!-- Event city -->
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
-					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
+					<span class="required-field">
 						Seleccione la ciudad donde se realizará el evento
 					</span>
 				</div>
@@ -481,8 +474,7 @@
 			<!-- Event Adres -->
 			<div class="eventForm-row">
 				<div class="eventForm-row-info">
-					<span>
-						<strong class="eventForm-row-info-required">*</strong>
+					<span class="required-field">
 						Introduce la dirección del evento
 					</span>
 				</div>
@@ -509,8 +501,7 @@
 			<!-- map\location  -->
 			<div class="eventForm-upperPositionRow">
 				<div class="eventForm-upperPositionRow-info">
-					<span>
-						<strong class="eventForm-upperPositionRow-info-required">*</strong>
+					<span class="required-field">
 						Marcar la ubicación del evento
 					</span>
 				</div>
