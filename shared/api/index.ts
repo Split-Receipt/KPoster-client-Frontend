@@ -252,7 +252,16 @@ export const deleteMedia = (id: number | string): Promise<AxiosResponse<any>> =>
 export const requestDataAboutPlatform = (): Promise<AxiosResponse<{ data: BaseStrapiResponse<AboutPlatform> }>> => {
 	const { $api } = useNuxtApp();
 	const params = {
-		populate: '*',
+		populate: {
+			platformContacts: true,
+			platformSocialMedias: true,
+			culturalPortalContacts: {
+				populate: {
+					contactSocialMedias: true,
+					contacts: true,
+				},
+			},
+		},
 	};
 
 	return $api.get('/api/cultural-portal-cusco', { params });

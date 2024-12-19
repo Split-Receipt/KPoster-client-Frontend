@@ -1,95 +1,86 @@
 <template>
 	<div class="contact">
 		<div class="contact__block">
-			<h5 class="contact__title">{{ props.contact.name }}</h5>
+			<h5 class="contact__title">{{ props.contact.contactName }}</h5>
 		</div>
 		<div class="contact__block contact__block--second">
 			<div class="contact__line">
 				<div class="contact__text">{{ $t('E-mail') }}</div>
-				<div class="contact__text contact__text--value">{{ props.contact.email }}</div>
+				<div class="contact__text contact__text--value">
+					{{ props.contact.contacts.mail }}
+				</div>
 			</div>
 			<div class="contact__line">
 				<div class="contact__text">{{ $t('Número de teléfono') }}</div>
-				<div class="contact__text contact__text--value">{{ props.contact.phone }}</div>
+				<div class="contact__text contact__text--value">
+					{{ props.contact.contacts.tel }}
+				</div>
 			</div>
 			<div class="contact__line">
 				<div class="contact__text">{{ $t('País y ciudad') }}</div>
-				<div class="contact__text contact__text--value">{{ props.contact.city }}</div>
+				<div class="contact__text contact__text--value">
+					{{ props.contact.contacts.place }}
+				</div>
 			</div>
 			<div class="contact__socials">
 				<cp-social-link
-					v-for="media in formattedMedia"
-					:key="media.link"
-					:social-media-link="media.link"
-					:social-media-name="media.name"
+					v-for="media in props.contact.contactSocialMedias"
+					:key="media.socialMediaLink"
+					:social-media-link="media.socialMediaLink"
+					:social-media-name="media.socialMediaName"
 				/>
-			</div> 
+			</div>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
+import type { CulturalPortalContacts } from '@shared/api/types';
 type Props = {
-	contact: {
-        name?: string;
-        email?: string;
-        phone?: string;
-        city?: string;
-        job?: string;
-        social_media?: {
-            instagram?: string;
-            facebook?: string;
-            tiktok?: string;
-            linkedin?: string;
-        };
-    }
+	contact: CulturalPortalContacts;
 };
 
 const props = defineProps<Props>();
-
-const formattedMedia = computed(() =>
-  Object.entries(props.contact?.social_media ?? {}).map(([name, link]) => ({ name, link }))
-);
 </script>
 
 <style scoped lang="scss">
 .contact {
-    display: grid;
+	display: grid;
 
-    &__title {
-        margin-bottom: 20px;
-    }
+	&__title {
+		margin-bottom: 20px;
+	}
 
-    &__text {
-        color: $gray;
-        text-transform: uppercase;
-    }
+	&__text {
+		color: $gray;
+		text-transform: uppercase;
+	}
 
-    &__line {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 5px;
-    }
+	&__line {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 5px;
+	}
 
-    &__text {
-        margin-bottom: 10px;
-        &--value {
-            text-align: right;
-        }
-    }
+	&__text {
+		margin-bottom: 10px;
+		&--value {
+			text-align: right;
+		}
+	}
 
-    &__socials {
-        display: flex;
-        gap: 10px;
-        padding-top: 10px;
-    }
+	&__socials {
+		display: flex;
+		gap: 10px;
+		padding-top: 10px;
+	}
 
-    @media #{$screen-tablet} {
-        grid-template-columns: 1fr 1fr;
-        &__socials {
-            gap: 20px;
-        }
+	@media #{$screen-tablet} {
+		grid-template-columns: 1fr 1fr;
+		&__socials {
+			gap: 20px;
+		}
 	}
 }
 </style>

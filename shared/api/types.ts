@@ -420,12 +420,12 @@ export type AboutPlatform = {
 		aboutUs: {
 			aboutUsText: string;
 		};
-		culturalPortalContacts: CulturalPortalContacts;
+		culturalPortalContacts: CulturalPortalContacts[];
 		platformContacts: { id: number } & Contacts;
 		platformSocialMedias: ({ id: number } & SocialMedia)[]
 };
 
-type CulturalPortalContacts = {
+export type CulturalPortalContacts = {
 	id: number;
 	contactName: string;
 	contactSocialMedias: SocialMedia[];

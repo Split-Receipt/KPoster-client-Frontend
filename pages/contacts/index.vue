@@ -3,9 +3,10 @@
 		<template #content>
 			<contact-block
 				v-for="contact in contactList"
-				:key="contact.email"
+				:key="contact.id"
 				:contact="contact"
-				class="contacts__block"/>
+				class="contacts__block"
+			/>
 		</template>
 	</cp-base-page>
 </template>
@@ -13,22 +14,16 @@
 <script setup lang="ts">
 import CpBasePage from '@shared/gui/CpBasePage.vue';
 import ContactBlock from './ContactBlock.vue';
+import { useCommonDataStore } from '@stores/common-data-store';
+const commonDataStore = useCommonDataStore();
 
-const contactMock = {
-	name: 'John Doe',
-	job: 'organizador',
-	email: 'organizador@cusco.com',	
-	phone: '+ 111 81959 193491',
-	city: 'Cusco, peru',
-	social_media: {
-		instagram: 'http://localhost:3000/esevent-host',
-		linkedin: 'http://localhost:3000/esevent-host',
-		tiktok: 'http://localhost:3000/esevent-host',
-		facebook: 'http://localhost:3000/esevent-host',
-	},
-};
+const contactList = computed(() => {
+	if (commonDataStore.platformData) {
+		return commonDataStore.platformData.attributes.culturalPortalContacts;
+	}
 
-const contactList = computed(() => Array(3).fill(contactMock));
+	return [];
+});
 </script>
 
 <style scoped lang="scss">
@@ -36,8 +31,8 @@ const contactList = computed(() => Array(3).fill(contactMock));
 	&__block {
 		margin-bottom: 50px;
 		@media #{$screen-tablet} {
-            margin-bottom: 70px;
-        }
+			margin-bottom: 70px;
+		}
 
 		&:last-of-type {
 			margin-bottom: 0;
