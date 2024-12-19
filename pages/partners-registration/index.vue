@@ -5,7 +5,6 @@
 		</h1>
 		<help-request-suggestion class="partners__help-request-suggestion"/>
 		<v-form ref="partnerRegForm" class="partners__form">
-			<h3>{{ $t('partners_formTitle') }}</h3>
 
 			<!-- Organization type -->
 			<div class="partners__form-rowDnD">

@@ -7,10 +7,18 @@
 			<p>{{ $t('help_request_description') }}</p>
 			<div class="help-request__contacts">
 				<p class="help-request__contact">
-					{{ commonDataStore.platformData?.attributes.platformContacts.mail }}
+					<nuxt-link
+						:to="`mailto:${commonDataStore.platformData?.attributes.platformContacts.mail}`"
+					>
+						{{ commonDataStore.platformData?.attributes.platformContacts.mail }}
+					</nuxt-link>
 				</p>
 				<p class="help-request__contact">
-					{{ commonDataStore.platformData?.attributes.platformContacts.tel }}
+					<nuxt-link
+						:to="`tel:${commonDataStore.platformData?.attributes.platformContacts.tel}`"
+					>
+						{{ commonDataStore.platformData?.attributes.platformContacts.tel }}
+					</nuxt-link>
 				</p>
 			</div>
 		</div>
@@ -38,7 +46,13 @@ const commonDataStore = useCommonDataStore();
 	&__title {
 		margin-bottom: 20px;
 		font-size: 30px;
+		width: fit-content;
 		line-height: initial;
+		background: #ff3938;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		color: transparent;
 	}
 	&__content {
 		display: flex;
