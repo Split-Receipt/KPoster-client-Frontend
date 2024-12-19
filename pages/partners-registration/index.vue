@@ -3,9 +3,8 @@
 		<h1 class="partners__title">
 			Ingresa tus datos para registrarte en el Portal Cultural del Cusco
 		</h1>
-		<help-request-suggestion class="partners__help-request-suggestion"/>
+		<help-request-suggestion class="partners__help-request-suggestion" />
 		<v-form ref="partnerRegForm" class="partners__form">
-
 			<!-- Organization type -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-row-info">
@@ -859,16 +858,11 @@
 			<!-- culture Type -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-row-info">
-					<span>
-						<strong class="partners__form-row-info-required">*</strong>
-						Afiliaciones o in incitativas
-					</span>
+					<span> Afiliaciones o in incitativas </span>
 				</div>
 				<div class="partners__form-row-input">
 					<v-field
-						v-slot="{ errors }"
 						name="Affiliations"
-						rules="require_checkbox"
 						:model-value="partnerRegistrationForm.data.affiliations"
 					>
 						<div>
@@ -880,14 +874,6 @@
 								@update:checkbox-update="(value) => checkboxCollectAffiliations(value as number, index)"
 							/>
 						</div>
-						<span
-							v-if="
-								errors && partnerRegistrationForm.data.affiliations.length < 1
-							"
-							class="required-input-error-info-leftSide"
-						>
-							{{ errors[0] }}</span
-						>
 					</v-field>
 				</div>
 			</div>
@@ -1331,7 +1317,6 @@ const currentPartnerType = computed(() => {
 
 <style scoped lang="scss">
 .partners {
-
 	&__help-request-suggestion {
 		align-self: flex-start;
 		margin-top: 20px;
