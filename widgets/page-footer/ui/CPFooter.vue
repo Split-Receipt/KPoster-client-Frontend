@@ -21,7 +21,6 @@
 				<nuxt-img src="/images/logo-hatun.png" class="footer__icon-logo" />
 				<nuxt-img src="/images/logo-cusco.png" class="footer__icon-logo" />
 			</div>
-
 		</div>
 	</div>
 </template>
@@ -43,22 +42,23 @@ const userStore = useUserStore();
 const commonDataStore = useCommonDataStore();
 
 const footerListData = computed(() => {
+	const result = { ...footerLists };
 	if (commonDataStore.platformData) {
 		const formattedContacts = formatPlatformContactsContacts(
 			commonDataStore.platformData.attributes.platformContacts
 		);
 
-		footerLists.contactsList.listItems = formattedContacts;
+		result.contactsList.listItems = formattedContacts;
 		if (commonDataStore.platformData.attributes.platformSocialMedias) {
 			const formattedSocialMedias = formatPlatformSocialMedias(
 				commonDataStore.platformData.attributes.platformSocialMedias
 			);
 
-			footerLists.socialList.listItems = formattedSocialMedias;
+			result.socialList.listItems = formattedSocialMedias;
 		}
 	}
 
-	return footerLists;
+	return result;
 });
 
 const formatPlatformContactsContacts = (
@@ -128,7 +128,6 @@ const showBecomePartnerButton = computed(() => {
 		justify-content: center;
 		align-items: center;
 		gap: 50px;
-
 	}
 
 	&__logos {
