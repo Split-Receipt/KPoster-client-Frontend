@@ -40,26 +40,27 @@ import { formatExternalLink } from '@shared/helpers/formatText';
 const { locale } = useI18n();
 const userStore = useUserStore();
 const commonDataStore = useCommonDataStore();
+const footerListData = reactive({ ...footerLists });
 
-const footerListData = computed(() => {
-	const result = { ...footerLists };
-	if (commonDataStore.platformData) {
-		const formattedContacts = formatPlatformContactsContacts(
-			commonDataStore.platformData.attributes.platformContacts
-		);
-
-		result.contactsList.listItems = formattedContacts;
-		if (commonDataStore.platformData.attributes.platformSocialMedias) {
-			const formattedSocialMedias = formatPlatformSocialMedias(
-				commonDataStore.platformData.attributes.platformSocialMedias
+watch(
+	() => commonDataStore.platformData,
+	() => {
+		if (commonDataStore.platformData) {
+			const formattedContacts = formatPlatformContactsContacts(
+				commonDataStore.platformData.attributes.platformContacts
 			);
 
-			result.socialList.listItems = formattedSocialMedias;
+			footerListData.contactsList.listItems = formattedContacts;
+			if (commonDataStore.platformData.attributes.platformSocialMedias) {
+				const formattedSocialMedias = formatPlatformSocialMedias(
+					commonDataStore.platformData.attributes.platformSocialMedias
+				);
+
+				footerListData.socialList.listItems = formattedSocialMedias;
+			}
 		}
 	}
-
-	return result;
-});
+);
 
 const formatPlatformContactsContacts = (
 	platformContacts: BaseStrapiResponse<AboutPlatform>['attributes']['platformContacts']
