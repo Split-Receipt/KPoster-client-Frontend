@@ -1149,8 +1149,8 @@ const partnerForm = reactive<PartnerRegistration>({
 		commercialName: '',
 		compName: '',
 		ruc: '',
-		startDate: '',
 		user: null,
+		startDate: '',
 		personCount: 0,
 		middleAge: 0,
 		womenPercentage: 0,
@@ -1379,24 +1379,27 @@ const submitPartnerForm = async () => {
 
 const deleteUnusedMedia = async () => {
 	if (mainProdValue.value !== 'File') {
-		const fileId =
-			eventHostOriginalData.value?.data.attributes.productDescriptionFile
-				.data[0].id;
-		if (fileId) {
-			await deleteFile(fileId, 'productDescriptionFile');
+		const file =
+			eventHostOriginalData.value?.data.attributes.productDescriptionFile?.data;
+		if (file && file.length > 0) {
+			await deleteFile(file[0].id, 'productDescriptionFile');
 		}
 	}
 
 	if (compVideoValue.value !== 'File') {
-		const fileId =
-			eventHostOriginalData.value?.data.attributes.compVideoFile.data[0].id;
-		if (fileId) {
-			await deleteFile(fileId, 'compVideoFile');
+		const file =
+			eventHostOriginalData.value?.data.attributes.compVideoFile?.data;
+		if (file && file.length > 0) {
+			await deleteFile(file[0]?.id, 'compVideoFile');
 		}
 	}
 };
 
 const preparePartnerData = () => {
+	if (!userStore.user?.id) {
+		return;
+	}
+	partnerForm.data.user = userStore.user?.id;
 	partnerForm.data.cultureType = selectedCultureTypes.value.map((item) =>
 		Number(item)
 	);
