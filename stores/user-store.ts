@@ -37,6 +37,13 @@ export const useUserStore = defineStore('userData', {
 			}
 
 		 },
+
+		 loginWithJWT(jwt: string) {
+			localStorage.setItem('AuthToken', jwt);
+			localStorage.setItem('isAuth', 'true');
+			this.isAuth = true;
+			this.getMyUser();
+		 },
 		 async register(registrationParams: RegisterParams) {
 			if (Object.values(registrationParams).some((value) => !value)) {
 				return;

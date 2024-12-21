@@ -1,5 +1,5 @@
 import { useNuxtApp } from 'nuxt/app';
-import type { BaseStrapiResponse, EventCreateType, LoginData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, MyUser, AboutPlatform, Affiliation, EventHost, CultureType, OrgType, NewsOne, ResetPasswordPayload } from '@shared/api/types.ts';
+import type { BaseStrapiResponse, RequestResetPasswordPayload ,EventCreateType, LoginData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, MyUser, AboutPlatform, Affiliation, EventHost, CultureType, OrgType, NewsOne, ResetPasswordPayload } from '@shared/api/types.ts';
 import type { AxiosResponse } from 'axios';
 import { startOfDay } from 'date-fns';
 
@@ -295,8 +295,14 @@ const { $api } = useNuxtApp();
 	return $api.get(`/api/news/${id}`, { params });
 };
 
-export const requestPasswordReset = (params: ResetPasswordPayload) => {
+export const requestPasswordReset = (params: RequestResetPasswordPayload) => {
 	const { $api } = useNuxtApp();
 
-	return $api.post('/api/auth/forgot-password');
+	return $api.post('/api/auth/forgot-password', params);
+};
+
+export const requestChangePassword = (params: ResetPasswordPayload): Promise<AxiosResponse<LoginData>> => {
+	const { $api } = useNuxtApp();
+
+	return $api.post('/api/auth/reset-password', params);
 };

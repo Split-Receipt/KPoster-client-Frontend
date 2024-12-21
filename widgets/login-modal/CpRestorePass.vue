@@ -31,6 +31,7 @@ const email = ref('');
 const sendResetPasswordRequest = () => {
 	try {
 		requestPasswordReset({ email: email.value });
+		toast.success('Se ha enviado a su correo electrónico un enlace a la página de restablecimiento de contraseña.');
 	} catch (error) {
 		toast.error(
 			'No se pudo enviar la solicitud de restablecimiento de contraseña'
