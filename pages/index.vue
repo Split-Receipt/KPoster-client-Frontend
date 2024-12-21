@@ -44,7 +44,6 @@
 
 <script setup lang="ts">
 import { startOfDay, endOfDay } from 'date-fns';
-import PartnersDropDown from '@features/partners-filter/PartnersDropDown.vue';
 import CityDropDown from '@features/city-filter/CityDropDown.vue';
 import EventCategoryDropDown from '@features/event-category-filter/EventCategoryDropDown.vue';
 import { requestEventsColletions, requestEventsList } from '@shared/api';
