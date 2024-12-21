@@ -2,7 +2,7 @@
   "name": "nuxt-app",
   "private": true,
   "type": "module",
-  "version": "17.0.0",
+  "version": "18.0.0",
   "scripts": {
     "build": "node ./svgFontGenerator.js app/styles/icons app/styles/fonts/iconFont && nuxt build",
     "dev": "nuxt dev",
@@ -12,7 +12,7 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "prepare": "husky",
-		"start": "node --import ./.output/server/sentry.server.config.mjs .output/server/index.mjs"
+    "start": "node --import ./.output/server/sentry.server.config.mjs .output/server/index.mjs"
   },
   "dependencies": {
     "@kangc/v-md-editor": "^2.3.18",
