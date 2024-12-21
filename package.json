@@ -27,6 +27,7 @@
     "markdown-it": "^14.1.0",
     "normalize-scss": "^8.0.0",
     "nuxt": "^3.12.1",
+    "nuxt-gtag": "^3.0.2",
     "nuxt-swiper": "^1.2.2",
     "pinia": "^2.2.8",
     "qs": "^6.13.0",

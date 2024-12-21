@@ -10,13 +10,16 @@ export default defineNuxtConfig({
     }
   },
   devtools: { enabled: true },
-  modules: ["@nuxt/eslint", "nuxt-swiper", "@nuxtjs/i18n", "@nuxt/image", '@vueuse/nuxt', "@pinia/nuxt"],
-	pinia: {
+  modules: ["@nuxt/eslint", "nuxt-swiper", "@nuxtjs/i18n", "@nuxt/image", '@vueuse/nuxt', "@pinia/nuxt", "nuxt-gtag"],
+  pinia: {
     storesDirs: ['./stores/**'],
+  },
+	gtag: {
+    id: 'G-R3P5VNXQH2'
   },
   i18n: {
     vueI18n: './i18n.config.ts',
-		strategy: 'prefix_and_default',
+    strategy: 'prefix_and_default',
     locales: ['en', 'es', 'qu'],
     defaultLocale: 'en'
   },
@@ -46,7 +49,7 @@ export default defineNuxtConfig({
     "@styles": "/app/styles",
     "@app": "/app",
     "@widgets": "/widgets",
-		"@stores": "/stores"
+        "@stores": "/stores"
   },
 
   runtimeConfig: {
