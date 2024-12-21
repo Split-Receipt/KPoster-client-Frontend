@@ -34,7 +34,7 @@
 
 				<!-- personal activity (First name) -->
 				<div
-					v-if="currentPartnerType === 'persona_natural'"
+					v-if="currentPartnerType === 'persona-natural'"
 					class="partners__form-row"
 				>
 					<div class="partners__form-row-info">
@@ -69,7 +69,7 @@
 
 				<!-- Persona lIdentifying Document  -->
 				<div
-					v-if="currentPartnerType === 'persona_natural'"
+					v-if="currentPartnerType === 'persona-natural'"
 					class="partners__form-rowDnD"
 				>
 					<div class="partners__form-row-info">
@@ -102,7 +102,7 @@
 
 				<!-- Persona lIdentifying Document scan -->
 				<div
-					v-if="currentPartnerType === 'persona_natural'"
+					v-if="currentPartnerType === 'persona-natural'"
 					class="partners__form-rowDnD"
 				>
 					<div class="partners__form-rowDnD-info">
@@ -1331,7 +1331,7 @@ const currentPartnerType = computed(() => {
 			margin-top: 33px;
 		}
 	}
-	
+
 	&__subtitle {
 		width: 50%;
 		h3 {

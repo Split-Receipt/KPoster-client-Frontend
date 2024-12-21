@@ -18,7 +18,7 @@
 				<div class="partners__form-row-input">
 					<v-field
 						v-slot="{ errors }"
-						v-model="partnerForm.data.orgType"
+						:model-value="partnerForm.data.orgType"
 						name="orgType"
 						rules="required"
 					>
@@ -42,7 +42,7 @@
 
 			<!-- personal activity (First name) -->
 			<div
-				v-if="currentPartnerType === 'persona_natural'"
+				v-if="currentPartnerType === 'persona-natural'"
 				class="partners__form-row"
 			>
 				<div class="partners__form-row-info">
@@ -77,7 +77,7 @@
 
 			<!-- Persona lIdentifying Document  -->
 			<div
-				v-if="currentPartnerType === 'persona_natural'"
+				v-if="currentPartnerType === 'persona-natural'"
 				class="partners__form-rowDnD"
 			>
 				<div class="partners__form-row-info">
@@ -108,7 +108,7 @@
 
 			<!-- Persona lIdentifying Document scan -->
 			<div
-				v-if="currentPartnerType === 'persona_natural'"
+				v-if="currentPartnerType === 'persona-natural'"
 				class="partners__form-rowDnD"
 			>
 				<div class="partners__form-rowDnD-info">
@@ -140,7 +140,7 @@
 
 			<!-- Organization name -->
 			<div
-				v-if="currentPartnerType !== 'persona_natural'"
+				v-if="currentPartnerType !== 'persona-natural'"
 				class="partners__form-row"
 			>
 				<div class="partners__form-row-info">
@@ -175,7 +175,7 @@
 
 			<!-- Company name -->
 			<div
-				v-if="currentPartnerType !== 'persona_natural'"
+				v-if="currentPartnerType !== 'persona-natural'"
 				class="partners__form-row"
 			>
 				<div class="partners__form-row-info">
@@ -207,7 +207,7 @@
 
 			<!-- Pay number -->
 			<div
-				v-if="currentPartnerType !== 'persona_natural'"
+				v-if="currentPartnerType !== 'persona-natural'"
 				class="partners__form-row"
 			>
 				<div class="partners__form-row-info">
@@ -1491,7 +1491,6 @@ const getCoordinates = computed(() => {
 // Функция маппинга данных партнера в форму
 const mapPartnerDataToForm = (source: EventHost) => {
 	const attributes = source.data.attributes || {};
-
 	// Основные поля
 	partnerForm.data.orgType = attributes.orgType.data.id || null;
 	partnerForm.data.commercialName = attributes.commercialName || '';
