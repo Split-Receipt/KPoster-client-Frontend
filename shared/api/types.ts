@@ -476,3 +476,7 @@ export type NewsOne = BaseStrapiResponse<
 		publishedAt: string;
 		locale: string
 	}>;
+
+	export type ResetPasswordPayload = {
+		email: string;
+	};

@@ -18,11 +18,12 @@
 							type="email"
 						/>
 						<span
-							class="modal-content-inputs-passRestore" 
+							class="modal-content-inputs-passRestore"
+							@click="goingToPassRestore"
 						>
 							Recuperar contraseña?
-						</span> 
-						<!-- @click="goingToPassRestore" ToDo => open when be ready email server -->
+						</span>
+
 					</div>
 					<cp-text-input
 						v-model="loginData.password"
@@ -46,7 +47,7 @@
 			>
 				<span @click="goingToRegistration">Registrarse</span>
 			</div>
-			<!-- <cp-restore-pass v-if="loginModalState === 'passRestore'"/> ToDo => open when be ready email server -->
+			<cp-restore-pass v-if="loginModalState === 'passRestore'"/>
 		</div>
 	</div>
 </template>
