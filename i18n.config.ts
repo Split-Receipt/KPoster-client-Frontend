@@ -3,6 +3,7 @@ export default defineI18nConfig(() => ({
 	locale: 'en-US',
 	messages: {
 		en: {
+			email_confirmed: 'Your email has been confirmed, you can go back to the main page',
 			help_request_title: 'Does the form seem complicated?',
 			help_request_description: 'Contact us in any convenient way and we will help you',
 			to_main_page: 'Home',
@@ -85,6 +86,7 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		'en-US': {
+			email_confirmed: 'Your email has been confirmed, you can go back to the main page',
 			help_request_description: 'Contact us in any convenient way and we will help you',
 			help_request_title: 'Does the form seem complicated?',
 			to_main_page: 'To the main page',
@@ -161,6 +163,7 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		es: {
+			email_confirmed: 'Tu email ha sido confirmado, puedes volver a la página principal',
 			help_request_description: 'Contáctanos de forma cómoda y te ayudaremos',
 			help_request_title: '¿El formulario parece complicado?',
 			to_main_page: 'Inicio',
@@ -244,6 +247,8 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		qu: {
+			email_confirmed: 'Correo electrónico nisqaykiqa takyachisqañam, hatun p\'anqaman kutiyta atinki',
+			name_of_platform: 'Portal Cultural Cusco',
 			help_request_description: 'Conveniente manerapi rimanakuy hinaspa yanapasqaykiku',
 			help_request_title: '¿Complicadochu rikchakun chay formulario?',
 			to_main_page: 'Wasi',
