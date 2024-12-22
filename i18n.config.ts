@@ -3,6 +3,7 @@ export default defineI18nConfig(() => ({
 	locale: 'en-US',
 	messages: {
 		en: {
+			check_your_email: 'Check your email for further instructions',
 			require_location_on_map: 'require to choose location at map',
 			choose_at_least_one_point: 'require to choose at least one point',
 			require_to_type_number: 'require to type number',
@@ -96,6 +97,7 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		'en-US': {
+			check_your_email: 'Check your email for instructions',
 			require_location_on_map: 'require to choose location at map',
 			choose_at_least_one_point: 'require to choose at least one point',
 			require_to_type_number: 'Require to type number',
@@ -183,6 +185,7 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		es: {
+			check_your_email: 'Revisa tu correo electrónico para más instrucciones',
 			require_location_on_map: 'Es necesario elegir la ubicación en el mapa',
 			choose_at_least_one_point: 'Requiere elegir al menos un punto',
 			require_to_type_number: 'requiere escribir el número',
@@ -277,6 +280,7 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		qu: {
+			check_your_email: 'Aswan kamachiykunata tarinaykipaq correo electrónicoykita qhaway',
 			require_location_on_map: 'mapapi maypi kasqanmanta akllanapaq mañakunku',
 			choose_at_least_one_point: 'huk puntollatapas akllanapaqmi mañakun',
 			require_to_type_number: 'yupayta qillqanapaq mañakun',

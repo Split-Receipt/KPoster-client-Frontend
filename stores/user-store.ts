@@ -49,12 +49,7 @@ export const useUserStore = defineStore('userData', {
 				return;
 			}
 			try {
-				const response = await registerUser(registrationParams);
-				localStorage.setItem('AuthToken', response.data.jwt);
-				localStorage.setItem('isAuth', 'true');
-				this.isAuth = true;
-
-				await this.getMyUser();
+				await registerUser(registrationParams);
 			} catch (e) {
 				throw new Error('No se pudo registrar el usuario');
 			}

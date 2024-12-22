@@ -15,7 +15,7 @@
 			class="passRestore-btn"
 			text="Recuperar contraseña"
 			size="small"
-			:disabled="!email"
+			:disabled="!email || isFormSended"
 			@click="sendResetPasswordRequest"
 		/>
 	</div>
@@ -26,12 +26,24 @@ import CpButton from '@shared/gui/CpButton.vue';
 import CpTextInput from '@shared/gui/CpTextInput.vue';
 import { toast } from 'vue3-toastify';
 import { requestPasswordReset } from '@shared/api';
+
+type Events = {
+	(e: 'close'): void;
+};
+
+const emit = defineEmits<Events>();
+const isFormSended = ref<boolean>(false);
 const email = ref('');
+const { t } = useI18n();
 
 const sendResetPasswordRequest = () => {
 	try {
 		requestPasswordReset({ email: email.value });
-		toast.success('Se ha enviado a su correo electrónico un enlace a la página de restablecimiento de contraseña.');
+		toast.success(t('check_your_email'));
+		isFormSended.value = true;
+		setTimeout(() => {
+			emit('close');
+		}, 2000);
 	} catch (error) {
 		toast.error(
 			'No se pudo enviar la solicitud de restablecimiento de contraseña'
