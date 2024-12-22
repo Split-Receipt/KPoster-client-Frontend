@@ -237,18 +237,18 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<v-field
 								v-slot="{ errors }"
-								v-model="eventDate.date"
-								name="eventDate"
+								v-model="eventStartDate.date"
+								name="eventStartDate"
 								rules="required"
 							>
 								<cp-text-input2
-									id="event_date_id"
-									v-model="eventDate.date"
+									id="event_start_date_id"
+									v-model="eventStartDate.date"
 									type="date"
 									:circle="false"
 									required-field
 									:min="new Date().toISOString().split('T')[0]"
-									label-text="Fecha"
+									label-text="Fecha de inicio del evento"
 									placeholder="introduzca el enlace"
 								/>
 
@@ -263,18 +263,70 @@
 						<span class="eventForm-upperPositionRow-input-details-input">
 							<v-field
 								v-slot="{ errors }"
-								v-model="eventDate.time"
-								name="eventTime"
+								v-model="eventStartDate.time"
+								name="eventStartTime"
 								rules="required"
 							>
 								<cp-text-input2
-									id="event_date_id"
-									v-model="eventDate.time"
+									id="event_start_date_id"
+									v-model="eventStartDate.time"
 									type="time"
 									:circle="false"
 									required-field
 									:min="new Date().toISOString().split('T')[0]"
 									label-text="Hora de inicio del evento"
+									placeholder="introduzca el enlace"
+								/>
+
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}</span
+								>
+							</v-field>
+						</span>
+						<span class="eventForm-upperPositionRow-input-details-input">
+							<v-field
+								v-slot="{ errors }"
+								v-model="eventEndDate.date"
+								name="eventEndDate"
+								rules="required"
+							>
+								<cp-text-input2
+									id="event_end_date_id"
+									v-model="eventEndDate.date"
+									type="date"
+									:circle="false"
+									required-field
+									:min="new Date().toISOString().split('T')[0]"
+									label-text="Fecha de finalización del evento"
+									placeholder="introduzca el enlace"
+								/>
+
+								<span
+									v-if="errors.length"
+									class="required-input-error-info-center"
+								>
+									{{ errors[0] }}</span
+								>
+							</v-field>
+						</span>
+						<span class="eventForm-upperPositionRow-input-details-input">
+							<v-field
+								v-slot="{ errors }"
+								v-model="eventEndDate.time"
+								name="eventEndTime"
+								rules="required"
+							>
+								<cp-text-input2
+									id="event_end_date_id"
+									v-model="eventEndDate.time"
+									type="time"
+									:circle="false"
+									required-field
+									:min="new Date().toISOString().split('T')[0]"
+									label-text="Hora de finalización del evento"
 									placeholder="introduzca el enlace"
 								/>
 
@@ -701,7 +753,8 @@ const eventCreateForm = reactive<EventCreateType>({
 		eventName: '',
 		eventDescription: '',
 		eventCategory: [],
-		eventDate: '',
+		eventEndDate: '',
+		eventStartDate: '',
 		eventHost: '',
 		eventSocialMedias: [
 			{ socialMediaName: 'TikTok', socialMediaLink: '' },
@@ -746,15 +799,28 @@ const isSpin = ref<boolean>(false);
 const route = useRoute();
 const eventData = ref<EventData | null>(null);
 
-const eventDate = reactive({
+const eventEndDate = reactive({
 	date: '',
 	time: '',
 });
 
-watch(eventDate, () => {
-	if (eventDate.date && eventDate.time) {
-		eventCreateForm.data.eventDate = new Date(
-			`${eventDate.date}T${eventDate.time}`
+const eventStartDate = reactive({
+	date: '',
+	time: '',
+});
+
+watch(eventEndDate, () => {
+	if (eventEndDate.date && eventEndDate.time) {
+		eventCreateForm.data.eventEndDate = new Date(
+			`${eventEndDate.date}T${eventEndDate.time}`
+		);
+	}
+});
+
+watch(eventStartDate, () => {
+	if (eventStartDate.date && eventStartDate.time) {
+		eventCreateForm.data.eventStartDate = new Date(
+			`${eventStartDate.date}T${eventStartDate.time}`
 		);
 	}
 });
@@ -767,7 +833,8 @@ const mapEventDataToForm = (source: EventData) => {
 	eventCreateForm.data.eventDescription = attributes.eventDescription || '';
 	eventCreateForm.data.eventShortDescription =
 		attributes.eventShortDescription || '';
-	eventCreateForm.data.eventDate = attributes.eventDate || '';
+	eventCreateForm.data.eventEndDate = attributes.eventEndDate || '';
+	eventCreateForm.data.eventStartDate = attributes.eventStartDate || '';
 	eventCreateForm.data.eventDuration = attributes.eventDuration || '';
 	eventCreateForm.data.linkToBuyTicket = attributes.linkToBuyTicket || '';
 	eventCreateForm.data.eventDigitalCatalog =
@@ -819,11 +886,17 @@ const mapEventDataToForm = (source: EventData) => {
 			attributes.eventContacts.mail || '';
 	}
 
-	// Map eventDate to separate date and time for your date pickers
-	if (attributes.eventDate) {
-		const eventDateTime = new Date(attributes.eventDate);
-		eventDate.date = eventDateTime.toISOString().split('T')[0];
-		eventDate.time = eventDateTime.toTimeString().split(' ')[0].slice(0, 5);
+	// Map eventDates to separate date and time for your date pickers
+	if (attributes.eventEndDate) {
+		const eventDateTime = new Date(attributes.eventEndDate);
+		eventEndDate.date = eventDateTime.toISOString().split('T')[0];
+		eventEndDate.time = eventDateTime.toTimeString().split(' ')[0].slice(0, 5);
+	}
+
+	if (attributes.eventStartDate) {
+		const eventDateTime = new Date(attributes.eventStartDate);
+		eventStartDate.date = eventDateTime.toISOString().split('T')[0];
+		eventStartDate.time = eventDateTime.toTimeString().split(' ')[0].slice(0, 5);
 	}
 };
 
@@ -1044,8 +1117,12 @@ const prepareEventCreationData = () => {
 	}
 	const timezone = localStorage.getItem('timezone');
 	eventCreateForm.data.eventHost = currentUserEventHostId as number;
-	eventCreateForm.data.eventDate = fromZonedTime(
-		toDate(eventCreateForm.data.eventDate),
+	eventCreateForm.data.eventEndDate = fromZonedTime(
+		toDate(eventCreateForm.data.eventEndDate),
+		timezone ?? 'America/Lima'
+	);
+	eventCreateForm.data.eventStartDate = fromZonedTime(
+		toDate(eventCreateForm.data.eventStartDate),
 		timezone ?? 'America/Lima'
 	);
 	eventCreateForm.data.eventSocialMedias =

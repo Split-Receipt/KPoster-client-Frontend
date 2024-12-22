@@ -143,9 +143,11 @@ const config = useRuntimeConfig();
 const filters: CollectionFilters = {
 	type: { $eq: CollectionTypes.forMainPage },
 	events: {
-		eventDate: {
-			$gte: startOfDay(new Date()),
+		eventStartDate: {
 			$lte: endOfDay(new Date()),
+		},
+		eventEndDate: {
+			$gte: startOfDay(new Date()),
 		},
 	},
 };
@@ -191,9 +193,11 @@ const changeFilters = (data: any, filterPath: string) => {
 		}
 
 		case 'date': {
-			filters.events.eventDate = {
-				$gte: startOfDay(data),
-				$lte: endOfDay(data),
+			filters.events.eventStartDate = {
+				$lte: startOfDay(new Date()),
+			};
+			filters.events.eventEndDate = {
+				$gte: startOfDay(new Date()),
 			};
 			getEvents();
 			break;

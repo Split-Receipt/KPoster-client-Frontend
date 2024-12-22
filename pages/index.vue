@@ -64,9 +64,11 @@ const eventsCollections = ref();
 const events = ref<EventData[]>([]);
 const filters: CollectionFilters = {
 	events: {
-		eventDate: {
+		eventStartDate: {
+			$lte: startOfDay(new Date()),
+		},
+		eventEndDate: {
 			$gte: startOfDay(new Date()),
-			$lte: endOfDay(new Date()),
 		},
 	},
 };
@@ -74,7 +76,7 @@ const filters: CollectionFilters = {
 const filtersForCollections: CollectionFilters = {
 	type: { $eq: CollectionTypes.forMainPage },
 	events: {
-		eventDate: {
+		eventStartDate: {
 			$gte: startOfDay(new Date()),
 		},
 	},
@@ -102,7 +104,9 @@ onMounted(() => {
 
 const getEventsCollection = async () => {
 	try {
-		const eventsCollectionsRequestData = await requestEventsColletions(filtersForCollections);
+		const eventsCollectionsRequestData = await requestEventsColletions(
+			filtersForCollections
+		);
 		eventsCollections.value = eventsCollectionsRequestData.data.data;
 	} catch (e) {
 		console.error(e);
@@ -140,8 +144,10 @@ const changeFilters = (data: any, filterPath: string) => {
 
 		case 'date': {
 			const timezone = localStorage.getItem('timezone');
-			filters.events.eventDate = {
+			filters.events.eventEndDate = {
 				$gte: fromZonedTime(startOfDay(data), timezone ?? 'America/Lima'),
+			};
+			filters.events.eventStartDate = {
 				$lte: fromZonedTime(endOfDay(data), timezone ?? 'America/Lima'),
 			};
 			requestPageData();

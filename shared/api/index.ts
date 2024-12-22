@@ -49,9 +49,14 @@ export const requestEventsColletions = (filters: CollectionFilters) => {
 		populate: {
 			events: {
 				filters: {
-					eventDate: {
+					events: {
+						eventStartDate: {
+						$lte: startOfDay(new Date()),
+					},
+					eventEndDate: {
 						$gte: startOfDay(new Date()),
 					},
+				},
 				},
 				populate: {
 					eventAddress: {

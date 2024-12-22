@@ -17,7 +17,7 @@
 					{{ categoryName }}</span
 				>
 				<span class="detailed__mainImage-info-date">{{
-					formatDateByTZ(new Date(event.attributes.eventDate))
+					getEventDateRange
 				}}</span>
 			</div>
 			<span class="detailed__mainImage-info-button">
@@ -65,7 +65,11 @@
 			/>
 		</div>
 
-		<div v-if="event.attributes.eventDigitalCatalog || event.attributes.eventWebSite">
+		<div
+			v-if="
+				event.attributes.eventDigitalCatalog || event.attributes.eventWebSite
+			"
+		>
 			<h2 class="detailed__map-title">Relacionados</h2>
 			<div class="detailed__relatedList">
 				<cp-huge-link-btn
@@ -237,7 +241,7 @@ import CpMarkdownViewer from '@shared/gui/CpMardownViewer/CpMarkdownViewer.vue';
 import { requestEventById } from '@shared/api';
 import { EventDefaultValue } from '@shared/default-values/events';
 import { formatExternalLink } from '@shared/helpers/formatText';
-import { format } from 'date-fns';
+import { format, isEqual } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
 import { useRuntimeConfig } from 'nuxt/app';
 import EventDetailRec from '@widgets/recommendations/EventDetailRec.vue';
@@ -289,10 +293,27 @@ const getEventById = async (id: string) => {
 	}
 };
 
+const getEventDateRange = computed(() => {
+	if (
+		event.value.attributes.eventEndDate &&
+		event.value.attributes.eventStartDate
+	) {
+		const endDate = new Date(event.value.attributes.eventEndDate);
+		const startDate = new Date(event.value.attributes.eventStartDate);
+		if (isEqual(endDate, startDate)) {
+			return formatDateByTZ(startDate);
+		}
+
+		return `${formatDateByTZ(startDate)} - ${formatDateByTZ(endDate)}`;
+	}
+
+	return '';
+});
+
 const formatDateByTZ = (eventDate: Date) => {
 	return format(
 		toZonedTime(eventDate, localStorage.getItem('timezone') ?? 'America/Lima'),
-		'dd.MM HH:mm'
+		'dd.MM.yyyy HH:mm'
 	);
 };
 

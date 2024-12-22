@@ -4,7 +4,8 @@ export type EventCard = {
 	attributes: Pick<
 			EventData['attributes'],
 			| 'linkToBuyTicket'
-			| 'eventDate'
+			| 'eventStartDate'
+			| 'eventEndDate'
 			| 'eventName'
 			| 'eventShortDescription'
 		> & {

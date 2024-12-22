@@ -91,7 +91,8 @@ const props = withDefaults(defineProps<Props>(), {
 				],
 			},
 			eventName: 'Event Name',
-			eventDate: '01/01/2024',
+			eventStartDate: '01/01/2024',
+			eventEndDate: '01/01/2024',
 			eventShortDescription:
 				'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 		},
@@ -128,10 +129,26 @@ function buyTicketHandler() {
 }
 
 const formattedDate = computed(() => {
-	return format(
-		new Date(props.eventCardData.attributes.eventDate),
-		'dd/MM/yyyy'
-	);
+	if (
+		props.eventCardData.attributes.eventEndDate &&
+		props.eventCardData.attributes.eventStartDate
+	) {
+		const endDate = format(
+			new Date(props.eventCardData.attributes.eventEndDate),
+			'dd/MM/yyyy'
+		);
+		const startDate = format(
+			new Date(props.eventCardData.attributes.eventStartDate),
+			'dd/MM/yyyy'
+		);
+		if (endDate === startDate) {
+			return startDate;
+		} else {
+			return `${startDate} - ${endDate}`;
+		}
+	} else {
+		return '';
+	}
 });
 
 const formattedTitle = computed(() => {
@@ -176,7 +193,6 @@ const formattedTitle = computed(() => {
 				object-fit: cover;
 			}
 		}
-
 	}
 
 	&__title {

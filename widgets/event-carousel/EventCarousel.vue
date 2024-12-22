@@ -88,7 +88,8 @@ const props = withDefaults(defineProps<Props>(), {
 			id: 1,
 			attributes: {
 				linkToBuyTicket: '#',
-				eventDate: '01/01/2024',
+				eventStartDate: '01/01/2024',
+				eventEndDate: '01/01/2024',
 				eventName: 'Event Name',
 				eventShortDescription:
 					'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
