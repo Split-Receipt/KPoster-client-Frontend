@@ -9,6 +9,7 @@
 			:model-value="resetPasswordPayload.password"
 			name="newPassword"
 			rules="required|minLength:8"
+			class="reset-password-form__input"
 		>
 			<cp-text-input
 				v-model="resetPasswordPayload.password"
@@ -24,6 +25,7 @@
 			:model-value="resetPasswordPayload.passwordConfirmation"
 			name="newPasswordConfirmation"
 			rules="required|minLength:8|confirmed:newPassword"
+			class="reset-password-form__input"
 		>
 			<cp-text-input
 				v-model="resetPasswordPayload.passwordConfirmation"
@@ -61,7 +63,7 @@ onBeforeMount(() => {
 });
 
 const setUniqueCode = () => {
-	resetPasswordPayload.code = route.params.code as string;
+	resetPasswordPayload.code = route.query.code as string;
 };
 
 const resetPassword = async () => {
@@ -85,6 +87,7 @@ const resetPassword = async () => {
 	justify-content: center;
 	align-items: center;
 	gap: 20px;
+
 	&__error-message {
 		color: red;
 		width: 100%;

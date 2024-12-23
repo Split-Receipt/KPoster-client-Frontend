@@ -5,6 +5,7 @@ export default defineI18nConfig(() => ({
 		en: {
 			check_your_email: 'Check your email for further instructions',
 			require_location_on_map: 'require to choose location at map',
+			this_field_is_required: 'This field is required',
 			choose_at_least_one_point: 'require to choose at least one point',
 			require_to_type_number: 'require to type number',
 			file_is_required: 'File is required',
