@@ -7,22 +7,22 @@
 		<div class="contact__block">
 			<div class="contact__line">
 				<div class="contact__text">{{ $t('E-mail') }}</div>
-				<div class="contact__text contact__text--value">{{ props.contact?.email }}</div>
+				<div class="contact__text contact__text--value">{{ props.contact?.mail }}</div>
 			</div>
 			<div class="contact__line">
 				<div class="contact__text">{{ $t('Número de teléfono') }}</div>
-				<div class="contact__text contact__text--value">{{ props.contact?.phone }}</div>
+				<div class="contact__text contact__text--value">{{ props.contact?.tel}}</div>
 			</div>
 			<div class="contact__line">
 				<div class="contact__text">{{ $t('País y ciudad') }}</div>
-				<div class="contact__text contact__text--value">{{ props.contact?.city }}</div>
+				<div class="contact__text contact__text--value">{{ props.contact?.place }}</div>
 			</div>
-			<div class="contact__socials">
+			<div v-if="contact?.socialMedia" class="contact__socials">
 				<cp-social-link
-					v-for="media in formattedMedia"
-					:key="media.link"
-					:social-media-link="media.link"
-					:social-media-name="media.name"
+					v-for="media in contact.socialMedia"
+					:key="media.socialMediaLink"
+					:social-media-link="media.socialMediaLink"
+					:social-media-name="media.socialMediaName"
 				/>
 			</div> 
 		</div>
@@ -30,27 +30,15 @@
 </template>
 
 <script setup lang="ts">
+import type { Contacts, SocialMedia } from '@shared/api/types';
 type Props = {
-	contact: {
+	contact: Contacts & {
         name?: string;
-        email?: string;
-        phone?: string;
-        city?: string;
-        job?: string;
-        social_media?: {
-            instagram?: string;
-            facebook?: string;
-            tiktok?: string;
-            linkedin?: string;
-        };
-    }
+        socialMedia?: SocialMedia[];
+}
 };
 
 const props = defineProps<Props>();
-
-const formattedMedia = computed(() =>
-  Object.entries(props.contact?.social_media ?? {}).map(([name, link]) => ({ name, link }))
-);
 </script>
 
 <style scoped lang="scss">

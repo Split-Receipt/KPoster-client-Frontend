@@ -410,7 +410,7 @@ export type CultureType = {
 		}
 	};
 
-	type Contacts = {
+export type Contacts = {
 		place: string;
 		tel: string;
 		mail: string;

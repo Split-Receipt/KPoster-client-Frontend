@@ -1,6 +1,6 @@
 <template>
-	<div class="event-carousel__wrapper">
-		<div class="event-carousel">
+	<cp-section :header="$t('Galería del organizador')">
+		<template #controls>
 			<div class="event-carousel__controls">
 				<cp-button
 					shape="square"
@@ -23,7 +23,8 @@
 					]"
 				/>
 			</div>
-
+		</template>
+		<template #section-content>
 			<swiper
 				:id="id"
 				:modules="[SwiperNavigation, SwiperGrid]"
@@ -94,12 +95,13 @@
 					/>
 				</swiper-slide>
 			</swiper>
-		</div>
-	</div>
+		</template>
+	</cp-section>
 </template>
 
 <script setup lang="ts">
 import CpMediaCard from './CpMediaCard.vue';
+import CpSection from '@shared/gui/CpSection.vue';
 import type { CpMediaCardProps } from './types';
 type Props = {
 	mediaFilesUrls?: string[];
@@ -124,56 +126,31 @@ const emit = defineEmits<Emits>();
 <style scoped lang="scss">
 .event-carousel {
 	&__controls {
-		position: relative;
-		display: flex;
-		justify-content: flex-end;
-		gap: 20px;
-		margin-right: 10px;
-
-		@media #{$screen-desktop} {
-			margin-right: 0px;
+		display: none;
+		@media #{$screen-tablet} {
+			display: flex;
+			gap: 20px;
 		}
 	}
 
 	&__button {
-		position: static;
 		width: auto;
 		display: none;
 
 		@media #{$screen-tablet} {
 			display: block;
 		}
-
-		@media screen and (max-width: 960px) {
-			display: none;
-		}
 	}
 
-	&-image {
-		object-fit: cover;
-		width: 100%;
-		height: 100%;
-	}
-
-	&-video {
+	&-image, &-video {
 		object-fit: cover;
 		width: 100%;
 		height: 100%;
 	}
 }
 
-.swiper {
-	@media #{$screen-tablet} {
-		padding-top: 55px;
-	}
-}
-
-.swiper-button-next {
-	&::after {
-		content: '';
-	}
-}
-.swiper-button-prev {
+.swiper-button-prev, .swiper-button-next {
+	position: static;
 	&::after {
 		content: '';
 	}

@@ -114,8 +114,10 @@ const show = ref(false);
 
 	&__media-item {
 		width: 100%;
-		height: 100%;
+		height: 300px;
 		object-fit: cover;
+		border: 1px solid transparent;
+		border-radius: 16px;
 	}
 }
 </style>

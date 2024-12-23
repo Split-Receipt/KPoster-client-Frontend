@@ -56,7 +56,7 @@
 				/>
 			</div>
 
-			<div class="event__section">
+			<div v-if="event.attributes.eventDigitalCatalog || event.attributes.eventWebSite" class="event__section">
 				<h3 class="event__section-title">{{ $t('Relacionados')}}</h3>
 				<div class="event__related">
 					<cp-link-btn
@@ -184,7 +184,7 @@ import CpSocialLink from '@shared/gui/CpSocialLink.vue';
 import CplinkBtn from '@shared/gui/CpLinkBtn.vue';
 import CpMap from '@shared/gui/CpMap.vue';
 import CpButton from '@shared/gui/CpButton.vue';
-import CpMarkdownViewer from '@shared/gui/CpMardownViewer/CpMarkdownViewer.vue';
+import CpMarkdownViewer from '@shared/gui/CpMarkdownViewer/CpMarkdownViewer.vue';
 import { requestEventById } from '@shared/api';
 import { EventDefaultValue } from '@shared/default-values/events';
 import { formatExternalLink } from '@shared/helpers/formatText';
@@ -250,13 +250,13 @@ const formatDateByTZ = (eventDate: Date) => {
 };
 
 const formattedContact = computed(() => {
-	const host = get(event.value, 'attributes.eventHost.data.attributes', {});
+	const host = event.value.attributes.eventHost.data.attributes;
 
 	return {
 		name: host.commercialName,
-		phone: host.contacts?.tel,
-		email: host.contacts?.mail,
-		city: host.contacts?.place,
+		tel: host.contacts?.tel,
+		mail: host.contacts?.mail,
+		place: host.contacts?.place,
 		social_media: host.socialMedias,
 	};
 });
@@ -323,6 +323,8 @@ const eventCategoriesNames = computed(() => {
 		justify-content: flex-end;
 		flex-direction: column;
 		margin-bottom: 40px;
+		background-repeat: no-repeat;
+		background-size: cover;
 
 		@media #{$screen-tablet} {
 			padding: 25px;

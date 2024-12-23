@@ -1548,7 +1548,7 @@ const mapPartnerDataToForm = (source: EventHost) => {
 	&__title {
 		margin-bottom: 45px;
 		font-size: 70px;
-		font-family: $font-family-medium-expanded;
+		font-family: $font-family-medium;
 
 		@media (max-width: 1265px) {
 			line-height: 80px;
