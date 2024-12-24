@@ -29,7 +29,10 @@ const filters: CollectionFilters = {
 		$eq: CollectionTypes.forSinglePages,
 	},
 	events: {
-		eventDate: {
+		eventStartDate: {
+			$lte: startOfDay(new Date()),
+		},
+		eventEndDate: {
 			$gte: startOfDay(new Date()),
 		},
 	},

@@ -188,7 +188,7 @@ import CpMarkdownViewer from '@shared/gui/CpMarkdownViewer/CpMarkdownViewer.vue'
 import { requestEventById } from '@shared/api';
 import { EventDefaultValue } from '@shared/default-values/events';
 import { formatExternalLink } from '@shared/helpers/formatText';
-import { format } from 'date-fns';
+import { format, isEqual } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
 import { useRuntimeConfig } from 'nuxt/app';
 import ContactBlock from '@features/contacts/ContactBlock.vue';
@@ -241,6 +241,23 @@ const getEventById = async (id: string) => {
 		isSpin.value = false;
 	}
 };
+
+const getEventDateRange = computed(() => {
+	if (
+		event.value.attributes.eventEndDate &&
+		event.value.attributes.eventStartDate
+	) {
+		const endDate = new Date(event.value.attributes.eventEndDate);
+		const startDate = new Date(event.value.attributes.eventStartDate);
+		if (isEqual(endDate, startDate)) {
+			return formatDateByTZ(startDate);
+		}
+
+		return `${formatDateByTZ(startDate)} - ${formatDateByTZ(endDate)}`;
+	}
+
+	return '';
+});
 
 const formatDateByTZ = (eventDate: Date) => {
 	return format(

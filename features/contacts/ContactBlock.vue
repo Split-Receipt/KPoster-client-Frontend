@@ -24,18 +24,15 @@
 					:social-media-link="media.socialMediaLink"
 					:social-media-name="media.socialMediaName"
 				/>
-			</div> 
+			</div>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import type { Contacts, SocialMedia } from '@shared/api/types';
+import type { CulturalPortalContacts } from '@shared/api/types';
 type Props = {
-	contact: Contacts & {
-        name?: string;
-        socialMedia?: SocialMedia[];
-}
+	contact: CulturalPortalContacts;
 };
 
 const props = defineProps<Props>();
@@ -43,7 +40,7 @@ const props = defineProps<Props>();
 
 <style scoped lang="scss">
 .contact {
-    display: grid;
+	display: grid;
 
     &__block {
         &--first {
@@ -51,36 +48,36 @@ const props = defineProps<Props>();
         }
     }
 
-    &__text {
-        color: $gray;
-        text-transform: uppercase;
-    }
+	&__text {
+		color: $gray;
+		text-transform: uppercase;
+	}
 
-    &__line {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 5px;
-    }
+	&__line {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 5px;
+	}
 
-    &__text {
-        margin-bottom: 10px;
-        &--value {
-            text-align: right;
-        }
-    }
+	&__text {
+		margin-bottom: 10px;
+		&--value {
+			text-align: right;
+		}
+	}
 
-    &__socials {
-        display: flex;
-        gap: 10px;
-        padding-top: 10px;
-    }
+	&__socials {
+		display: flex;
+		gap: 10px;
+		padding-top: 10px;
+	}
 
-    @media #{$screen-tablet} {
-        grid-template-columns: 1fr 1fr;
-        &__socials {
-            gap: 20px;
-        }
+	@media #{$screen-tablet} {
+		grid-template-columns: 1fr 1fr;
+		&__socials {
+			gap: 20px;
+		}
 	}
 }
 </style>

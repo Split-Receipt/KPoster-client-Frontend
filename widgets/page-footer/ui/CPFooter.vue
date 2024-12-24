@@ -97,7 +97,7 @@ const formatPlatformSocialMedias = (
 	}, []);
 };
 const showBecomePartnerButton = computed(() => {
-	return userStore.getUserRole !== UserRolesTypes.eventHost;
+	return userStore.getUserRole === UserRolesTypes.client || userStore.getUserRole === UserRolesTypes.authenticated;
 });
 </script>
 

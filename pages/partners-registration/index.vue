@@ -1,5 +1,10 @@
 <template>
-	<cp-base-page :header="$t('Ingresa tus datos para registrarte en el Portal Cultural del Cusco')" class="partners">
+	<cp-base-page
+		:header="
+			$t('Ingresa tus datos para registrarte en el Portal Cultural del Cusco')
+		"
+		class="partners"
+	>
 		<template #content>
 			<help-request-suggestion class="partners__help-request-suggestion" />
 			<v-form ref="partnerRegForm" class="partners__form">
@@ -33,7 +38,7 @@
 
 				<!-- personal activity (First name) -->
 				<div
-					v-if="currentPartnerType === 'persona_natural'"
+					v-if="currentPartnerType === 'persona-natural'"
 					class="partners__form-row"
 				>
 					<div class="partners__form-row-info">
@@ -67,7 +72,7 @@
 
 				<!-- Persona lIdentifying Document  -->
 				<div
-					v-if="currentPartnerType === 'persona_natural'"
+					v-if="currentPartnerType === 'persona-natural'"
 					class="partners__form-rowDnD"
 				>
 					<div class="partners__form-row-info">
@@ -85,7 +90,9 @@
 							rules="required"
 						>
 							<cp-radio-button
-								v-model="partnerRegistrationForm.data.personalIdentifyingDocument"
+								v-model="
+									partnerRegistrationForm.data.personalIdentifyingDocument
+								"
 								:options="docTypeOptions"
 								name="PersonalIdentifyingDocument"
 								style="margin-left: -30px"
@@ -99,7 +106,7 @@
 
 				<!-- Persona lIdentifying Document scan -->
 				<div
-					v-if="currentPartnerType === 'persona_natural'"
+					v-if="currentPartnerType === 'persona-natural'"
 					class="partners__form-rowDnD"
 				>
 					<div class="partners__form-rowDnD-info">
@@ -307,7 +314,10 @@
 											'required-input-error-textInput': errors.length > 0,
 										}"
 									/>
-									<span v-if="errors" class="required-input-error-info-leftSide">
+									<span
+										v-if="errors"
+										class="required-input-error-info-leftSide"
+									>
 										{{ errors[0] }}</span
 									>
 								</v-field>
@@ -327,7 +337,10 @@
 											'required-input-error-textInput': errors.length > 0,
 										}"
 									/>
-									<span v-if="errors" class="required-input-error-info-leftSide">
+									<span
+										v-if="errors"
+										class="required-input-error-info-leftSide"
+									>
 										{{ errors[0] }}</span
 									>
 								</v-field>
@@ -458,7 +471,9 @@
 						>
 							<div>
 								<cp-check-box
-									v-for="(item, index) in commonDataStore.getCultureTypesOptions"
+									v-for="(
+										item, index
+									) in commonDataStore.getCultureTypesOptions"
 									:key="item.value"
 									:option="item"
 									return-value="id"
@@ -529,7 +544,9 @@
 						<v-field
 							v-if="mainProdValue === 'File'"
 							v-slot="{ errors }"
-							:model-value="partnerRegistrationForm.files.productDescriptionFile"
+							:model-value="
+								partnerRegistrationForm.files.productDescriptionFile
+							"
 							name="productDescription"
 							rules="required_file"
 						>
@@ -593,7 +610,9 @@
 								>
 								<cp-text-area
 									v-model="partnerRegistrationForm.data.productDescriptionText"
-									:class="{ 'required-input-error-textInput': errors.length > 0 }"
+									:class="{
+										'required-input-error-textInput': errors.length > 0,
+									}"
 									text-area-id="mainProdTextArea"
 									text-area-label="Descripción del Producto"
 									text-area-placeholder="por favor escriba una descripción del producto"
@@ -716,7 +735,10 @@
 											'required-input-error-socialMedia': errors.length > 0,
 										}"
 									/>
-									<span v-if="errors" class="required-input-error-info-leftSide">
+									<span
+										v-if="errors"
+										class="required-input-error-info-leftSide"
+									>
 										{{ errors[0] }}</span
 									>
 								</v-field>
@@ -737,7 +759,10 @@
 											'required-input-error-socialMedia': errors.length > 0,
 										}"
 									/>
-									<span v-if="errors" class="required-input-error-info-leftSide">
+									<span
+										v-if="errors"
+										class="required-input-error-info-leftSide"
+									>
 										{{ errors[0] }}</span
 									>
 								</v-field>
@@ -758,7 +783,10 @@
 											'required-input-error-socialMedia': errors.length > 0,
 										}"
 									/>
-									<span v-if="errors" class="required-input-error-info-leftSide">
+									<span
+										v-if="errors"
+										class="required-input-error-info-leftSide"
+									>
 										{{ errors[0] }}</span
 									>
 								</v-field>
@@ -847,7 +875,9 @@
 						>
 							<div>
 								<cp-check-box
-									v-for="(item, index) in commonDataStore.getAffiliationsOptions"
+									v-for="(
+										item, index
+									) in commonDataStore.getAffiliationsOptions"
 									:key="item.value"
 									:option="item"
 									return-value="id"
@@ -1074,6 +1104,7 @@ import CpTextArea from '@shared/gui/CpTextArea.vue';
 import { useCommonDataStore } from '@stores/common-data-store';
 import { useUserStore } from '@stores/user-store';
 import type { CoordinatesType } from '@shared/gui/types';
+import { UserRolesTypes } from '@shared/api/types';
 
 const { locale } = useI18n();
 
@@ -1223,12 +1254,6 @@ const checkboxCollectAffiliations = (value: number, index: number) => {
 const sendPartnerRegistrationForm = async () => {
 	const isValid = await partnerRegForm.value?.validate();
 
-	if (userStore.isAuth) {
-		toast.error('Primero debe cerrar sesión en su cuenta actual');
-
-		return;
-	}
-
 	if (!isValid.valid) {
 		isSpin.value = false;
 		toast.error('Form is invalid');
@@ -1239,21 +1264,19 @@ const sendPartnerRegistrationForm = async () => {
 	try {
 		isSpin.value = true;
 		formSended.value = true;
-		if (!userStore.isAuth) {
-			await userStore.register(userRegistrationData);
-
-			if (!userStore.user || !userStore.user.id) {
-				throw new Error('No se pudo encontrar el usuario');
-			}
+		if (
+			userStore.user &&
+			userStore.user.role.type !== UserRolesTypes.eventHost
+		) {
 			partnerRegistrationForm.data.user = userStore.user.id;
-		} else if (userStore.user) {
-			partnerRegistrationForm.data.user = userStore.user.id;
+			await createPartner();
+			toast.success('El registro fue exitoso');
+			setTimeout(() => {
+				navigateTo(`/${locale.value}`);
+			}, 2000);
+		} else {
+			throw new Error('No se pudo encontrar el usuario');
 		}
-		await createPartner();
-		toast.success('El registro fue exitoso');
-		setTimeout(() => {
-			navigateTo(`/${locale.value}`);
-		}, 2000);
 	} catch (error) {
 		toast.error(
 			'Nuestro administrador se comunicará conusted por correo electrónico'

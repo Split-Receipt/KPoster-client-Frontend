@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<event-host-personal-page-content
-			v-if="userStore.user.role.type === UserRolesTypes.eventHost"
+			v-if="userStore.user.role.type === UserRolesTypes.eventHost && userStore.user?.eventHostData"
 		/>
 		<client-personal-page-content v-else />
 	</div>

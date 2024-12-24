@@ -51,9 +51,10 @@ export type RequestOption = {
 export type EventCreateType = {
 	data: {
 		eventName: string;
+		eventStartDate: Date | string;
 		eventDescription: string;
 		eventCategory: number[];
-		eventDate: Date | string;
+		eventEndDate: Date | string;
 		eventHost: number | string;
 		eventDuration: string;
 		eventDigitalCatalog: string;
@@ -99,7 +100,8 @@ export type EventData = {
 			eventCategory:{
 				data: EventCategory[] };
 			eventId: string;
-			eventDate: string;
+			eventEndDate: string;
+			eventStartDate: string;
 			createdAt: string;
 			updatedAt: string;
 			publishedAt: string;
@@ -204,11 +206,16 @@ export type CollectionFilters = {
 		$eq: typeof CollectionTypes[keyof typeof CollectionTypes]
 	};
 	events: {
-		eventDate?: {
+		eventEndDate?: {
 			$eq?: Date;
 			$gte?: Date;
 			$lte?: Date;
 		};
+		eventStartDate?: {
+			$eq?: Date;
+			$gte?: Date;
+			$lte?: Date;
+		}
 		eventAddress?: {
 			city: {
 				cityCode: {
@@ -420,12 +427,12 @@ export type AboutPlatform = {
 		aboutUs: {
 			aboutUsText: string;
 		};
-		culturalPortalContacts: CulturalPortalContacts;
+		culturalPortalContacts: CulturalPortalContacts[];
 		platformContacts: { id: number } & Contacts;
 		platformSocialMedias: ({ id: number } & SocialMedia)[]
 };
 
-type CulturalPortalContacts = {
+export type CulturalPortalContacts = {
 	id: number;
 	contactName: string;
 	contactSocialMedias: SocialMedia[];
@@ -476,3 +483,13 @@ export type NewsOne = BaseStrapiResponse<
 		publishedAt: string;
 		locale: string
 	}>;
+
+	export type RequestResetPasswordPayload = {
+		email: string;
+	};
+
+export type ResetPasswordPayload = {
+	password: string;
+	passwordConfirmation: string;
+	code: string;
+};
