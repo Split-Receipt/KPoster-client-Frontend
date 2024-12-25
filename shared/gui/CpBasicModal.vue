@@ -17,7 +17,7 @@
 						size="small"
 						shape="oval"
 						color="yellowGrey"
-						text="Sí"
+						:text="$t('yes')"
 						@click="modalHandleAccept"
 					/>
 					<cp-button
@@ -26,7 +26,7 @@
 						size="small"
 						shape="oval"
 						color="transparent"
-						text="No"
+						:text="$t('no')"
 						@click="modaHandleClose"
 					/>
 				</div>
@@ -39,8 +39,13 @@
 import { onClickOutside } from '@vueuse/core';
 type Props = {
 	show: boolean;
+	acceptButton?: boolean;
+	cancelButton?: boolean;
 };
-defineProps<Props>();
+withDefaults(defineProps<Props>(), {
+	acceptButton: true,
+	cancelButton: true,
+});
 const emit = defineEmits<Events>();
 type Events = {
 	(event: 'close' | 'accept', data: any): void;

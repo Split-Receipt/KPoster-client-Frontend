@@ -1,14 +1,42 @@
 <template>
-	<cp-base-page :header="$t('Ingresa tus datos para registrarte en el Portal Cultural del Cusco')" class="partners">
+	<cp-base-page
+		:header="
+			$t('Ingresa tus datos para registrarte en el Portal Cultural del Cusco')
+		"
+		class="partners"
+	>
 		<template #content>
+			<teleport to="body">
+				<cp-basic-modal
+					:show="showAfterRegistrationModal"
+					:cancel-button="false"
+					@accept="
+						() => {
+							showAfterRegistrationModal = false;
+							navigateTo(`/${locale}/`);
+						}
+					"
+					@close="
+						() => {
+							showAfterRegistrationModal = false;
+							navigateTo(`/${locale}/`);
+						}
+					"
+				>
+					<template #content>
+						<h4>{{ $t('registration_successful') }}</h4>
+						<span>
+							{{ $t('partner_after_registration_modal_content') }}
+						</span>
+					</template>
+				</cp-basic-modal>
+			</teleport>
 			<help-request-suggestion class="partners__help-request-suggestion" />
 			<v-form ref="partnerRegForm" class="partners__form">
 				<!-- Organization type -->
 				<div class="partners__form-rowDnD">
 					<div class="partners__form-row-info">
-						<span class="required-field">
-							Tipo de organizaón
-						</span>
+						<span class="required-field"> Tipo de organizaón </span>
 					</div>
 					<div class="partners__form-row-input">
 						<v-field
@@ -71,9 +99,7 @@
 					class="partners__form-rowDnD"
 				>
 					<div class="partners__form-row-info">
-						<span class="required-field">
-							Tipo de documento de identidad
-						</span>
+						<span class="required-field"> Tipo de documento de identidad </span>
 					</div>
 					<div class="partners__form-row-input">
 						<v-field
@@ -85,7 +111,9 @@
 							rules="required"
 						>
 							<cp-radio-button
-								v-model="partnerRegistrationForm.data.personalIdentifyingDocument"
+								v-model="
+									partnerRegistrationForm.data.personalIdentifyingDocument
+								"
 								:options="docTypeOptions"
 								name="PersonalIdentifyingDocument"
 								style="margin-left: -30px"
@@ -199,9 +227,7 @@
 					class="partners__form-row"
 				>
 					<div class="partners__form-row-info">
-						<span class="required-field">
-							RUC
-						</span>
+						<span class="required-field"> RUC </span>
 					</div>
 					<div class="partners__form-row-input">
 						<v-field
@@ -307,7 +333,10 @@
 											'required-input-error-textInput': errors.length > 0,
 										}"
 									/>
-									<span v-if="errors" class="required-input-error-info-leftSide">
+									<span
+										v-if="errors"
+										class="required-input-error-info-leftSide"
+									>
 										{{ errors[0] }}</span
 									>
 								</v-field>
@@ -327,7 +356,10 @@
 											'required-input-error-textInput': errors.length > 0,
 										}"
 									/>
-									<span v-if="errors" class="required-input-error-info-leftSide">
+									<span
+										v-if="errors"
+										class="required-input-error-info-leftSide"
+									>
 										{{ errors[0] }}</span
 									>
 								</v-field>
@@ -458,7 +490,9 @@
 						>
 							<div>
 								<cp-check-box
-									v-for="(item, index) in commonDataStore.getCultureTypesOptions"
+									v-for="(
+										item, index
+									) in commonDataStore.getCultureTypesOptions"
 									:key="item.value"
 									:option="item"
 									return-value="id"
@@ -481,8 +515,8 @@
 				<div class="partners__form-rowDnD">
 					<div class="partners__form-rowDnD-info">
 						<span class="required-field">
-							Especificar la labor que realiza en el área seleccionada de cultura
-							viva comunitaria
+							Especificar la labor que realiza en el área seleccionada de
+							cultura viva comunitaria
 							<cp-info-pop-up id="org_Work_Type" info="orgWorkType info" />
 						</span>
 					</div>
@@ -529,7 +563,9 @@
 						<v-field
 							v-if="mainProdValue === 'File'"
 							v-slot="{ errors }"
-							:model-value="partnerRegistrationForm.files.productDescriptionFile"
+							:model-value="
+								partnerRegistrationForm.files.productDescriptionFile
+							"
 							name="productDescription"
 							rules="required_file"
 						>
@@ -593,7 +629,9 @@
 								>
 								<cp-text-area
 									v-model="partnerRegistrationForm.data.productDescriptionText"
-									:class="{ 'required-input-error-textInput': errors.length > 0 }"
+									:class="{
+										'required-input-error-textInput': errors.length > 0,
+									}"
 									text-area-id="mainProdTextArea"
 									text-area-label="Descripción del Producto"
 									text-area-placeholder="por favor escriba una descripción del producto"
@@ -716,7 +754,10 @@
 											'required-input-error-socialMedia': errors.length > 0,
 										}"
 									/>
-									<span v-if="errors" class="required-input-error-info-leftSide">
+									<span
+										v-if="errors"
+										class="required-input-error-info-leftSide"
+									>
 										{{ errors[0] }}</span
 									>
 								</v-field>
@@ -737,7 +778,10 @@
 											'required-input-error-socialMedia': errors.length > 0,
 										}"
 									/>
-									<span v-if="errors" class="required-input-error-info-leftSide">
+									<span
+										v-if="errors"
+										class="required-input-error-info-leftSide"
+									>
 										{{ errors[0] }}</span
 									>
 								</v-field>
@@ -758,7 +802,10 @@
 											'required-input-error-socialMedia': errors.length > 0,
 										}"
 									/>
-									<span v-if="errors" class="required-input-error-info-leftSide">
+									<span
+										v-if="errors"
+										class="required-input-error-info-leftSide"
+									>
 										{{ errors[0] }}</span
 									>
 								</v-field>
@@ -769,9 +816,7 @@
 				<!-- location on map -->
 				<div class="partners__form-rowDnD">
 					<div class="partners__form-rowDnD-info">
-						<span class="required-field">
-							Marcar la ubicación del evento
-						</span>
+						<span class="required-field"> Marcar la ubicación del evento </span>
 					</div>
 					<div class="partners__form-rowDnD-input fullWidth-map">
 						<div class="partnerRegistration__map">
@@ -847,7 +892,9 @@
 						>
 							<div>
 								<cp-check-box
-									v-for="(item, index) in commonDataStore.getAffiliationsOptions"
+									v-for="(
+										item, index
+									) in commonDataStore.getAffiliationsOptions"
 									:key="item.value"
 									:option="item"
 									return-value="id"
@@ -929,114 +976,6 @@
 					</div>
 				</div>
 
-				<!-- Registration Data -->
-				<div v-if="!userStore.isAuth" class="partners__form-rowDnD">
-					<div class="partners__form-rowDnD-info">
-						<span class="required-field">
-							Detalles de inicio de sesión
-							<cp-info-pop-up
-								id="user_registration_info"
-								info="No se admitirán redes personales"
-							/>
-						</span>
-					</div>
-					<div class="partners__form-rowDnD-input">
-						<div class="partners__form-rowDnD-input-authInfo">
-							<span class="partners__form-rowDnD-semiBlock-authInfo">
-								<v-field
-									v-slot="{ errors }"
-									:model-value="userRegistrationData.username"
-									name="username"
-									rules="required"
-								>
-									<cp-text-input2
-										id="username_id"
-										v-model="userRegistrationData.username"
-										:circle="true"
-										label-text="Nombre de usuario"
-										placeholder="Nombre"
-									/>
-									<span
-										v-if="errors.length"
-										class="required-input-error-info-center"
-									>
-										{{ errors[0] }}
-									</span>
-								</v-field>
-							</span>
-							<span class="partners__form-rowDnD-semiBlock-authInfo">
-								<v-field
-									v-slot="{ errors }"
-									:model-value="userRegistrationData.username"
-									name="eventHostRegistrationEmail"
-									rules="required"
-								>
-									<cp-text-input2
-										id="email_id"
-										v-model="userRegistrationData.email"
-										:circle="true"
-										label-text="Email"
-										placeholder="example@example.com"
-									/>
-									<span
-										v-if="errors.length"
-										class="required-input-error-info-center"
-									>
-										{{ errors[0] }}
-									</span>
-								</v-field>
-							</span>
-
-							<span class="partners__form-rowDnD-semiBlock-authInfo">
-								<v-field
-									v-slot="{ errors }"
-									:model-value="userRegistrationData.password"
-									name="eventHostRegistrationPassword"
-									rules="required|minLength:8"
-								>
-									<cp-text-input2
-										id="pass_id"
-										v-model="userRegistrationData.password"
-										:circle="true"
-										type="password"
-										label-text="Password"
-										placeholder="Password"
-									/>
-									<span
-										v-if="errors.length"
-										class="required-input-error-info-center"
-									>
-										{{ errors[0] }}
-									</span>
-								</v-field>
-							</span>
-							<span class="partners__form-rowDnD-semiBlock-authInfo">
-								<v-field
-									v-slot="{ errors }"
-									v-model="passwordConfirmationValue"
-									name="eventHostPasswordConfirmation"
-									rules="required|confirmed:eventHostRegistrationPassword"
-								>
-									<cp-text-input2
-										id="confirmPass_id"
-										v-model="passwordConfirmationValue"
-										:circle="true"
-										type="password"
-										label-text="Confirm Password"
-										placeholder="Password again"
-									/>
-									<span
-										v-if="errors.length"
-										class="required-input-error-info-center"
-									>
-										{{ errors[0] }}
-									</span>
-								</v-field>
-							</span>
-						</div>
-					</div>
-				</div>
-
 				<div class="partners__form-submit">
 					<div class="partners__form-submit-btnContainer">
 						<cp-button
@@ -1082,6 +1021,7 @@ const commonDataStore = useCommonDataStore();
 
 const formSended = ref(false);
 const { $objToFormData } = useNuxtApp();
+const showAfterRegistrationModal = ref(false);
 
 // test values ----------------------------------------------------------
 
@@ -1239,21 +1179,14 @@ const sendPartnerRegistrationForm = async () => {
 	try {
 		isSpin.value = true;
 		formSended.value = true;
-		if (!userStore.isAuth) {
-			await userStore.register(userRegistrationData);
-
-			if (!userStore.user || !userStore.user.id) {
-				throw new Error('No se pudo encontrar el usuario');
-			}
+		if (userStore.user) {
 			partnerRegistrationForm.data.user = userStore.user.id;
-		} else if (userStore.user) {
-			partnerRegistrationForm.data.user = userStore.user.id;
+		} else {
+			throw new Error('No se pudo encontrar el usuario');
 		}
 		await createPartner();
 		toast.success('El registro fue exitoso');
-		setTimeout(() => {
-			navigateTo(`/${locale.value}`);
-		}, 2000);
+		showAfterRegistrationModal.value = true;
 	} catch (error) {
 		toast.error(
 			'Nuestro administrador se comunicará conusted por correo electrónico'
