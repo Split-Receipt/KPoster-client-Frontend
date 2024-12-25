@@ -1,10 +1,11 @@
-import { defineRule, configure, extend } from 'vee-validate';
+import { defineRule, configure } from 'vee-validate';
 import { required } from '@vee-validate/rules';
 
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin((nuxtApp) => {
+	const { t } = nuxtApp.$i18n;
 	configure({
 		generateMessage: () => {
-			return 'This field is required';
+			return t('this_field_is_required');
 		},
 	});
 
@@ -19,7 +20,7 @@ export default defineNuxtPlugin(() => {
 				value
 			)
 		) {
-			return 'This field must be a valid';
+			return t('this_field_is_incorrect');
 		}
 
 		return true;
@@ -30,7 +31,7 @@ export default defineNuxtPlugin(() => {
 			return true;
 		}
 
-		return 'Passwords must match';
+		return t('passwords_do_not_match');
 	});
 
 defineRule('minLength', (value: string, [limit]: [number]) => {
@@ -39,14 +40,14 @@ defineRule('minLength', (value: string, [limit]: [number]) => {
     return true;
   }
   if (value.length < limit) {
-    return `This field must be at least ${limit} characters`;
+    return t('this_field_must_be_at_least', { count: limit });
   }
 
   return true;
 });
 	defineRule('required_file', (value: FileList | null) => {
 		if (!value || value.length === 0) {
-			return 'A file is required';
+			return t('file_is_required');
 		}
 
 		return true;
@@ -54,7 +55,7 @@ defineRule('minLength', (value: string, [limit]: [number]) => {
 
 	defineRule('require_number', (value: number | null) => {
 		if (!value || value < 1) {
-			return 'require to type number';
+			return t('require_to_type_number');
 		}
 
 		return true;
@@ -62,7 +63,7 @@ defineRule('minLength', (value: string, [limit]: [number]) => {
 
 	defineRule('require_checkbox', (value: string[] | number[]) => {
 		if (value?.length < 1) {
-			return 'require to choose at least one point';
+			return t('choose_at_least_one_point');
 		}
 
 		return true;
@@ -70,7 +71,7 @@ defineRule('minLength', (value: string, [limit]: [number]) => {
 
 	defineRule('require_coordinates', (value: number[]) => {
 		if (value[0] === -12.046016 && value[1] === -77.030554) {
-			return 'require to choose location at map';
+			return t('require_location_on_map');
 		}
 
 		return true;

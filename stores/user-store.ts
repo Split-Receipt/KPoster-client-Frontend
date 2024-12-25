@@ -37,17 +37,19 @@ export const useUserStore = defineStore('userData', {
 			}
 
 		 },
+
+		 loginWithJWT(jwt: string) {
+			localStorage.setItem('AuthToken', jwt);
+			localStorage.setItem('isAuth', 'true');
+			this.isAuth = true;
+			this.getMyUser();
+		 },
 		 async register(registrationParams: RegisterParams) {
 			if (Object.values(registrationParams).some((value) => !value)) {
 				return;
 			}
 			try {
-				const response = await registerUser(registrationParams);
-				localStorage.setItem('AuthToken', response.data.jwt);
-				localStorage.setItem('isAuth', 'true');
-				this.isAuth = true;
-
-				await this.getMyUser();
+				await registerUser(registrationParams);
 			} catch (e) {
 				throw new Error('No se pudo registrar el usuario');
 			}

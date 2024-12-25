@@ -92,6 +92,7 @@ const handleClick = (clickEvent: MouseEvent) => {
 	text-decoration: none;
 	color: $black;
 	background-color: $white;
+	font-family: $font-family-medium;
 	cursor: pointer;
 
 	&:disabled {

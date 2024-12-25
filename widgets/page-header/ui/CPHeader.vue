@@ -289,7 +289,7 @@ const isAllowedToCreateEvent = computed(() => {
 	}
 
 	&__icon-logo {
-		width: 60px;
+		width: 50px;
 		@media #{$screen-tablet} {
 			background-color: transparent;
 			width: $header-icon-logo-width-screen-tablet;

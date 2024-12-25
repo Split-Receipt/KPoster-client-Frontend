@@ -56,7 +56,7 @@
 				/>
 			</div>
 
-			<div class="event__section">
+			<div v-if="event.attributes.eventDigitalCatalog || event.attributes.eventWebSite" class="event__section">
 				<h3 class="event__section-title">{{ $t('Relacionados')}}</h3>
 				<div class="event__related">
 					<cp-link-btn
@@ -184,11 +184,11 @@ import CpSocialLink from '@shared/gui/CpSocialLink.vue';
 import CplinkBtn from '@shared/gui/CpLinkBtn.vue';
 import CpMap from '@shared/gui/CpMap.vue';
 import CpButton from '@shared/gui/CpButton.vue';
-import CpMarkdownViewer from '@shared/gui/CpMardownViewer/CpMarkdownViewer.vue';
+import CpMarkdownViewer from '@shared/gui/CpMarkdownViewer/CpMarkdownViewer.vue';
 import { requestEventById } from '@shared/api';
 import { EventDefaultValue } from '@shared/default-values/events';
 import { formatExternalLink } from '@shared/helpers/formatText';
-import { format } from 'date-fns';
+import { format, isEqual } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
 import { useRuntimeConfig } from 'nuxt/app';
 import ContactBlock from '@features/contacts/ContactBlock.vue';
@@ -242,6 +242,23 @@ const getEventById = async (id: string) => {
 	}
 };
 
+const getEventDateRange = computed(() => {
+	if (
+		event.value.attributes.eventEndDate &&
+		event.value.attributes.eventStartDate
+	) {
+		const endDate = new Date(event.value.attributes.eventEndDate);
+		const startDate = new Date(event.value.attributes.eventStartDate);
+		if (isEqual(endDate, startDate)) {
+			return formatDateByTZ(startDate);
+		}
+
+		return `${formatDateByTZ(startDate)} - ${formatDateByTZ(endDate)}`;
+	}
+
+	return '';
+});
+
 const formatDateByTZ = (eventDate: Date) => {
 	return format(
 		toZonedTime(eventDate, localStorage.getItem('timezone') ?? 'America/Lima'),
@@ -250,13 +267,13 @@ const formatDateByTZ = (eventDate: Date) => {
 };
 
 const formattedContact = computed(() => {
-	const host = get(event.value, 'attributes.eventHost.data.attributes', {});
+	const host = event.value.attributes.eventHost.data.attributes;
 
 	return {
 		name: host.commercialName,
-		phone: host.contacts?.tel,
-		email: host.contacts?.mail,
-		city: host.contacts?.place,
+		tel: host.contacts?.tel,
+		mail: host.contacts?.mail,
+		place: host.contacts?.place,
 		social_media: host.socialMedias,
 	};
 });
@@ -323,6 +340,8 @@ const eventCategoriesNames = computed(() => {
 		justify-content: flex-end;
 		flex-direction: column;
 		margin-bottom: 40px;
+		background-repeat: no-repeat;
+		background-size: cover;
 
 		@media #{$screen-tablet} {
 			padding: 25px;

@@ -9,7 +9,7 @@ import CpSocialLink from '@shared/gui/CpSocialLink.vue';
 import CplinkBtn from '@shared/gui/CpLinkBtn.vue';
 import CpMap from '@shared/gui/CpMap.vue';
 import CpButton from '@shared/gui/CpButton.vue';
-import CpMarkdownViewer from '@shared/gui/CpMardownViewer/CpMarkdownViewer.vue';
+import CpMarkdownViewer from '@shared/gui/CpMarkdownViewer/CpMarkdownViewer.vue';
 import { requestEventById } from '@shared/api';
 import { EventDefaultValue } from '@shared/default-values/events';
 import { formatExternalLink } from '@shared/helpers/formatText';

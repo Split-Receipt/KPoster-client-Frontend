@@ -6,7 +6,8 @@
 				v-if="loginModalState !== 'login'"
 				class="modal-content-backward"
 				@click="goingToLogin"
-			>Back</span
+			>
+				Back</span
 			>
 			<div v-if="loginModalState === 'login'" class="modal-content-login">
 				<h2 class="modal-content-title">Iniciar sesión en el perfil</h2>
@@ -18,11 +19,11 @@
 							type="email"
 						/>
 						<span
-							class="modal-content-inputs-passRestore" 
+							class="modal-content-inputs-passRestore"
+							@click="goingToPassRestore"
 						>
 							Recuperar contraseña?
-						</span> 
-						<!-- @click="goingToPassRestore" ToDo => open when be ready email server -->
+						</span>
 					</div>
 					<cp-text-input
 						v-model="loginData.password"
@@ -39,14 +40,20 @@
 					/>
 				</div>
 			</div>
-			<cp-registration v-if="loginModalState === 'registration'" />
+			<cp-registration
+				v-if="loginModalState === 'registration'"
+				@close="hanldeCloseModal"
+			/>
 			<div
 				v-if="loginModalState === 'login'"
 				class="modal-content-registrationBtn"
 			>
 				<span @click="goingToRegistration">Registrarse</span>
 			</div>
-			<!-- <cp-restore-pass v-if="loginModalState === 'passRestore'"/> ToDo => open when be ready email server -->
+			<cp-restore-pass
+				v-if="loginModalState === 'passRestore'"
+				@close="hanldeCloseModal"
+			/>
 		</div>
 	</div>
 </template>

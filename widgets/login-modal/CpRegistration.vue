@@ -35,7 +35,7 @@
 			</div>
 			<cp-button
 				style="margin-top: 25px"
-				:disabled="passInput !== passConfirm || passConfirm === ''"
+				:disabled="!canSubmitForm"
 				text="Entrar"
 				size="small"
 				@click="register"
@@ -49,11 +49,25 @@ import type { RegisterParams } from '@shared/api/types';
 import { useUserStore } from '@stores/user-store';
 import { toast } from 'vue3-toastify';
 
+type Events = {
+	(e: 'close'): void;
+};
+
+const emit = defineEmits<Events>();
+
+const { t } = useI18n();
+
 const userStore = useUserStore();
 const passInput = ref<string>('');
 const passConfirm = ref<string>('');
 const username = ref<string>('');
 const email = ref<string>('');
+const isFormSended = ref<boolean>(false);
+
+const canSubmitForm = computed(() => {
+	return passInput.value === passConfirm.value && passConfirm.value !== '' && !isFormSended.value;
+}
+);
 
 const register = async () => {
 	const registerParams: RegisterParams = {
@@ -66,6 +80,11 @@ const register = async () => {
 	}
 	try {
 		await userStore.register(registerParams);
+		toast.success(t('check_your_email'));
+		isFormSended.value = true;
+		setTimeout(() => {
+			emit('close');
+		}, 2000);
 	} catch (e) {
 		toast.error(e as string);
 	}

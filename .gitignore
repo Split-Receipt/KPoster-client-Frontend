@@ -24,3 +24,6 @@ logs
 .env.*
 app-version.env
 !.env.example
+
+# Sentry Config File
+.env.sentry-build-plugin

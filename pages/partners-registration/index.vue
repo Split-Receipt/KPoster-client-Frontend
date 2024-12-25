@@ -61,7 +61,7 @@
 
 				<!-- personal activity (First name) -->
 				<div
-					v-if="currentPartnerType === 'persona_natural'"
+					v-if="currentPartnerType === 'persona-natural'"
 					class="partners__form-row"
 				>
 					<div class="partners__form-row-info">
@@ -95,7 +95,7 @@
 
 				<!-- Persona lIdentifying Document  -->
 				<div
-					v-if="currentPartnerType === 'persona_natural'"
+					v-if="currentPartnerType === 'persona-natural'"
 					class="partners__form-rowDnD"
 				>
 					<div class="partners__form-row-info">
@@ -127,7 +127,7 @@
 
 				<!-- Persona lIdentifying Document scan -->
 				<div
-					v-if="currentPartnerType === 'persona_natural'"
+					v-if="currentPartnerType === 'persona-natural'"
 					class="partners__form-rowDnD"
 				>
 					<div class="partners__form-rowDnD-info">
@@ -1013,6 +1013,7 @@ import CpTextArea from '@shared/gui/CpTextArea.vue';
 import { useCommonDataStore } from '@stores/common-data-store';
 import { useUserStore } from '@stores/user-store';
 import type { CoordinatesType } from '@shared/gui/types';
+import { UserRolesTypes } from '@shared/api/types';
 
 const { locale } = useI18n();
 
@@ -1162,12 +1163,6 @@ const checkboxCollectAffiliations = (value: number, index: number) => {
 
 const sendPartnerRegistrationForm = async () => {
 	const isValid = await partnerRegForm.value?.validate();
-
-	if (userStore.isAuth) {
-		toast.error('Primero debe cerrar sesión en su cuenta actual');
-
-		return;
-	}
 
 	if (!isValid.valid) {
 		isSpin.value = false;

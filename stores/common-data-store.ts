@@ -27,7 +27,7 @@ export const useCommonDataStore = defineStore('commonData', {
 		getOrgTypesOptions: (state) => {
 			return state.orgTypes.map((orgType) => ({
 				id: orgType.id,
-				value: orgType.attributes.orgTypeName,
+				value: orgType.attributes.orgTypeCode,
 				label: orgType.attributes.orgTypeName,
 			}));
 		},

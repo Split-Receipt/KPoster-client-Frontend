@@ -13,7 +13,7 @@ import type { AboutPlatform } from '@shared/api/types';
 import CpBasePage from '@shared/gui/CpBasePage.vue';
 import { requestDataAboutPlatform } from '@shared/api';
 import { toast } from 'vue3-toastify';
-import CpMarkdownViewer from '@shared/gui/CpMardownViewer/CpMarkdownViewer.vue';
+import CpMarkdownViewer from '@shared/gui/CpMarkdownViewer/CpMarkdownViewer.vue';
 const aboutPlatform = ref<AboutPlatform['aboutUs']['aboutUsText']>();
 
 const getInfoAboutPlatform = async () => {
@@ -33,7 +33,7 @@ onBeforeMount(() => {
 
 <style scoped lang="scss">
 .about-us {
-	font-family: $font-family-medium-expanded;
+	font-family: $font-family-medium;
 
 	&-sub-title {
 		margin-bottom: 0.5em;
