@@ -30,7 +30,10 @@
 
 <script setup lang="ts">
 import type { SocialMedia } from '@shared/api/types';
-import { formatExternalLink, formatNameToBeCode } from '@shared/helpers/formatText';
+import {
+	formatExternalLink,
+	formatNameToBeCode,
+} from '@shared/helpers/formatText';
 // expected social names: instagram \ facebook \ linkedin \ tiktok
 
 const props = defineProps<SocialMedia>();
@@ -216,6 +219,7 @@ const socialMediaFormattedValues = computed(() => {
 			width: 100%;
 			height: 100%;
 			z-index: -1;
+			background: red;
 			border-radius: 10px;
 			pointer-events: none;
 			transition: all 0.3s;
