@@ -435,7 +435,7 @@ export type AboutPlatform = {
 export type CulturalPortalContacts = {
 	id: number;
 	contactName: string;
-	contactSocialMedias: SocialMedia[];
+	contactSocialMedias?: SocialMedia[];
 	contacts: Contacts;
 };
 

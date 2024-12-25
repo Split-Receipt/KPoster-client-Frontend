@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import CpBasePage from '@shared/gui/CpBasePage.vue';
-import ContactBlock from './ContactBlock.vue';
+import ContactBlock from '@features/contacts/ContactBlock.vue';
 import { useCommonDataStore } from '@stores/common-data-store';
 const commonDataStore = useCommonDataStore();
 

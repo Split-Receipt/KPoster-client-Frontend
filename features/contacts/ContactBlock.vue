@@ -1,25 +1,25 @@
 <template>
 	<div class="contact">
 		<div class="contact__block contact__block--first">
-			<h5 class="contact__title">{{ props.contact?.name }}</h5>
+			<h5 class="contact__title">{{ props.contact?.contactName }}</h5>
 			<slot name="description"/>
 		</div>
 		<div class="contact__block">
 			<div class="contact__line">
 				<div class="contact__text">{{ $t('E-mail') }}</div>
-				<div class="contact__text contact__text--value">{{ props.contact?.mail }}</div>
+				<div class="contact__text contact__text--value">{{ props.contact?.contacts.mail }}</div>
 			</div>
 			<div class="contact__line">
 				<div class="contact__text">{{ $t('Número de teléfono') }}</div>
-				<div class="contact__text contact__text--value">{{ props.contact?.tel}}</div>
+				<div class="contact__text contact__text--value">{{ props.contact?.contacts.tel}}</div>
 			</div>
 			<div class="contact__line">
 				<div class="contact__text">{{ $t('País y ciudad') }}</div>
-				<div class="contact__text contact__text--value">{{ props.contact?.place }}</div>
+				<div class="contact__text contact__text--value">{{ props.contact?.contacts.tel }}</div>
 			</div>
-			<div v-if="contact?.socialMedia" class="contact__socials">
+			<div v-if="contact?.contactSocialMedias" class="contact__socials">
 				<cp-social-link
-					v-for="media in contact.socialMedia"
+					v-for="media in contact.contactSocialMedias"
 					:key="media.socialMediaLink"
 					:social-media-link="media.socialMediaLink"
 					:social-media-name="media.socialMediaName"

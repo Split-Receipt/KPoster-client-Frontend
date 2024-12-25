@@ -3,6 +3,7 @@ export default defineI18nConfig(() => ({
 	locale: 'en',
 	messages: {
 		en: {
+			event_host_gallery: 'Event Host Gallery',
 			yes: 'Yes',
 			no: 'No',
 			registration_successful: 'Registration Succesfull',
@@ -102,6 +103,7 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		es: {
+			event_host_gallery: 'Galería del Organizador',
 			yes: 'Si',
 			no: 'No',
 			registration_successful: 'Registro exitoso',
@@ -201,6 +203,7 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		qu: {
+			event_host_gallery: 'Galería Organizador nisqa',
 			yes: 'Arí',
 			no: 'No',
 			registration_successful: 'Inscripción allin ruwasqa',

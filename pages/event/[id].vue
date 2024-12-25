@@ -10,9 +10,7 @@
 					<h3 class="event__cover-title">
 						{{ event.attributes.eventName }}
 					</h3>
-					<div class="event__cover-date">{{
-						formatDateByTZ(new Date(event.attributes.eventDate))
-					}}</div>
+					<div class="event__cover-date">{{ getEventDateRange }}</div>
 				</div>
 				<cp-button
 					v-if="event.attributes.linkToBuyTicket"
@@ -36,7 +34,7 @@
 			</div>
 
 			<div v-if="eventSocialMedias.length" class="event__media event__section">
-				<div class="event__media-title">{{ $t('Redes sociales:')}}</div>
+				<div class="event__media-title">{{ $t('Redes sociales:') }}</div>
 				<div class="event__media-links">
 					<cp-social-link
 						v-for="value in eventSocialMedias"
@@ -48,7 +46,7 @@
 			</div>
 
 			<div v-if="getEventCoordinates.center" class="event__map event__section">
-				<h3 class="event__section-title">{{ $t('Dirección del evento')}}</h3>
+				<h3 class="event__section-title">{{ $t('Dirección del evento') }}</h3>
 				<cp-map
 					class="event__map-map"
 					:map-markers="getEventCoordinates.marker"
@@ -56,8 +54,13 @@
 				/>
 			</div>
 
-			<div v-if="event.attributes.eventDigitalCatalog || event.attributes.eventWebSite" class="event__section">
-				<h3 class="event__section-title">{{ $t('Relacionados')}}</h3>
+			<div
+				v-if="
+					event.attributes.eventDigitalCatalog || event.attributes.eventWebSite
+				"
+				class="event__section"
+			>
+				<h3 class="event__section-title">{{ $t('Relacionados') }}</h3>
 				<div class="event__related">
 					<cp-link-btn
 						v-if="event.attributes.eventDigitalCatalog"
@@ -78,102 +81,34 @@
 				v-if="getMediaPhotosUrls.length || getMediaVideosUrls.length"
 				class="event__carousel slider-gallery event__section"
 			>
-				<h3 class="event__section-title">{{ $t('Event gallery')}}</h3>
 				<cp-media-carousel
-					id="qwe123"
+					id="event-gallery"
 					:media-files-urls="getMediaPhotosUrls"
 					:video-files-urls="getMediaVideosUrls"
 				/>
 			</div>
 
 			<div class="event__contacts event__section">
-				<h3 class="event__section-title">{{ $t('Contactos del organizador')}}</h3>
-				<contact-block
-					:contact="formattedContact"
-				>
+				<h3 class="event__section-title">
+					{{ $t('Contactos del organizador') }}
+				</h3>
+				<contact-block :contact="formattedContact">
 					<template #description>
 						{{ event.attributes.eventHost.data.attributes.orgResume }}
 						<div
 							v-if="event.attributes.eventHost.data.attributes.commercialName"
 							style="text-decoration: underline"
 						>
-							<nuxt-link :to="`/event-host/${event.attributes.eventHost.data.id}`">
+							<nuxt-link
+								:to="`/event-host/${event.attributes.eventHost.data.id}`"
+							>
 								{{ $t('Página del organizador') }}
 							</nuxt-link>
 						</div>
 					</template>
 				</contact-block>
 			</div>
-
-			<!-- <div v-if="false" class="event__comment">
-				<h2 class="event__comment-title">¿ Que le pareció nuestro evento?</h2>
-				<div class="event__comment-textArea">
-					<cp-text-area
-						text-area-id="event-event-comments"
-						text-area-placeholder="Deja tus comentarios"
-					/>
-					<span class="event__comment-textArea-submit">
-						<cp-button text="Enviar" size="small" />
-					</span>
-				</div>
-
-				<div class="event__comment__block">
-					<span class="event__comment__block-title">
-						<h3>Comentarios</h3>
-						<cp-button size="small" text="Eso es todo&nbsp;&gt;" />
-					</span>
-					<span class="event__comment__block-buttons">
-						<cp-button
-							shape="circle"
-							color="transparent"
-							text=""
-							with-image="../public/images/sort.svg"
-						/>
-						<span>
-							<cp-button class="sort-button" size="small" text="Positivos" />
-							<cp-button class="sort-button" size="small" text="Negativos" />
-						</span>
-					</span>
-				</div>
-
-				<div class="event__comment__list">
-					<div class="event__comment__list-item">
-						<span class="event__comment__list-item-avatar" />
-						<span class="event__comment__list-item-info">
-							<p class="event__comment__list-item-info-name">Usuario afshi</p>
-							<p class="event__comment__list-item-info-comment">
-								me gustó todo el evento
-							</p>
-						</span>
-						<span class="event__comment__list-item-date"> 12.07.2024 </span>
-					</div>
-
-					<div class="event__comment__list-item">
-						<span class="event__comment__list-item-avatar" />
-						<span class="event__comment__list-item-info">
-							<p class="event__comment__list-item-info-name">Usuario afshi</p>
-							<p class="event__comment__list-item-info-comment">
-								me gustó todo el evento
-							</p>
-						</span>
-						<span class="event__comment__list-item-date"> 12.07.2024 </span>
-					</div>
-
-					<div class="event__comment__list-item">
-						<span class="event__comment__list-item-avatar" />
-						<span class="event__comment__list-item-info">
-							<p class="event__comment__list-item-info-name">Usuario afshi</p>
-							<p class="event__comment__list-item-info-comment">
-								me gustó todo el evento
-							</p>
-						</span>
-						<span class="event__comment__list-item-date"> 12.07.2024 </span>
-					</div>
-				</div>
-			</div> -->
-
-			<event-detail-rec class="slider-recommended  event__section" />
-			
+			<event-detail-rec class="slider-recommended event__section" />
 		</template>
 	</cp-base-page>
 </template>
@@ -195,8 +130,7 @@ import ContactBlock from '@features/contacts/ContactBlock.vue';
 import EventDetailRec from '@widgets/recommendations/EventDetailRec.vue';
 import CpMediaCarousel from '@shared/gui/CpMediaCarousel.vue';
 import type { EventData } from '@shared/api/types';
-import { get } from 'lodash';
- 
+
 const route = useRoute();
 const id = route.params.id as string;
 
@@ -270,11 +204,14 @@ const formattedContact = computed(() => {
 	const host = event.value.attributes.eventHost.data.attributes;
 
 	return {
-		name: host.commercialName,
-		tel: host.contacts?.tel,
-		mail: host.contacts?.mail,
-		place: host.contacts?.place,
-		social_media: host.socialMedias,
+		id: 0,
+		contactName: host.commercialName ?? host.personalName,
+		contactSocialMedias: host.socialMedias,
+		contacts: {
+			mail: host.contacts?.mail,
+			tel: host.contacts?.tel,
+			place: host.contacts?.place,
+		},
 	};
 });
 
@@ -416,8 +353,8 @@ const eventCategoriesNames = computed(() => {
 			gap: 10px;
 			flex-wrap: wrap;
 			:deep(.link) {
-			width: 100%;
-		}
+				width: 100%;
+			}
 		}
 	}
 
@@ -432,7 +369,7 @@ const eventCategoriesNames = computed(() => {
 		}
 
 		&-map {
-			:deep(.leaflet-container){
+			:deep(.leaflet-container) {
 				border-radius: 16px;
 			}
 		}

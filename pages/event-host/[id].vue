@@ -27,7 +27,10 @@
 						<event-category-drop-down
 							@change:filter-event-cats="(value: string[]) => changeFilters(value, 'eventCategory')"
 						/>
-						<event-carousel id="organizer-events-carousel" :event-data="events" />
+						<event-carousel
+							id="organizer-events-carousel"
+							:event-data="events"
+						/>
 					</div>
 				</template>
 			</cp-section>
@@ -38,15 +41,20 @@
 			/>
 
 			<div v-if="eventHost?.data?.attributes?.compVideoLink">
-				<iframe :src="eventHost?.data?.attributes?.compVideoLink" class="host__video"/>
+				<iframe
+					:src="formatExternalLink(eventHost?.data?.attributes?.compVideoLink)"
+					class="host__video"
+				/>
 			</div>
 
 			<cp-section v-if="eventHost?.data?.attributes" class="host__contacts">
 				<template #section-content>
-					<contact-block :contact="formattedContact(eventHost.data.attributes)">
+					<contact-block :contact="formattedContact">
 						<template #description>
 							<h3>{{ $t('Contactos del organizador') }}</h3>
-							<span>{{ $t('Siempre puedes contactarnos usando estos contactos') }}</span>
+							<span>{{
+								$t('Siempre puedes contactarnos usando estos contactos')
+							}}</span>
 						</template>
 					</contact-block>
 				</template>
@@ -76,6 +84,7 @@ import { startOfDay, endOfDay } from 'date-fns';
 import CpBasePage from '@shared/gui/CpBasePage.vue';
 import CpSection from '@shared/gui/CpSection.vue';
 import ContactBlock from '@features/contacts/ContactBlock.vue';
+import { formatExternalLink } from '@shared/helpers/formatText';
 
 const route = useRoute();
 const eventHostId = route.params.id as string;
@@ -165,24 +174,32 @@ onMounted(async () => {
 	changeMainImage();
 });
 
-const formattedContact = (host: EventHost['data']['attributes']) => {
-	let result = {
-		mail: '',
-		tel: '',
-		place: '',
-		socialMedia: [],
-	};
-	if (host) {
-		result = {
+const formattedContact = computed(() => {
+	if (!eventHost.value) {
+		return {
+			id: 0,
+			contactName: '',
+			contactSocialMedias: [],
+			contacts: {
+				mail: '',
+				tel: '',
+				place: '',
+			},
+		};
+	}
+	const host = eventHost.value.data.attributes;
+
+	return {
+		id: 0,
+		contactName: host.commercialName ?? host.personalName,
+		contactSocialMedias: host.socialMedias,
+		contacts: {
 			mail: host.contacts?.mail,
 			tel: host.contacts?.tel,
 			place: host.contacts?.place,
-			socialMedia: host.socialMedias,
-		};
-	}
-
-	return result;
-};
+		},
+	};
+});
 
 const getMediaPhotosUrls = computed(() => {
 	const eventHostData = eventHost.value?.data.attributes;
@@ -252,12 +269,11 @@ const testMapCenter = [-12.046016, -77.030554];
 		display: grid;
 		gap: 10px;
 		color: $gray;
-		grid-template-areas: 
-		"b"
-		"d"
-		"a"
-		"c"
-		;
+		grid-template-areas:
+			'b'
+			'd'
+			'a'
+			'c';
 
 		&__title {
 			color: $black;
@@ -287,13 +303,12 @@ const testMapCenter = [-12.046016, -77.030554];
 		}
 
 		@media #{$screen-tablet} {
-			grid-template-areas: 
-			"b d d"
-			"b d d"
-			"b d d"
-			"a d d"
-			"c d d"
-			;
+			grid-template-areas:
+				'b d d'
+				'b d d'
+				'b d d'
+				'a d d'
+				'c d d';
 			column-gap: 20px;
 
 			&__image {
