@@ -1,5 +1,18 @@
 <template>
 	<div class="footer">
+		<teleport to="body">
+			<cp-basic-modal
+				:show="show"
+				:cancel-button="false"
+				@accept="handleAccept"
+				@close="show = false"
+			>
+				<template #content>
+					<h4>{{ $t('event_host_registration_redirect') }}</h4>
+					<span>{{ $t('event_host_registration_redirect_content') }}</span>
+				</template>
+			</cp-basic-modal>
+		</teleport>
 		<div class="footer__list-wrapper">
 			<footer-list
 				v-for="(list, index) in footerListData"
@@ -15,7 +28,7 @@
 				:text="$t('partners_button_become_partner')"
 				size="large"
 				:islink="true"
-				:link-to="`/${locale}/partners-registration`"
+				@click="show = true"
 			/>
 			<div class="footer__logos">
 				<nuxt-img src="/images/logo-hatun.png" class="footer__icon-logo" />
@@ -24,11 +37,9 @@
 				<nuxt-img src="/images/casadecultura.png" class="footer__icon-logo" />
 			</div>
 			<div class="footer__credit">
-				<nuxt-link
-					to="https://uya.digital/"
-					target="_blank"
-					external
-				>made by UYA Digital</nuxt-link>
+				<nuxt-link to="https://uya.digital/" target="_blank" external>
+					made by UYA Digital</nuxt-link
+				>
 			</div>
 		</div>
 	</div>
@@ -50,6 +61,7 @@ const { locale } = useI18n();
 const userStore = useUserStore();
 const commonDataStore = useCommonDataStore();
 const footerListData = reactive({ ...footerLists });
+const show = ref<boolean>(false);
 
 watch(
 	() => commonDataStore.platformData,
@@ -70,6 +82,11 @@ watch(
 		}
 	}
 );
+
+const handleAccept = () => {
+	show.value = false;
+	navigateTo(`/${locale}/partners-registration`);
+};
 
 const formatPlatformContactsContacts = (
 	platformContacts: BaseStrapiResponse<AboutPlatform>['attributes']['platformContacts']
@@ -106,7 +123,10 @@ const formatPlatformSocialMedias = (
 	}, []);
 };
 const showBecomePartnerButton = computed(() => {
-	return userStore.getUserRole === UserRolesTypes.client || userStore.getUserRole === UserRolesTypes.authenticated;
+	return (
+		userStore.getUserRole === UserRolesTypes.client ||
+		userStore.getUserRole === UserRolesTypes.authenticated
+	);
 });
 </script>
 
