@@ -147,9 +147,6 @@ const dataToFilter = (event: Event) => {
 		-moz-box-shadow: 0px 0px 29px -9px rgba(34, 60, 80, 0.2);
 		box-shadow: 0px 0px 29px -9px rgba(34, 60, 80, 0.2);
 		overflow: hidden;
-		&__window {
-			overflow: scroll;
-		}
 
 		&--shown {
 			opacity: 1;
