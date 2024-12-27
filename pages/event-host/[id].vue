@@ -17,7 +17,7 @@
 					</div>
 				</template>
 			</cp-section>
-			<cp-section :header="$t('Calendario de eventos')">
+			<cp-section v-if="events.length" :header="$t('Calendario de eventos')">
 				<template #section-content>
 					<div class="host__calendar">
 						<date-card-carousel />
