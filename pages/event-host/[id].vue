@@ -17,16 +17,18 @@
 					</div>
 				</template>
 			</cp-section>
-			<cp-section v-if="events.length" :header="$t('Calendario de eventos')">
+			<cp-section :header="$t('Calendario de eventos')">
 				<template #section-content>
 					<div class="host__calendar">
 						<date-card-carousel />
-						<city-drop-down
-							@change:filter-cities="(value: string[]) => changeFilters(value, 'city')"
-						/>
-						<event-category-drop-down
-							@change:filter-event-cats="(value: string[]) => changeFilters(value, 'eventCategory')"
-						/>
+						<div class="host__filters">
+							<city-drop-down
+								@change:filter-cities="(value: string[]) => changeFilters(value, 'city')"
+							/>
+							<event-category-drop-down
+								@change:filter-event-cats="(value: string[]) => changeFilters(value, 'eventCategory')"
+							/>
+						</div>
 						<event-carousel
 							id="organizer-events-carousel"
 							:event-data="events"
@@ -317,6 +319,18 @@ const testMapCenter = [-12.046016, -77.030554];
 				border-radius: 30px;
 			}
 		}
+	}
+
+	&__filters {
+		margin: 10px 0;
+		display: flex;
+		gap: 10px;
+		flex-direction: column;
+
+		@media #{$screen-tablet} {
+			gap: 20px;
+        	flex-direction: row;
+    	}
 	}
 
 	&__video {

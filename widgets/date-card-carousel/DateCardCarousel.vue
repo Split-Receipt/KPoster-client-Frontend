@@ -155,7 +155,10 @@ onMounted(async () => {
 	height: 100%;
 
 	&__wrapper {
-		height: $date-card-carousel-wrapper-height;
+		height: 120px;
+		@media #{$screen-desktop} {
+			height: 130px;
+		}
 	}
 
 	&__button {
@@ -174,15 +177,27 @@ onMounted(async () => {
 
 	&__item {
 		position: relative;
+		display: flex;
+		align-items: flex-end;
+		padding-bottom: 15px;
+		@media #{$screen-desktop} {
+			align-items: flex-start;
+			padding-bottom: 0;
+		}
 	}
 
 	&__month {
 		position: absolute;
-		bottom: $date-card-carousel-month-bottom;
-		font-size: $date-card-carousel-month-font-size;
-		line-height: $date-card-carousel-month-line-height;
+		top: 0;
+		font-size: 14px;
+		line-height: normal;
 		border-bottom: 1px solid $date-card-carousel-month-border-color;
 		color: $date-card-carousel-month-color;
+
+		@media #{$screen-desktop} {
+			font-size: $date-card-carousel-month-font-size;
+			line-height: $date-card-carousel-month-line-height;
+		}
 	}
 }
 

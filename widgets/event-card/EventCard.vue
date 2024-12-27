@@ -10,9 +10,9 @@
 				/>
 			</div>
 			<div class="event-card__content">
-				<h4 class="event-card__title">
-					{{ formattedTitle }}
-				</h4>
+				<h5 class="event-card__title">
+					{{ props.eventCardData.attributes.eventName }}
+				</h5>
 				<div class="event-card__text">
 					{{ eventCardData.attributes.eventShortDescription }}
 				</div>
@@ -51,7 +51,7 @@
 						class="event-card__button"
 						type="secondary"
 						:class="`event-card__button--${size}`"
-						:text="$t('Learn more')"
+						:text="$t('Leer más')"
 					/>
 				</div>
 			</div>
@@ -150,12 +150,6 @@ const formattedDate = computed(() => {
 		return '';
 	}
 });
-
-const formattedTitle = computed(() => {
-	return props.eventCardData.attributes.eventName.length > 19
-		? props.eventCardData.attributes.eventName.slice(0, 15) + '...'
-		: props.eventCardData.attributes.eventName;
-});
 </script>
 
 <style scoped lang="scss">
@@ -193,10 +187,6 @@ const formattedTitle = computed(() => {
 				object-fit: cover;
 			}
 		}
-	}
-
-	&__title {
-		white-space: nowrap;
 	}
 
 	&__text {

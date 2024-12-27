@@ -20,6 +20,15 @@
 			<div class="footer__logos">
 				<nuxt-img src="/images/logo-hatun.png" class="footer__icon-logo" />
 				<nuxt-img src="/images/logo-cusco.png" class="footer__icon-logo" />
+				<nuxt-img src="/images/culturaviva.png" class="footer__icon-logo" />
+				<nuxt-img src="/images/casadecultura.png" class="footer__icon-logo" />
+			</div>
+			<div class="footer__credit">
+				<nuxt-link
+					to="https://uya.digital/"
+					target="_blank"
+					external
+				>made by UYA Digital</nuxt-link>
 			</div>
 		</div>
 	</div>
@@ -108,6 +117,7 @@ const showBecomePartnerButton = computed(() => {
 	flex-direction: column;
 	row-gap: $footer-default-row-gap;
 	padding: $footer-default-padding;
+	position: relative;
 
 	@media #{$screen-tablet} {
 		flex-wrap: wrap;
@@ -133,13 +143,15 @@ const showBecomePartnerButton = computed(() => {
 
 	&__logos {
 		display: flex;
+		gap: 10px;
 	}
 
 	&__icon-logo {
-		width: 100px;
-		height: 100%;
+		width: auto;
+		height: 35px;
+		opacity: 0.5;
 		@media #{$screen-desktop} {
-			width: 140px;
+			height: 50px;
 		}
 	}
 
@@ -161,6 +173,10 @@ const showBecomePartnerButton = computed(() => {
 		@media #{$screen-desktop} {
 			width: 400px;
 		}
+	}
+
+	&__credit {
+		color: $footer-list-item-color;
 	}
 }
 </style>

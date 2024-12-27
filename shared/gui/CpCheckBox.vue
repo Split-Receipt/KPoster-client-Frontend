@@ -8,7 +8,7 @@
 				:checked="props.checked"
 				@change="checkBoxAction"
 			/>
-			<label :for="props.option.value + props.option.id" style="--size: 22px">
+			<label :for="props.option.value + props.option.id" style="--size: 15px">
 				<svg viewBox="0,0,50,50">
 					<path d="M5 30 L 20 45 L 45 5" />
 				</svg>
@@ -77,7 +77,7 @@ const checkBoxAction = (event: Event) => {
 
 	&-input {
 		left: 0;
-		top: 5px;
+		top: 6px;
 		position: absolute;
 	}
 
@@ -104,38 +104,39 @@ const checkBoxAction = (event: Event) => {
 			border: 2px solid rgb(35, 33, 33);
 			width: var(--size);
 			height: var(--size);
-			border-radius: 6px;
+			border-radius: 3px;
 			cursor: pointer;
-			transition: all 0.2s ease;
+			transition: all 0.1s ease;
+			position: relative;
 
 			&:active {
 				transform: scale(1.05);
-				border-radius: 12px;
+				border-radius: 6px;
 			}
 
 			svg {
 				pointer-events: none;
-				padding: 10%;
+				padding: 5%;
+				position: absolute;
 
 				path {
 					fill: none;
 					stroke: rgb(35, 33, 33);
-					stroke-width: 7px;
+					stroke-width: 10px;
 					stroke-linecap: round;
 					stroke-linejoin: round;
 					stroke-dasharray: 100;
 					stroke-dashoffset: 101;
-					transition: all 250ms cubic-bezier(1, 0, 0.37, 0.91);
+					transition: all 200ms cubic-bezier(1, 0, 0.37, 0.91);
 				}
 			}
 		}
 	}
 	.checkbox-wrapper__label {
-		margin-left: 15px;
+		margin-left: 8px;
 		font-size: 16px;
 		line-height: 28px;
 		cursor: pointer;
-		font-family: 'NeuethingSans-MediumSemiExpanded';
 	}
 }
 </style>

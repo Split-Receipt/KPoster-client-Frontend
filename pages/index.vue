@@ -167,6 +167,10 @@ const changeFilters = (data: any, filterPath: string) => {
 		margin-bottom: 30px;
 	}
 
+	&__date-carousel {
+		margin-top: -25px;
+	}
+
 	&__section {
 		&-list {
 			display: flex;
@@ -202,8 +206,12 @@ const changeFilters = (data: any, filterPath: string) => {
 	&__filters {
 		display: flex;
 		flex-wrap: wrap;
-		padding: 20px;
+		padding: 20px 0 10px;
 		gap: 20px;
+
+		@media #{$screen-tablet} {
+			padding: 20px 0;
+		}
 	}
 }
 </style>
