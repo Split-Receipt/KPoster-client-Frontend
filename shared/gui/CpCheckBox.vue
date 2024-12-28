@@ -95,24 +95,14 @@ const checkBoxAction = (event: Event) => {
 			stroke-dashoffset: 0;
 		}
 
-		&:focus + label {
-			transform: scale(1.03);
-		}
-
 		+ label {
 			display: block;
-			border: 2px solid rgb(35, 33, 33);
+			border: 1px solid rgb(35, 33, 33);
 			width: var(--size);
 			height: var(--size);
 			border-radius: 3px;
 			cursor: pointer;
-			transition: all 0.1s ease;
 			position: relative;
-
-			&:active {
-				transform: scale(1.05);
-				border-radius: 6px;
-			}
 
 			svg {
 				pointer-events: none;
@@ -122,12 +112,11 @@ const checkBoxAction = (event: Event) => {
 				path {
 					fill: none;
 					stroke: rgb(35, 33, 33);
-					stroke-width: 10px;
+					stroke-width: 6px;
 					stroke-linecap: round;
 					stroke-linejoin: round;
 					stroke-dasharray: 100;
 					stroke-dashoffset: 101;
-					transition: all 200ms cubic-bezier(1, 0, 0.37, 0.91);
 				}
 			}
 		}

@@ -9,9 +9,7 @@
 			<span class="animatedLink__logo">
 				<nuxt-img
 					v-if="socialMediaFormattedValues.socialMediaName"
-					:class="
-						'animatedLink__logo-' + socialMediaFormattedValues.socialMediaName
-					"
+					:class="['animatedLink__logo-img', `animatedLink__logo-${socialMediaFormattedValues.socialMediaName}`]"
 					:src="
 						'../public/images/' +
 							socialMediaFormattedValues.socialMediaName +
@@ -20,9 +18,7 @@
 				/>
 			</span>
 			<span
-				:class="
-					'animatedLink__bg-' + socialMediaFormattedValues.socialMediaName
-				"
+				:class="['animatedLink__bg-img', `animatedLink__bg-${socialMediaFormattedValues.socialMediaName}`]"
 			/>
 		</nuxt-link>
 	</div>
@@ -69,41 +65,16 @@ const socialMediaFormattedValues = computed(() => {
 	cursor: pointer;
 	transition: all 0.3s;
 
-	&:hover .animatedLink__bg-instagram {
-		transform: rotate(35deg);
+	&:hover .animatedLink__bg-img {
+		transform: scale(1.05);
 		transform-origin: bottom;
-	}
-
-	&:hover .animatedLink__bg-facebook {
-		transform: rotate(35deg);
-		transform-origin: bottom;
-	}
-
-	&:hover .animatedLink__bg-linkedin {
-		transform: rotate(35deg);
-		transform-origin: bottom;
-	}
-
-	&:hover .animatedLink__bg-tiktok {
-		transform: rotate(35deg);
-		transform-origin: bottom;
-	}
-
-	&:hover .animatedLink__bg-youtube {
-		transform: rotate(35deg);
-		transform-origin: bottom;
-	}
-
-	&:hover .animatedLink__logo {
-		background-color: rgba(156, 156, 156, 0.466);
-		backdrop-filter: blur(4px);
 	}
 
 	&__logo {
 		z-index: 1;
 		padding: 0;
-		width: 36px;
-		height: 36px;
+		width: 35px;
+		height: 35px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -114,20 +85,10 @@ const socialMediaFormattedValues = computed(() => {
 		cursor: pointer;
 		transition: all 0.3s;
 
-		&-instagram {
-			height: 35px;
-			width: 35px;
-		}
-
 		&-facebook {
 			position: absolute;
-			bottom: 0;
-			height: 36px;
-		}
-
-		&-linkedin {
-			height: 35px;
-			width: 35px;
+			bottom: -1px;
+			height: 30px;
 		}
 
 		&-tiktok {

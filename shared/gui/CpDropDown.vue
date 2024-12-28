@@ -1,8 +1,7 @@
 <template>
-	<div class="dropdown">
+	<div ref="dropdownFilter" class="dropdown">
 		<div class="dropdown__title">{{ dropDownLabel }}</div>
 		<div tabindex="0" class="dropdown__icon" @click="showList = !showList">
-			<input type="checkbox" />
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				class="icon icon-tabler icon-tabler-chevron-down"
@@ -35,6 +34,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+const props = defineProps<Props>();
+const emit = defineEmits<Events>();
+const dropdownFilter = ref(null);
+onClickOutside(dropdownFilter, () => (showList.value = false));
 interface Option {
 	item_title: string;
 	item_UID: string;
@@ -54,9 +57,6 @@ interface Props {
 type Events = {
 	(event: 'update:modelValue', eventData: string[]): void;
 };
-
-const props = defineProps<Props>();
-const emit = defineEmits<Events>();
 
 const showList = ref(false);
 
@@ -130,11 +130,9 @@ const dataToFilter = (event: Event) => {
 	.popup input:checked + .dropdown__icon svg {
 		transform: rotate(180deg);
 	}
-	input {
-		display: none;
-	}	
 
 	.popup {
+		visibility: hidden;
 		opacity: 0;
 		min-width: 250px;
 		position: absolute;
@@ -149,6 +147,7 @@ const dataToFilter = (event: Event) => {
 		overflow: hidden;
 
 		&--shown {
+			visibility: visible;
 			opacity: 1;
 			transition: opacity .2s ease-in-out;
 		}

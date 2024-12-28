@@ -289,17 +289,10 @@ const isAllowedToCreateEvent = computed(() => {
 	}
 
 	&__icon-logo {
+		background-color: transparent;
 		width: 50px;
 		@media #{$screen-tablet} {
-			background-color: transparent;
-			width: $header-icon-logo-width-screen-tablet;
-			height: $header-icon-logo-height-screen-tablet;
-		}
-
-		@media #{$screen-desktop} {
-			background-color: transparent;
-			width: $header-icon-logo-width-screen-desktop;
-			height: $header-icon-logo-height-screen-desktop;
+			width: 80px;
 		}
 	}
 

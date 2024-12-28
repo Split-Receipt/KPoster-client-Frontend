@@ -95,7 +95,7 @@ type cardSizeDayType = keyof typeof cardSizeDay;
 
 	&--active {
 		background: $date-card-active-background-color;
-		border: none;
+		border: 1px solid white;
 		.date-card__day-week {
 			color: $white;
 		}
@@ -125,5 +125,6 @@ type cardSizeDayType = keyof typeof cardSizeDay;
 		background-color: $date-card-disabled-background-color;
 		box-shadow: none;
 	}
+
 }
 </style>
