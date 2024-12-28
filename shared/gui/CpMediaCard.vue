@@ -11,8 +11,35 @@
 			</template>
 		</cp-basic-modal>
 	</teleport>
+	<teleport to="body">
+		<cp-basic-modal
+			:show="showMediaInModal"
+			:accept-button="false"
+			:cancel-button="false"
+			fit-content
+			@close="showMediaInModal = false"
+		>
+			<template #content>
+				<img
+					v-if="type === 'image'"
+					class="media-card__media-item_in-modal"
+					:src="item.source"
+					alt="No se pudo cargar el medio"
+				/>
+				<video
+					v-else-if="type === 'video'"
+					class="media-card__media-item_in-modal"
+					:src="item.source"
+					controls
+					alt="No se pudo cargar el medio"
+				/>
+			</template>
+		</cp-basic-modal>
+	</teleport>
 	<div :class="['media-card', { 'media-card_deleted': isMediaDeleted }]">
-		<p v-if="isMediaDeleted" class="media-card__deleted-notification">Archivo eliminado</p>
+		<p v-if="isMediaDeleted" class="media-card__deleted-notification">
+			Archivo eliminado
+		</p>
 		<button
 			v-if="editMode"
 			type="button"
@@ -27,6 +54,7 @@
 				class="media-card__media-item"
 				:src="item.source"
 				alt="No se pudo cargar el medio"
+				@click="showMediaInModal = true"
 			/>
 		</div>
 
@@ -36,6 +64,7 @@
 				:src="item.source"
 				controls
 				alt="No se pudo cargar el medio"
+				@click="showMediaInModal = true"
 			/>
 		</div>
 	</div>
@@ -54,6 +83,7 @@ const props = withDefaults(defineProps<CpMediaCardProps>(), {
 const emit = defineEmits<Events>();
 
 const localDeletionMediaStatus = ref(false);
+const showMediaInModal = ref(false);
 
 const isMediaDeleted = computed(() => {
 	if (props.isMediaDeleted === null) {
@@ -82,7 +112,7 @@ const show = ref(false);
 	align-items: center;
 	justify-content: center;
 	border: none;
-	font-size: 14px;
+	font-size: 26px;
 	right: 5px;
 	top: 5px;
 	width: 40px;
@@ -118,6 +148,13 @@ const show = ref(false);
 		object-fit: cover;
 		border: 1px solid transparent;
 		border-radius: 16px;
+
+		&_in-modal {
+			width: 100%;
+			height: auto;
+			object-fit: contain;
+			border-radius: 40px;
+		}
 	}
 }
 </style>

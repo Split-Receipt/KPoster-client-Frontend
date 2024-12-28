@@ -291,11 +291,10 @@ const eventCategoriesNames = computed(() => {
 	}
 
 	&__cover-button {
+		width: 255px;
 		:deep(.button--medium) {
 			font-size: 18px;
 		}
-
-		width: 255px;
 
 		@media #{$screen-tablet} {
 			width: 330px;

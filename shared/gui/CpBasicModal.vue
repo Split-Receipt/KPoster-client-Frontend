@@ -1,17 +1,32 @@
 <template>
 	<div v-if="show" class="modal">
 		<!-- ToDo separate modal window -->
-		<div ref="permitModal" class="modal-window">
-			<button type="button" class="modal-window-close" @click="modaHandleClose">
+		<div
+			ref="permitModal"
+			:class="['modal-window', { 'modal-window_fit-content': fitContent }]"
+		>
+			<button
+				v-if="!fitContent"
+				type="button"
+				class="modal-window-close"
+				@click="modaHandleClose"
+			>
 				╳
 			</button>
-			<div class="modal-window-content">
+			<span v-else class="modal-window-close_fit-content" @click="modaHandleClose">╳</span>
+			<div
+				:class="[
+					'modal-window-content',
+					{ 'modal-window-content_fit-content': fitContent },
+				]"
+			>
 				<slot
 					name="content"
 					@data-sended="(value: any) => modalInnerData = value"
 				/>
 				<div class="modal-window-content-controls">
 					<cp-button
+						v-if="acceptButton"
 						class="modal-window-content-controls-accept"
 						width="maxWidth"
 						size="small"
@@ -21,6 +36,7 @@
 						@click="modalHandleAccept"
 					/>
 					<cp-button
+						v-if="cancelButton"
 						class="modal-window-content-controls-decline"
 						width="maxWidth"
 						size="small"
@@ -36,17 +52,39 @@
 </template>
 
 <script setup lang="ts">
-import { onClickOutside } from '@vueuse/core';
+import { onClickOutside, useScrollLock } from '@vueuse/core';
+
+const props = withDefaults(defineProps<Props>(), {
+	acceptButton: true,
+	cancelButton: true,
+	fitContent: false,
+});
+
+const emit = defineEmits<Events>();
+const element = ref<HTMLElement | null>(null);
+const isLocked = useScrollLock(element);
 type Props = {
+	fitContent?: boolean;
 	show: boolean;
 	acceptButton?: boolean;
 	cancelButton?: boolean;
 };
-withDefaults(defineProps<Props>(), {
-	acceptButton: true,
-	cancelButton: true,
+
+watch(
+	() => props.show,
+	(value) => {
+		if (value) {
+			isLocked.value = true;
+		} else {
+			isLocked.value = false;
+		}
+	}
+);
+
+onMounted(() => {
+	element.value = document.body;
 });
-const emit = defineEmits<Events>();
+
 type Events = {
 	(event: 'close' | 'accept', data: any): void;
 };
@@ -90,6 +128,17 @@ onClickOutside(permitModal, () => modaHandleClose());
 		border-radius: 40px;
 		background: #fff;
 
+		&_fit-content {
+			height: auto;
+			padding: 0;
+
+		@media screen and (max-width: 575px) {
+			height: auto !important;
+			padding: 0px !important;
+			min-height: unset;
+		}
+		}
+
 		@media screen and (max-width: 1450px) {
 			width: 60%;
 		}
@@ -126,6 +175,18 @@ onClickOutside(permitModal, () => modaHandleClose());
 			background-color: #fff;
 			cursor: pointer;
 
+			&_fit-content {
+				position: absolute;
+				background: rgba(0, 0, 0, 0.1);
+				border-radius: 50%;
+				right: 15px;
+				top: 15px;
+				cursor: pointer;
+				z-index: 999;
+				font-size: 26px;
+				color: #fff;
+			}
+
 			@media screen and (max-width: 575px) {
 				right: 15px;
 				top: 15px;
@@ -141,6 +202,16 @@ onClickOutside(permitModal, () => modaHandleClose());
 			justify-content: center;
 			align-items: center;
 			height: 100%;
+
+			&_fit-content {
+				padding: 0;
+				border-radius: 40px;
+
+			@media screen and (max-width: 575px) {
+				justify-content: center !important;
+				padding: 0 !important;
+			}
+			}
 
 			@media screen and (max-width: 575px) {
 				justify-content: flex-start;
