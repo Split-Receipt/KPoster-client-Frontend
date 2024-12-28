@@ -50,7 +50,7 @@
 					class="event-card__button"
 					type="secondary"
 					:class="`event-card__button--${size}`"
-					:text="$t('Leer más')"
+					:text="$t('learn_more')"
 				/>
 			</div>
 		</div>

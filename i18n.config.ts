@@ -3,6 +3,7 @@ export default defineI18nConfig(() => ({
 	locale: 'en',
 	messages: {
 		en: {
+			learn_more: 'Learn more',
 			event_host_registration_redirect: 'You are about to be redirected to the event organizer registration page.',
 			event_host_registration_redirect_content: 'Registering as an event organizer will allow you to publish information about the events you hold. This status is not given immediately, after registration you will need to wait until our administration checks the information you provided',
 			event_host_gallery: 'Event Host Gallery',
@@ -105,6 +106,7 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		es: {
+			learn_more: 'Leer más',
 			event_host_registration_redirect: 'Estás a punto de ir a la página de registro del organizador del evento.',
 			event_host_registration_redirect_content: 'Registrarse como organizador de eventos le permitirá publicar información sobre los eventos que organiza. Este estado no se otorga inmediatamente después del registro; deberá esperar a que nuestra administración verifique la información que proporcionó.',
 			event_host_gallery: 'Galería del Organizador',
@@ -207,6 +209,7 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		qu: {
+			learn_more: 'Astawan ñawinchay',
 			event_host_registration_redirect_content: 'Registrarse como organizador de eventos le permitirá publicar información sobre los eventos que organiza. Este estado no se otorga inmediatamente después del registro; deberá esperar a que nuestra administración verifique la información que proporcionó.',
 			event_host_registration_redirect: 'Evento organizador nisqapa inscribikusqan paginaman rinaykipaqñam kachkanki',
 			event_host_gallery: 'Galería Organizador nisqa',
