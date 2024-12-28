@@ -1,16 +1,53 @@
 <template>
-	<div v-if="props.isSpinned" class="spinner">
-		<div class="spinner__loader">
-			<div class="spinner__load1" />
-			<div class="spinner__load2" />
-			<div class="spinner__load3" />
-			<div class="spinner__load4" />
-			<div class="spinner__load5" />
-			<div class="spinner__load6" />
-			<div class="spinner__load7" />
-			<div class="spinner__load8" />
-			<div class="spinner__load9" />
-		</div>
+	<div  v-if="props.isSpinned" class="loading">
+		<svg
+			class="pl"
+			width="240"
+			height="240"
+			viewBox="0 0 240 240">
+			<circle
+				class="pl__ring pl__ring--a"
+				cx="120"
+				cy="120"
+				r="105"
+				fill="none"
+				stroke="#000"
+				stroke-width="20"
+				stroke-dasharray="0 660"
+				stroke-dashoffset="-330"
+				stroke-linecap="round"/>
+			<circle
+				class="pl__ring pl__ring--b"
+				cx="120"
+				cy="120"
+				r="35"
+				fill="none"
+				stroke="#000"
+				stroke-width="20"
+				stroke-dasharray="0 220"
+				stroke-dashoffset="-110"
+				stroke-linecap="round"/>
+			<circle
+				class="pl__ring pl__ring--c"
+				cx="85"
+				cy="120"
+				r="70"
+				fill="none"
+				stroke="#000"
+				stroke-width="20"
+				stroke-dasharray="0 440"
+				stroke-linecap="round"/>
+			<circle
+				class="pl__ring pl__ring--d"
+				cx="155"
+				cy="120"
+				r="70"
+				fill="none"
+				stroke="#000"
+				stroke-width="20"
+				stroke-dasharray="0 440"
+				stroke-linecap="round"/>
+		</svg>
 	</div>
 </template>
 
@@ -22,227 +59,229 @@ const props = defineProps<SpinnerProps>();
 </script>
 
 <style scoped lang="scss">
-.spinner {
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 9999;
-	position: fixed;
-	background-color: #fff;
-
-	&__loader {
-		display: flex;
-		align-items: center;
-		position: absolute;
-		left: 50%;
-		top: 50%;
-	}
-
-	&__load1 {
-		position: absolute;
-		content: '';
-		margin-right: 1em;
-		height: 1.2em;
-		width: 1.2em;
-		border-radius: 5px;
-		background-color: #888888;
-		box-shadow: 0 1px 7px rgba(0, 0, 0, 0.3);
-	}
-
-	&__load2 {
-		position: absolute;
-		margin-right: 1em;
-		content: '';
-		height: 1.2em;
-		width: 1.2em;
-		border-radius: 5px;
-		background-color: #888888;
-		animation: 2s flow2 infinite;
-	}
-
-	&__load3 {
-		position: absolute;
-		margin-right: 1em;
-		content: '';
-		height: 1.2em;
-		width: 1.2em;
-		border-radius: 5px;
-		background-color: #888888;
-		animation: 2s flow3 infinite;
-	}
-
-	&__load4 {
-		position: absolute;
-		margin-right: 1em;
-		content: '';
-		height: 1.2em;
-		width: 1.2em;
-		border-radius: 5px;
-		background-color: #888888;
-		animation: 2s flow4 infinite;
-	}
-
-	&__load5 {
-		position: absolute;
-		margin-right: 1em;
-		content: '';
-		height: 1.2em;
-		width: 1.2em;
-		border-radius: 5px;
-		background-color: #888888;
-		animation: 2s flow5 infinite;
-	}
-
-	&__load6 {
-		position: absolute;
-		margin-right: 1em;
-		content: '';
-		height: 1.2em;
-		width: 1.2em;
-		border-radius: 5px;
-		background-color: #888888;
-		animation: 6s flow6 infinite;
-	}
-
-	&__load7 {
-		position: absolute;
-		margin-right: 1em;
-		content: '';
-		height: 1.2em;
-		width: 1.2em;
-		border-radius: 5px;
-		background-color: #888888;
-		animation: 6s flow7 infinite;
-	}
-
-	&__load8 {
-		position: absolute;
-		margin-right: 1em;
-		content: '';
-		height: 1.2em;
-		width: 1.2em;
-		border-radius: 5px;
-		background-color: #888888;
-		animation: 6s flow8 infinite;
-	}
-
-	&__load9 {
-		position: absolute;
-		content: '';
-		height: 1.2em;
-		width: 1.2em;
-		border-radius: 5px;
-		background-color: #888888;
-		animation: 6s flow9 infinite;
-	}
+.loading {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 999;
+  background: $white;
+}
+.pl {
+  width: 6em;
+  height: 6em;
 }
 
-@keyframes flow2 {
-	50% {
-		transform: translateX(3em);
-		box-shadow: 0 1px 7px rgba(0, 0, 0, 0.3);
-	}
-
-	100% {
-		transform: translateX(0em);
-	}
+.pl__ring {
+  animation: ringA 2s linear infinite;
 }
 
-@keyframes flow3 {
-	50% {
-		transform: translateX(-3em);
-		box-shadow: 0 1px 7px rgba(0, 0, 0, 0.3);
-	}
-
-	100% {
-		transform: translateX(0em);
-	}
+.pl__ring--a {
+  stroke: #ffc11c;
 }
 
-@keyframes flow4 {
-	50% {
-		transform: translateY(3em);
-		box-shadow: 0 1px 7px rgba(0, 0, 0, 0.3);
-	}
-
-	100% {
-		transform: translateY(0em);
-	}
+.pl__ring--b {
+  animation-name: ringB;
+  stroke: #ff972a;
 }
 
-@keyframes flow5 {
-	50% {
-		transform: translateY(-3em);
-		box-shadow: 0 1px 7px rgba(0, 0, 0, 0.3);
-	}
-
-	100% {
-		transform: translateY(0em);
-	}
+.pl__ring--c {
+  animation-name: ringC;
+  stroke: #ff5a35;
 }
 
-@keyframes flow6 {
-	30% {
-		transform: translateX(3em);
-		box-shadow: 0 1px 7px rgba(0, 0, 0, 0.3);
-	}
-
-	60% {
-		transform: translateX(3em) translateY(-3em);
-		box-shadow: 0 1px 7px rgba(0, 0, 0, 0.3);
-	}
-
-	100% {
-		transform: translateX(0em) translateY(0em);
-	}
+.pl__ring--d {
+  animation-name: ringD;
+  stroke: #ff3938;
 }
 
-@keyframes flow7 {
-	30% {
-		transform: translateX(-3em);
-		box-shadow: 0 1px 7px rgba(0, 0, 0, 0.3);
-	}
+/* Animations */
+@keyframes ringA {
+  from,
+  4% {
+    stroke-dasharray: 0 660;
+    stroke-width: 20;
+    stroke-dashoffset: -330;
+  }
 
-	60% {
-		transform: translateX(-3em) translateY(3em);
-		box-shadow: 0 1px 7px rgba(0, 0, 0, 0.3);
-	}
+  12% {
+    stroke-dasharray: 60 600;
+    stroke-width: 30;
+    stroke-dashoffset: -335;
+  }
 
-	100% {
-		transform: translateX(0em) translateY(0em);
-	}
+  32% {
+    stroke-dasharray: 60 600;
+    stroke-width: 30;
+    stroke-dashoffset: -595;
+  }
+
+  40%,
+  54% {
+    stroke-dasharray: 0 660;
+    stroke-width: 20;
+    stroke-dashoffset: -660;
+  }
+
+  62% {
+    stroke-dasharray: 60 600;
+    stroke-width: 30;
+    stroke-dashoffset: -665;
+  }
+
+  82% {
+    stroke-dasharray: 60 600;
+    stroke-width: 30;
+    stroke-dashoffset: -925;
+  }
+
+  90%,
+  to {
+    stroke-dasharray: 0 660;
+    stroke-width: 20;
+    stroke-dashoffset: -990;
+  }
 }
 
-@keyframes flow8 {
-	30% {
-		transform: translateY(3em);
-		box-shadow: 0 1px 7px rgba(0, 0, 0, 0.3);
-	}
+@keyframes ringB {
+  from,
+  12% {
+    stroke-dasharray: 0 220;
+    stroke-width: 20;
+    stroke-dashoffset: -110;
+  }
 
-	60% {
-		transform: translateY(3em) translateX(3em);
-		box-shadow: 0 1px 7px rgba(0, 0, 0, 0.3);
-	}
+  20% {
+    stroke-dasharray: 20 200;
+    stroke-width: 30;
+    stroke-dashoffset: -115;
+  }
 
-	100% {
-		transform: translateX(0em) translateY(0em);
-	}
+  40% {
+    stroke-dasharray: 20 200;
+    stroke-width: 30;
+    stroke-dashoffset: -195;
+  }
+
+  48%,
+  62% {
+    stroke-dasharray: 0 220;
+    stroke-width: 20;
+    stroke-dashoffset: -220;
+  }
+
+  70% {
+    stroke-dasharray: 20 200;
+    stroke-width: 30;
+    stroke-dashoffset: -225;
+  }
+
+  90% {
+    stroke-dasharray: 20 200;
+    stroke-width: 30;
+    stroke-dashoffset: -305;
+  }
+
+  98%,
+  to {
+    stroke-dasharray: 0 220;
+    stroke-width: 20;
+    stroke-dashoffset: -330;
+  }
 }
 
-@keyframes flow9 {
-	30% {
-		transform: translateY(-3em);
-		box-shadow: 0 1px 7px rgba(0, 0, 0, 0.3);
-	}
+@keyframes ringC {
+  from {
+    stroke-dasharray: 0 440;
+    stroke-width: 20;
+    stroke-dashoffset: 0;
+  }
 
-	60% {
-		transform: translateY(-3em) translateX(-3em);
-		box-shadow: 0 1px 7px rgba(0, 0, 0, 0.3);
-	}
+  8% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -5;
+  }
 
-	100% {
-		transform: translateX(0em) translateY(0em);
-	}
+  28% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -175;
+  }
+
+  36%,
+  58% {
+    stroke-dasharray: 0 440;
+    stroke-width: 20;
+    stroke-dashoffset: -220;
+  }
+
+  66% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -225;
+  }
+
+  86% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -395;
+  }
+
+  94%,
+  to {
+    stroke-dasharray: 0 440;
+    stroke-width: 20;
+    stroke-dashoffset: -440;
+  }
+}
+
+@keyframes ringD {
+  from,
+  8% {
+    stroke-dasharray: 0 440;
+    stroke-width: 20;
+    stroke-dashoffset: 0;
+  }
+
+  16% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -5;
+  }
+
+  36% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -175;
+  }
+
+  44%,
+  50% {
+    stroke-dasharray: 0 440;
+    stroke-width: 20;
+    stroke-dashoffset: -220;
+  }
+
+  58% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -225;
+  }
+
+  78% {
+    stroke-dasharray: 40 400;
+    stroke-width: 30;
+    stroke-dashoffset: -395;
+  }
+
+  86%,
+  to {
+    stroke-dasharray: 0 440;
+    stroke-width: 20;
+    stroke-dashoffset: -440;
+  }
 }
 </style>

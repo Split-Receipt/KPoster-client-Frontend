@@ -100,6 +100,16 @@ type cardSizeDayType = keyof typeof cardSizeDay;
 			color: $white;
 		}
 	}
+
+	&:hover {
+		transform: scale(1.05);
+	}
+
+	&--active, &:disabled{
+		&:hover {
+			transform: scale(1);
+		}
+	}
 	
 	&__day {
 		font-size: $date-card-day-font-size;

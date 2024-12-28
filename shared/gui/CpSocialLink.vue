@@ -91,9 +91,19 @@ const socialMediaFormattedValues = computed(() => {
 			height: 30px;
 		}
 
+		&-instagram {
+			height: 30px;
+			width: 30px;
+		}
+
+		&-linkedin {
+			height: 30px;
+			width: 30px;
+		}
+
 		&-tiktok {
-			height: 25px;
-			width: 25px;
+			height: 30px;
+			width: 30px;
 		}
 		&-youtube {
 			height: 100%;

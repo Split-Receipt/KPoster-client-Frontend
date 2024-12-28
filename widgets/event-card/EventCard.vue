@@ -152,87 +152,64 @@ const formattedDate = computed(() => {
 
 <style scoped lang="scss">
 .event-card {
+	min-width: 290px;
+	max-width: 500px;
 	height: 580px;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	padding: $event-card-default-padding;
+	overflow: hidden;
+	padding: 15px;
 	border-radius: $event-card-default-border-radius;
 	background-color: $event-card-text-background-color;
 	box-shadow: $card-shadow;
 	text-align: center;
-	overflow: hidden;
+	display: grid;
+	grid-template-rows: 280px auto;
+	gap: 8px;
+
+	@media #{$screen-tablet} {
+		height: 600px;
+	}
 
 	&__content {
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-		margin-top: 20px;
+		display: grid;
+		grid-template-rows: 50px auto 30px 130px;
+		gap: 8px;
 	}
 
 	&__img {
-		position: relative;
-		overflow: hidden;
-		width: 100%;
-		height: $event-card-image-default-height;
+		height: 280px;
 
 		&-pic {
+			height: 280px;
 			width: 100%;
-			height: $event-card-image-default-height;
-			object-fit: fill;
 			border-radius: $event-card-default-border-radius;
-
-			@media screen and (min-width: 718px) {
-				object-fit: cover;
-			}
+			object-fit: fill;
 		}
 	}
 
+	&__controls {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		gap: 8px;
+		justify-self: flex-end;
+	}
+
 	&__text {
-		font-size: $event-card-text-default-font-size;
-		line-height: $event-card-text-default-line-height;
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 		color: $event-card-text-color;
 		line-clamp: 3;
 		-webkit-line-clamp: 3;
-
-		@media #{$screen-tablet} {
-			font-size: $event-card-text-font-size-tablet;
-			line-height: $event-card-text-line-height-tablet;
-		}
-
-		@media #{$screen-big-desktop} {
-			font-size: $event-card-text-font-size-big-desktop;
-			line-height: $event-card-text-line-height-big-desktop;
-		}
 	}
 
 	&__date {
 		font-size: $event-card-date-default-font-size;
-		line-height: $event-card-date-default-line-height;
 
 		@media #{$screen-tablet} {
 			font-size: $event-card-date-font-size-tablet;
-			line-height: $event-card-date-line-height-tablet;
 		}
-	}
-
-	&__controls {
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-		justify-self: flex-end;
-	}
-
-	:deep(.button) {
-		width: 100%;
-	}
-
-	@media #{$screen-tablet} {
-		height: 600px;
 	}
 }
 </style>
