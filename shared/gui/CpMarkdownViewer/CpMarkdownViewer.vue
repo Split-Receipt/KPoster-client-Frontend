@@ -99,7 +99,20 @@ function renderMarkdown(): Node[] {
 					stack.push(linkNode);
 				} else if (childToken.type === 'link_close') {
 					stack.pop();
+				} else if (childToken.type === 'image') {
+					// childToken.attrs содержит среди прочего src, alt, title
+					const imageAttrs = Object.fromEntries(childToken.attrs || []);
+					const imageNode: Node = {
+						tag: 'img',
+						attrs: {
+							src: imageAttrs.src || '',
+							alt: imageAttrs.alt || '',
+							title: imageAttrs.title || '',
+						},
+					};
+					parent.children!.push(imageNode);
 				}
+
 				// Добавьте обработку других типов токенов по необходимости
 			});
 		} else if (token.type.endsWith('_close')) {

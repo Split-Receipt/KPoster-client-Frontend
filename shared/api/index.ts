@@ -312,8 +312,8 @@ export const requestChangePassword = (params: ResetPasswordPayload): Promise<Axi
 	return $api.post('/api/auth/reset-password', params);
 };
 
-export const confirmEmail = (params: { confirmation: string }) => {
+export const requestEventHostInstructions = (): Promise<AxiosResponse<{ data: any }>> => {
 	const { $api } = useNuxtApp();
 
-	return $api.get('/api/auth/email-confirmation', { params });
+	return $api.get('/api/intstruction-for-event-host');
 };

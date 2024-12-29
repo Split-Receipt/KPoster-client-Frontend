@@ -3,6 +3,7 @@ export default defineI18nConfig(() => ({
 	locale: 'en',
 	messages: {
 		en: {
+			how_to_become_event_host: 'How to become an event host?',
 			learn_more: 'Learn more',
 			event_host_registration_redirect: 'You are about to be redirected to the event organizer registration page.',
 			event_host_registration_redirect_content: 'Registering as an event organizer will allow you to publish information about the events you hold. This status is not given immediately, after registration you will need to wait until our administration checks the information you provided',
@@ -106,6 +107,7 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		es: {
+			how_to_become_event_host: '¿Cómo convertirse en un organizador de eventos?',
 			learn_more: 'Leer más',
 			event_host_registration_redirect: 'Estás a punto de ir a la página de registro del organizador del evento.',
 			event_host_registration_redirect_content: 'Registrarse como organizador de eventos le permitirá publicar información sobre los eventos que organiza. Este estado no se otorga inmediatamente después del registro; deberá esperar a que nuestra administración verifique la información que proporcionó.',
@@ -209,6 +211,7 @@ export default defineI18nConfig(() => ({
 			tikTok: 'TikTok',
 		},
 		qu: {
+			how_to_become_event_host: '¿Imaynatataq evento organizador kayta atisunman?',
 			learn_more: 'Astawan ñawinchay',
 			event_host_registration_redirect_content: 'Registrarse como organizador de eventos le permitirá publicar información sobre los eventos que organiza. Este estado no se otorga inmediatamente después del registro; deberá esperar a que nuestra administración verifique la información que proporcionó.',
 			event_host_registration_redirect: 'Evento organizador nisqapa inscribikusqan paginaman rinaykipaqñam kachkanki',
