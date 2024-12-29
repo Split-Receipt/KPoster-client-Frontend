@@ -6,6 +6,10 @@
 		<div class="help-request__content">
 			<p>{{ $t('help_request_description') }}</p>
 			<div class="help-request__contacts">
+				<nuxt-link :to="`/${locale}/registration-instructions`" style="text-decoration: underline">
+					{{ $t('how_to_become_event_host') }}
+				</nuxt-link>
+
 				<p class="help-request__contact">
 					<nuxt-link
 						:to="`mailto:${commonDataStore.platformData?.attributes.platformContacts.mail}`"
@@ -28,6 +32,7 @@
 <script lang="ts" setup>
 import { useCommonDataStore } from '@stores/common-data-store';
 const commonDataStore = useCommonDataStore();
+const { locale } = useI18n();
 </script>
 
 <style scoped lang="scss">
