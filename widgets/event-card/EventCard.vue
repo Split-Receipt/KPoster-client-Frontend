@@ -154,7 +154,7 @@ const formattedDate = computed(() => {
 .event-card {
 	min-width: 290px;
 	max-width: 500px;
-	height: 580px;
+	height: 620px;
 	overflow: hidden;
 	padding: 15px;
 	border-radius: $event-card-default-border-radius;
@@ -162,24 +162,39 @@ const formattedDate = computed(() => {
 	box-shadow: $card-shadow;
 	text-align: center;
 	display: grid;
-	grid-template-rows: 280px auto;
+	grid-template-rows: 250px auto;
 	gap: 8px;
 
 	@media #{$screen-tablet} {
-		height: 600px;
+		height: 640px;
 	}
 
 	&__content {
 		display: grid;
-		grid-template-rows: 50px auto 30px 130px;
-		gap: 8px;
+		gap: 5px;
+		@media #{$screen-tablet} {
+			gap: 8px;
+		}
+	}
+
+	&__title {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		line-height: 26px;
+		line-clamp: 3;
+		-webkit-line-clamp: 3;
+
+		@media #{$screen-tablet} {
+			line-height: 30px;
+		}
 	}
 
 	&__img {
-		height: 280px;
+		height: 250px;
 
 		&-pic {
-			height: 280px;
+			height: 250px;
 			width: 100%;
 			border-radius: $event-card-default-border-radius;
 			object-fit: fill;
@@ -188,6 +203,7 @@ const formattedDate = computed(() => {
 
 	&__controls {
 		width: 100%;
+		height: 130px;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
@@ -202,6 +218,10 @@ const formattedDate = computed(() => {
 		color: $event-card-text-color;
 		line-clamp: 3;
 		-webkit-line-clamp: 3;
+		line-height: 20px;
+		@media #{$screen-tablet} {
+			line-height: 24px;
+		}
 	}
 
 	&__date {
