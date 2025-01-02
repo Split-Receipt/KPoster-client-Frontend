@@ -132,8 +132,7 @@
 			<cp-media-carousel
 				v-if="
 					eventHostOriginalData &&
-						eventHostOriginalData?.data?.attributes.personalDocumentScan.data
-							.length > 0
+						eventHostOriginalData?.data?.attributes.personalDocumentScan?.data?.length > 0
 				"
 				id="personalDocumentScan"
 				is-deletable
