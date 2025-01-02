@@ -295,7 +295,7 @@ export type EventHost = {
 			personalName: string
 			personalIdentifyingDocument: string
 			personalDocumentScan: {
-				data: StrapiMediaDefaultType
+				data: StrapiMediaDefaultType[]
 			}
 			orgResume: string
 			affiliations: {

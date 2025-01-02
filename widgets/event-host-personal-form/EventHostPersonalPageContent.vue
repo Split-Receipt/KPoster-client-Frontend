@@ -10,9 +10,7 @@
 			<!-- Organization type -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-row-info">
-					<span class="required-field">
-						Tipo de organización
-					</span>
+					<span class="required-field"> Tipo de organización </span>
 				</div>
 				<div class="partners__form-row-input">
 					<v-field
@@ -79,9 +77,7 @@
 				class="partners__form-rowDnD"
 			>
 				<div class="partners__form-row-info">
-					<span class="required-field">
-						Tipo de documento de identidad
-					</span>
+					<span class="required-field"> Tipo de documento de identidad </span>
 				</div>
 				<div class="partners__form-row-input">
 					<v-field
@@ -133,6 +129,24 @@
 					</v-field>
 				</div>
 			</div>
+			<cp-media-carousel
+				v-if="
+					eventHostOriginalData &&
+						eventHostOriginalData?.data?.attributes.personalDocumentScan.data
+							.length > 0
+				"
+				id="personalDocumentScan"
+				is-deletable
+				:media-files-objects="
+					eventHostOriginalData.data.attributes.personalDocumentScan.data.map(
+						(media) => ({
+							id: media.id,
+							source: makeMediaUrl(media.attributes.url),
+						})
+					)
+				"
+				@delete-photo="(value: CpMediaCardProps['item']) => deleteFile(value.id, 'personalDocumentScan')"
+			/>
 
 			<!-- Organization name -->
 			<div
@@ -205,9 +219,7 @@
 				class="partners__form-row"
 			>
 				<div class="partners__form-row-info">
-					<span class="required-field">
-						RUC
-					</span>
+					<span class="required-field"> RUC </span>
 				</div>
 				<div class="partners__form-row-input">
 					<v-field
@@ -823,9 +835,7 @@
 			<!-- location on map -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-rowDnD-info">
-					<span class="required-field">
-						Marcar la ubicación del evento
-					</span>
+					<span class="required-field"> Marcar la ubicación del evento </span>
 				</div>
 				<div class="partners__form-rowDnD-input fullWidth-map">
 					<div class="partnerRegistration__map">
@@ -886,15 +896,12 @@
 			<!-- culture Type -->
 			<div class="partners__form-rowDnD">
 				<div class="partners__form-row-info">
-					<span class="required-field">
-						Afiliaciones o in incitativas
-					</span>
+					<span> Afiliaciones o in incitativas </span>
 				</div>
 				<div class="partners__form-row-input">
 					<v-field
 						v-slot="{ errors }"
 						name="Affiliations"
-						rules="require_checkbox"
 						:model-value="partnerForm.data.affiliations"
 					>
 						<div>

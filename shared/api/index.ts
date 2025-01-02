@@ -208,6 +208,7 @@ export const requestEventsHost = (id: number | string): Promise<AxiosResponse<Ev
 			videoBusinessCard: {
 				populate: '*',
 			},
+			personalDocumentScan: true,
 			orgType: true,
 			socialMedias: {
 				populate: '*',
