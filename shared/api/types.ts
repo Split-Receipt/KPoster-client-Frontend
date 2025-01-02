@@ -230,7 +230,10 @@ export type CollectionFilters = {
 			commercialName?: {
 				$eq?: string;
 				$in?: string[]
-			}
+			};
+			id?: {
+				$eq?: number;
+			};
 		};
 		eventCategory?: {
 			eventCategoryCode: {
@@ -492,4 +495,15 @@ export type ResetPasswordPayload = {
 	password: string;
 	passwordConfirmation: string;
 	code: string;
+};
+
+export type Pagination = {
+	total: number;
+	pageSize: number;
+	page: number;
+	pageCount: number;
+};
+
+export type ResponseMeta = {
+	pagination: Pagination
 };

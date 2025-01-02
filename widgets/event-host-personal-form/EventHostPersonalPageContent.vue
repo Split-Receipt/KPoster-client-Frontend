@@ -1230,8 +1230,8 @@ const getEventHostEvents = async () => {
 	}
 	const filters = {
 		eventHost: {
-			commercialName: {
-				$eq: eventHostOriginalData.value?.data.attributes.commercialName,
+			id: {
+				$eq: eventHostOriginalData.value?.data.id,
 			},
 		},
 	};
