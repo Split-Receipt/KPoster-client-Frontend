@@ -73,7 +73,7 @@ import {
 	addMonths,
 	isEqual,
 } from 'date-fns';
-import { es } from 'date-fns/locale';
+import { enGB, es } from 'date-fns/locale';
 
 const props = withDefaults(defineProps<Props>(), {
 	dateStart: () => addDays(new Date(), -3),
@@ -82,6 +82,8 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<Events>();
+
+const { locale } = useI18n();
 
 type Props = {
 	dateStart?: Date;
@@ -107,7 +109,7 @@ const dateLoaded = ref(false);
 const allDaysOfInterval: Ref<Array<AllDaysOfInterval>> = ref([]);
 const dateNow = new Date();
 
-setDefaultOptions({ locale: es }); // #TODO - вынести date fns в отдельный модуль
+setDefaultOptions({ locale: locale.value === 'en' ? enGB : es }); // #TODO - вынести date fns в отдельный модуль
 
 const createAllDaysOfInterval = () => {
 	eachDayOfInterval({

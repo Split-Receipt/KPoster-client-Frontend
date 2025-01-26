@@ -24,7 +24,7 @@
 			<div>
 				<cp-grid-layout v-if="events.length">
 					<template #header>
-						<h4 class="main-page__list-title">{{ $t('Eventos hoy') }}</h4>
+						<h4 class="main-page__list-title">{{ $t('events_today') }}</h4>
 					</template>
 					<event-card
 						v-for="event in events"
@@ -35,7 +35,7 @@
 					/>
 				</cp-grid-layout>
 				<h5 v-else class="main-page__section-placeholder">
-					{{ $t('Sin eventos') }}
+					{{ $t('no_event') }}
 				</h5>
 			</div>
 		</template>

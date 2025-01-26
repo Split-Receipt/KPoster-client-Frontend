@@ -27,7 +27,6 @@
 				class="footer__button"
 				:text="$t('partners_button_become_partner')"
 				size="large"
-				:islink="true"
 				@click="show = true"
 			/>
 			<div class="footer__logos">
@@ -85,7 +84,7 @@ watch(
 
 const handleAccept = () => {
 	show.value = false;
-	navigateTo(`/${locale}/partners-registration`);
+	navigateTo(`/${locale.value}/partners-registration`);
 };
 
 const formatPlatformContactsContacts = (
