@@ -507,3 +507,15 @@ export type Pagination = {
 export type ResponseMeta = {
 	pagination: Pagination
 };
+
+export interface RequestError {
+	data: any;
+	error: {
+		details: {
+			[key: string]: any;
+		},
+		message: string;
+		name: string;
+		status: number;
+	}
+}

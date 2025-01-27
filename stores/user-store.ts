@@ -1,7 +1,8 @@
 import { defineStore, setActivePinia, createPinia } from 'pinia';
-import type { LoginParams, RegisterParams } from '@shared/api/types';
+import type { LoginParams, RegisterParams, RequestError } from '@shared/api/types';
 import { loginUser, requestMyUser, registerUser } from '@shared/api';
 import type { UserStore } from './types';
+import { isRequestError } from '@shared/api/typeGuards';
 
 const pinia = createPinia();
 
@@ -33,7 +34,11 @@ export const useUserStore = defineStore('userData', {
 
 				await this.getMyUser();
 			} catch (e) {
-				throw new Error('No se pudo iniciar sesión');
+				if (isRequestError(e)) {
+					throw new Error(e.error.message);
+				} else {
+					throw new Error('No se pudo iniciar sesión');
+				}
 			}
 
 		 },
@@ -51,7 +56,11 @@ export const useUserStore = defineStore('userData', {
 			try {
 				await registerUser(registrationParams);
 			} catch (e) {
-				throw new Error('No se pudo registrar el usuario');
+				if (isRequestError(e)) {
+					throw new Error(e.error.message);
+				} else {
+					throw new Error('No se pudo registrar el usuario');
+				}
 			}
 
 		 },
