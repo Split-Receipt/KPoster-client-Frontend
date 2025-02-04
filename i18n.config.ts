@@ -1,3 +1,5 @@
+import { sub } from "date-fns";
+
 export default defineI18nConfig(() => ({
 	legacy: false,
 	locale: 'en',
@@ -107,6 +109,10 @@ export default defineI18nConfig(() => ({
 			instagram: 'Instagram',
 			linkedIn: 'LinkedIn',
 			tikTok: 'TikTok',
+			submit: 'Submit',
+			upload_file: 'Upload file',
+			paste_link: 'Paste link',
+			type_text: 'Type text',
 		},
 		es: {
 			no_event: 'Sin Eventos',
@@ -156,7 +162,8 @@ export default defineI18nConfig(() => ({
 			culture_area_filter_placeholder: 'área cultural',
 			event_category_filter_placeholder: 'Categoría',
 			// drag n drop component features
-			clear: 'Clara',
+			clear: 'Eliminar',
+			file_is_required: 'El archivo es obligatorio',
 			drag_n_drop:
 				'Arrastre y suelte algunos archivos aquí o haga clic para seleccionar archivos',
 			file_drop: 'Suelta los archivos aquí...',
@@ -213,6 +220,10 @@ export default defineI18nConfig(() => ({
 			instagram: 'Instagram',
 			linkedIn: 'LinkedIn',
 			tikTok: 'TikTok',
+			submit: 'Enviar',
+			upload_file: 'Subir archivo',
+			paste_link: 'Pegar enlace',
+			type_text: 'Escribir texto',
 		},
 		qu: {
 			event_category_filter_placeholder: 'ñiqichana',
@@ -315,6 +326,9 @@ export default defineI18nConfig(() => ({
 			instagram: 'Instagram',
 			linkedIn: 'LinkedIn',
 			tikTok: 'TikTok',
+			upload_file: 'Apachiy willay',
+			paste_link: 'T’inkina apachiy',
+			type_text: 'Qillqay simi',
 		},
 	},
 }));

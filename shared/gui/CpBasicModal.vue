@@ -10,10 +10,8 @@
 				type="button"
 				class="modal-window-close"
 				@click="modaHandleClose"
-			>
-				╳
-			</button>
-			<span v-else class="modal-window-close_fit-content" @click="modaHandleClose">╳</span>
+			/>
+			<span v-else class="modal-window-close_fit-content" @click="modaHandleClose"/>
 			<div
 				:class="[
 					'modal-window-content',
@@ -24,7 +22,7 @@
 					name="content"
 					@data-sended="(value: any) => modalInnerData = value"
 				/>
-				<div class="modal-window-content-controls">
+				<div v-if="!fitContent" class="modal-window-content-controls">
 					<cp-button
 						v-if="acceptButton"
 						class="modal-window-content-controls-accept"
@@ -119,188 +117,102 @@ onClickOutside(permitModal, () => modaHandleClose());
 	background-color: rgb(0 0 0 / 0.2);
 
 	&-window {
-		box-sizing: border-box;
 		position: relative;
-		width: 50%;
-		height: 35%;
-		min-height: 275px;
-		padding: 30px;
-		border-radius: 40px;
-		background: #fff;
+		padding: 15px;
+		background: $white;
+		border-radius: 20px;
+		max-width: 90vw;
+
+		@media #{$screen-tablet} {
+			max-width: 70vw;
+		}
+
+		@media #{$screen-desktop} {
+			padding: 30px;
+			max-width: 45vw;
+		}
 
 		&_fit-content {
 			height: auto;
 			padding: 0;
 
-		@media screen and (max-width: 575px) {
-			height: auto !important;
-			padding: 0px !important;
-			min-height: unset;
-		}
-		}
-
-		@media screen and (max-width: 1450px) {
-			width: 60%;
-		}
-
-		@media screen and (max-width: 1150px) {
-			width: 65%;
-		}
-
-		@media screen and (max-width: 875px) {
-			width: 75%;
-		}
-
-		@media screen and (max-width: 575px) {
-			height: 45%;
-			padding: 15px;
-		}
-
-		@media screen and (max-width: 445px) {
-			width: 90%;
+			@media screen and (max-width: 575px) {
+				height: auto !important;
+				padding: 0px !important;
+				min-height: unset;
+			}
 		}
 
 		&-close {
 			position: absolute;
-			right: 30px;
-			top: 30px;
-			height: 46px;
-			width: 46px;
+			right: 10px;
+			top: 10px;
+			height: 25px;
+			width: 25px;
 			border-radius: 50%;
 			color: $black;
-			font-size: 14px;
-			font-weight: 600;
+			font-size: 16px;
+			font-weight: 700;
 			z-index: 999;
 			border: 1px solid $black;
 			background-color: #fff;
 			cursor: pointer;
 
+			@media #{$screen-tablet} {
+				height: 30px;
+				width: 30px;
+			}
+
+			@media #{$screen-desktop} {
+				font-size: 18px;
+				height: 35px;
+				width: 35px;
+			}
+
+			&::before {
+				content: '⨉';
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+
 			&_fit-content {
 				position: absolute;
-				background: rgba(0, 0, 0, 0.1);
 				border-radius: 50%;
 				right: 15px;
 				top: 15px;
+				height: 25px;
+				width: 25px;
 				cursor: pointer;
+				font-size: 16px;
+				font-weight: 700;
+				border: 1px solid $black;
+				background-color: rgba(255, 255, 255, 0.5);
 				z-index: 999;
-				font-size: 26px;
-				color: #fff;
-			}
 
-			@media screen and (max-width: 575px) {
-				right: 15px;
-				top: 15px;
+					&::before {
+						content: '⨉';
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%, -50%);
+				}
 			}
 		}
 
 		&-content {
-			padding: 40px 0 100px 0;
-			box-sizing: border-box;
-			position: relative;
+			padding: 25px 0 0;
 			display: flex;
 			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			height: 100%;
+			gap: 15px;
 
 			&_fit-content {
 				padding: 0;
-				border-radius: 40px;
-
-			@media screen and (max-width: 575px) {
-				justify-content: center !important;
-				padding: 0 !important;
-			}
-			}
-
-			@media screen and (max-width: 575px) {
-				justify-content: flex-start;
-				padding: 50px 0 90px 0;
-			}
-
-			h4 {
-				box-sizing: border-box;
-				font-family: 'Poppins-Medium';
-				color: $soft-black;
-				line-height: 66px;
-				text-align: center;
-				font-size: 44px;
-				margin-bottom: 15px;
-				cursor: default;
-
-				@media screen and (max-width: 1280px) {
-					font-size: 34px;
-					line-height: 51px;
-				}
-
-				@media screen and (max-width: 768px) {
-					font-size: 28px;
-					line-height: 42px;
-				}
-
-				@media screen and (max-width: 430px) {
-					font-size: 22px;
-					line-height: 33px;
-				}
-			}
-
-			span {
-				box-sizing: border-box;
-				color: $gray;
-				font-size: 22px;
-				line-height: 35px;
-				text-align: center;
-				cursor: default;
-				width: 65%;
-
-				@media screen and (max-width: 1280px) {
-					font-size: 16px;
-					line-height: 25px;
-				}
-
-				@media screen and (max-width: 1030px) {
-					width: 75%;
-				}
-
-				@media screen and (max-width: 910px) {
-					width: 80%;
-				}
-
-				@media screen and (max-width: 768px) {
-					font-size: 12px;
-					line-height: 19px;
-				}
-
-				@media screen and (max-width: 751px) {
-					width: 85%;
-				}
 			}
 
 			&-controls {
-				position: absolute;
-				bottom: 0;
-				box-sizing: border-box;
-				display: flex;
-				justify-content: space-between;
-				width: 100%;
-
-				@media screen and (max-width: 575px) {
-					flex-direction: column;
-				}
-
-				&-accept {
-					width: 100%;
-					margin-right: 15px;
-
-					@media screen and (max-width: 575px) {
-						margin-right: 0;
-						margin-bottom: 15px;
-					}
-				}
-
-				&-decline {
-					width: 100%;
-				}
+				margin-top: 8px;	
 			}
 		}
 	}

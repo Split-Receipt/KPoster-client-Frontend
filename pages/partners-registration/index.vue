@@ -1015,7 +1015,7 @@ import { useUserStore } from '@stores/user-store';
 import type { CoordinatesType } from '@shared/gui/types';
 import { UserRolesTypes } from '@shared/api/types';
 
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 
 const userStore = useUserStore();
 const commonDataStore = useCommonDataStore();
@@ -1046,14 +1046,14 @@ const docTypeOptions = [
 ];
 
 const compVideoSwitcherOptions = [
-	{ optionName: 'Upload File', optionValue: 'File', optionKey: 'FileKey' },
-	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },
+	{ optionName: () => t('upload_file'), optionValue: 'File', optionKey: 'FileKey' },
+	{ optionName: () => t('paste_link'), optionValue: 'Link', optionKey: 'LinkKey' },
 ];
 
 const mainProdSwitcherOptions = [
-	{ optionName: 'Upload File', optionValue: 'File', optionKey: 'FileKey' },
-	{ optionName: 'Paste Link', optionValue: 'Link', optionKey: 'LinkKey' },
-	{ optionName: 'Type text', optionValue: 'Text', optionKey: 'TextKey' },
+	{ optionName: () => t('upload_file'), optionValue: 'File', optionKey: 'FileKey' },
+	{ optionName: () => t('paste_link'), optionValue: 'Link', optionKey: 'LinkKey' },
+	{ optionName: () => t('type_text'), optionValue: 'Text', optionKey: 'TextKey' },
 ];
 // ----------------------------------------------------------------------
 
