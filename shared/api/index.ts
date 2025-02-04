@@ -31,10 +31,13 @@ export const requestCategories = (): Promise<AxiosResponse<{ data: CultureType[]
 	return $api.get('api/areas-de-la-culturas');
 };
 
-export const requestEventsHostList = () => {
+export const requestEventsHostList = (params?: { populate: string | Record<string, string | boolean> }): Promise<AxiosResponse<{ data: EventHost['data'][] }>> => {
 	const { $api } = useNuxtApp();
+	if (params) {
+	return $api.get('/api/partners', { params });
+	}
 
-	return $api.get('/api/partners');
+ return $api.get('/api/partners');
 };
 
 export const requestEventCategories = (): Promise<AxiosResponse<{ data: EventCategory[] }>> => {

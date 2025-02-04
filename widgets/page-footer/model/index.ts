@@ -33,6 +33,11 @@ export const footerLists: FooterLists = {
 				text: 'contacts_title',
 				href: '/contacts',
 			},
+			{
+				id: 4,
+				text: 'event_host_page',
+				href: '/event-host-list',
+			},
 		],
 	},
 	contactsList: {

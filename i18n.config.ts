@@ -3,8 +3,10 @@ import { sub } from "date-fns";
 export default defineI18nConfig(() => ({
 	legacy: false,
 	locale: 'en',
+	missingWarn: false,
 	messages: {
 		en: {
+			event_host_page: 'Event Hosts List',
 			no_event: 'No events',
 			events_today: 'Events today',
 			how_to_become_event_host: 'How to become an event host?',
@@ -115,6 +117,7 @@ export default defineI18nConfig(() => ({
 			type_text: 'Type text',
 		},
 		es: {
+			event_host_page: 'Nuestros organizadores de eventos',
 			no_event: 'Sin Eventos',
 			events_today: 'Eventos hoy',
 			how_to_become_event_host: '¿Cómo convertirse en un organizador de eventos?',
@@ -226,6 +229,7 @@ export default defineI18nConfig(() => ({
 			type_text: 'Escribir texto',
 		},
 		qu: {
+			event_host_page: 'Evento organizadores nisqayku',
 			event_category_filter_placeholder: 'ñiqichana',
 			city_filter_placeholder: 'Llaqtakuna',
 			no_event: 'Fiestakunaqa manam kanchu',
