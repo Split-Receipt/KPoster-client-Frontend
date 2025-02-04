@@ -15,7 +15,7 @@
 			</div>
 			<div class="contact__line">
 				<div class="contact__text">{{ $t('País y ciudad') }}</div>
-				<div class="contact__text contact__text--value">{{ props.contact?.contacts.tel }}</div>
+				<div class="contact__text contact__text--value">{{ props.contact?.contacts.place }}</div>
 			</div>
 			<div v-if="contact?.contactSocialMedias" class="contact__socials">
 				<cp-social-link

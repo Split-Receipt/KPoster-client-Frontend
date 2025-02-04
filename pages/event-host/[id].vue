@@ -4,9 +4,6 @@
 			<cp-section>
 				<template #section-content>
 					<div class="cover">
-						<div class="cover__subtitle">
-							{{ $t('Creador de contenido en plataformas digitales') }}
-						</div>
 						<div ref="eventHostMainImage" class="cover__image" />
 						<h4 class="cover__title">
 							{{ eventHost?.data.attributes.commercialName }}
@@ -281,12 +278,6 @@ const testMapCenter = [-12.046016, -77.030554];
 			color: $black;
 			grid-area: a;
 			align-self: flex-end;
-		}
-
-		&__subtitle {
-			text-transform: uppercase;
-			letter-spacing: 0.5px;
-			grid-area: b;
 		}
 
 		&__desc {

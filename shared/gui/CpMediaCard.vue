@@ -153,7 +153,7 @@ const show = ref(false);
 			width: 100%;
 			height: auto;
 			object-fit: contain;
-			border-radius: 40px;
+			border-radius: 20px;
 		}
 	}
 }

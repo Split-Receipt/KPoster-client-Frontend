@@ -8,7 +8,7 @@
 				@close="show = false"
 			>
 				<template #content>
-					<h4>{{ $t('event_host_registration_redirect') }}</h4>
+					<h5>{{ $t('event_host_registration_redirect') }}</h5>
 					<span>{{ $t('event_host_registration_redirect_content') }}</span>
 				</template>
 			</cp-basic-modal>
