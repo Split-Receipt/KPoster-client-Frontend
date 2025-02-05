@@ -84,7 +84,6 @@
 						v-slot="{ errors }"
 						:model-value="partnerForm.data.personalIdentifyingDocument"
 						name="orgType"
-						rules="required"
 					>
 						<cp-radio-button
 							v-model="partnerForm.data.personalIdentifyingDocument"

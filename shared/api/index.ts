@@ -1,5 +1,5 @@
 import { useNuxtApp } from 'nuxt/app';
-import type { BaseStrapiResponse, RequestResetPasswordPayload ,EventCreateType, LoginData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, MyUser, AboutPlatform, Affiliation, EventHost, CultureType, OrgType, NewsOne, ResetPasswordPayload } from '@shared/api/types.ts';
+import type { BaseStrapiResponse, RequestResetPasswordPayload ,EventCreateType, LoginData, CollectionFilters, PartnerRegistration, RegisterParams, LoginParams, EventData, EventCategory, City, MyUser, AboutPlatform, Affiliation, EventHost, CultureType, OrgType, NewsOne, ResetPasswordPayload, EventHostListQueryParams, ResponseMeta } from '@shared/api/types.ts';
 import type { AxiosResponse } from 'axios';
 import { startOfDay } from 'date-fns';
 
@@ -31,7 +31,7 @@ export const requestCategories = (): Promise<AxiosResponse<{ data: CultureType[]
 	return $api.get('api/areas-de-la-culturas');
 };
 
-export const requestEventsHostList = (params?: { populate: string | Record<string, string | boolean> }): Promise<AxiosResponse<{ data: EventHost['data'][] }>> => {
+export const requestEventsHostList = (params?: EventHostListQueryParams): Promise<AxiosResponse<{ data: EventHost['data'][], meta: ResponseMeta }>> => {
 	const { $api } = useNuxtApp();
 	if (params) {
 	return $api.get('/api/partners', { params });

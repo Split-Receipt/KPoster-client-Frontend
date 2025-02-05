@@ -519,3 +519,11 @@ export interface RequestError {
 		status: number;
 	}
 }
+
+export interface EventHostListQueryParams {
+	 pagination: {
+		 page: number, pageSize: number
+		},
+		populate?: string | Record<string, string | boolean>
+	}
+
