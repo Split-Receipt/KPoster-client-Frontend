@@ -258,6 +258,12 @@ export const deleteMedia = (id: number | string): Promise<AxiosResponse<any>> =>
 	return $api.delete(`/api/upload/files/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('AuthToken')}` } } );
 };
 
+export const deleteEvent = (id: number | string): Promise<AxiosResponse<any>> => {
+	const { $api } = useNuxtApp();
+
+	return $api.delete(`/api/events/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('AuthToken')}` } } );
+};
+
 export const requestDataAboutPlatform = (): Promise<AxiosResponse<{ data: BaseStrapiResponse<AboutPlatform> }>> => {
 	const { $api } = useNuxtApp();
 	const params = {

@@ -1,4 +1,16 @@
 <template>
+	<teleport to="body">
+		<cp-basic-modal
+			:show="show"
+			@accept="deleteEvent(eventCardData.id)"
+			@close="show = false"
+		>
+			<template #content>
+				<h4>¿Eliminar Evento?</h4>
+				<span>¿Confirmar eliminación? será imposible cancelar la acción</span>
+			</template>
+		</cp-basic-modal>
+	</teleport>
 	<div class="event-card" :class="`event-card--${size}`">
 		<div class="event-card__img" :class="`event-card__img--${size}`">
 			<nuxt-img
@@ -25,9 +37,7 @@
 					class="event-card__button"
 					:class="`event-card__button--${size}`"
 					text="Editar evento"
-					@click.stop="
-						navigateTo(`/${locale}/event-edit/${eventCardData.id}`)
-					"
+					@click.stop="navigateTo(`/${locale}/event-edit/${eventCardData.id}`)"
 				/>
 
 				<cp-button
@@ -35,6 +45,7 @@
 					class="event-card__button"
 					type="secondary"
 					text="Borrar"
+					@click="handleDeleteEvent"
 				/>
 
 				<cp-button
@@ -62,6 +73,7 @@ import { format } from 'date-fns';
 import type { EventCard } from '@widgets/event-card/types/types';
 import { formatExternalLink } from '@shared/helpers/formatText';
 import CpButton from '@shared/gui/CpButton.vue';
+import { deleteEvent } from '@shared/api';
 
 const props = withDefaults(defineProps<Props>(), {
 	size: 'small',
@@ -97,6 +109,8 @@ const props = withDefaults(defineProps<Props>(), {
 	}),
 });
 
+const show = ref(false);
+
 const { locale } = useI18n();
 
 const config = useRuntimeConfig();
@@ -118,6 +132,10 @@ const photoUrl = computed(() => {
 
 	return '';
 });
+
+const handleDeleteEvent = () => {
+	show.value = true;
+};
 
 function buyTicketHandler() {
 	window.open(
