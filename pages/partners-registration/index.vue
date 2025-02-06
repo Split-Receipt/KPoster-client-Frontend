@@ -1046,14 +1046,14 @@ const docTypeOptions = [
 ];
 
 const compVideoSwitcherOptions = [
-	{ optionName: () => t('upload_file'), optionValue: 'File', optionKey: 'FileKey' },
-	{ optionName: () => t('paste_link'), optionValue: 'Link', optionKey: 'LinkKey' },
+	{ optionName: t('upload_file'), optionValue: 'File', optionKey: 'FileKey' },
+	{ optionName: t('paste_link'), optionValue: 'Link', optionKey: 'LinkKey' },
 ];
 
 const mainProdSwitcherOptions = [
-	{ optionName: () => t('upload_file'), optionValue: 'File', optionKey: 'FileKey' },
-	{ optionName: () => t('paste_link'), optionValue: 'Link', optionKey: 'LinkKey' },
-	{ optionName: () => t('type_text'), optionValue: 'Text', optionKey: 'TextKey' },
+	{ optionName: t('upload_file'), optionValue: 'File', optionKey: 'FileKey' },
+	{ optionName: t('paste_link'), optionValue: 'Link', optionKey: 'LinkKey' },
+	{ optionName: t('type_text'), optionValue: 'Text', optionKey: 'TextKey' },
 ];
 // ----------------------------------------------------------------------
 

@@ -229,6 +229,7 @@ export default defineI18nConfig(() => ({
 			type_text: 'Escribir texto',
 		},
 		qu: {
+			file_is_required: 'Archivo nisqatan necesitakun',
 			event_host_page: 'Evento organizadores nisqayku',
 			event_category_filter_placeholder: 'ñiqichana',
 			city_filter_placeholder: 'Llaqtakuna',

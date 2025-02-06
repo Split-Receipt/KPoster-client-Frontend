@@ -62,6 +62,7 @@
 					type="secondary"
 					:class="`event-card__button--${size}`"
 					:text="$t('learn_more')"
+					@click.stop="navigateTo(`/${locale}/event/${eventCardData.id}`)"
 				/>
 			</div>
 		</div>

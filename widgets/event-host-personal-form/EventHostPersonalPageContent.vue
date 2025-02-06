@@ -131,7 +131,8 @@
 			<cp-media-carousel
 				v-if="
 					eventHostOriginalData &&
-						eventHostOriginalData?.data?.attributes.personalDocumentScan?.data?.length > 0
+						eventHostOriginalData?.data?.attributes.personalDocumentScan?.data
+							?.length > 0
 				"
 				id="personalDocumentScan"
 				is-deletable
@@ -1070,10 +1071,9 @@
 				</div>
 			</div>
 		</v-form>
-		<div>
+		<div v-if="eventHostEventsList.length > 0">
 			<h3 class="eventForm-row-title">Eventos</h3>
 			<event-carousel
-				v-if="eventHostEventsList.length > 0"
 				id="eventHostEvents"
 				with-edit-controls
 				:event-data="eventHostEventsList"
@@ -1206,14 +1206,14 @@ const docTypeOptions = [
 ];
 
 const compVideoSwitcherOptions = [
-	{ optionName: () => t('upload_file'), optionValue: 'File', optionKey: 'FileKey' },
-	{ optionName: () => t('paste_link'), optionValue: 'Link', optionKey: 'LinkKey' },
+	{ optionName: t('upload_file'), optionValue: 'File', optionKey: 'FileKey' },
+	{ optionName: t('paste_link'), optionValue: 'Link', optionKey: 'LinkKey' },
 ];
 
 const mainProdSwitcherOptions = [
-	{ optionName: () => t('upload_file'), optionValue: 'File', optionKey: 'FileKey' },
-	{ optionName: () => t('paste_link'), optionValue: 'Link', optionKey: 'LinkKey' },
-	{ optionName: () => t('type_text'), optionValue: 'Text', optionKey: 'TextKey' },
+	{ optionName: t('upload_file'), optionValue: 'File', optionKey: 'FileKey' },
+	{ optionName: t('paste_link'), optionValue: 'Link', optionKey: 'LinkKey' },
+	{ optionName: t('type_text'), optionValue: 'Text', optionKey: 'TextKey' },
 ];
 
 const fetchInitialData = async () => {

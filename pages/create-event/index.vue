@@ -49,7 +49,7 @@
 							:key="item.id + item.value"
 							:option="item"
 							return-value="id"
-							@update:checkbox-update="(value: number) => checkboxCollectCategories(value, index)"
+							@update:checkbox-update="(value) => checkboxCollectCategories(value as number, index)"
 						/>
 						<span
 							v-if="
