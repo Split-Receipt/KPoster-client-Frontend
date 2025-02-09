@@ -59,10 +59,17 @@
 		</div>
 
 		<div v-else-if="type === 'video'">
+			<cp-button
+				class="media-card__video-control"
+				with-image="/../public/images/play.svg"
+				size="small"
+				control="true"
+				shape="circle"
+				type="secondary"
+			/>
 			<video
 				class="media-card__media-item"
 				:src="item.source"
-				controls
 				alt="No se pudo cargar el medio"
 				@click="showMediaInModal = true"
 			/>
@@ -127,6 +134,13 @@ const show = ref(false);
 
 .media-card {
 	position: relative;
+	&__video-control {
+		position: absolute;
+		left: 50%;
+		right: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%)
+	}
 
 	&__deleted-notification {
 		position: absolute;
