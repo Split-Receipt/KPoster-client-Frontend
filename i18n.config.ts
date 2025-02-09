@@ -6,7 +6,9 @@ export default defineI18nConfig(() => ({
 	missingWarn: false,
 	messages: {
 		en: {
+			no_contacts: 'No contacts were found',
 			event_host_page: 'Event Hosts List',
+			organisator_contact: 'Organisator contacts',
 			no_event: 'No events',
 			events_today: 'Events today',
 			how_to_become_event_host: 'How to become an event host?',
@@ -117,6 +119,8 @@ export default defineI18nConfig(() => ({
 			type_text: 'Type text',
 		},
 		es: {
+			no_contacts: 'Sin contactos',
+			organisator_contact: 'Contactos del organizador',
 			event_host_page: 'Nuestros organizadores de eventos',
 			no_event: 'Sin Eventos',
 			events_today: 'Eventos hoy',
@@ -229,6 +233,8 @@ export default defineI18nConfig(() => ({
 			type_text: 'Escribir texto',
 		},
 		qu: {
+			no_contacts: 'Mana contactokuna',
+			organisator_contact: 'Organizador nisqawan rimanakuykuna',
 			file_is_required: 'Archivo nisqatan necesitakun',
 			event_host_page: 'Evento organizadores nisqayku',
 			event_category_filter_placeholder: 'ñiqichana',

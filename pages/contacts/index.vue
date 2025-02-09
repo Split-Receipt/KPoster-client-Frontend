@@ -1,6 +1,6 @@
 <template>
-	<cp-base-page :header="$t('Contactos del organizador')" class="contacts">
-		<template #content>
+	<cp-base-page :header="pageHeader" class="contacts">
+		<template v-if="contactList.length" #content>
 			<contact-block
 				v-for="contact in contactList"
 				:key="contact.id"
@@ -16,6 +16,15 @@ import CpBasePage from '@shared/gui/CpBasePage.vue';
 import ContactBlock from '@features/contacts/ContactBlock.vue';
 import { useCommonDataStore } from '@stores/common-data-store';
 const commonDataStore = useCommonDataStore();
+const { t } = useI18n();
+
+const pageHeader = computed(() => {
+	if (contactList.value.length) {
+		return t('organisator_contact');
+	} else {
+		return t('no_contacts');
+	}
+});
 
 const contactList = computed(() => {
 	if (commonDataStore.platformData) {

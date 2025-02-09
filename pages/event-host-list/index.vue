@@ -44,7 +44,7 @@ const eventHostMeta = reactive({
 });
 const paginationConfig = reactive({
 	page: 1,
-	pageSize: 10,
+	pageSize: 6,
 });
 
 const nextPage = () => {
@@ -81,13 +81,6 @@ onBeforeMount(() => {
 
 <style lang="scss">
 .event-host-page {
-	&__title {
-		margin-bottom: 25px;
-
-		@media #{$screen-tablet} {
-			margin-bottom: 50px;
-		}
-	}
 	&__content {
 		display: grid;
 		column-gap: 20px;
@@ -95,12 +88,13 @@ onBeforeMount(() => {
 		grid-template-columns: 1fr;
 
 		@media #{$screen-desktop} {
-			grid-template-columns: 1fr 1fr;
+			grid-template-columns: 1fr 1fr 1fr;
 		}
 	}
 }
 
 .pagination {
+	margin-top: 20px;
 	display: flex;
 	flex-direction: row;
 

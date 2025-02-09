@@ -52,15 +52,25 @@ const getMediaUrl = computed(() => {
 		flex-direction: column;
 		justify-content: space-between;
 		gap: 20px;
+
+		@media #{$screen-tablet} {
+			width: 50%;
+		}
 	}
 
 	&__img {
 		position: relative;
 		overflow: hidden;
-		width: 100%;
 		border-radius: 30px;
 		height: $event-card-image-default-height;
 		object-fit: cover;
+
+		@media #{$screen-tablet} {
+			max-width: 500px;
+			max-height: 500px;
+			width: 50%;
+			height: 100%;
+		}
 	}
 
 	&__title {

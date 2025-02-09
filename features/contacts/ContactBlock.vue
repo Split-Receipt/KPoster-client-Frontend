@@ -5,15 +5,15 @@
 			<slot name="description"/>
 		</div>
 		<div class="contact__block">
-			<div class="contact__line">
+			<div v-if="props.contact?.contacts?.mail" class="contact__line">
 				<div class="contact__text">{{ $t('E-mail') }}</div>
 				<div class="contact__text contact__text--value">{{ props.contact?.contacts.mail }}</div>
 			</div>
-			<div class="contact__line">
+			<div v-if="props.contact?.contacts?.tel" class="contact__line">
 				<div class="contact__text">{{ $t('Número de teléfono') }}</div>
 				<div class="contact__text contact__text--value">{{ props.contact?.contacts.tel}}</div>
 			</div>
-			<div class="contact__line">
+			<div v-if="props.contact?.contacts?.place" class="contact__line">
 				<div class="contact__text">{{ $t('País y ciudad') }}</div>
 				<div class="contact__text contact__text--value">{{ props.contact?.contacts.place }}</div>
 			</div>

@@ -13,7 +13,7 @@
 				>
 					<nuxt-link
 						v-if="!!item.href"
-						:to="item.href"
+						:to="`/${locale ?? ''}${item.href}`"
 						class="footer-list__text footer-list__link"
 						:target="item.linkType === 'external' ? '_blank' : '_self'"
 						:external="item.linkType === 'external'"
@@ -32,14 +32,14 @@
 
 <script setup lang="ts">
 import type { FooterListItem } from '../model';
+defineProps<Props>();
+const { locale } = useI18n();
 type Props = {
 	list: {
 		header: string;
 		listItems: FooterListItem[];
 	};
 };
-
-defineProps<Props>();
 </script>
 
 <style scoped lang="scss">
