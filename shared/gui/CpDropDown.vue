@@ -20,11 +20,12 @@
 		</div>
 		<label class="popup" :class="{ 'popup--shown': showList }">
 			<nav class="popup__window">
-				<div v-for="option in getDataForChekboxes" :key="option.id" class="checkbox-container">
-					<cp-check-box
-						:option="option"
-						@change="dataToFilter"
-					/>
+				<div
+					v-for="option in getDataForChekboxes"
+					:key="option.id"
+					class="checkbox-container"
+				>
+					<cp-check-box :option="option" @change="dataToFilter" />
 				</div>
 			</nav>
 		</label>
@@ -117,14 +118,13 @@ const dataToFilter = (event: Event) => {
 		outline-offset: 0;
 		box-shadow: $card-shadow;
 
-			&:hover {
-				transform: scale(1.05);
-			}
+		&:hover {
+			transform: scale(1.05);
+		}
 
-			&:active {
-				transform: scale(0.95);
-			}
-		
+		&:active {
+			transform: scale(0.95);
+		}
 	}
 
 	.popup input:checked + .dropdown__icon svg {
@@ -146,10 +146,17 @@ const dataToFilter = (event: Event) => {
 		box-shadow: 0px 0px 29px -9px rgba(34, 60, 80, 0.2);
 		overflow: hidden;
 
+		&__window {
+			max-height: 250px;
+			overflow-y: auto;
+			scrollbar-color: #353333 transparent;
+			scrollbar-width: thin;
+		}
+
 		&--shown {
 			visibility: visible;
 			opacity: 1;
-			transition: opacity .2s ease-in-out;
+			transition: opacity 0.2s ease-in-out;
 		}
 	}
 }

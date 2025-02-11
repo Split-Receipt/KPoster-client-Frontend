@@ -13,6 +13,9 @@
 				<event-category-drop-down
 					@change:filter-event-cats="(value: string[]) => changeFilters(value, 'eventCategory')"
 				/>
+				<partners-drop-down
+					@change:filter-event-cats="(value: string[]) => changeFilters(value, 'eventHost')"
+				/>
 			</div>
 			<div v-if="eventsCollections?.length" class="main-page__section-list">
 				<main-section
@@ -56,6 +59,7 @@ import CpGridLayout from '@shared/gui/CpGridLayout.vue';
 import CpBasePage from '@shared/gui/CpBasePage.vue';
 import EventCard from '@widgets/event-card/EventCard.vue';
 import { fromZonedTime } from 'date-fns-tz';
+import PartnersDropDown from '@features/partners-filter/PartnersDropDown.vue';
 
 const { locale } = useI18n();
 
@@ -132,6 +136,12 @@ const changeFilters = (data: any, filterPath: string) => {
 					},
 				},
 			};
+			requestPageData();
+			break;
+		}
+
+		case 'eventHost': {
+			filters.events.eventHost = { commercialName: { $in: data } };
 			requestPageData();
 			break;
 		}

@@ -3,7 +3,7 @@
 		<label
 			v-if="props.labelText"
 			:for="props.id"
-			:class="{'required-field': props.isRequired}"
+			:class="{ 'required-field': props.isRequired }"
 		>
 			{{ props.labelText }}
 		</label>
@@ -11,6 +11,7 @@
 			v-if="props.type === 'text' || props.type === 'email'"
 			:id="props.id"
 			type="text"
+			:class="{ textInput_rounded: rounded }"
 			:placeholder="props.placeholder"
 			:value="modelValue"
 			@input="handleInputValueUpdate"
@@ -20,6 +21,7 @@
 				:id="props.id"
 				ref="passInput"
 				v-model="passValue"
+				:class="{ textInput_rounded: rounded }"
 				class="textInput-password-invisible"
 				type="password"
 				:placeholder="props.placeholder"
@@ -32,13 +34,18 @@
 				@click="passVisibilityToggle"
 			/>
 		</div>
-		<label v-if="props.type === 'date' && props.labelText" :for="props.id" :class="{'required-field': props.isRequired}">
+		<label
+			v-if="props.type === 'date' && props.labelText"
+			:for="props.id"
+			:class="{ 'required-field': props.isRequired }"
+		>
 			{{ props.labelText }}
 		</label>
 		<input
 			v-if="props.type === 'date'"
 			:id="props.id"
 			type="date"
+			:class="{ textInput_rounded: rounded }"
 			:value="modelValue"
 			placeholder="ingrese la fecha"
 			@focus="dateInputFocus"
@@ -48,6 +55,7 @@
 			v-if="props.type === 'number'"
 			:id="props.id"
 			type="number"
+			:class="{ textInput_rounded: rounded }"
 			min="0"
 			:value="modelValue"
 			:placeholder="props.placeholder"
@@ -66,6 +74,7 @@ type textInputProps = {
 	withEye?: boolean;
 	labelText?: string;
 	isRequired?: boolean;
+	rounded?: boolean;
 };
 
 type Events = {
@@ -129,6 +138,10 @@ const numberInputValidate = (event: any) => {
 <style scoped lang="scss">
 .textInput {
 	width: 100%;
+
+	&_rounded {
+		border-radius: 50px;
+	}
 
 	label {
 		font-size: 22px;

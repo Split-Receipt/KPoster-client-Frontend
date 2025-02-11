@@ -49,7 +49,7 @@
 		>
 			╳
 		</button>
-		<div v-if="type === 'image'">
+		<div v-if="type === 'image'" class="media-card__media-item-wrapper">
 			<nuxt-img
 				class="media-card__media-item"
 				:src="item.source"
@@ -58,7 +58,7 @@
 			/>
 		</div>
 
-		<div v-else-if="type === 'video'">
+		<div v-else-if="type === 'video'" class="media-card__media-item-wrapper">
 			<cp-button
 				class="media-card__video-control"
 				with-image="/../public/images/play.svg"
@@ -67,10 +67,18 @@
 				shape="circle"
 				type="secondary"
 			/>
+			<nuxt-img
+				v-if="!videoLoaded"
+				class="media-card__media-item"
+				src="/images/event-card_blured.jpg"
+				alt="Preview"
+				@click="showMediaInModal = true"
+			/>
 			<video
 				class="media-card__media-item"
 				:src="item.source"
 				alt="No se pudo cargar el medio"
+				@loadeddata="videoLoaded = true"
 				@click="showMediaInModal = true"
 			/>
 		</div>
@@ -90,6 +98,7 @@ const props = withDefaults(defineProps<CpMediaCardProps>(), {
 const emit = defineEmits<Events>();
 
 const localDeletionMediaStatus = ref(false);
+const videoLoaded = ref(false);
 const showMediaInModal = ref(false);
 
 const isMediaDeleted = computed(() => {
@@ -139,7 +148,7 @@ const show = ref(false);
 		left: 50%;
 		right: 50%;
 		top: 50%;
-		transform: translate(-50%, -50%)
+		transform: translate(-50%, -50%);
 	}
 
 	&__deleted-notification {
@@ -162,6 +171,11 @@ const show = ref(false);
 		object-fit: cover;
 		border: 1px solid transparent;
 		border-radius: 16px;
+
+		&-wrapper {
+			width: 100%;
+			height: 300px;
+		}
 
 		&_in-modal {
 			width: 100%;
