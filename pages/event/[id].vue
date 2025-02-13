@@ -96,7 +96,7 @@
 					<template #description>
 						{{ event.attributes.eventHost.data.attributes.orgResume }}
 						<div
-							v-if="event.attributes.eventHost.data.attributes.commercialName"
+							v-if="event.attributes.eventHost.data.id"
 							style="text-decoration: underline"
 						>
 							<nuxt-link
@@ -116,7 +116,6 @@
 <script setup lang="ts">
 import CpBasePage from '@shared/gui/CpBasePage.vue';
 import CpSocialLink from '@shared/gui/CpSocialLink.vue';
-import CplinkBtn from '@shared/gui/CpLinkBtn.vue';
 import CpMap from '@shared/gui/CpMap.vue';
 import CpButton from '@shared/gui/CpButton.vue';
 import CpMarkdownViewer from '@shared/gui/CpMarkdownViewer/CpMarkdownViewer.vue';

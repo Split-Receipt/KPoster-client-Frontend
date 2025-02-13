@@ -524,6 +524,7 @@ export interface EventHostListQueryParams {
 	 pagination: {
 		 page: number, pageSize: number
 		},
+		sort: string[]
 		populate?: string | Record<string, string | boolean>
 	}
 

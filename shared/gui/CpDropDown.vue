@@ -19,7 +19,7 @@
 			</svg>
 		</div>
 		<label class="popup" :class="{ 'popup--shown': showList }">
-			<nav class="popup__window">
+			<nav ref="list" class="popup__window">
 				<div
 					v-for="option in getDataForChekboxes"
 					:key="option.id"
@@ -34,9 +34,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useInfiniteScroll } from '@vueuse/core';
 
 const props = defineProps<Props>();
 const emit = defineEmits<Events>();
+const list = ref<HTMLElement>();
 const dropdownFilter = ref(null);
 onClickOutside(dropdownFilter, () => (showList.value = false));
 interface Option {
@@ -53,11 +55,18 @@ interface Props {
 	dropDownLabel: string;
 	options: Option[];
 	value: string[];
+	canLoadMore?: boolean
 }
 
 type Events = {
 	(event: 'update:modelValue', eventData: string[]): void;
+	(event: 'loadMore'): void;
 };
+
+const { reset } = useInfiniteScroll(list, () => emit('loadMore'), {
+	distance: 10,
+	canLoadMore: () => props.canLoadMore ?? false,
+});
 
 const showList = ref(false);
 

@@ -81,7 +81,6 @@
 				</div>
 				<div class="partners__form-row-input">
 					<v-field
-						v-slot="{ errors }"
 						:model-value="partnerForm.data.personalIdentifyingDocument"
 						name="orgType"
 					>
@@ -91,9 +90,6 @@
 							name="PersonalIdentifyingDocument"
 							style="margin-left: -30px"
 						/>
-						<span v-if="errors" class="required-input-error-info-leftSide">{{
-							errors[0]
-						}}</span>
 					</v-field>
 				</div>
 			</div>
@@ -110,21 +106,15 @@
 				</div>
 				<div class="partners__form-rowDnD-input">
 					<v-field
-						v-slot="{ errors }"
 						:model-value="partnerForm.files.personalDocumentScan"
 						name="personalDocumentScan"
-						rules="required_file"
 					>
 						<cp-drag-n-drop
 							v-model="partnerForm.files.personalDocumentScan"
 							:is-single="true"
 							type="image"
 							:max-size="5"
-							:is-invalid="errors.length > 0"
 						/>
-						<span v-if="errors" class="required-input-error-info-center">{{
-							errors[0]
-						}}</span>
 					</v-field>
 				</div>
 			</div>

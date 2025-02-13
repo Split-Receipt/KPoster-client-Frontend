@@ -40,8 +40,8 @@
 			/>
 
 			<div v-if="eventHost?.data?.attributes?.compVideoLink">
-				<iframe
-					:src="formatExternalLink(eventHost?.data?.attributes?.compVideoLink)"
+				<cp-youtube-player
+					:video-url="formatExternalLink(eventHost?.data?.attributes?.compVideoLink)"
 					class="host__video"
 				/>
 			</div>
@@ -73,6 +73,7 @@ import {
 	type CollectionFilters,
 	type StrapiMediaDefaultType,
 } from '@shared/api/types';
+import CpYoutubePlayer from '@entities/CPYoutubePlayer/CpYoutubePlayer.vue';
 import type { EventCard } from '@widgets/event-card/types/types';
 import { requestEventsHost, requestEventsList } from '@shared/api';
 import { useRuntimeConfig } from 'nuxt/app';
@@ -262,7 +263,7 @@ const testMarkers = [{ coordinates: [-12.046016, -77.030554] }];
 const testMapCenter = [-12.046016, -77.030554];
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .host {
 	.cover {
 		display: grid;
@@ -324,7 +325,8 @@ const testMapCenter = [-12.046016, -77.030554];
     	}
 	}
 
-	&__video {
+	iframe {
+		
 		width: 100%;
 		border: none;
 		border-radius: 16px;

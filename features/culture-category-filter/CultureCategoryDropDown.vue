@@ -18,7 +18,7 @@ type Events = {
 
 const emit = defineEmits<Events>();
 const cultureCategoriesData = ref();
-const pickedCultureCategories = ref();
+const pickedCultureCategories = ref([]);
 
 const requestFilterData = async () => {
 	try {
