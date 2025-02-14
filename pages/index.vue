@@ -14,7 +14,7 @@
 					@change:filter-event-cats="(value: string[]) => changeFilters(value, 'eventCategory')"
 				/>
 				<partners-drop-down
-					@change:filter-event-cats="(value: string[]) => changeFilters(value, 'eventHost')"
+					@change:event-host="(value: string[]) => changeFilters(value, 'eventHost')"
 				/>
 			</div>
 			<div v-if="eventsCollections?.length" class="main-page__section-list">
