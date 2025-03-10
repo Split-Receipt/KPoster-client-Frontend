@@ -270,6 +270,7 @@ export const requestDataAboutPlatform = (): Promise<AxiosResponse<{ data: BaseSt
 		populate: {
 			platformContacts: true,
 			platformSocialMedias: true,
+			aboutUs: true,
 			culturalPortalContacts: {
 				populate: {
 					contactSocialMedias: true,
